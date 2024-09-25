@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.customHardware.loopTime
+package org.gentrifiedApps.gentrifiedAppsUtil
 
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
