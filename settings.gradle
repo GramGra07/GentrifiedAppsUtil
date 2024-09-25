@@ -1,0 +1,3 @@
+rootProject.name = 'gentrifiedAppsUtil'
+
+enableFeaturePreview('VERSION_CATALOGS')

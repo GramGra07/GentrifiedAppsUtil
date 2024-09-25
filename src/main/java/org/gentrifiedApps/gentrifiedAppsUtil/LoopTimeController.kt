@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.customHardware.loopTime
 
-import com.acmerobotics.dashboard.config.Config
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 
-@Config
 class LoopTimeController(
     // loopTimeController.spacedObjectOf("name")!!.run(loopTimeController.currentTime)
     private val timer: ElapsedTime,

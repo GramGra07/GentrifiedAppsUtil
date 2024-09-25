@@ -1,0 +1,96 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.2.2'
+    }
+}
+
+plugins {
+    id 'maven-publish'
+}
+
+apply plugin: 'com.android.library'
+
+group 'org.gentrifiedApps.gentrifiedAppsUtil'
+version 'v1.0.1'
+
+android {
+    namespace 'org.gentrifiedApps.gentrifiedAppsUtil'
+
+    //    buildToolsVersion '29.0.2'
+
+    lintOptions {
+        disable 'ExpiredTargetSdkVersion'
+    }
+
+    defaultConfig {
+        minSdkVersion 24
+        //noinspection ExpiredTargetSdkVersion
+        targetSdkVersion 34
+        compileSdk 34
+        versionCode 1
+        versionName 'v1.0.1'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+        }
+    }
+}
+
+
+allprojects {
+    repositories {
+        mavenCentral()
+        google()
+    }
+}
+
+repositories {
+    mavenCentral()
+    google() // Needed for androidx
+}
+
+dependencies {
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    implementation 'org.firstinspires.ftc:RobotCore:10.1.0'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                groupId = 'org.gentrifiedApps'
+                artifactId = 'gentrifiedApps'
+                version = 'v1.0.1'
+
+                afterEvaluate {
+                    from components.release
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = 'gentrifiedApps'
+                url = "${project.buildDir}/release"
+            }
+        }
+    }
+}
