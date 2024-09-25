@@ -10,6 +10,7 @@ buildscript {
 
 plugins {
     id 'maven-publish'
+    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 apply plugin: 'com.android.library'
@@ -29,7 +30,7 @@ android {
     defaultConfig {
         minSdkVersion 24
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 34
+        targetSdkVersion 28
         compileSdk 34
         versionCode 1
         versionName 'v1.0.1'
@@ -53,6 +54,9 @@ android {
             useJUnitPlatform()
         }
     }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
 }
 
 
@@ -71,6 +75,7 @@ repositories {
 dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     implementation 'org.firstinspires.ftc:RobotCore:10.1.0'
+    implementation libs.core.ktx
 }
 
 afterEvaluate {
