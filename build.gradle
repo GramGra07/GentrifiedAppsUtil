@@ -16,7 +16,7 @@ plugins {
 apply plugin: 'com.android.library'
 
 group 'org.gentrifiedApps.gentrifiedAppsUtil'
-version 'v1.0.5'
+version 'v1.0.6'
 
 android {
     namespace 'org.gentrifiedApps.gentrifiedAppsUtil'
@@ -33,7 +33,7 @@ android {
         targetSdkVersion 28
         compileSdk 34
         versionCode 1
-        versionName 'v1.0.5'
+        versionName 'v1.0.6'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.debug
@@ -88,7 +88,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = 'org.gentrifiedApps'
                 artifactId = 'gentrifiedApps'
-                version = 'v1.0.5'
+                version = 'v1.0.6'
 
                 afterEvaluate {
                     from components.release
