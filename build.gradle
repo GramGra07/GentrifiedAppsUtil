@@ -54,6 +54,10 @@ android {
             useJUnitPlatform()
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE-notice.md'
+        exclude 'META-INF/LICENSE.md'
+    }
     kotlinOptions {
         jvmTarget = '17'
     }
