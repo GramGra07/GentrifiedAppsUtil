@@ -77,7 +77,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.11.1'
     implementation 'org.firstinspires.ftc:RobotCore:10.1.0'
     implementation libs.core.ktx
 }
