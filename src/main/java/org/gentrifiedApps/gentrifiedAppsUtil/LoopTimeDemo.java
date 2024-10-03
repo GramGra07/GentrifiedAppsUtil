@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @TeleOp
 //@Disabled
 
-class LoopTimeDemo extends LinearOpMode {
+public class LoopTimeDemo extends LinearOpMode {
     public void runOpMode() {
         ElapsedTime elapsedTime = new ElapsedTime();
         LoopTimeController loopTimeController = new LoopTimeController(elapsedTime,null);
