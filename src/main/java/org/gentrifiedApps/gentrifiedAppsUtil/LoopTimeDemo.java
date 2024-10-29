@@ -1,11 +1,12 @@
 package org.gentrifiedApps.gentrifiedAppsUtil;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp
-//@Disabled
+@Disabled
 
 public class LoopTimeDemo extends LinearOpMode {
     public void runOpMode() {
