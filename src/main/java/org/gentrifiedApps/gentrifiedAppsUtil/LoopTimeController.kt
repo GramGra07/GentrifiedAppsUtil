@@ -5,9 +5,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 
 class LoopTimeController(
     // loopTimeController.spacedObjectOf("name")!!.run(loopTimeController.currentTime)
-    private val timer: ElapsedTime,
+//    private val timer: ElapsedTime,
     private val periodics: List<PeriodicLoopTimeObject?>? = null,
 ) {
+    private val timer = ElapsedTime()
     var loops: Int = 0
     private var lps = 0.0
     private var currentTime: Double = 0.0
