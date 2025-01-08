@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class LoopTimeDemo extends LinearOpMode {
     public void runOpMode() {
         ElapsedTime elapsedTime = new ElapsedTime();
-        LoopTimeController loopTimeController = new LoopTimeController(elapsedTime,null);
+        LoopTimeController loopTimeController = new LoopTimeController(null);
         waitForStart();
         while (opModeIsActive()) {
             loopTimeController.update();

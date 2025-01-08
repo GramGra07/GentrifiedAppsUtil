@@ -3,7 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 
-class LoopTimeController(
+open class LoopTimeController(
     // loopTimeController.spacedObjectOf("name")!!.run(loopTimeController.currentTime)
 //    private val timer: ElapsedTime,
     private val periodics: List<PeriodicLoopTimeObject?>? = null,
@@ -22,7 +22,7 @@ class LoopTimeController(
 
     private var startTime: Double
     private var lastTime: Double
-    private var deltaTime: Double = 0.0
+    var deltaTime: Double = 0.0
 
     init {
         timer.reset()
@@ -43,7 +43,7 @@ class LoopTimeController(
         }
     }
 
-    fun update() {
+    open fun update() {
         currentTimems = timer.milliseconds()
         currentTime = timer.seconds()
         doCalculations()
