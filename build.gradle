@@ -81,6 +81,7 @@ dependencies {
     implementation libs.core.ktx
     implementation("org.mockito:mockito-core:4.0.0")
     implementation 'junit:junit:4.12'
+    testImplementation libs.junit.jupiter
 }
 
 afterEvaluate {
