@@ -1,12 +1,14 @@
 package org.gentrifiedApps.gentrifiedAppsUtil;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.List;
 
 @TeleOp(name = "AnalysisOpMode", group = "Linear OpMode")
+@Disabled
 public class AnalysisOpMode extends LinearOpMode {
     private LoopTimeAnalyzer loopTimeAnalyzer;
 
