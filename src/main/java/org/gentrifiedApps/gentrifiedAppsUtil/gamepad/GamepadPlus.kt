@@ -34,10 +34,10 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
         secondaryHash[Button.TOUCHPAD] = gamepad!!.guide
         secondaryHash[Button.LEFT_STICK] = gamepad!!.left_stick_button
         secondaryHash[Button.RIGHT_STICK] = gamepad!!.right_stick_button
-        secondaryHash[Button.UP] = gamepad!!.dpad_up
-        secondaryHash[Button.DOWN] = gamepad!!.dpad_down
-        secondaryHash[Button.LEFT] = gamepad!!.dpad_left
-        secondaryHash[Button.RIGHT] = gamepad!!.dpad_right
+        secondaryHash[Button.DPAD_UP] = gamepad!!.dpad_up
+        secondaryHash[Button.DPAD_DOWN] = gamepad!!.dpad_down
+        secondaryHash[Button.DPAD_LEFT] = gamepad!!.dpad_left
+        secondaryHash[Button.DPAD_RIGHT] = gamepad!!.dpad_right
         secondaryHash[Button.RIGHT_BUMPER] = gamepad!!.right_bumper
         secondaryHash[Button.LEFT_BUMPER] = gamepad!!.left_bumper
     }
@@ -72,10 +72,10 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
         hash[Button.TOUCHPAD] = gamepad!!.guide
         hash[Button.LEFT_STICK] = gamepad!!.left_stick_button
         hash[Button.RIGHT_STICK] = gamepad!!.right_stick_button
-        hash[Button.UP] = gamepad!!.dpad_up
-        hash[Button.DOWN] = gamepad!!.dpad_down
-        hash[Button.LEFT] = gamepad!!.dpad_left
-        hash[Button.RIGHT] = gamepad!!.dpad_right
+        hash[Button.DPAD_UP] = gamepad!!.dpad_up
+        hash[Button.DPAD_DOWN] = gamepad!!.dpad_down
+        hash[Button.DPAD_LEFT] = gamepad!!.dpad_left
+        hash[Button.DPAD_RIGHT] = gamepad!!.dpad_right
         hash[Button.RIGHT_BUMPER] = gamepad!!.right_bumper
         hash[Button.LEFT_BUMPER] = gamepad!!.left_bumper
     }
@@ -98,10 +98,10 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
             Button.TOUCHPAD -> gamepad!!.guide
             Button.LEFT_STICK -> gamepad!!.left_stick_button
             Button.RIGHT_STICK -> gamepad!!.right_stick_button
-            Button.UP -> gamepad!!.dpad_up
-            Button.DOWN -> gamepad!!.dpad_down
-            Button.LEFT -> gamepad!!.dpad_left
-            Button.RIGHT -> gamepad!!.dpad_right
+            Button.DPAD_UP -> gamepad!!.dpad_up
+            Button.DPAD_DOWN -> gamepad!!.dpad_down
+            Button.DPAD_LEFT -> gamepad!!.dpad_left
+            Button.DPAD_RIGHT -> gamepad!!.dpad_right
             Button.RIGHT_BUMPER -> gamepad!!.right_bumper
             Button.LEFT_BUMPER -> gamepad!!.left_bumper
         }
