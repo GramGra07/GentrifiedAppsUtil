@@ -6,3 +6,4 @@
 
 * LoopTimeController
 
+* BinaryArray

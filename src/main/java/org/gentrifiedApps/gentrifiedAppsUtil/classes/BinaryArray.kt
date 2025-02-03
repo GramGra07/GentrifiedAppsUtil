@@ -6,6 +6,7 @@ import org.gentrifiedApps.velocityvision.enums.Color
  * A class to represent a binary array of 1 and 0
  * @param size The size of the array
  * @constructor Creates a binary array of the given size
+ * @see Color
  */
 class BinaryArray(size: Int) {
     private val array: DoubleArray = DoubleArray(size)
