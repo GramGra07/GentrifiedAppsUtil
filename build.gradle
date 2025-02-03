@@ -73,14 +73,18 @@ allprojects {
 repositories {
     mavenCentral()
     google() // Needed for androidx
+
+    maven { url = 'https://maven.brott.dev/' }
+    maven { url = 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation "org.firstinspires.ftc:Hardware:10.1.1"
-    implementation "org.firstinspires.ftc:RobotCore:10.1.0"
+    implementation "org.firstinspires.ftc:Hardware:10.2.0"
+    implementation "org.firstinspires.ftc:RobotCore:10.2.0"
+    implementation 'com.github.GramGra07:VelocityVision:1.1.1'
     implementation libs.core.ktx
     implementation("org.mockito:mockito-core:4.0.0")
-    implementation 'junit:junit:4.12'
+    implementation libs.junit.v412
     testImplementation libs.junit.jupiter
 }
 

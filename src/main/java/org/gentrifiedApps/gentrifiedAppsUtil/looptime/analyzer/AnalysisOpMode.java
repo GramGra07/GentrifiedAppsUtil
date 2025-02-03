@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil;
+package org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;

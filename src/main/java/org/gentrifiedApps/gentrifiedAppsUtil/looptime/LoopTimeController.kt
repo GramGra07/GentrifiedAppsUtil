@@ -1,7 +1,8 @@
-package org.gentrifiedApps.gentrifiedAppsUtil
+package org.gentrifiedApps.gentrifiedAppsUtil.looptime
 
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.looptime.objects.PeriodicLoopTimeObject
 
 open class LoopTimeController(
     // loopTimeController.spacedObjectOf("name")!!.run(loopTimeController.currentTime)

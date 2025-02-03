@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil
+package org.gentrifiedApps.gentrifiedAppsUtil.looptime.objects
 
 import org.firstinspires.ftc.robotcore.external.Telemetry
 

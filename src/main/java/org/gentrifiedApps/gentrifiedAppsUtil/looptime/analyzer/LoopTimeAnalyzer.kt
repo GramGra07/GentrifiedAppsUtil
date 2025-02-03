@@ -1,7 +1,8 @@
-package org.gentrifiedApps.gentrifiedAppsUtil
+package org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
 
 open class LoopTimeAnalyzer(
     private val opMode: OpMode,
