@@ -79,7 +79,7 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
         hash[Button.RIGHT_BUMPER] = gamepad!!.right_bumper
         hash[Button.LEFT_BUMPER] = gamepad!!.left_bumper
     }
-    fun readBooleanButtonFromHash(button: Button): Boolean {
+    private fun readBooleanButtonFromHash(button: Button): Boolean {
         return hash[button]!!
     }
     fun readBooleanButtonFromController(button: Button): Boolean {
