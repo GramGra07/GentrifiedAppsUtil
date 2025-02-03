@@ -5,5 +5,5 @@
 ### Contents:
 
 * LoopTimeController
-
 * BinaryArray
+* GamepadPlus
