@@ -24,6 +24,11 @@ class BinaryArray(size: Int) {
         return array.size
     }
 
+    /**
+     * Converts the binary array to a color
+     * @return The color represented by the binary array
+     * @see Color
+     */
     fun toColor(): Color {
         return if (this[0] == 0.0 && this[1] == 1.0) {
             Color.RED

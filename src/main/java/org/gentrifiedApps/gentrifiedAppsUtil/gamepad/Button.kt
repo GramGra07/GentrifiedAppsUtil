@@ -1,5 +1,8 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.gamepad
 
+/**
+ * Enum class for all boolean buttons on a gamepad
+ */
 enum class Button {
     CROSS,
     CIRCLE,
@@ -19,6 +22,10 @@ enum class Button {
     RIGHT_BUMPER,
     LEFT_BUMPER,
 }
+
+/**
+ * Enum class for all float buttons on a gamepad
+ */
 enum class FloatButton {
     LEFT_X,
     LEFT_Y,
