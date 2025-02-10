@@ -1,0 +1,50 @@
+package test.kotlin.drive
+
+import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.drive.MecanumDriver
+import org.junit.Test
+import org.testng.Assert.assertEquals
+
+class MecanumTest {
+
+    @Test
+    fun testDriveMecanum() {
+        val drivePowerCoefficients = MecanumDriver.driveMecanum(0.0, 1.0, 0.0)
+        assertEquals(DrivePowerCoefficients(1.0, 1.0, 1.0, 1.0), drivePowerCoefficients)
+    }
+    @Test
+    fun testDriveMecanum_Forward() {
+        val drivePowerCoefficients = MecanumDriver.driveMecanum(0.0, 1.0, 0.0)
+        assertEquals(DrivePowerCoefficients(1.0, 1.0, 1.0, 1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveMecanum_Backward() {
+        val drivePowerCoefficients = MecanumDriver.driveMecanum(0.0, -1.0, 0.0)
+        assertEquals(DrivePowerCoefficients(-1.0, -1.0, -1.0, -1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveMecanum_Right() {
+        val drivePowerCoefficients = MecanumDriver.driveMecanum(1.0, 0.0, 0.0)
+        assertEquals(DrivePowerCoefficients(1.0, -1.0, -1.0, 1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveMecanum_Left() {
+        val drivePowerCoefficients = MecanumDriver.driveMecanum(-1.0, 0.0, 0.0)
+        assertEquals(DrivePowerCoefficients(-1.0, 1.0, 1.0, -1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveMecanum_Rotation() {
+        val drivePowerCoefficients = MecanumDriver.driveMecanum(0.0, 0.0, 1.0)
+        assertEquals(DrivePowerCoefficients(1.0, -1.0, 1.0, -1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveMecanum_Diagonal() {
+        val drivePowerCoefficients = MecanumDriver.driveMecanum(1.0, 1.0, 0.0)
+        assertEquals(DrivePowerCoefficients(2.0, 0.0, 0.0, 2.0), drivePowerCoefficients)
+    }
+}

@@ -7,7 +7,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.drive
  * @param backLeft The coefficient for the back left motor.
  * @param backRight The coefficient for the back right motor.
  */
-data class FieldCentricCoefficients(
+data class DrivePowerCoefficients(
     val frontLeft: Double,
     val frontRight: Double,
     val backLeft: Double,

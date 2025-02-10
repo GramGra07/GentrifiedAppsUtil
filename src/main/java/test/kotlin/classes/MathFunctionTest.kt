@@ -1,4 +1,4 @@
-package test.kotlin
+package test.kotlin.classes
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Point

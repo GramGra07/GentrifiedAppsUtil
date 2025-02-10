@@ -136,4 +136,7 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
             FloatButton.TOUCH_Y -> gamepad!!.touchpad_finger_1_y
         }
     }
+    fun atRest():Boolean{
+        return gamepad!!.atRest()
+    }
 }

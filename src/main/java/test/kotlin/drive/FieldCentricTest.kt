@@ -1,10 +1,9 @@
-package test.kotlin
+package test.kotlin.drive
 
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.FieldCentricDriver
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.FieldCentricCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.junit.Test
 import org.testng.Assert.assertEquals
-import kotlin.math.sqrt
 
 class FieldCentricTest {
 
@@ -15,7 +14,7 @@ class FieldCentricTest {
         val rotation = 0.0
         val gyroAngle = Math.toRadians(90.0)
 
-        val result: FieldCentricCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
+        val result: DrivePowerCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
 
         assertEquals(1.0, result.frontLeft, "Front left power should be 1.0")
         assertEquals(1.0, result.frontRight, "Front right power should be 1.0")
@@ -29,7 +28,7 @@ class FieldCentricTest {
         val rotation = 0.0
         val gyroAngle = Math.toRadians(90.0)
 
-        val result: FieldCentricCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
+        val result: DrivePowerCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
 
         assertEquals(-1.0, result.frontLeft, )
         assertEquals(-1.0, result.frontRight, )
@@ -44,7 +43,7 @@ class FieldCentricTest {
         val rotation = 1.0
         val gyroAngle = 0.0
 
-        val result: FieldCentricCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
+        val result: DrivePowerCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
 
         assertEquals(-1.0, result.frontLeft, "Front left power should be 0.0")
         assertEquals(1.0, result.frontRight, "Front right power should be 2.0")
@@ -59,7 +58,7 @@ class FieldCentricTest {
         val rotation = 0.0
         val gyroAngle = Math.PI / 2
 
-        val result: FieldCentricCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
+        val result: DrivePowerCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
 
         assertEquals(0.0, result.frontLeft, "Front left power should be 0.0")
         assertEquals(0.0, result.frontRight, "Front right power should be 0.0")

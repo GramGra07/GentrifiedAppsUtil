@@ -1,4 +1,4 @@
-package test.kotlin
+package test.kotlin.sm
 
 import org.firstinspires.ftc.robotcore.internal.system.Assert.assertFalse
 import org.firstinspires.ftc.robotcore.internal.system.Assert.assertTrue

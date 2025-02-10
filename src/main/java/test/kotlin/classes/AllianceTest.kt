@@ -1,4 +1,4 @@
-package test.kotlin
+package test.kotlin.classes
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Alliance
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.BinaryArray

@@ -2,7 +2,7 @@
   <configuration default="false" name="SequentialRun" type="JUnit" factoryName="JUnit">
     <module name="gentrifiedAppsUtil.main" />
     <option name="PACKAGE_NAME" value="test.kotlin" />
-    <option name="MAIN_CLASS_NAME" value="test.kotlin.SequentialRunSMTestCases" />
+    <option name="MAIN_CLASS_NAME" value="test.kotlin.sm.SequentialRunSMTestCases" />
     <option name="METHOD_NAME" value="" />
     <option name="TEST_OBJECT" value="class" />
     <method v="2">

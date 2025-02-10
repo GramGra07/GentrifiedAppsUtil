@@ -16,7 +16,7 @@ class FieldCentricDriver {
          * @param rotation The rotation value of the controller. ex rightStickX
          * @param gyroAngle The angle of the gyro. ex imu.getAngularOrientation().firstAngle
          * @return The coefficients to drive the robot.
-         * @see FieldCentricCoefficients
+         * @see DrivePowerCoefficients
          */
         @JvmStatic
         fun driveFieldCentric(
@@ -24,7 +24,7 @@ class FieldCentricDriver {
             y: Double,
             rotation: Double,
             gyroAngle: Double
-        ): FieldCentricCoefficients {
+        ): DrivePowerCoefficients {
             val controllerAngle = Math.toDegrees(atan2(y, x))
             val robotDegree = Math.toDegrees(gyroAngle)
             val movementDegree = controllerAngle - robotDegree
@@ -39,7 +39,7 @@ class FieldCentricDriver {
                 (yControl * abs(yControl) + xControl * abs(xControl) - rotation)
             val backLeftPower =
                 (yControl * abs(yControl) - xControl * abs(xControl) - rotation)
-            return FieldCentricCoefficients(
+            return DrivePowerCoefficients(
                 frontLeftPower,
                 frontRightPower,
                 backLeftPower,
