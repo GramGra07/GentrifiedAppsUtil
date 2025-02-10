@@ -18,7 +18,6 @@ public class InitOpMode extends LinearOpMode {
             if (initMovementController.hasMovedOnInit()) {
                 telemetry.addData("Status", "Moved");
                 telemetry.update();
-                break;
             } else {
                 telemetry.addData("Status", "Not Moved");
                 telemetry.update();
