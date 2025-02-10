@@ -12,7 +12,9 @@ public class IdlerOpMode extends LinearOpMode {
         public void runOpMode() {
             waitForStart();
             if (opModeIsActive()) {
-                idler.safeIdle(3,()->{telemetry.addLine("Hello World");});
+                idler.safeIdle(3,()->{telemetry.addLine("Hello World");telemetry.update();});
+                telemetry.addLine("Done");
+                telemetry.update();
             }
         }
 }

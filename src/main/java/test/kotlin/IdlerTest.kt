@@ -1,6 +1,6 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.idler
+package test.kotlin
 
-import com.qualcomm.robotcore.util.ElapsedTime
+import org.gentrifiedApps.gentrifiedAppsUtil.idler.Idler
 import org.junit.Test
 import org.junit.Assert.assertTrue
 
