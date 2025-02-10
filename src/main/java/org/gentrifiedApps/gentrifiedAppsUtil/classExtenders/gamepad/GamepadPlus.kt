@@ -9,20 +9,22 @@ import java.util.EnumMap
  * @param loopSaveMode Whether to enable loop save mode (could reduce performance)
  * @throws IllegalArgumentException If loopSaveMode is not enabled and you call loopSavingRead
  */
-class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
-    private var gamepad:Gamepad? = null
+class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
+    private var gamepad: Gamepad? = null
 
     init {
         this.gamepad = gamepad
         primarySync()
     }
+
     private var secondaryHash = EnumMap<Button, Boolean>(Button::class.java)
     private var hash = EnumMap<Button, Boolean>(Button::class.java)
+
     /**
-    * This function is used to save the current state of the gamepad at the **BEGINNING** of your code
+     * This function is used to save the current state of the gamepad at the **BEGINNING** of your code
      **/
-    fun loopSavingRead(){
-        require(loopSaveMode){"Loop save mode is not enabled"}
+    fun loopSavingRead() {
+        require(loopSaveMode) { "Loop save mode is not enabled" }
         secondaryHash[Button.CROSS] = gamepad!!.cross
         secondaryHash[Button.CIRCLE] = gamepad!!.circle
         secondaryHash[Button.TRIANGLE] = gamepad!!.triangle
@@ -41,14 +43,15 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
         secondaryHash[Button.RIGHT_BUMPER] = gamepad!!.right_bumper
         secondaryHash[Button.LEFT_BUMPER] = gamepad!!.left_bumper
     }
-    private fun primarySync(){
+
+    private fun primarySync() {
         hash.clear()
         for (entry in Button.entries) {
             hash[entry] = false
         }
         sync()
         //
-        if (loopSaveMode){
+        if (loopSaveMode) {
             secondaryHash.clear()
             for (entry in Button.entries) {
                 secondaryHash[entry] = false
@@ -79,12 +82,15 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
         hash[Button.RIGHT_BUMPER] = gamepad!!.right_bumper
         hash[Button.LEFT_BUMPER] = gamepad!!.left_bumper
     }
+
     private fun readBooleanButtonFromHash(button: Button): Boolean {
         return hash[button]!!
     }
+
     fun readBooleanButtonFromController(button: Button): Boolean {
         return if (loopSaveMode) secondaryHash[button]!! else returnButton(button)
     }
+
     private fun returnButton(button: Button): Boolean {
         return when (button) {
             Button.CROSS -> gamepad!!.cross
@@ -106,24 +112,31 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
             Button.LEFT_BUMPER -> gamepad!!.left_bumper
         }
     }
+
     fun buttonJustPressed(button: Button): Boolean {
         return !readBooleanButtonFromHash(button) && readBooleanButtonFromController(button)
     }
+
     fun buttonJustReleased(button: Button): Boolean {
         return readBooleanButtonFromHash(button) && !readBooleanButtonFromController(button)
     }
+
     fun buttonPressed(button: Button): Boolean {
         return readBooleanButtonFromController(button)
     }
+
     fun buttonReleased(button: Button): Boolean {
         return !readBooleanButtonFromController(button)
     }
+
     fun buttonHeld(button: Button): Boolean {
         return readBooleanButtonFromHash(button) && readBooleanButtonFromController(button)
     }
+
     fun buttonNotHeld(button: Button): Boolean {
         return !readBooleanButtonFromHash(button) && !readBooleanButtonFromController(button)
     }
+
     fun readFloat(button: FloatButton): Float {
         return when (button) {
             FloatButton.LEFT_X -> gamepad!!.left_stick_x
@@ -136,7 +149,8 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode:Boolean = false) {
             FloatButton.TOUCH_Y -> gamepad!!.touchpad_finger_1_y
         }
     }
-    fun atRest():Boolean{
+
+    fun atRest(): Boolean {
         return gamepad!!.atRest()
     }
 }

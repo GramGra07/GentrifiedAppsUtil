@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 class SensorArray {
     private var array: HashMap<String, Sensor> = HashMap()
 
-    private fun Map.Entry<String,Sensor>.sensor():Sensor {
+    private fun Map.Entry<String, Sensor>.sensor(): Sensor {
         return this.value
     }
 

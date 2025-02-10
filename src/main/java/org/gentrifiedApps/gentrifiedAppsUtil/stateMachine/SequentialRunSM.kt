@@ -17,7 +17,7 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
     var isRunning = true
     private var shouldRestart = true
     private var sustainOnEnter: Map<T, StateChangeCallback> = HashMap(builder.onEnterCommands)
-    public var sustainStates: List<T> = ArrayList(builder.states)
+    var sustainStates: List<T> = ArrayList(builder.states)
     private var sustainTransitions: Map<T, () -> Boolean> = HashMap(builder.transitions)
 
     class Builder<T : Enum<T>> {

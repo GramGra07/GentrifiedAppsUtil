@@ -11,9 +11,9 @@ class MathFunctions {
          * @param values The values to get the average of
          * @return The average of the values
          */
-    fun averageOf(values: DoubleArray): Double {
-        return values.average()
-    }
+        fun averageOf(values: DoubleArray): Double {
+            return values.average()
+        }
 
         /**
          * Returns the quadrant of a point
@@ -23,40 +23,40 @@ class MathFunctions {
          * -----
          * 3 | 4
          */
-    fun getQuadrant(pose: Point): Int {
-        var x = pose.x.toInt()
-        var y = pose.y.toInt()
-        if (x == 0) {
-            x = (x + 0.1).toInt() // compensates for divide by 0 error
+        fun getQuadrant(pose: Point): Int {
+            var x = pose.x.toInt()
+            var y = pose.y.toInt()
+            if (x == 0) {
+                x = (x + 0.1).toInt() // compensates for divide by 0 error
+            }
+            if (y == 0) {
+                y = (y + 0.1).toInt() // compensates for divide by 0 error
+            }
+            val xSign = x.toDouble() / abs(x) // gets sign of x
+            val ySign = y.toDouble() / abs(y) // gets sign of y
+            val xIsPositive = xSign == 1.0 // checks if x is positive
+            val yIsPositive = ySign == 1.0 // checks if y is positive
+            return if (xIsPositive && !yIsPositive) {
+                4
+            } else if (xIsPositive && yIsPositive) {
+                2
+            } else if (!xIsPositive && !yIsPositive) {
+                3
+            } else if (!xIsPositive && yIsPositive) {
+                1
+            } else {
+                0
+            }
         }
-        if (y == 0) {
-            y = (y + 0.1).toInt() // compensates for divide by 0 error
-        }
-        val xSign = x.toDouble() / abs(x) // gets sign of x
-        val ySign = y.toDouble() / abs(y) // gets sign of y
-        val xIsPositive = xSign == 1.0 // checks if x is positive
-        val yIsPositive = ySign == 1.0 // checks if y is positive
-        return if (xIsPositive && !yIsPositive) {
-            4
-        } else if (xIsPositive && yIsPositive) {
-            2
-        } else if (!xIsPositive && !yIsPositive) {
-            3
-        } else if (!xIsPositive && yIsPositive) {
-            1
-        } else {
-            0
-        }
-    }
 
         /**
          * Returns three-fourths of a number
          * @param amount The number to get three-fourths of
          * @return Three-fourths of the number
          */
-    fun threeFourths(amount: Int): Int {
-        return amount / 4 * 3
-    }
+        fun threeFourths(amount: Int): Int {
+            return amount / 4 * 3
+        }
 
         /**
          * Normalizes a delta to be between -180 and 180

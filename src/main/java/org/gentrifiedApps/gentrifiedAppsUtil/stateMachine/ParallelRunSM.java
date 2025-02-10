@@ -10,20 +10,22 @@ import java.util.function.Supplier;
 
 /**
  * ParallelRunSM is a state machine that runs all states at once. It is used to run multiple states in parallel.
+ *
  * @param <T>
  */
 public class ParallelRunSM<T extends Enum<T>> {
-    private List<T> states;
-    private Map<T, StateChangeCallback> onEnterCommands;
-    private Supplier<Boolean> exitTransition;
+    private final List<T> states;
+    private final Map<T, StateChangeCallback> onEnterCommands;
+    private final Supplier<Boolean> exitTransition;
     private boolean isStarted = false;
     private boolean isRunning = true;
     private long startTime;
 
-    private AbstractMap.SimpleEntry<Boolean, Integer> timeout;
+    private final AbstractMap.SimpleEntry<Boolean, Integer> timeout;
 
     /**
      * Returns whether the state machine is running
+     *
      * @return boolean if the state machine is running
      */
     public boolean isRunning() {
@@ -32,6 +34,7 @@ public class ParallelRunSM<T extends Enum<T>> {
 
     /**
      * Returns whether the state machine has been started
+     *
      * @return boolean if the state machine has been started
      */
     public boolean isStarted() {
@@ -46,8 +49,8 @@ public class ParallelRunSM<T extends Enum<T>> {
     }
 
     public static class Builder<T extends Enum<T>> {
-        private List<T> states;
-        private Map<T, StateChangeCallback> onEnterCommands;
+        private final List<T> states;
+        private final Map<T, StateChangeCallback> onEnterCommands;
         private Supplier<Boolean> exitTransition;
         private ParallelRunSM<T> machine;
         private int stopRunningIncluded = 0;
@@ -63,6 +66,7 @@ public class ParallelRunSM<T extends Enum<T>> {
 
         /**
          * Adds a state to the state machine
+         *
          * @param state the state to add
          */
         public ParallelRunSM.Builder<T> state(T state) {
@@ -75,7 +79,8 @@ public class ParallelRunSM<T extends Enum<T>> {
 
         /**
          * Adds an onEnter command to a state
-         * @param state the state to add the command to
+         *
+         * @param state   the state to add the command to
          * @param command the command to add
          */
         public ParallelRunSM.Builder<T> onEnter(T state, StateChangeCallback command) {
@@ -88,7 +93,8 @@ public class ParallelRunSM<T extends Enum<T>> {
 
         /**
          * Adds a stopRunning command to the state machine
-         * @param state the state to add the command to
+         *
+         * @param state       the state to add the command to
          * @param exitCommand the command to add
          */
         public ParallelRunSM.Builder<T> stopRunning(T state, Supplier<Boolean> exitCommand) {
@@ -108,8 +114,9 @@ public class ParallelRunSM<T extends Enum<T>> {
 
         /**
          * Builds the state machine
+         *
          * @param useTimeout whether to use a timeout
-         * @param timeout the timeout to use
+         * @param timeout    the timeout to use
          * @return the state machine
          */
         public ParallelRunSM<T> build(Boolean useTimeout, Integer timeout) {
@@ -174,6 +181,7 @@ public class ParallelRunSM<T extends Enum<T>> {
 
     /**
      * Updates the state machine, should only be done once
+     *
      * @return boolean if the state machine has been updated
      */
     public boolean update() {
@@ -194,6 +202,7 @@ public class ParallelRunSM<T extends Enum<T>> {
 
     /**
      * Checks if the exit transition has been met, aka if the state machine should stop running OR if the timeout has been reached
+     *
      * @return boolean if the exit transition has been met
      */
     public boolean checkExitTransition() {

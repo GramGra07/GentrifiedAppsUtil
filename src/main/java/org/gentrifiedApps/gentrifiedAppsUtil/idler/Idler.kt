@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
  */
 class Idler {
     private val elapsed = ElapsedTime()
+
     init {
         elapsed.reset()
     }
@@ -16,9 +17,9 @@ class Idler {
      * @param time The amount of time to idle for.
      * @param updateWhileIdling A lambda to run while idling.
      */
-    fun safeIdle(time:Double, updateWhileIdling : Runnable){
+    fun safeIdle(time: Double, updateWhileIdling: Runnable) {
         elapsed.reset()
-        while(elapsed.seconds() < time){
+        while (elapsed.seconds() < time) {
             updateWhileIdling.run()
         }
     }

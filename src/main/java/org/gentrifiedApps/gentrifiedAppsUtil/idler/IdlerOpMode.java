@@ -8,13 +8,17 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @Disabled
 public class IdlerOpMode extends LinearOpMode {
     Idler idler = new Idler();
-        @Override
-        public void runOpMode() {
-            waitForStart();
-            if (opModeIsActive()) {
-                idler.safeIdle(3,()->{telemetry.addLine("Hello World");telemetry.update();});
-                telemetry.addLine("Done");
+
+    @Override
+    public void runOpMode() {
+        waitForStart();
+        if (opModeIsActive()) {
+            idler.safeIdle(3, () -> {
+                telemetry.addLine("Hello World");
                 telemetry.update();
-            }
+            });
+            telemetry.addLine("Done");
+            telemetry.update();
         }
+    }
 }

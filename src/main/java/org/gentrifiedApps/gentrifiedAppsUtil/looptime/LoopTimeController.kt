@@ -84,7 +84,7 @@ open class LoopTimeController(
 
     companion object {
         /**
-            * A function to run a function every given amount of loops.
+         * A function to run a function every given amount of loops.
          * @param period The amount of loops to wait to run the function
          * @param func The function to run
          */

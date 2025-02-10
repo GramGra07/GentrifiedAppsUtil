@@ -1,14 +1,12 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.util.List;
 
 public class AnalysisOpMode extends LinearOpMode {
-    private LoopTimeAnalyzer loopTimeAnalyzer;
+    private final LoopTimeAnalyzer loopTimeAnalyzer;
 
     public AnalysisOpMode(Integer testingLoops, Runnable initLoop, List<TestableFunctions> funcs) {
         this.loopTimeAnalyzer = new LoopTimeAnalyzer(this, testingLoops, initLoop, funcs);

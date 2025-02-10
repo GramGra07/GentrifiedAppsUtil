@@ -31,7 +31,7 @@ public class StateMachineLocal extends LinearOpMode {
                 })
                 .transition(state.StateOne, () -> {
                     return true; // return true or false
-                },0)
+                }, 0)
                 .state(state.END)
                 .onEnter(state.END, () -> {
                     // do something on enter
@@ -43,7 +43,7 @@ public class StateMachineLocal extends LinearOpMode {
                 })
                 .transition(state.END, () -> {
                     return true; // return true or false
-                },0)
+                }, 0)
                 .stopRunning(state.STOP) // stop the state machine
                 .build();
         waitForStart();

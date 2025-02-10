@@ -19,7 +19,7 @@ public class abstractedSM {
                 })
                 .transition(StateMachineAbstracted.state.StateOne, () -> {
                     return true; // return true or false
-                },0)
+                }, 0)
                 .state(StateMachineAbstracted.state.END)
                 .onEnter(StateMachineAbstracted.state.END, () -> {
                     // do something on enter
@@ -31,7 +31,7 @@ public class abstractedSM {
                 })
                 .transition(StateMachineAbstracted.state.END, () -> {
                     return true; // return true or false
-                },0)
+                }, 0)
                 .stopRunning(StateMachineAbstracted.state.STOP) // stop the state machine
                 .build();
     }

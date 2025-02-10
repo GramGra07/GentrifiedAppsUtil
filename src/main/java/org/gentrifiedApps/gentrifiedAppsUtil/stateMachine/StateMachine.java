@@ -2,8 +2,6 @@ package org.gentrifiedApps.gentrifiedAppsUtil.stateMachine;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.gentrifiedApps.gentrifiedAppsUtil.stateMachine.StateChangeCallback;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,19 +11,20 @@ import java.util.function.Supplier;
 
 /**
  * StateMachine is a state machine that runs states in sequence. It is used to run states in a specific order.
+ *
  * @param <T>
  */
 public class StateMachine<T extends Enum<T>> {
-    private List<T> states;
-    private Map<T, StateChangeCallback> onEnterCommands;
-    private Map<T, StateChangeCallback> onExitCommands;
-    private Map<T, Supplier<Boolean>> transitions;
-    private Map<T, StateChangeCallback> whileStateCommands;
-    private Map<T, Supplier<Boolean>> whileStateEscapeConditions;
-    private Map<T, Double> transitionDelayTimes;
+    private final List<T> states;
+    private final Map<T, StateChangeCallback> onEnterCommands;
+    private final Map<T, StateChangeCallback> onExitCommands;
+    private final Map<T, Supplier<Boolean>> transitions;
+    private final Map<T, StateChangeCallback> whileStateCommands;
+    private final Map<T, Supplier<Boolean>> whileStateEscapeConditions;
+    private final Map<T, Double> transitionDelayTimes;
     private T currentState;
     private int currentStateIndex;
-    private List<T> stateHistory;
+    private final List<T> stateHistory;
     private boolean isStarted = false;
     private boolean isRunning = true;
 
@@ -35,6 +34,7 @@ public class StateMachine<T extends Enum<T>> {
 
     /**
      * Main loop for the state machine
+     *
      * @param opMode the LinearOpMode to run the state machine in
      * @return boolean if the state machine is running and opMode is active
      */
@@ -44,6 +44,7 @@ public class StateMachine<T extends Enum<T>> {
 
     /**
      * Returns whether the state machine is running
+     *
      * @return boolean if the state machine is running
      */
     public boolean isRunning() {
@@ -63,13 +64,13 @@ public class StateMachine<T extends Enum<T>> {
     }
 
     public static class Builder<T extends Enum<T>> {
-        private List<T> states;
-        private Map<T, StateChangeCallback> onEnterCommands;
-        private Map<T, StateChangeCallback> onExitCommands;
-        private Map<T, Supplier<Boolean>> transitions;
-        private Map<T, StateChangeCallback> whileStateCommands;
-        private Map<T, Supplier<Boolean>> whileStateEscapeConditions;
-        private Map<T, Double> delayTimes;
+        private final List<T> states;
+        private final Map<T, StateChangeCallback> onEnterCommands;
+        private final Map<T, StateChangeCallback> onExitCommands;
+        private final Map<T, Supplier<Boolean>> transitions;
+        private final Map<T, StateChangeCallback> whileStateCommands;
+        private final Map<T, Supplier<Boolean>> whileStateEscapeConditions;
+        private final Map<T, Double> delayTimes;
         private StateMachine<T> machine;
         private int stopRunningIncluded = 0;
 
@@ -85,6 +86,7 @@ public class StateMachine<T extends Enum<T>> {
 
         /**
          * Adds a state to the state machine
+         *
          * @param state the state to add
          */
         public Builder<T> state(T state) {
@@ -97,9 +99,10 @@ public class StateMachine<T extends Enum<T>> {
 
         /**
          * Adds a whileState command to a state
-         * @param state the state to add the command to
+         *
+         * @param state           the state to add the command to
          * @param escapeCondition the condition to escape the state
-         * @param command the command to run while in the state
+         * @param command         the command to run while in the state
          */
         public Builder<T> whileState(T state, Supplier<Boolean> escapeCondition, StateChangeCallback command) {
             whileStateCommands.put(state, command); // Store the command
@@ -109,7 +112,8 @@ public class StateMachine<T extends Enum<T>> {
 
         /**
          * Adds an onEnter command to a state
-         * @param state the state to add the command to
+         *
+         * @param state   the state to add the command to
          * @param command the command to add
          */
         public Builder<T> onEnter(T state, StateChangeCallback command) {
@@ -122,7 +126,8 @@ public class StateMachine<T extends Enum<T>> {
 
         /**
          * Adds an onExit command to a state
-         * @param state the state to add the command to
+         *
+         * @param state   the state to add the command to
          * @param command the command to add
          */
         public Builder<T> onExit(T state, StateChangeCallback command) {
@@ -135,7 +140,8 @@ public class StateMachine<T extends Enum<T>> {
 
         /**
          * Adds a transition to a state
-         * @param state the state to add the transition to
+         *
+         * @param state     the state to add the transition to
          * @param condition the condition to transition
          */
         public Builder<T> transition(T state, Supplier<Boolean> condition, double delaySeconds) {
@@ -152,6 +158,7 @@ public class StateMachine<T extends Enum<T>> {
 
         /**
          * Adds a stopRunning command to the state machine
+         *
          * @param state the state to add the command to aka STOP
          */
         public Builder<T> stopRunning(T state) {
@@ -175,6 +182,7 @@ public class StateMachine<T extends Enum<T>> {
 
         /**
          * Builds the state machine
+         *
          * @return the state machine
          */
         public StateMachine<T> build() {
@@ -246,8 +254,10 @@ public class StateMachine<T extends Enum<T>> {
     }
 
     private TYPES currentActionType = TYPES.IDLE;
+
     /**
      * Updates the state machine
+     *
      * @return boolean if the state machine has been updated
      */
     public boolean update() {
@@ -335,7 +345,6 @@ public class StateMachine<T extends Enum<T>> {
 
         return false; // No actions performed
     }
-
 
 
     public boolean isValidTransition(T fromState, T toState) {

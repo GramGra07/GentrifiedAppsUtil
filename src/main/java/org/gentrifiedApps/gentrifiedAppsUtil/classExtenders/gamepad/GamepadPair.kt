@@ -9,14 +9,14 @@ import com.qualcomm.robotcore.hardware.Gamepad
  * @param gamepad2 The second gamepad
  * @param loopSaver Whether to enable loop save mode (could reduce performance)
  */
-class GamepadPair (gamepad1: Gamepad, gamepad2: Gamepad, val loopSaver: Boolean = false){
-    val gamepad1Plus= GamepadPlus(gamepad1,loopSaver)
-    val gamepad2Plus= GamepadPlus(gamepad2,loopSaver)
+class GamepadPair(gamepad1: Gamepad, gamepad2: Gamepad, val loopSaver: Boolean = false) {
+    val gamepad1Plus = GamepadPlus(gamepad1, loopSaver)
+    val gamepad2Plus = GamepadPlus(gamepad2, loopSaver)
 
     /**
      * Syncs the gamepads, must be run at the **end** of your loop
      */
-    fun sync(){
+    fun sync() {
         gamepad1Plus.sync()
         gamepad2Plus.sync()
     }

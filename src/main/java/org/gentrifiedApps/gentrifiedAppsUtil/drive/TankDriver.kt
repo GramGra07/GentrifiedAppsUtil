@@ -1,7 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.drive
 
-import android.R.attr
-
 
 class TankDriver {
     companion object {
@@ -28,6 +26,7 @@ class TankDriver {
                 backRightPower
             )
         }
+
         /**
          * Drive tank with
          * @param drivePower The power to drive the robot.

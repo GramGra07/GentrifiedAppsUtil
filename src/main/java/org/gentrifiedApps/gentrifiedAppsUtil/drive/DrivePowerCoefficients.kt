@@ -12,5 +12,4 @@ data class DrivePowerCoefficients(
     val frontRight: Double,
     val backLeft: Double,
     val backRight: Double
-) {
-}
+)

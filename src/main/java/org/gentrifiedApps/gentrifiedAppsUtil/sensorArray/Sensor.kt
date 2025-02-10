@@ -15,7 +15,12 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
  * @see SensorType
  * @see SensorArray
  */
-class Sensor(var name:String, private var type: SensorType, private var initializer: Runnable, var period: Int) {
+class Sensor(
+    var name: String,
+    private var type: SensorType,
+    private var initializer: Runnable,
+    var period: Int
+) {
     private lateinit var enc: DcMotorEx
     private lateinit var dist: DistanceSensor
     private lateinit var color: ColorSensor
@@ -36,6 +41,7 @@ class Sensor(var name:String, private var type: SensorType, private var initiali
         val temp = read()
         lastRead = temp
     }
+
     private fun read(): SensorReturn {
         return when (type) {
 
@@ -50,7 +56,11 @@ class Sensor(var name:String, private var type: SensorType, private var initiali
             }
 
             SensorType.COLOR -> {
-                lastRead.color = doubleArrayOf(color.red().toDouble(), color.green().toDouble(), color.blue().toDouble())
+                lastRead.color = doubleArrayOf(
+                    color.red().toDouble(),
+                    color.green().toDouble(),
+                    color.blue().toDouble()
+                )
                 lastRead
             }
 

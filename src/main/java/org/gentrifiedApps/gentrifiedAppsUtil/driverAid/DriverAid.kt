@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.driverAid
 
+import org.gentrifiedApps.gentrifiedAppsUtil.driverAid.DriverAid.DAFunc
 import org.jetbrains.annotations.TestOnly
 
 /**
@@ -10,9 +11,9 @@ import org.jetbrains.annotations.TestOnly
  * @property daState The current state of the driver aid
  * @see DAFunc
  */
-class DriverAid<T:Enum<T>>(enumClass: Class<T>) {
-    var daState : Enum<T>? = null
-    private var daFunc : DAFunc<T>? = null
+class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
+    var daState: Enum<T>? = null
+    private var daFunc: DAFunc<T>? = null
 
     @TestOnly
     fun getDAFunc() = daFunc
@@ -22,9 +23,11 @@ class DriverAid<T:Enum<T>>(enumClass: Class<T>) {
             "Enum class must have an IDLE constant"
         }
     }
-    fun runInit(){
+
+    fun runInit() {
         daFunc?.runInit()
     }
+
     fun update() {
         daFunc?.runALot()
     }
@@ -39,13 +42,13 @@ class DriverAid<T:Enum<T>>(enumClass: Class<T>) {
      * @param resetOnInit A lambda to run when the functions are initialized
      * @constructor Creates a new driver aid function
      */
-    class DAFunc<T:Enum<T>>(
+    class DAFunc<T : Enum<T>>(
         private val driverAid: DriverAid<T>,
-        val state:T,
+        val state: T,
         private val funcs: Runnable,
         private val runConstant: Runnable?,
         private val isEnded: java.util.function.BooleanSupplier,
-        private val resetOnInit : Runnable?
+        private val resetOnInit: Runnable?
     ) {
         fun runInit() {
             driverAid.daState = state
@@ -57,6 +60,7 @@ class DriverAid<T:Enum<T>>(enumClass: Class<T>) {
         fun runALot() {
             runConstant?.run()
         }
+
         fun isEnded(): Boolean {
             return isEnded.asBoolean
         }

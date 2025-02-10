@@ -5,7 +5,7 @@ data class SensorReturn(
     var dist: Double = 0.0,
     var color: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0),
     var touch: Boolean = false
-){
+) {
     /**
      * Returns a blank SensorReturn object
      */
