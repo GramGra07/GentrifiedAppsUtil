@@ -86,6 +86,7 @@ dependencies {
     implementation("org.mockito:mockito-core:4.0.0")
     implementation libs.junit.v412
     testImplementation libs.junit.jupiter
+    implementation 'org.testng:testng:6.9.6'
 }
 
 afterEvaluate {
