@@ -22,6 +22,9 @@ class DriverAid<T:Enum<T>>(enumClass: Class<T>) {
             "Enum class must have an IDLE constant"
         }
     }
+    fun runInit(){
+        daFunc?.runInit()
+    }
     fun update() {
         daFunc?.runALot()
     }
