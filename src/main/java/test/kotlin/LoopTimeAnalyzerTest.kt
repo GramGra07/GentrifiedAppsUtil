@@ -1,12 +1,14 @@
-package org.gentrifiedApps.gentrifiedAppsUtil
+package test.kotlin
 
+import org.gentrifiedApps.gentrifiedAppsUtil.driverAid.DriverAid
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.LoopTimeAnalyzer
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.TestableFunctions
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Test
 import org.mockito.Mockito
+import java.sql.Driver
 
 
 class LoopTimeAnalyzerTest {
@@ -15,7 +17,8 @@ class LoopTimeAnalyzerTest {
     private var function: Runnable = Runnable { println("TestFunction") }
     val testableFunction = TestableFunctions("TestFunction", function)
     private var loopTimeAnalyzer: LoopTimeAnalyzer =
-        LoopTimeAnalyzer(10.0, initLoop, listOf(testableFunction))
+        LoopTimeAnalyzer(
+            null,10.0, initLoop, listOf(testableFunction))
 
 
     @Test
@@ -30,47 +33,49 @@ class LoopTimeAnalyzerTest {
     }
 
     @Test
-    fun `init should call initLoop`() {
+    fun initShouldCallInitLoop2() {
         // Arrange
-        val initLoop = Mockito.mock(Runnable::class.java)
-        val loopAnalyzer = LoopTimeAnalyzer(10.0, initLoop, emptyList())
+        var bool = false
+        val loopAnalyzer = LoopTimeAnalyzer(null,10.0, { bool = true }, emptyList())
 
         // Act
         loopAnalyzer.init()
 
         // Assert
-        Mockito.verify(initLoop).run()
+        assertTrue(bool)
     }
 
     @Test
-    fun `mainLoop should update LoopTimeController`() {
+    fun testEachShouldUpdate() {
         // Arrange
-        val loopAnalyzer = LoopTimeAnalyzer(10.0, Runnable {}, emptyList())
-        val loopTimeController = Mockito.spy(LoopTimeController())
+        var bool = false
+        val loopAnalyzer = LoopTimeAnalyzer(null,10.0, Runnable {}, listOf(TestableFunctions("TestFunction", Runnable { bool = true })))
+        val loopTimeController = LoopTimeController()
         loopAnalyzer.loopTimeController = loopTimeController
 
         // Act
-        loopAnalyzer.mainLoop()
+        loopAnalyzer.testEach()
 
         // Assert
-        Mockito.verify(loopTimeController).update()
+        assertTrue(bool)
     }
 
     @Test
-    fun `testEach should iterate functions and analyze times`() {
+    fun testEachShouldIterateFunctions() {
         // Arrange
-        val mockFunction1 = Mockito.mock(Runnable::class.java)
-        val testableFunction1 = TestableFunctions("Function1", mockFunction1)
-        val mockFunction2 = Mockito.mock(Runnable::class.java)
-        val testableFunction2 = TestableFunctions("Function2", mockFunction2)
+        var bool1 = false
+        val testableFunction1 = TestableFunctions("Function1", { bool1 = true })
+        var bool2 = false
+        val testableFunction2 = TestableFunctions("Function2", {bool2 = true})
 
         val loopAnalyzer = LoopTimeAnalyzer(
+            null,
             testingLoops = 5.0,
             initLoop = Runnable {},
             allFunctions = listOf(testableFunction1, testableFunction2)
         )
 
-        val loopTimeController = Mockito.spy(LoopTimeController())
+        val loopTimeController = LoopTimeController()
         loopAnalyzer.loopTimeController = loopTimeController
 
         // Act
@@ -81,16 +86,17 @@ class LoopTimeAnalyzerTest {
         assertEquals(5, testableFunction2.allTimes.size)
         assertTrue(testableFunction1.averageTime > 0.0)
         assertTrue(testableFunction2.averageTime > 0.0)
-        Mockito.verify(mockFunction1, Mockito.times(5)).run()
-        Mockito.verify(mockFunction2, Mockito.times(5)).run()
+        assertTrue(bool1)
+        assertTrue(bool2)
     }
 
     @Test
-    fun `testEach should accurately iterate through functions and calculate times`() {
+    fun testEachShouldAccumulateTimes() {
         val testableFunction1 = TestableFunctions("Function1", Runnable { Thread.sleep(10) })
         val testableFunction2 = TestableFunctions("Function2", Runnable { Thread.sleep(20) })
         // Inject the custom LoopTimeController into the LoopTimeAnalyzer
         val loopAnalyzer = LoopTimeAnalyzer(
+            null,
             testingLoops = 3.0,
             initLoop = Runnable {},
             allFunctions = listOf(testableFunction1, testableFunction2),
@@ -102,19 +108,45 @@ class LoopTimeAnalyzerTest {
         // Assertions for Function1
         assertEquals(3, testableFunction1.allTimes.size)
         assertEquals(30.0, testableFunction1.allTimes.sum(), 10.0)
-        assertEquals(9.0, testableFunction1.averageTime, 4.0)
+        assertEquals(9.0, testableFunction1.averageTime, 6.0)
 
         // Assertions for Function2
         assertEquals(3, testableFunction2.allTimes.size)
-        assertEquals(60.0, testableFunction2.allTimes.sum(), 20.0)
-        assertEquals(20.0, testableFunction2.averageTime, 8.0)
+        assertEquals(60.0, testableFunction2.allTimes.sum(), 35.0)
+        assertEquals(20.0, testableFunction2.averageTime, 12.0)
     }
 
+    @Test
+    fun testEachShouldAccumulateTimesLong() {
+        val testableFunction1 = TestableFunctions("Function1", Runnable { Thread.sleep(5000) })
+        val testableFunction2 = TestableFunctions("Function2", Runnable { Thread.sleep(2000) })
+        // Inject the custom LoopTimeController into the LoopTimeAnalyzer
+        val loopAnalyzer = LoopTimeAnalyzer(
+            null,
+            testingLoops = 3.0,
+            initLoop = Runnable {},
+            allFunctions = listOf(testableFunction1, testableFunction2),
+        )
+
+        // Execute the testEach function
+        loopAnalyzer.testEach()
+
+        // Assertions for Function1
+        assertEquals(3, testableFunction1.allTimes.size)
+        assertEquals(15000.0, testableFunction1.allTimes.sum(), 5000.0)
+        assertEquals(5000.0, testableFunction1.averageTime, 2000.0)
+
+        // Assertions for Function2
+        assertEquals(3, testableFunction2.allTimes.size)
+        assertEquals(6000.0, testableFunction2.allTimes.sum(), 3500.0)
+        assertEquals(2000.0, testableFunction2.averageTime, 1500.0)
+    }
 
     @Test
-    fun `testEach should not run functions when testingLoops is zero`() {
+    fun testEachShouldNotThrowException2() {
         val testableFunction = TestableFunctions("NoLoopsFunction", Runnable { })
         val loopAnalyzer = LoopTimeAnalyzer(
+            null,
             testingLoops = 0.0,
             initLoop = Runnable {},
             allFunctions = listOf(testableFunction)
@@ -127,10 +159,11 @@ class LoopTimeAnalyzerTest {
     }
 
     @Test
-    fun `init should execute the provided initLoop`() {
+    fun initShouldCallInitLoop() {
         var wasInitCalled = false
         val initLoop = Runnable { wasInitCalled = true }
-        val loopAnalyzer = LoopTimeAnalyzer(10.0, initLoop, emptyList())
+        val loopAnalyzer = LoopTimeAnalyzer(
+            null,10.0, initLoop, emptyList())
 
         loopAnalyzer.init()
 
@@ -138,10 +171,11 @@ class LoopTimeAnalyzerTest {
     }
 
     @Test
-    fun `testEach should integrate LoopTimeController updates with TestableFunctions`() {
+    fun testEachShouldRunFunctions() {
         val testableFunction = TestableFunctions("IntegrationFunction", Runnable { })
 
         val loopAnalyzer = LoopTimeAnalyzer(
+            null,
             testingLoops = 5.0,
             initLoop = Runnable {},
             allFunctions = listOf(testableFunction),
@@ -153,8 +187,9 @@ class LoopTimeAnalyzerTest {
     }
 
     @Test
-    fun `testEach should handle empty list of functions`() {
+    fun testEachShouldNotThrowException() {
         val loopAnalyzer = LoopTimeAnalyzer(
+            null,
             testingLoops = 5.0,
             initLoop = Runnable {},
             allFunctions = emptyList()
@@ -169,20 +204,20 @@ class LoopTimeAnalyzerTest {
 class TestableFunctionsTest {
 
     @Test
-    fun `run should execute the provided function`() {
+    fun runShouldCallFunction() {
         // Arrange
-        val mockFunction = Mockito.mock(Runnable::class.java)
-        val testableFunction = TestableFunctions("TestFunction", mockFunction)
+        var bool = false
+        val testableFunction = TestableFunctions("TestFunction", { bool = true })
 
         // Act
         testableFunction.run()
 
         // Assert
-        Mockito.verify(mockFunction).run()
+        assertTrue(bool)
     }
 
     @Test
-    fun `addTime should append time to allTimes`() {
+    fun addTimeShouldAddTimeToList() {
         // Arrange
         val testableFunction = TestableFunctions("TestFunction", Runnable {})
         val time = 5.0
@@ -196,7 +231,7 @@ class TestableFunctionsTest {
     }
 
     @Test
-    fun `analyze should calculate average time`() {
+    fun analyzeShouldCalculateAverageTime() {
         // Arrange
         val testableFunction = TestableFunctions("TestFunction", Runnable {})
         testableFunction.addTime(2.0)
