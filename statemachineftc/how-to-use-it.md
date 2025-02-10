@@ -8,7 +8,7 @@ It is required to have both a state and transition builder for each state and th
 
 #### Inside the <> brackets, you **must** put the enum you created earlier.
 
-```
+```java
 StateMachine.Builder<name> builder = new StateMachine.Builder<>();
 builder.state(name.STATE1)
         .onEnter(name.STATE1, () -> System.out.println("Entering STATE1"))
