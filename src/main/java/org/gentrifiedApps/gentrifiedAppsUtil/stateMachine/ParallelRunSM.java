@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**
+ * ParallelRunSM is a state machine that runs all states at once. It is used to run multiple states in parallel.
+ * @param <T>
+ */
 public class ParallelRunSM<T extends Enum<T>> {
     private List<T> states;
     private Map<T, StateChangeCallback> onEnterCommands;
@@ -18,10 +22,18 @@ public class ParallelRunSM<T extends Enum<T>> {
 
     private AbstractMap.SimpleEntry<Boolean, Integer> timeout;
 
+    /**
+     * Returns whether the state machine is running
+     * @return boolean if the state machine is running
+     */
     public boolean isRunning() {
         return isRunning;
     }
 
+    /**
+     * Returns whether the state machine has been started
+     * @return boolean if the state machine has been started
+     */
     public boolean isStarted() {
         return isStarted;
     }
@@ -41,11 +53,18 @@ public class ParallelRunSM<T extends Enum<T>> {
         private int stopRunningIncluded = 0;
         private AbstractMap.SimpleEntry<Boolean, Integer> timeout;
 
+        /**
+         * Constructor for the Builder class
+         */
         public Builder() {
             states = new ArrayList<>();
             onEnterCommands = new HashMap<>();
         }
 
+        /**
+         * Adds a state to the state machine
+         * @param state the state to add
+         */
         public ParallelRunSM.Builder<T> state(T state) {
             if (states.contains(state)) {
                 throw new IllegalArgumentException("State already exists");
@@ -54,6 +73,11 @@ public class ParallelRunSM<T extends Enum<T>> {
             return this;
         }
 
+        /**
+         * Adds an onEnter command to a state
+         * @param state the state to add the command to
+         * @param command the command to add
+         */
         public ParallelRunSM.Builder<T> onEnter(T state, StateChangeCallback command) {
             if (!states.contains(state)) {
                 throw new IllegalArgumentException("State does not exist");
@@ -62,6 +86,11 @@ public class ParallelRunSM<T extends Enum<T>> {
             return this;
         }
 
+        /**
+         * Adds a stopRunning command to the state machine
+         * @param state the state to add the command to
+         * @param exitCommand the command to add
+         */
         public ParallelRunSM.Builder<T> stopRunning(T state, Supplier<Boolean> exitCommand) {
             this.stopRunningIncluded++;
             if (states.contains(state)) {
@@ -77,6 +106,12 @@ public class ParallelRunSM<T extends Enum<T>> {
             return this;
         }
 
+        /**
+         * Builds the state machine
+         * @param useTimeout whether to use a timeout
+         * @param timeout the timeout to use
+         * @return the state machine
+         */
         public ParallelRunSM<T> build(Boolean useTimeout, Integer timeout) {
             this.timeout = new AbstractMap.SimpleEntry<>(useTimeout, timeout);
 
@@ -113,6 +148,9 @@ public class ParallelRunSM<T extends Enum<T>> {
         }
     }
 
+    /**
+     * Starts the state machine
+     */
     public void start() {
         if (isStarted) {
             throw new IllegalStateException("StateMachine has already been started");
@@ -121,6 +159,9 @@ public class ParallelRunSM<T extends Enum<T>> {
         startTime = System.currentTimeMillis();
     }
 
+    /**
+     * Stops the state machine
+     */
     public void stop() {
         if (!isRunning) {
             throw new IllegalStateException("StateMachine is already stopped");
@@ -131,6 +172,10 @@ public class ParallelRunSM<T extends Enum<T>> {
         onEnterCommands.clear();
     }
 
+    /**
+     * Updates the state machine, should only be done once
+     * @return boolean if the state machine has been updated
+     */
     public boolean update() {
         if (!states.isEmpty()) {
             // run all states at once
@@ -147,11 +192,15 @@ public class ParallelRunSM<T extends Enum<T>> {
         return true;
     }
 
+    /**
+     * Checks if the exit transition has been met, aka if the state machine should stop running OR if the timeout has been reached
+     * @return boolean if the exit transition has been met
+     */
     public boolean checkExitTransition() {
         boolean exitResult = exitTransition.get();
         long elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println("Checking exit transition: " + exitResult);
-        System.out.println("Elapsed time: " + elapsedTime + "ms");
+//        System.out.println("Checking exit transition: " + exitResult);
+//        System.out.println("Elapsed time: " + elapsedTime + "ms");
         final boolean condition = exitResult || (timeout.getKey() && elapsedTime > timeout.getValue());
         if (condition) {
             isRunning = false;

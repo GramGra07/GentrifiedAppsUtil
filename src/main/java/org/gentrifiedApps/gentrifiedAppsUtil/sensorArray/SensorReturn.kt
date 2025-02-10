@@ -6,6 +6,9 @@ data class SensorReturn(
     var color: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0),
     var touch: Boolean = false
 ){
+    /**
+     * Returns a blank SensorReturn object
+     */
     fun blank(): SensorReturn {
         return SensorReturn()
     }

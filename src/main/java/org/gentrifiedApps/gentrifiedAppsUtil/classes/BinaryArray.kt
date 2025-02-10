@@ -25,6 +25,17 @@ class BinaryArray(size: Int) {
     }
 
     /**
+     * Converts the binary array to a color with the size of 1
+     */
+    fun toColor1(): Color {
+        return if (this[0] == 0.0) {
+            Color.RED
+        } else {
+            Color.BLUE
+        }
+    }
+
+    /**
      * Converts the binary array to a color
      * @return The color represented by the binary array
      * @see Color
@@ -38,6 +49,18 @@ class BinaryArray(size: Int) {
             Color.YELLOW
         } else {
             Color.NONE
+        }
+    }
+
+    /**
+     * Converts a binary array to an alliance
+     * @return Alliance with the alliance of the binary array, red if 0, blue if 1, red if anything else
+     */
+    fun toAlliance(): Alliance {
+        return when (this[0]) {
+            0.0 -> Alliance.RED
+            1.0 -> Alliance.BLUE
+            else -> Alliance.RED
         }
     }
 }

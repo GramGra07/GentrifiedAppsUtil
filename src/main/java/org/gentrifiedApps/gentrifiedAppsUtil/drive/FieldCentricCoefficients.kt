@@ -12,4 +12,5 @@ data class FieldCentricCoefficients(
     val frontRight: Double,
     val backLeft: Double,
     val backRight: Double
-)
+) {
+}

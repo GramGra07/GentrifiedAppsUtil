@@ -1,5 +1,11 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.stateMachine
 
+/**
+ * A class to represent a sequential state machine
+ * @param T The enum class for the states
+ * @param builder The builder for the state machine
+ * @see Builder
+ */
 class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
     private var states: List<T> = builder.states
     private var onEnterCommands: Map<T, StateChangeCallback> = builder.onEnterCommands
@@ -22,6 +28,10 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
         private var machine: SequentialRunSM<T>? = null
         private var stopRunningIncluded = 0
 
+        /**
+         * Adds a state to the state machine
+         * @param state The state to add
+         */
         fun state(state: T): Builder<T> {
             if (states.contains(state)) {
                 throw IllegalArgumentException("State already exists")
@@ -30,6 +40,11 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
             return this
         }
 
+        /**
+         * Adds an onEnter command to a state
+         * @param state The state to add the command to
+         * @param command The command to run
+         */
         fun onEnter(state: T, command: StateChangeCallback): Builder<T> {
             if (!states.contains(state)) {
                 throw IllegalArgumentException("State does not exist")
@@ -38,6 +53,11 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
             return this
         }
 
+        /**
+         * Adds a transition to a state
+         * @param state The state to add the transition to
+         * @param condition The condition to transition
+         */
         fun transition(state: T, condition: () -> Boolean, delaySeconds: Double): Builder<T> {
             if (!states.contains(state)) {
                 throw IllegalArgumentException("State does not exist")
@@ -50,6 +70,10 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
             return this
         }
 
+        /**
+         * Adds a stopRunning command to a state
+         * @param state The state to add the command to
+         */
         fun stopRunning(state: T): Builder<T> {
             stopRunningIncluded++
             if (states.contains(state)) {
@@ -69,6 +93,10 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
             return this
         }
 
+        /**
+         * Builds the state machine
+         * @return The state machine
+         */
         fun build(): SequentialRunSM<T> {
             if (states.isEmpty() || transitions.isEmpty()) {
                 throw IllegalArgumentException("States and transitions cannot be null or empty")
@@ -94,6 +122,9 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
         }
     }
 
+    /**
+     * Starts the state machine
+     */
     fun start() {
         if (isStarted) {
             throw IllegalStateException("StateMachine has already been started")
@@ -107,6 +138,9 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
         }
     }
 
+    /**
+     * Stops the state machine
+     */
     fun stop() {
         if (!isRunning) {
             throw IllegalStateException("StateMachine is already stopped")
@@ -117,6 +151,9 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
         transitions = emptyMap()
     }
 
+    /**
+     * Restarts the state machine
+     */
     fun restartAtBeginning() {
         if (shouldRestart) {
             stateHistory.clear()
@@ -134,6 +171,10 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
     private var currentStateIndex = 0
     private var startTime = 0.0
 
+    /**
+     * Updates the state machine
+     * @return Whether the state machine has updated successfully
+     */
     fun update(): Boolean {
         if (currentActionType == StateMachine.TYPES.IDLE && isStarted) {
             currentActionType = StateMachine.TYPES.ON_ENTER
@@ -185,7 +226,7 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
         return false
     }
 
-    fun isValidTransition(fromState: T, toState: T): Boolean {
+    private fun isValidTransition(fromState: T, toState: T): Boolean {
         if (fromState == toState) {
             println("Cannot transition to itself")
             throw IllegalArgumentException("Cannot transition to itself")
@@ -204,9 +245,5 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
             throw IllegalStateException("No transition condition exists from state $fromState")
         }
         return transitionCondition()
-    }
-
-    fun getStateHistory(): List<T> {
-        return stateHistory
     }
 }

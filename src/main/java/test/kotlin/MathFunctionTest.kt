@@ -19,7 +19,7 @@ class MathFunctionTest {
     fun testGetQuadrant() {
         val point = Point(1.0, -1.0)
         val result = MathFunctions.getQuadrant(point)
-        assertEquals(1, result, "Point(1.0, -1.0) should be in quadrant 1")
+        assertEquals(4, result, "Point(1.0, -1.0) should be in quadrant 4")
     }
 
     @Test

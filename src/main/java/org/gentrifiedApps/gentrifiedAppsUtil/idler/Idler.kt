@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
 /**
  * A class to help with safe sleep actions, which FTC typically does not have.
  */
-class Idler() {
+class Idler {
     private val elapsed = ElapsedTime()
     init {
         elapsed.reset()

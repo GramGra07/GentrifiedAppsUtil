@@ -4,9 +4,11 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.objects.PeriodicLoopTimeObject
 
+/**
+ * A class to return loop time information and load periodic loop time objects and .every functions
+ * @param periodics The periodic loop time objects to load
+ */
 open class LoopTimeController(
-    // loopTimeController.spacedObjectOf("name")!!.run(loopTimeController.currentTime)
-//    private val timer: ElapsedTime,
     private val periodics: List<PeriodicLoopTimeObject?>? = null,
 ) {
     private val timer = ElapsedTime()
@@ -44,6 +46,9 @@ open class LoopTimeController(
         }
     }
 
+    /**
+     * Updates the loop time controller
+     */
     open fun update() {
         currentTimems = timer.milliseconds()
         currentTime = timer.seconds()
@@ -57,6 +62,11 @@ open class LoopTimeController(
         deltaTime = currentTimems - lastTime
         lastTime = currentTimems
     }
+
+    /**
+     * Telemetry for the loop time controller
+     * @param telemetry The telemetry to use, opmode.telemetry
+     */
 
     fun telemetry(telemetry: Telemetry) {
         telemetry.addData("LOOP TIME", "")
@@ -73,6 +83,11 @@ open class LoopTimeController(
     }
 
     companion object {
+        /**
+            * A function to run a function every given amount of loops.
+         * @param period The amount of loops to wait to run the function
+         * @param func The function to run
+         */
         fun LoopTimeController.every(period: Int, func: Runnable) {
             if (this.loops % period == 0) {
                 func.run()

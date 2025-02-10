@@ -36,7 +36,7 @@ class Sensor(var name:String, private var type: SensorType, private var initiali
         val temp = read()
         lastRead = temp
     }
-    fun read(): SensorReturn {
+    private fun read(): SensorReturn {
         return when (type) {
 
             SensorType.ENC -> {

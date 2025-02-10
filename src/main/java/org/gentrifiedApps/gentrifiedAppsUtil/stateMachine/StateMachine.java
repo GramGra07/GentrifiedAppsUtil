@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
+/**
+ * StateMachine is a state machine that runs states in sequence. It is used to run states in a specific order.
+ * @param <T>
+ */
 public class StateMachine<T extends Enum<T>> {
     private List<T> states;
     private Map<T, StateChangeCallback> onEnterCommands;
@@ -29,10 +33,19 @@ public class StateMachine<T extends Enum<T>> {
         return currentState;
     }
 
+    /**
+     * Main loop for the state machine
+     * @param opMode the LinearOpMode to run the state machine in
+     * @return boolean if the state machine is running and opMode is active
+     */
     public boolean mainLoop(LinearOpMode opMode) {
         return opMode.opModeIsActive() && isRunning() && !opMode.isStopRequested();
     }
 
+    /**
+     * Returns whether the state machine is running
+     * @return boolean if the state machine is running
+     */
     public boolean isRunning() {
         return isRunning;
     }
@@ -70,6 +83,10 @@ public class StateMachine<T extends Enum<T>> {
             delayTimes = new HashMap<>();
         }
 
+        /**
+         * Adds a state to the state machine
+         * @param state the state to add
+         */
         public Builder<T> state(T state) {
             if (states.contains(state)) {
                 throw new IllegalArgumentException("State already exists");
@@ -78,12 +95,23 @@ public class StateMachine<T extends Enum<T>> {
             return this;
         }
 
+        /**
+         * Adds a whileState command to a state
+         * @param state the state to add the command to
+         * @param escapeCondition the condition to escape the state
+         * @param command the command to run while in the state
+         */
         public Builder<T> whileState(T state, Supplier<Boolean> escapeCondition, StateChangeCallback command) {
             whileStateCommands.put(state, command); // Store the command
             whileStateEscapeConditions.put(state, escapeCondition); // Store the escape condition
             return this;
         }
 
+        /**
+         * Adds an onEnter command to a state
+         * @param state the state to add the command to
+         * @param command the command to add
+         */
         public Builder<T> onEnter(T state, StateChangeCallback command) {
             if (!states.contains(state)) {
                 throw new IllegalArgumentException("State does not exist");
@@ -92,6 +120,11 @@ public class StateMachine<T extends Enum<T>> {
             return this;
         }
 
+        /**
+         * Adds an onExit command to a state
+         * @param state the state to add the command to
+         * @param command the command to add
+         */
         public Builder<T> onExit(T state, StateChangeCallback command) {
             if (!states.contains(state)) {
                 throw new IllegalArgumentException("State does not exist");
@@ -100,6 +133,11 @@ public class StateMachine<T extends Enum<T>> {
             return this;
         }
 
+        /**
+         * Adds a transition to a state
+         * @param state the state to add the transition to
+         * @param condition the condition to transition
+         */
         public Builder<T> transition(T state, Supplier<Boolean> condition, double delaySeconds) {
             if (!states.contains(state)) {
                 throw new IllegalArgumentException("State does not exist");
@@ -112,6 +150,10 @@ public class StateMachine<T extends Enum<T>> {
             return this;
         }
 
+        /**
+         * Adds a stopRunning command to the state machine
+         * @param state the state to add the command to aka STOP
+         */
         public Builder<T> stopRunning(T state) {
             this.stopRunningIncluded++;
             if (states.contains(state)) {
@@ -131,6 +173,10 @@ public class StateMachine<T extends Enum<T>> {
             return this;
         }
 
+        /**
+         * Builds the state machine
+         * @return the state machine
+         */
         public StateMachine<T> build() {
             if (states == null || states.isEmpty() || transitions == null || transitions.isEmpty()) {
                 throw new IllegalArgumentException("States and transitions cannot be null or empty");
@@ -159,6 +205,9 @@ public class StateMachine<T extends Enum<T>> {
         }
     }
 
+    /**
+     * Starts the state machine
+     */
     public void start() {
         if (isStarted) {
             throw new IllegalStateException("StateMachine has already been started");
@@ -173,13 +222,16 @@ public class StateMachine<T extends Enum<T>> {
         }
     }
 
+    /**
+     * Stops the state machine
+     */
     public void stop() {
         isRunning = false;
         stateHistory.clear();
         currentState = null;
         isStarted = false;
         currentActionType = TYPES.IDLE;
-        currentStateIndex = 9999999;
+        currentStateIndex = (int) Double.POSITIVE_INFINITY;
     }
 
     private double startTime = 0;
@@ -193,8 +245,11 @@ public class StateMachine<T extends Enum<T>> {
         STOP,
     }
 
-    private TYPES lastActionType;
     private TYPES currentActionType = TYPES.IDLE;
+    /**
+     * Updates the state machine
+     * @return boolean if the state machine has been updated
+     */
     public boolean update() {
         if (currentActionType == TYPES.IDLE && isStarted) {
             currentActionType = TYPES.ON_ENTER;
