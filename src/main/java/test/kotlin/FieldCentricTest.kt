@@ -22,6 +22,20 @@ class FieldCentricTest {
         assertEquals(1.0, result.backLeft, "Back left power should be 1.0")
         assertEquals(1.0, result.backRight, "Back right power should be 1.0")
     }
+    @Test
+    fun testDriveFieldCentricBack() {
+        val x = 0.0
+        val y = -1.0
+        val rotation = 0.0
+        val gyroAngle = Math.toRadians(90.0)
+
+        val result: FieldCentricCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
+
+        assertEquals(-1.0, result.frontLeft, )
+        assertEquals(-1.0, result.frontRight, )
+        assertEquals(-1.0, result.backLeft, )
+        assertEquals(-1.0, result.backRight, )
+    }
 
     @Test
     fun testDriveFieldCentricWithRotation() {
