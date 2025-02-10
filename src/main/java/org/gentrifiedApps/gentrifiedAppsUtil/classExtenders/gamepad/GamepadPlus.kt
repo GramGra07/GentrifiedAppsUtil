@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.gamepad
+package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad
 
 import com.qualcomm.robotcore.hardware.Gamepad
 import java.util.EnumMap

@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.gamepad
+package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad
 
 /**
  * Enum class for all boolean buttons on a gamepad
