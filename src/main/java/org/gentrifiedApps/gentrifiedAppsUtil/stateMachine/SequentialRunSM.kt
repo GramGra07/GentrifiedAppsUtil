@@ -13,7 +13,7 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
     private var transitionDelayTimes: Map<T, Double> = builder.delayTimes
     var currentState: T? = null
     private var stateHistory: MutableList<T> = ArrayList()
-    private var isStarted = false
+    var isStarted = false
     var isRunning = true
     private var shouldRestart = true
     private var sustainOnEnter: Map<T, StateChangeCallback> = HashMap(builder.onEnterCommands)
