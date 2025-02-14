@@ -28,18 +28,19 @@ data class GoBildaPinpointParams(
 class PinpointLocalizer(
     name: String,
     hwMap: HardwareMap,
-    startPose: Target2D,
-    params: GoBildaPinpointParams
+    private val startPose: Target2D,
+    private val params: GoBildaPinpointParams
 ) : PointLocalizer() {
     private var pinpoint: GoBildaPinpointDriver = hwMap.get(GoBildaPinpointDriver::class.java, name)
     private var pose: Target2D = Target2D(0.0, 0.0, Angle.blank())
 
-    init {
+    override fun initLocalizer() {
         params.initialize(pinpoint)
         setPose(startPose)
     }
 
     override fun update() {
+        pinpoint.update()
         this.pose = pinpoint.position.toTarget2D()
     }
 
@@ -53,7 +54,11 @@ class PinpointLocalizer(
     }
 
     override fun getPoseError(pose: Target2D): Target2D {
-        TODO("Not yet implemented")
+        return Target2D(
+            pose.x - this.pose.x,
+            pose.y - this.pose.y,
+            Angle(pose.angle.toRadians() - this.pose.angle.toRadians())
+        )
     }
 
     private fun Pose2D.toTarget2D(): Target2D {

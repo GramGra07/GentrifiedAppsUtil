@@ -51,6 +51,10 @@ import java.util.Arrays;
 
 public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSimple> {
 
+    //i2c address of the device
+    public static final byte DEFAULT_ADDRESS = 0x31;
+    private static final float goBILDA_SWINGARM_POD = 13.26291192f; //ticks-per-mm for the goBILDA Swingarm Pod
+    private static final float goBILDA_4_BAR_POD = 19.89436789f; //ticks-per-mm for the goBILDA 4-Bar Pod
     private int deviceStatus = 0;
     private int loopTime = 0;
     private int xEncoderValue = 0;
@@ -61,12 +65,6 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
     private float xVelocity = 0;
     private float yVelocity = 0;
     private float hVelocity = 0;
-
-    private static final float goBILDA_SWINGARM_POD = 13.26291192f; //ticks-per-mm for the goBILDA Swingarm Pod
-    private static final float goBILDA_4_BAR_POD = 19.89436789f; //ticks-per-mm for the goBILDA 4-Bar Pod
-
-    //i2c address of the device
-    public static final byte DEFAULT_ADDRESS = 0x31;
 
     public GoBildaPinpointDriver(I2cDeviceSynchSimple deviceClient, boolean deviceClientIsOwned) {
         super(deviceClient, deviceClientIsOwned);
@@ -91,70 +89,6 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
     public String getDeviceName() {
         return "goBILDA® Pinpoint Odometry Computer";
     }
-
-
-    //Register map of the i2c device
-    private enum Register {
-        DEVICE_ID(1),
-        DEVICE_VERSION(2),
-        DEVICE_STATUS(3),
-        DEVICE_CONTROL(4),
-        LOOP_TIME(5),
-        X_ENCODER_VALUE(6),
-        Y_ENCODER_VALUE(7),
-        X_POSITION(8),
-        Y_POSITION(9),
-        H_ORIENTATION(10),
-        X_VELOCITY(11),
-        Y_VELOCITY(12),
-        H_VELOCITY(13),
-        MM_PER_TICK(14),
-        X_POD_OFFSET(15),
-        Y_POD_OFFSET(16),
-        YAW_SCALAR(17),
-        BULK_READ(18);
-
-        private final int bVal;
-
-        Register(int bVal) {
-            this.bVal = bVal;
-        }
-    }
-
-    //Device Status enum that captures the current fault condition of the device
-    public enum DeviceStatus {
-        NOT_READY(0),
-        READY(1),
-        CALIBRATING(1 << 1),
-        FAULT_X_POD_NOT_DETECTED(1 << 2),
-        FAULT_Y_POD_NOT_DETECTED(1 << 3),
-        FAULT_NO_PODS_DETECTED(1 << 2 | 1 << 3),
-        FAULT_IMU_RUNAWAY(1 << 4);
-
-        private final int status;
-
-        DeviceStatus(int status) {
-            this.status = status;
-        }
-    }
-
-    //enum that captures the direction the encoders are set to
-    public enum EncoderDirection {
-        FORWARD,
-        REVERSED
-    }
-
-    //enum that captures the kind of goBILDA odometry pods, if goBILDA pods are used
-    public enum GoBildaOdometryPods {
-        goBILDA_SWINGARM_POD,
-        goBILDA_4_BAR_POD
-    }
-
-    //enum that captures a limited scope of read data. More options may be added in future update
-    public enum readData {
-        ONLY_UPDATE_HEADING,
-    }
-
 
     /**
      * Writes an int to the i2c device
@@ -197,7 +131,6 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
     private float readFloat(Register reg) {
         return byteArrayToFloat(deviceClient.read(reg.bVal, 4), ByteOrder.LITTLE_ENDIAN);
     }
-
 
     /**
      * Converts a float to a byte array
@@ -371,20 +304,6 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
     }
 
     /**
-     * Tuning this value should be unnecessary.<br>
-     * The goBILDA Odometry Computer has a per-device tuned yaw offset already applied when you receive it.<br><br>
-     * This is a scalar that is applied to the gyro's yaw value. Increasing it will mean it will report more than one degree for every degree the sensor fusion algorithm measures. <br><br>
-     * You can tune this variable by rotating the robot a large amount (10 full turns is a good starting place) and comparing the amount that the robot rotated to the amount measured.
-     * Rotating the robot exactly 10 times should measure 3600°. If it measures more or less, divide moved amount by the measured amount and apply that value to the Yaw Offset.<br><br>
-     * If you find that to get an accurate heading number you need to apply a scalar of more than 1.05, or less than 0.95, your device may be bad. Please reach out to tech@gobilda.com
-     *
-     * @param yawOffset A scalar for the robot's heading.
-     */
-    public void setYawScalar(double yawOffset) {
-        writeByteArray(Register.YAW_SCALAR, (floatToByteArray((float) yawOffset, ByteOrder.LITTLE_ENDIAN)));
-    }
-
-    /**
      * Send a position that the Pinpoint should use to track your robot relative to. You can use this to
      * update the estimated position of your robot with new external sensor data, or to run a robot
      * in field coordinates. <br><br>
@@ -432,6 +351,20 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
 
     public float getYawScalar() {
         return readFloat(Register.YAW_SCALAR);
+    }
+
+    /**
+     * Tuning this value should be unnecessary.<br>
+     * The goBILDA Odometry Computer has a per-device tuned yaw offset already applied when you receive it.<br><br>
+     * This is a scalar that is applied to the gyro's yaw value. Increasing it will mean it will report more than one degree for every degree the sensor fusion algorithm measures. <br><br>
+     * You can tune this variable by rotating the robot a large amount (10 full turns is a good starting place) and comparing the amount that the robot rotated to the amount measured.
+     * Rotating the robot exactly 10 times should measure 3600°. If it measures more or less, divide moved amount by the measured amount and apply that value to the Yaw Offset.<br><br>
+     * If you find that to get an accurate heading number you need to apply a scalar of more than 1.05, or less than 0.95, your device may be bad. Please reach out to tech@gobilda.com
+     *
+     * @param yawOffset A scalar for the robot's heading.
+     */
+    public void setYawScalar(double yawOffset) {
+        writeByteArray(Register.YAW_SCALAR, (floatToByteArray((float) yawOffset, ByteOrder.LITTLE_ENDIAN)));
     }
 
     /**
@@ -558,7 +491,6 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
                 hOrientation);
     }
 
-
     /**
      * @return a Pose2D containing the estimated velocity of the robot, velocity is unit per second
      */
@@ -568,6 +500,69 @@ public class GoBildaPinpointDriver extends I2cDeviceSynchDevice<I2cDeviceSynchSi
                 yVelocity,
                 AngleUnit.RADIANS,
                 hVelocity);
+    }
+
+    //Register map of the i2c device
+    private enum Register {
+        DEVICE_ID(1),
+        DEVICE_VERSION(2),
+        DEVICE_STATUS(3),
+        DEVICE_CONTROL(4),
+        LOOP_TIME(5),
+        X_ENCODER_VALUE(6),
+        Y_ENCODER_VALUE(7),
+        X_POSITION(8),
+        Y_POSITION(9),
+        H_ORIENTATION(10),
+        X_VELOCITY(11),
+        Y_VELOCITY(12),
+        H_VELOCITY(13),
+        MM_PER_TICK(14),
+        X_POD_OFFSET(15),
+        Y_POD_OFFSET(16),
+        YAW_SCALAR(17),
+        BULK_READ(18);
+
+        private final int bVal;
+
+        Register(int bVal) {
+            this.bVal = bVal;
+        }
+    }
+
+    //Device Status enum that captures the current fault condition of the device
+    public enum DeviceStatus {
+        NOT_READY(0),
+        READY(1),
+        CALIBRATING(1 << 1),
+        FAULT_X_POD_NOT_DETECTED(1 << 2),
+        FAULT_Y_POD_NOT_DETECTED(1 << 3),
+        FAULT_NO_PODS_DETECTED(1 << 2 | 1 << 3),
+        FAULT_IMU_RUNAWAY(1 << 4);
+
+        private final int status;
+
+        DeviceStatus(int status) {
+            this.status = status;
+        }
+    }
+
+    //enum that captures the direction the encoders are set to
+    public enum EncoderDirection {
+        FORWARD,
+        REVERSED
+    }
+
+    //enum that captures the kind of goBILDA odometry pods, if goBILDA pods are used
+    public enum GoBildaOdometryPods {
+        goBILDA_SWINGARM_POD,
+        goBILDA_4_BAR_POD
+    }
+
+
+    //enum that captures a limited scope of read data. More options may be added in future update
+    public enum readData {
+        ONLY_UPDATE_HEADING,
     }
 
 

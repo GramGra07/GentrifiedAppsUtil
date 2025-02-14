@@ -4,10 +4,12 @@ import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 
+//perpOffsetY and parOffsetX
 class Encoder(
     private val encoderSpecs: EncoderSpecs,
     name: String,
     direction: DcMotorSimple.Direction,
+    val offset: Double,
     hwMap: HardwareMap?
 ) {
     private var encoder: DcMotor?
@@ -38,12 +40,16 @@ class Encoder(
         return ticksToInches(getTicks())
     }
 
-    fun getDelta(last: Int): Int {
-        return getTicks() - last
+    fun getDelta(): Int {
+        return getTicks() - lastPosition
     }
 
     private fun ticksToInches(ticks: Int): Double {
         return ticks.toDouble() / encoderSpecs.ticksPerInch
+    }
+
+    fun ticksPerIn(): Double {
+        return encoderSpecs.ticksPerInch
     }
 }
 

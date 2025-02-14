@@ -11,8 +11,8 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Ta
 
 data class SparkFunOTOSParams(
     val offset: Pose2D,
-    val angularScalar: Double,
-    val linearScalar: Double,
+    val angularScalar: Double = 1.0,
+    val linearScalar: Double = 1.0,
 ) {
     fun initialize(spark: SparkFunOTOS) {
         spark.initialize()
@@ -29,15 +29,16 @@ data class SparkFunOTOSParams(
 class OTOSLocalizer(
     name: String,
     hwMap: HardwareMap,
-    startPose: Target2D,
-    params: SparkFunOTOSParams
+    private val startPose: Target2D,
+    private val params: SparkFunOTOSParams
 ) : PointLocalizer() {
     private var pose: Target2D = Target2D(0.0, 0.0, Angle.blank())
     private var spark: SparkFunOTOS = hwMap.get(SparkFunOTOS::class.java, name)
 
-    init {
+    override fun initLocalizer() {
         params.initialize(spark)
         setPose(startPose)
+        spark.begin()
     }
 
     override fun update() {
@@ -54,7 +55,11 @@ class OTOSLocalizer(
     }
 
     override fun getPoseError(pose: Target2D): Target2D {
-        TODO("Not yet implemented")
+        return Target2D(
+            pose.x - this.pose.x,
+            pose.y - this.pose.y,
+            Angle(pose.angle.toRadians() - this.pose.angle.toRadians())
+        )
     }
 
     private fun Pose2D.toTarget2D(): Target2D {

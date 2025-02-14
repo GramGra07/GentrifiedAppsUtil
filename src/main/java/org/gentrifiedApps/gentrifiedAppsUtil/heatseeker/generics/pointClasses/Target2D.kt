@@ -17,6 +17,10 @@ data class Target2D(val x: Double, val y: Double, val angle: Angle) {
         return atan2(target.y - y, target.x - x)
     }
 
+    fun h(): Double {
+        return angle.toRadians()
+    }
+
     fun toPose2D(): SparkFunOTOS.Pose2D {
         return SparkFunOTOS.Pose2D(x, y, angle.toRadians())
     }

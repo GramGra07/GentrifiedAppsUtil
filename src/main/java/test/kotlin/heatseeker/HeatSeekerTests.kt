@@ -1,6 +1,7 @@
 package test.kotlin.heatseeker
 
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generators.EncoderSpecsBuilder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
@@ -8,6 +9,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.An
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.OTOSLocalizer
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking.MecanumLocalizer
 import org.junit.Test
 
 class HeatSeekerTests {
@@ -126,16 +128,82 @@ class AngleTests{
         assert(angle.toRadians() == Math.PI)
     }
 }
-class LocalizerTests{
+class DriverTests{
+    @Test
+    fun testDriver(){
+        val vectors = Driver.findWheelVectors(1.0,0.0,0.0)
+        assert(vectors.frontLeft == 1.0)
+        assert(vectors.frontRight == 1.0)
+        assert(vectors.backLeft == 1.0)
+        assert(vectors.backRight == 1.0)
+        val vectors2 = Driver.findWheelVectors(0.0,1.0,0.0)
+        assert(vectors2.frontLeft == 1.0)
+        assert(vectors2.frontRight == -1.0)
+        assert(vectors2.backLeft == -1.0)
+        assert(vectors2.backRight == 1.0)
+        val vectors3 = Driver.findWheelVectors(0.0,0.0,1.0)
+    }
+}
+class WaypointTests{
+    @Test
+    fun testWaypointConstructor(){
+        val waypoint = org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(1.0,2.0,3.0,1.0)
+        assert(waypoint.x == 1.0)
+        assert(waypoint.y == 2.0)
+        assert(waypoint.h == 3.0)
+        assert(waypoint.velocity == 1.0)
+    }
+    @Test
+    fun testWaypointConstructor2(){
+        val waypoint = org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(1.0,2.0,Angle(3.0, AngleUnit.DEGREES),1.0)
+        assert(waypoint.x == 1.0)
+        assert(waypoint.y == 2.0)
+        assert(waypoint.h == Math.toRadians(3.0))
+        assert(waypoint.velocity == 1.0)
+    }
+    @Test
+    fun testWaypointConstructor3() {
+        val waypoint =
+            org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(
+                Target2D(
+                    1.0,
+                    2.0,
+                    Angle(3.0, AngleUnit.DEGREES)
+                ), 1.0
+            )
+
+        assert(waypoint.x == 1.0)
+        assert(waypoint.y == 2.0)
+        assert(waypoint.h == Math.toRadians(3.0))
+        assert(waypoint.velocity == 1.0)
+    }
+}
+class PathBuilderTests{
+    @Test
+    fun testPathBuilderBasics(){
+        val path = org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder()
+            .addWaypoint(org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(1.0,2.0,3.0,1.0))
+            .addWaypoint(org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(5.0,6.0,7.0,1.0))
+            .build()
+        assert(path.size == 2)
+        assert(path[0].x == 1.0)
+        assert(path[0].y == 2.0)
+        assert(path[0].h == 3.0)
+        assert(path[0].velocity == 1.0)
+        assert(path[1].x == 5.0)
+        assert(path[1].y == 6.0)
+        assert(path[1].h == 7.0)
+        assert(path[1].velocity == 1.0)
+    }
 }
 class EncoderTests{
     @Test
     fun testEncoderSpecsBasic(){
         val encoderSpecs = EncoderSpecs(1, 1.0, 1.0)
         assert(encoderSpecs.ticksPerInch == 1.0 / Math.PI)
-        val encoder = Encoder(encoderSpecs, "encoder", DcMotorSimple.Direction.FORWARD, null)
+        val encoder = Encoder(encoderSpecs, "encoder", DcMotorSimple.Direction.FORWARD, 0.0,null)
         assert(encoder.getTicks() == 0)
-        assert(encoder.getDelta(0) == 0)
+        assert(encoder.getDelta() == 0)
         assert(encoder.getInches() == 0.0)
     }
     @Test
