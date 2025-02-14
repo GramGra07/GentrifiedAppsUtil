@@ -11,18 +11,27 @@ class Encoder(
     hwMap: HardwareMap?
 ) {
     private var encoder: DcMotor?
+    private var lastPosition = 0
 
     init {
         require(name.isNotBlank()) { "name must not be blank" }
         encoder = hwMap?.get(DcMotor::class.java, name)
         encoder?.direction = direction
-        encoder?.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        encoder?.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-
+        reset()
     }
 
     fun getTicks(): Int {
         return encoder?.currentPosition ?: 0
+    }
+
+    fun setLastPosition() {
+        lastPosition = getTicks()
+    }
+
+    fun reset() {
+        encoder?.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        encoder?.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        lastPosition = getTicks()
     }
 
     fun getInches(): Double {

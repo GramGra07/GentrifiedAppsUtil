@@ -1,5 +1,9 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses
 
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
 import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -11,6 +15,20 @@ data class Target2D(val x: Double, val y: Double, val angle: Angle) {
 
     fun angleTo(target: Target2D): Double {
         return atan2(target.y - y, target.x - x)
+    }
+
+    fun toPose2D(): SparkFunOTOS.Pose2D {
+        return SparkFunOTOS.Pose2D(x, y, angle.toRadians())
+    }
+
+    fun toPose2D2(): Pose2D {
+        return Pose2D(
+            DistanceUnit.INCH,
+            x,
+            y,
+            AngleUnit.RADIANS,
+            angle.toRadians()
+        )
     }
 
     companion object {

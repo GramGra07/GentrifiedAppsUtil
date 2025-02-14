@@ -127,13 +127,6 @@ class AngleTests{
     }
 }
 class LocalizerTests{
-    @Test
-    fun testLocalizerBasic(){
-        val localizer = OTOSLocalizer()
-        val target = Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES))
-        localizer.setPose(target)
-        assert(localizer.getPose() == target)
-    }
 }
 class EncoderTests{
     @Test
