@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking
 
 import com.qualcomm.robotcore.hardware.DcMotor
+import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.TrackingLocalizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
@@ -90,5 +91,11 @@ class MecanumLocalizer(
             Angle(pose.angle.toRadians() - this.pose.angle.toRadians())
         )
     }
-
+    override fun testEncoderDirection(telemetry: Telemetry) {
+        telemetry.addData("FL Encoder", fl.currentPosition)
+        telemetry.addData("FR Encoder", fr.currentPosition)
+        telemetry.addData("BL Encoder", bl.currentPosition)
+        telemetry.addData("BR Encoder", br.currentPosition)
+        telemetry.update()
+    }
 }

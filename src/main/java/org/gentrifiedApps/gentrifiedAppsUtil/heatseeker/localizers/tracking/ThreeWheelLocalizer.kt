@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking
 
+import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderStorage
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.TrackingLocalizer
@@ -62,4 +63,10 @@ class ThreeWheelLocalizer(
         )
     }
 
+    override fun testEncoderDirection(telemetry: Telemetry) {
+        telemetry.addData("Left Encoder", leftEncoder.getTicks())
+        telemetry.addData("Right Encoder", rightEncoder.getTicks())
+        telemetry.addData("Perp Encoder", perpEncoder.getTicks())
+        telemetry.update()
+    }
 }

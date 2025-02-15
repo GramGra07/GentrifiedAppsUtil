@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking
 
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.IMU
+import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderStorage
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.TrackingLocalizer
@@ -70,6 +71,12 @@ class TwoWheelLocalizer(
             pose.y - this.pose.y,
             Angle(pose.angle.toRadians() - this.pose.angle.toRadians())
         )
+    }
+
+    override fun testEncoderDirection(telemetry: Telemetry) {
+        telemetry.addData("Par Encoder", parEncoder.getTicks())
+        telemetry.addData("Perp Encoder", perpEncoder.getTicks())
+        telemetry.update()
     }
 
 }

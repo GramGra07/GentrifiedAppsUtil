@@ -24,7 +24,7 @@ class Driver(
     private val frDirection: Direction,
     private val blDirection: Direction,
     private val brDirection: Direction,
-    var localizer: Localizer
+    var localizer: Localizer?
 ) {
     val driveType = DRIVETYPE.MECANUM
     private val hwMap: HardwareMap = opMode.hardwareMap
@@ -45,28 +45,38 @@ class Driver(
         fr.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         bl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         br.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        fl.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        fr.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        bl.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        br.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
         fl.direction = flDirection
         fr.direction = frDirection
         bl.direction = blDirection
         br.direction = brDirection
 
-        localizer.initLocalizer()
-        drawer.drawLocalization(localizer.getPose())
-        telemetry.sendTelemetry(opMode.telemetry, localizer.getPose())
+        if (localizer != null) {
+            localizer!!.initLocalizer()
+            drawer.drawLocalization(localizer!!.getPose())
+            telemetry.sendTelemetry(opMode.telemetry, localizer!!.getPose())
+        }
     }
 
     fun update() {
         updatePoseEstimate()
-        drawer.drawLocalization(localizer.getPose())
-        telemetry.sendTelemetry(opMode.telemetry, localizer.getPose())
+        if (localizer != null) {
+            drawer.drawLocalization(localizer!!.getPose())
+            telemetry.sendTelemetry(opMode.telemetry, localizer!!.getPose())
+        }
     }
     fun updateNoTelemetry() {
         updatePoseEstimate()
-        drawer.drawLocalization(localizer.getPose())
+        if (localizer != null) {
+            drawer.drawLocalization(localizer!!.getPose())
+        }
     }
 
     private fun updatePoseEstimate() {
-        localizer.update()
+        localizer?.update()
     }
 
     fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {

@@ -3,6 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS.Pose2D
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.PointLocalizer
@@ -60,6 +61,10 @@ class OTOSLocalizer(
             pose.y - this.pose.y,
             Angle(pose.angle.toRadians() - this.pose.angle.toRadians())
         )
+    }
+
+    override fun testEncoderDirection(telemetry: Telemetry) {
+
     }
 
     private fun Pose2D.toTarget2D(): Target2D {

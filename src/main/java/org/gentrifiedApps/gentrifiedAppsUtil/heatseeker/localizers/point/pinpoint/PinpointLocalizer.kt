@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.pinpoint
 
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
@@ -59,6 +60,12 @@ class PinpointLocalizer(
             pose.y - this.pose.y,
             Angle(pose.angle.toRadians() - this.pose.angle.toRadians())
         )
+    }
+
+    override fun testEncoderDirection(telemetry: Telemetry) {
+        telemetry.addLine("x encoder direction: ${pinpoint.encoderX}")
+        telemetry.addLine("y encoder direction: ${pinpoint.encoderY}")
+        telemetry.update()
     }
 
     private fun Pose2D.toTarget2D(): Target2D {

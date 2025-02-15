@@ -7,13 +7,14 @@ import kotlin.math.abs
 class LateralTicksTuner(private val driver: Driver) : LinearOpMode() {
     val distance = 48
     override fun runOpMode() {
+        require(driver.localizer != null)
         telemetry.addLine("Move laterally 48 inches")
         telemetry.update()
 
         waitForStart()
         while (opModeIsActive()) {
             driver.updateNoTelemetry()
-            val mult = (driver.localizer.getPose().x / distance)
+            val mult = (driver.localizer!!.getPose().x / distance)
             telemetry.addData("Multiply Ticks Per in = ", mult)
             telemetry.update()
         }

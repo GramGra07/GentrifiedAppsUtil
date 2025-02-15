@@ -7,6 +7,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 class TrackWidthTuner (private val driver: Driver) : LinearOpMode() {
     val turns = 5
     override fun runOpMode() {
+        require(driver.localizer != null)
         telemetry.addLine("Turn the robot 360 degrees $turns times")
         telemetry.update()
 
@@ -14,7 +15,7 @@ class TrackWidthTuner (private val driver: Driver) : LinearOpMode() {
         while (opModeIsActive()) {
             driver.updateNoTelemetry()
 
-            val heading = driver.localizer.getPose().h()
+            val heading = driver.localizer!!.getPose().h()
             val correctedTrackWidth = (heading / (2 * Math.PI * turns))
             // Display results
             telemetry.addData("Heading", heading)
