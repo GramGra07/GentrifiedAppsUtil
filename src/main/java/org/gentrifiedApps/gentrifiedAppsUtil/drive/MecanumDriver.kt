@@ -5,18 +5,22 @@ class MecanumDriver {
     companion object {
         /**
          * Drive mecanum.
-         * @param x The x value of the controller. ex leftStickX
-         * @param y The y value of the controller. ex leftStickY
-         * @param rotation The rotation value of the controller. ex rightStickX
+         * @param x_ The x value of the controller. ex leftStickX
+         * @param y_ The y value of the controller. ex leftStickY
+         * @param rotation_ The rotation value of the controller. ex rightStickX
          * @return The coefficients to drive the robot.
          * @see DrivePowerCoefficients
          */
+        @Suppress("LocalVariableName")
         @JvmStatic
         fun driveMecanum(
-            x: Double,
-            y: Double,
-            rotation: Double,
+            x_: Float,
+            y_: Float,
+            rotation_: Float,
         ): DrivePowerCoefficients {
+            val x = x_.toDouble()
+            val y = y_.toDouble()
+            val rotation = rotation_.toDouble()
             val frontLeftPower: Double = (y + x + rotation)
             val backLeftPower: Double = (y - x + rotation)
             val frontRightPower: Double = (y - x - rotation)

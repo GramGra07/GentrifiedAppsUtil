@@ -28,7 +28,7 @@ class Driver(
     private var bl: DcMotor = hwMap.get(DcMotor::class.java, blName)
     private var br: DcMotor = hwMap.get(DcMotor::class.java, brName)
 
-    private val drawer = Drawer()
+    val drawer = Drawer()
     private val telemetry: TelemetryMaker = TelemetryMaker()
 
     init {

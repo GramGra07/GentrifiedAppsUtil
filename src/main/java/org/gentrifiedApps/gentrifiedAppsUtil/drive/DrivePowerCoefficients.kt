@@ -18,4 +18,7 @@ data class DrivePowerCoefficients(
             return DrivePowerCoefficients(0.0,0.0,0.0,0.0)
         }
     }
+    fun notZero():Boolean{
+        return this != zeros()
+    }
 }

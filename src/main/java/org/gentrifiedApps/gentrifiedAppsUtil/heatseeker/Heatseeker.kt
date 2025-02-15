@@ -2,8 +2,12 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PIDController
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint
+import kotlin.math.cos
 import kotlin.math.hypot
+import kotlin.math.sin
 
 class Heatseeker(private val driver: Driver) {
     private var path = mutableListOf<Waypoint>()
@@ -16,6 +20,7 @@ class Heatseeker(private val driver: Driver) {
 
     fun followPath(path: List<Waypoint>, tolerance: Double) {
         this.path = path.toMutableList()
+        driver.drawer.drawPath(path)
         while (!isFinished(path) && driver.opMode.opModeIsActive() && !driver.opMode.isStopRequested) {
             if (currentIndex >= path.size) {
                 driver.setWheelPower(DrivePowerCoefficients.zeros())
@@ -46,7 +51,29 @@ class Heatseeker(private val driver: Driver) {
         driver.setWheelPower(DrivePowerCoefficients.zeros())
     }
 
-    private fun isFinished(path: List<Waypoint>): Boolean {
+    fun isFinished(path: List<Waypoint>): Boolean {
         return currentIndex >= path.size
+    }
+    fun teleOpCorrector():TeleOpCorrector{
+        return TeleOpCorrector(driver)
+    }
+}
+
+class TeleOpCorrector(private val driver: Driver){
+    private var correctionAngle :Angle = Angle.blank()
+    init {
+        updateOrientation()
+    }
+    fun correctByAngle(drivePowerCoefficients: DrivePowerCoefficients):DrivePowerCoefficients{
+        val angleDifference = driver.localizer.getPose().angle.toRadians() - correctionAngle.toRadians()
+        val frontLeft = drivePowerCoefficients.frontLeft * cos(angleDifference) - drivePowerCoefficients.frontRight * sin(angleDifference)
+        val frontRight = drivePowerCoefficients.frontLeft * sin(angleDifference) + drivePowerCoefficients.frontRight * cos(angleDifference)
+        val backLeft = drivePowerCoefficients.backLeft * cos(angleDifference) - drivePowerCoefficients.backRight * sin(angleDifference)
+        val backRight = drivePowerCoefficients.backLeft * sin(angleDifference) + drivePowerCoefficients.backRight * cos(angleDifference)
+        val newPowerCoefficients = DrivePowerCoefficients(frontLeft, frontRight, backLeft, backRight)
+        return newPowerCoefficients
+    }
+    fun updateOrientation(){
+        correctionAngle = driver.localizer.getPose().angle
     }
 }
