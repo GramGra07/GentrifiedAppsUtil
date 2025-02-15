@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
@@ -19,6 +20,10 @@ class Driver(
     frName: String,
     blName: String,
     brName: String,
+    private val flDirection: Direction,
+    private val frDirection: Direction,
+    private val blDirection: Direction,
+    private val brDirection: Direction,
     var localizer: Localizer
 ) {
     val driveType = DRIVETYPE.MECANUM
@@ -40,6 +45,11 @@ class Driver(
         fr.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         bl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         br.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        fl.direction = flDirection
+        fr.direction = frDirection
+        bl.direction = blDirection
+        br.direction = brDirection
+
         localizer.initLocalizer()
         drawer.drawLocalization(localizer.getPose())
         telemetry.sendTelemetry(opMode.telemetry, localizer.getPose())

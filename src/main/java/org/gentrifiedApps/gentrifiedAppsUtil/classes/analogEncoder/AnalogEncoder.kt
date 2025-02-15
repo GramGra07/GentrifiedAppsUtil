@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.classes
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder
 
 import com.qualcomm.robotcore.hardware.AnalogInput
 import com.qualcomm.robotcore.hardware.HardwareMap

@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.MecanumDriver.Companion.driveMecanum
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
@@ -24,7 +25,7 @@ class HeatseekerTestOpMode : LinearOpMode() {
         "spark", this.hardwareMap, Target2D.blank(),
         SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
     )
-    private val driver = Driver(this, "fl", "fr", "bl", "br", otos)
+    private val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
     private val heatseeker = Heatseeker(driver)
 
     private val path = PathBuilder()
@@ -47,18 +48,18 @@ class HeatseekerTeleTestOpMode : LinearOpMode() {
         "spark", this.hardwareMap, Target2D.blank(),
         SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
     )
-    private val driver = Driver(this, "fl", "fr", "bl", "br", otos)
+    private val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
     private val heatseeker = Heatseeker(driver)
     val teleOpCorrector = heatseeker.teleOpCorrector()
 
     override fun runOpMode() {
         while (opModeIsActive()) {
-            val powerCoefficients = driveMecanum(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x)
+            var powerCoefficients = driveMecanum(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x)
             if (!powerCoefficients.notZero()){
                 // has no powers to move
                 teleOpCorrector.updateOrientation()
             }else if (gamepad1.right_stick_x.toDouble() == 0.0){
-                teleOpCorrector.correctByAngle(powerCoefficients)
+                powerCoefficients = teleOpCorrector.correctByAngle(powerCoefficients)
             }
 
             driver.setWheelPower(powerCoefficients)
