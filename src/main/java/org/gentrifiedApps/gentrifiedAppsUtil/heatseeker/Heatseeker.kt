@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.FeedforwardController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PIDController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
@@ -9,14 +10,18 @@ import kotlin.math.cos
 import kotlin.math.hypot
 import kotlin.math.sin
 
-class Heatseeker(private val driver: Driver) {
+class Heatseeker(private val driver: Driver,
+                 private var xPID:PIDController, private var yPID:PIDController, private var hPID:PIDController) {
+    fun setPIDControllers(xPID:PIDController,yPID:PIDController,hPID:PIDController){
+        this.xPID = xPID
+        this.yPID = yPID
+        this.hPID = hPID
+    }
     private var path = mutableListOf<Waypoint>()
 
     private var currentIndex = 0
 
-    private val xPID = PIDController(1.0, 0.0, 0.0)
-    private val yPID = PIDController(1.0, 0.0, 0.0)
-    private val hPID = PIDController(1.0, 0.0, 0.0)
+    private val feedforward = FeedforwardController(0.1, 0.05, 0.01)
 
     fun followPath(path: List<Waypoint>, tolerance: Double) {
         this.path = path.toMutableList()
@@ -33,14 +38,32 @@ class Heatseeker(private val driver: Driver) {
 
             val error = driver.localizer.getPoseError(target.target2D)
 
-            // Compute PID corrections
-            val xCorrection = xPID.calculatePID(error.x, 0.0) * target.velocity
-            val yCorrection = yPID.calculatePID(error.y, 0.0) * target.velocity
-            val headingCorrection = hPID.calculatePID(error.h(), 0.0) * target.velocity
+            val xCorrection = xPID.calculate(error.x)
+            val yCorrection = yPID.calculate(error.y)
+            val headingCorrection = hPID.calculate(error.h())
 
-            // Apply movement corrections
-            val powerCoefficients =
-                driver.findWheelVectors(yCorrection, xCorrection, headingCorrection)
+            // Estimate desired velocity based on error
+            val targetVelX = error.x * 0.5  // Scale for smooth movement
+            val targetVelY = error.y * 0.5
+            val targetVelH = error.h() * 0.5
+
+            // Estimate acceleration assuming simple scaling
+            val targetAccelX = targetVelX * 0.1
+            val targetAccelY = targetVelY * 0.1
+            val targetAccelH = targetVelH * 0.1
+
+            // Compute feedforward terms
+            val xFF = feedforward.calculate(targetVelX, targetAccelX)
+            val yFF = feedforward.calculate(targetVelY, targetAccelY)
+            val headingFF = feedforward.calculate(targetVelH, targetAccelH)
+
+            // Combine PID and feedforward
+            val xPower = xCorrection + xFF
+            val yPower = yCorrection + yFF
+            val headingPower = headingCorrection + headingFF
+
+            val powerCoefficients = driver.findWheelVectors(yPower, xPower, headingPower)
+
             driver.setWheelPower(powerCoefficients)
 
             // Move to next waypoint if close enough

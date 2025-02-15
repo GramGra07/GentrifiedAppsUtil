@@ -10,6 +10,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.MecanumDriver.Companion.driveMecanum
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Heatseeker
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PIDController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
@@ -26,7 +27,7 @@ class HeatseekerTestOpMode : LinearOpMode() {
         SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
     )
     private val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
-    private val heatseeker = Heatseeker(driver)
+    private val heatseeker = Heatseeker(driver, PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0))
 
     private val path = PathBuilder()
         .addWaypoint(Waypoint(1.0, 2.0, Angle(90.0, AngleUnit.DEGREES), 1.0))
@@ -49,8 +50,8 @@ class HeatseekerTeleTestOpMode : LinearOpMode() {
         SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
     )
     private val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
-    private val heatseeker = Heatseeker(driver)
-    val teleOpCorrector = heatseeker.teleOpCorrector()
+    private val heatseeker = Heatseeker(driver, PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0))
+    private val teleOpCorrector = heatseeker.teleOpCorrector()
 
     override fun runOpMode() {
         while (opModeIsActive()) {
