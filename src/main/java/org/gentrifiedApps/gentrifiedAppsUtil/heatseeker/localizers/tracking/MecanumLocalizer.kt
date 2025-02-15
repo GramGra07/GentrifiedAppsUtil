@@ -19,9 +19,6 @@ class MecanumLocalizer(
     private var bl: DcMotor = driver.sendEncoders()[2]
     private var br: DcMotor = driver.sendEncoders()[3]
 
-    // found by change in encoder count/rotation in radians
-    // T = trackWidth in * ticks per rev / wheel circumference
-
     private var lastFl = 0
     private var lastFr = 0
     private var lastBl = 0

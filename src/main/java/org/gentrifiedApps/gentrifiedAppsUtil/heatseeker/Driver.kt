@@ -60,6 +60,10 @@ class Driver(
         drawer.drawLocalization(localizer.getPose())
         telemetry.sendTelemetry(opMode.telemetry, localizer.getPose())
     }
+    fun updateNoTelemetry() {
+        updatePoseEstimate()
+        drawer.drawLocalization(localizer.getPose())
+    }
 
     private fun updatePoseEstimate() {
         localizer.update()
