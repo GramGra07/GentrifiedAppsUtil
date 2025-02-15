@@ -7,6 +7,7 @@
 
 * [BinaryArray](other-classes/binaryarray.md)
 * [Alliance](other-classes/alliance.md)
+* [AnalogEncoder](other-classes/analogencoder.md)
 
 ## LoopTimeController
 
