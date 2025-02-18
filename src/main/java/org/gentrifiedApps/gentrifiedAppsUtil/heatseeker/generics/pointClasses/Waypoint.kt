@@ -5,7 +5,7 @@ data class Waypoint(val target2D: Target2D, val velocity: Double) {
         Target2D(
             x,
             y,
-            Angle(h, AngleUnit.RADIANS)
+            Angle(h, AngleUnit.DEGREES)
         ), velocity
     )
 
