@@ -1,6 +1,6 @@
 # Gentrified Apps Util
 
-### Contains many utilities I use and have created in order to help other teams advance their code&#x20;
+#### Contains many utilities I use and have created in order to help other teams advance their code&#x20;
 
 ### Contents:
 
@@ -18,5 +18,5 @@
 * Idler
 * SensorArray
 * State Machines
-  * Parallel
-  * Sequential
+    * Parallel
+    * Sequential
