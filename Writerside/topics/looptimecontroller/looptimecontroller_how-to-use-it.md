@@ -1,6 +1,6 @@
 # How to use it
 
-[This demo opmode](../src/main/java/org/gentrifiedApps/gentrifiedAppsUtil/LoopTimeDemo.java) is very handy in getting you started with the LoopTimeController. Initialize the controller in the init section of your code.
+[//]: # ([This demo opmode]&#40;../src/main/java/org/gentrifiedApps/gentrifiedAppsUtil/LoopTimeDemo.java&#41; is very handy in getting you started with the LoopTimeController. Initialize the controller in the init section of your code.)
 
 ```java
 ElapsedTime elapsedTime = new ElapsedTime();
