@@ -11,6 +11,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.looptime.objects.PeriodicLoopTimeOb
 open class LoopTimeController(
     private val periodics: List<PeriodicLoopTimeObject?>? = null,
 ) {
+    constructor() : this(null)
     private val timer = ElapsedTime()
     var loops: Int = 0
     private var lps = 0.0

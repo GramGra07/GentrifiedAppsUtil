@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap
  * @param calculatorOperations The list of operations to perform on the input voltage.
  */
 class AnalogEncoder(val name: String, private val startPosition:Double, private val calculatorOperations:List<Operation>) {
+    constructor(name: String,calculatorOperations: List<Operation>) : this(name,0.0,calculatorOperations)
     private lateinit var analogEncoder: AnalogInput
     private lateinit var calculator: AnalogEncoderCalculator
     fun init(ahwMap: HardwareMap) {

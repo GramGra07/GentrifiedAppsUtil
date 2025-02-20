@@ -10,6 +10,7 @@ import java.util.EnumMap
  * @throws IllegalArgumentException If loopSaveMode is not enabled and you call loopSavingRead
  */
 class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
+    constructor(gamepad: Gamepad) : this(gamepad, false)
     private var gamepad: Gamepad? = null
 
     init {
