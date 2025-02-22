@@ -25,6 +25,9 @@
         <toc-element topic="gamepadplus_how-to-use-it.md"/>
         <toc-element topic="gamepadplus_other-useful-functions.md"/>
     </toc-element>
+    <toc-element toc-title="VoltageCompensator">
+        <toc-element topic="What-is-it.md"/>
+    </toc-element>
     <toc-element toc-title="ServoPlus">
         <toc-element topic="servoplus_how-to-use-it.md"/>
     </toc-element>
