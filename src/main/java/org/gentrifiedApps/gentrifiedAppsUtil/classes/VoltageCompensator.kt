@@ -26,5 +26,3 @@ class VoltageCompensator(val name:String, private val kf:Double) {
         return (12/getVoltage())*kf*controlEffort
     }
 }
-VoltageCompensator(name,kf)
-        getVoltageCompensatedKf(controlEffort)
