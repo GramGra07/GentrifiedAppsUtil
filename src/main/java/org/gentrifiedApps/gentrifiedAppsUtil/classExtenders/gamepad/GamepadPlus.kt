@@ -154,4 +154,19 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
     fun atRest(): Boolean {
         return gamepad!!.atRest()
     }
+    fun getButtonsCurrentlyPressed():List<Button>{
+            val buttons = mutableListOf<Button>()
+            for (button in Button.values()){
+                if (loopSaveMode) {
+                    if (readBooleanButtonFromHash(button)) {
+                        buttons.add(button)
+                    }
+                }else{
+                    if (returnButton(button)){
+                        buttons.add(button)
+                    }
+                }
+            }
+            return buttons
+    }
 }

@@ -10,7 +10,7 @@ driveFieldCentric(x,y,rotation,gyro);
 // where gyro is the current rotation of the robot
 ```
 
-It then returns FieldCentricCoefficients, which return values of frontLeft, frontRight, backLeft, backRight.&#x20;
+It then returns DrivePowerCoefficients, which return values of frontLeft, frontRight, backLeft, backRight.&#x20;
 
 ```java
 coefficients.frontLeft // this will return the double for front left
