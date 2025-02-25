@@ -8,9 +8,13 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.OTOSLocalizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking.MecanumLocalizer
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.Path
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.PathType
 import org.junit.Test
+import org.testng.Assert.assertEquals
 
 class HeatSeekerTests {
 }
@@ -186,14 +190,66 @@ class PathBuilderTests{
             .addWaypoint(org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(5.0,6.0,Math.toDegrees(7.0),1.0))
             .build()
         assert(path.size == 2)
-        assert(path[0].x == 1.0)
-        assert(path[0].y == 2.0)
-        assert(path[0].h == 3.0)
+        assert(path[0].x() == 1.0)
+        assert(path[0].y() == 2.0)
+        assert(path[0].h() == 3.0)
         assert(path[0].velocity == 1.0)
-        assert(path[1].x == 5.0)
-        assert(path[1].y == 6.0)
-        assert(path[1].h == 7.0)
+        assert(path[1].x() == 5.0)
+        assert(path[1].y() == 6.0)
+        assert(path[1].h() == 7.0)
         assert(path[1].velocity == 1.0)
+    }
+    @Test
+    fun testPathConstructorWithWaypoint() {
+        val waypoint = Waypoint(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES), 1.0)
+        val path = Path(waypoint)
+        assertEquals(PathType.MOVE_TO, path.type)
+        assertEquals(1.0, path.x())
+        assertEquals(2.0, path.y())
+        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), path.h())
+        assertEquals(1.0, path.velocity)
+    }
+
+    @Test
+    fun testPathConstructorWithTargetAndVelocity() {
+        val target = Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES))
+        val path = Path(target, 1.0)
+        assertEquals(PathType.MOVE_TO, path.type)
+        assertEquals(1.0, path.x())
+        assertEquals(2.0, path.y())
+        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), path.h())
+        assertEquals(1.0, path.velocity)
+    }
+
+    @Test
+    fun testPathConstructorWithHeadingVelocityAndCurrentTarget() {
+        val currentTarget = Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES))
+        val path = Path(Angle(4.0, AngleUnit.DEGREES), 1.0, currentTarget)
+        assertEquals(PathType.TURN_TO, path.type)
+        assertEquals(1.0, path.x())
+        assertEquals(2.0, path.y())
+        assertEquals(Angle(4.0, AngleUnit.DEGREES).toRadians(), path.h())
+        assertEquals(1.0, path.velocity)
+    }
+
+    @Test
+    fun testPathConstructorWithHeadingVelocityXAndY() {
+        val path = Path(Angle(4.0, AngleUnit.DEGREES), 1.0, 1.0, 2.0)
+        assertEquals(PathType.TURN_TO, path.type)
+        assertEquals(1.0, path.x())
+        assertEquals(2.0, path.y())
+        assertEquals(Angle(4.0, AngleUnit.DEGREES).toRadians(), path.h())
+        assertEquals(1.0, path.velocity)
+    }
+
+    @Test
+    fun testWaypointFunction() {
+        val path = Path(Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES)), 1.0)
+        val waypoint = path.waypoint()
+        assertEquals(1.0, waypoint.x)
+        assertEquals(2.0, waypoint.y)
+        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), waypoint.h)
+        assertEquals(1.0, waypoint.velocity)
     }
 }
 class EncoderTests{

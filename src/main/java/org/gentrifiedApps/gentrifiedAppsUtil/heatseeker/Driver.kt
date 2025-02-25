@@ -26,6 +26,17 @@ class Driver(
     private val brDirection: Direction,
     var localizer: Localizer?
 ) {
+    constructor(
+        opMode: LinearOpMode,
+        flName: String,
+        frName: String,
+        blName: String,
+        brName: String,
+        flDirection: Direction,
+        frDirection: Direction,
+        blDirection: Direction,
+        brDirection: Direction
+    ) : this(opMode, flName, frName, blName, brName, flDirection, frDirection, blDirection, brDirection, null)
     val driveType = DRIVETYPE.MECANUM
     private val hwMap: HardwareMap = opMode.hardwareMap
     private var fl: DcMotor = hwMap.get(DcMotor::class.java, flName)
