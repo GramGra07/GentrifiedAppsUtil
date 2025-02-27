@@ -1,4 +1,4 @@
-# What is it?
+# What is voltage compensation?
 
 In FTC, voltage matters in almost every aspect, a simple voltage compensation algorithm saves a lot of tuning time by "normalizing" the voltage to get similar performance on all voltages.
 
@@ -7,9 +7,9 @@ In FTC, voltage matters in almost every aspect, a simple voltage compensation al
 To initialize, use the following code:
 
 ```java
-VoltageCompensator(name,kf);
+VoltageCompensator(kf);
 ```
-Where name is our expansion or control hub, and kf is your tuned feedforward gain. Start at 1.0 and use that to tune your feedforward gain.
+Where  kf is your tuned feedforward gain. Start at 1.0 and use that to tune your feedforward gain.
 
 Then, in your main loop, use the following code:
 
