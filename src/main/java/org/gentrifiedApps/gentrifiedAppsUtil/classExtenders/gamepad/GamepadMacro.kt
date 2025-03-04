@@ -5,14 +5,17 @@ class GamepadMacro(private val macro: List<ButtonPress>, private val func: Runna
     private var progress = 0 // Tracks position in macro sequence
 
     fun update(buttons: List<Button>) {
+        // should make a list to track each individual press
+        // needs to sort through the list of buttons and check if the current button is the next in the sequence
+        // if it is, increment progress
+        // if it isn't, reset progress
+        // if progress is equal to the length of the macro, run the function and reset progress
         if (buttons.contains(macroButtons[progress])) {
-            progress++ // Move to the next expected button
-            if (progress == macroButtons.size) {
-                func.run()
-                progress = 0 // Reset after activation
-            }
-        } else if (!buttons.contains(macroButtons.getOrNull(progress - 1))) {
-            progress = 0 // Reset if sequence is broken
+            progress++
+        }
+        if (progress == macroButtons.size) {
+            func.run()
+            progress = 0
         }
     }
 }
