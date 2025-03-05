@@ -12,6 +12,7 @@
         <toc-element topic="alliance.md"/>
         <toc-element topic="other-classes_analogencoder.md"/>
         <toc-element topic="Timeout.md"/>
+        <toc-element topic="Scribe.md"/>
     </toc-element>
     <toc-element toc-title="LoopTimeController">
         <toc-element topic="looptimecontroller_what-is-it.md"/>
