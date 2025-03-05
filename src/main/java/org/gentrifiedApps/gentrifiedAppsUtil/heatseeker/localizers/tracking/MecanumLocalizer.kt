@@ -14,6 +14,7 @@ class MecanumLocalizer(
     private val startPose: Target2D,
 ) : TrackingLocalizer() {
     private var pose: Target2D = Target2D(0.0, 0.0, Angle.blank())
+    constructor(driver: Driver, ticksPerIn: Double, trackWidth: Double) : this(driver, ticksPerIn, trackWidth, Target2D(0.0, 0.0, Angle.blank()))
 
     private var fl: DcMotor = driver.sendEncoders()[0]
     private var fr: DcMotor = driver.sendEncoders()[1]
