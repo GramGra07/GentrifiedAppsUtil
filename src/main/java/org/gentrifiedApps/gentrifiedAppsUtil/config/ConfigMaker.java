@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * This class is used to create a configuration file for the robot controller
+ */
 public class ConfigMaker{
     private boolean hasBeenBuilt = false;
     private String XML = "";
@@ -52,10 +55,27 @@ public class ConfigMaker{
         Motor
     }
     private static String name;
+    /**
+     * Creates a new ConfigMaker
+     * @param configName The name of the configuration file
+     */
     public ConfigMaker(String configName){
         this.name = configName;
     }
+
+    /**
+     * Adds a device to the configuration
+     * @param name The name of the device
+     * @param moduleType The type of module the device is connected to
+     * @param type The type of device
+     * @param port The port the device is connected to
+     */
     public ConfigMaker addDevice(String name, ModuleType moduleType, DeviceType type, int port){
+        if (port > 10){
+            throw new IllegalArgumentException("Device port must be less than 10");
+        }else if (port < 0){
+            throw new IllegalArgumentException("Device port must be greater than 0");
+        }
         String s = String.format("         <%s name=\"%s\" port=\"%s\"/>\n", type.toString(), name, port);
         if (moduleType == ModuleType.CONTROL_HUB) {
             CHUB += s;
@@ -70,12 +90,21 @@ public class ConfigMaker{
      * @param type
      * @param name
      */
+    boolean added = false;
     public ConfigMaker addModule(ModuleType type, String name){
-        if (type == ModuleType.EXPANSION_HUB){
+
+        if (type == ModuleType.EXPANSION_HUB && !added){
             EHub = String.format("      <LynxModule name=\"%s\" port=\"1\">\n",name);
+            added = true;
         }
         return this;
     }
+
+    /**
+     * Adds a camera to the configuration
+     * @param name The name of the camera
+     * @param serialNumber The serial number of the camera
+     */
     public ConfigMaker addCamera(String name, String serialNumber){
             WC +=String.format("<Webcam name=\"%s\" serialNumber=\"%s\" />\n", name, serialNumber);
         return this;
@@ -99,6 +128,10 @@ public class ConfigMaker{
         }
         return this;
     }
+
+    /**
+     * Builds the configuration file
+     */
     public ConfigMaker build(){
         hasBeenBuilt = true;
         if (!EHub.equals("")){
@@ -118,6 +151,9 @@ public class ConfigMaker{
         return this;
     }
 
+    /**
+     * Writes the configuration file
+     */
     public void run(){
         if (!hasBeenBuilt){
             build();
