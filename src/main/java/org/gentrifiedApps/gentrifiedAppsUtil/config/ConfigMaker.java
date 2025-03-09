@@ -77,6 +77,9 @@ public class ConfigMaker{
             throw new IllegalArgumentException("Device port must be greater than 0");
         }
         String s = String.format("         <%s name=\"%s\" port=\"%s\"/>\n", type.toString(), name, port);
+        if (type == DeviceType.RevColorSensorV3 || type == DeviceType.RevExternalImu||type == DeviceType.AdafruitBNO055IMU||type == DeviceType.HuskyLens||type == DeviceType.SparkFunOTOS){
+            s +=  "bus=\"undefined\"";
+        }
         if (moduleType == ModuleType.CONTROL_HUB) {
             CHUB += s;
         }else if (moduleType == ModuleType.EXPANSION_HUB){
