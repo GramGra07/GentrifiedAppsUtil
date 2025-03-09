@@ -13,7 +13,7 @@ public final class AnalyzerOpModeRegistrar {
 
     static Runnable initLoop = () -> {
     };
-    static Boolean enableOpMode = true;
+    static Boolean enableOpMode = false;
 
     static List<TestableFunctions> funcs = List.of(new TestableFunctions("FunctionName", () -> {
         // Function implementation

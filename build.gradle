@@ -82,7 +82,7 @@ dependencies {
     implementation libs.hardware
     implementation libs.robotcore
 
-    implementation libs.dashboard
+    compileOnly libs.dashboard
 
     implementation libs.velocityvision
     implementation libs.core.ktx
