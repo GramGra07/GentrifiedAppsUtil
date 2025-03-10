@@ -12,8 +12,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap
  */
 class AnalogEncoder(private val hwMap: HardwareMap,val name: String, private val startPosition:Double, private val calculatorOperations:List<Operation>) {
     constructor(hwMap:HardwareMap,name: String,calculatorOperations: List<Operation>) : this(hwMap,name,0.0,calculatorOperations)
-    private var analogEncoder: AnalogInput = hwMap.get(AnalogInput::class.java, name)
-    private var calculator: AnalogEncoderCalculator = AnalogEncoderCalculator(calculatorOperations)
+    private lateinit var analogEncoder: AnalogInput
+    private lateinit var calculator: AnalogEncoderCalculator
+    init {
+        analogEncoder = hwMap.get(AnalogInput::class.java, name)
+        calculator = AnalogEncoderCalculator(calculatorOperations)
+    }
 
     /**
      * Gets the current position of the encoder using the result of the operations.
