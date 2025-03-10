@@ -25,7 +25,7 @@ class Scribe private constructor(val tagger: String){
         var instance : Scribe = Scribe(defaultTagger)
         @JvmStatic
         fun create(tagger: String){
-            this.instance = Scribe(tagger)
+            this.instance = Scribe(defaultTagger+tagger)
         }
         @JvmStatic
         fun reset(){

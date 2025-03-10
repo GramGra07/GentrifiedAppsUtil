@@ -19,7 +19,7 @@ class VoltageTracker(hardwareMap: HardwareMap, private val usesVoltageCompensato
     private var voltageSensor :VoltageSensor = if (usesVoltageCompensator){
         voltageCompensator.voltageSensor
     } else {
-        hardwareMap.voltageSensor.iterator().next()
+        hardwareMap.voltageSensor.first()
     }
     private var initialVoltage = 0.0
     private var currentVoltage = 0.0
@@ -45,13 +45,17 @@ class VoltageTracker(hardwareMap: HardwareMap, private val usesVoltageCompensato
      */
     fun telemetry(telemetry: Telemetry){
         update()
-        telemetry.addLine("Voltage: $currentVoltage")
-        telemetry.addLine("Voltage Drop: $voltageDrop")
-        telemetry.addLine("Lowest Voltage: $lowestVoltage")
+        telemetry.addLine("Voltage: ${currentVoltage.format(3)}")
+        telemetry.addLine("Voltage Drop: ${voltageDrop.format(2)}")
+        telemetry.addLine("Lowest Voltage: ${lowestVoltage.format(2)}")
     }
 
     fun calculateVoltageCompensatedKf(controlEffort:Double):Double{
         require(usesVoltageCompensator)
         return voltageCompensator.getVoltageCompensatedKf(controlEffort)
     }
+}
+
+private fun Double.format(i: Int): String {
+    return String.format("%.${i}f", this)
 }

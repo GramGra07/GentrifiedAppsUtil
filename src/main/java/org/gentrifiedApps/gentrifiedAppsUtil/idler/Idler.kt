@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
 /**
  * A class to help with safe sleep actions, which FTC typically does not have.
  */
-class Idler(private val opMode: LinearOpMode? = null) {
+class Idler(private val opMode: LinearOpMode) {
     private val elapsed = ElapsedTime()
 
     init {
@@ -20,10 +20,7 @@ class Idler(private val opMode: LinearOpMode? = null) {
      */
     fun safeIdle(time: Double, updateWhileIdling: Runnable) {
         elapsed.reset()
-        while (elapsed.seconds() < time && opMode?.opModeIsActive() == true && !opMode.isStopRequested) {
-            updateWhileIdling.run()
-        }
-        if (opMode == null) {
+        while (elapsed.seconds() < time && opMode.opModeIsActive() == true && !opMode.isStopRequested) {
             updateWhileIdling.run()
         }
     }

@@ -16,10 +16,11 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
     init {
         this.gamepad = gamepad
         primarySync()
+        initMaps()
     }
 
-    private var secondaryHash = EnumMap<Button, Boolean>(Button::class.java)
-    private var hash = EnumMap<Button, Boolean>(Button::class.java)
+    private var secondaryHash = HashMap<Button, Boolean>()
+    private var hash = HashMap<Button, Boolean>()
 
     /**
      * This function is used to save the current state of the gamepad at the **BEGINNING** of your code
@@ -30,6 +31,10 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
         secondaryHash[Button.CIRCLE] = gamepad!!.circle
         secondaryHash[Button.TRIANGLE] = gamepad!!.triangle
         secondaryHash[Button.SQUARE] = gamepad!!.square
+        secondaryHash[Button.A] = gamepad!!.a
+        secondaryHash[Button.B] = gamepad!!.b
+        secondaryHash[Button.X] = gamepad!!.x
+        secondaryHash[Button.Y] = gamepad!!.y
         secondaryHash[Button.L1] = gamepad!!.left_bumper
         secondaryHash[Button.R1] = gamepad!!.right_bumper
         secondaryHash[Button.SHARE] = gamepad!!.back
@@ -46,14 +51,12 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
     }
 
     private fun primarySync() {
-        hash.clear()
         for (entry in Button.entries) {
             hash[entry] = false
         }
         sync()
         //
         if (loopSaveMode) {
-            secondaryHash.clear()
             for (entry in Button.entries) {
                 secondaryHash[entry] = false
             }
@@ -69,6 +72,10 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
         hash[Button.CIRCLE] = gamepad!!.circle
         hash[Button.TRIANGLE] = gamepad!!.triangle
         hash[Button.SQUARE] = gamepad!!.square
+        hash[Button.A] = gamepad!!.a
+        hash[Button.B] = gamepad!!.b
+        hash[Button.X] = gamepad!!.x
+        hash[Button.Y] = gamepad!!.y
         hash[Button.L1] = gamepad!!.left_bumper
         hash[Button.R1] = gamepad!!.right_bumper
         hash[Button.SHARE] = gamepad!!.back
@@ -94,6 +101,10 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
 
     private fun returnButton(button: Button): Boolean {
         return when (button) {
+            Button.A-> gamepad!!.a
+            Button.B -> gamepad!!.b
+            Button.X -> gamepad!!.x
+            Button.Y -> gamepad!!.y
             Button.CROSS -> gamepad!!.cross
             Button.CIRCLE -> gamepad!!.circle
             Button.TRIANGLE -> gamepad!!.triangle
@@ -168,5 +179,9 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
                 }
             }
             return buttons
+    }
+    fun initMaps(){
+        hash = HashMap()
+        secondaryHash = HashMap()
     }
 }

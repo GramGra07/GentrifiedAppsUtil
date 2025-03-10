@@ -86,10 +86,10 @@ dependencies {
 
     implementation libs.velocityvision
     implementation libs.core.ktx
-    implementation libs.mockito.core
-    implementation libs.junit.v412
+    testImplementation libs.mockito.core
+    testImplementation libs.junit.v412
     testImplementation libs.junit.jupiter
-    implementation libs.testng
+    testImplementation libs.testng
 }
 
 afterEvaluate {

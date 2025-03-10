@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMa
  */
 class VoltageCompensator(private val kf:Double) {
 
-    val voltageSensor: VoltageSensor = hardwareMap.voltageSensor.iterator().next()
+    val voltageSensor: VoltageSensor = hardwareMap.voltageSensor.first()
     fun getVoltage(): Double {
         return voltageSensor.voltage
     }

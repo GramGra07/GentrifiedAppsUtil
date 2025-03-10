@@ -68,7 +68,7 @@ class Driver(
         if (localizer != null) {
             localizer!!.initLocalizer()
             drawer.drawLocalization(localizer!!.getPose())
-            telemetry.sendTelemetry(opMode.telemetry, localizer!!.getPose())
+            telemetry.sendTelemetryNoUpdate(opMode.telemetry, localizer!!.getPose())
         }
     }
 
@@ -76,7 +76,7 @@ class Driver(
         updatePoseEstimate()
         if (localizer != null) {
             drawer.drawLocalization(localizer!!.getPose())
-            telemetry.sendTelemetry(opMode.telemetry, localizer!!.getPose())
+            telemetry.sendTelemetryNoUpdate(opMode.telemetry, localizer!!.getPose())
         }
     }
     fun updateNoTelemetry() {
