@@ -5,6 +5,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generators.EncoderSpecsBuilder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
@@ -151,7 +152,7 @@ class DriverTests{
 class WaypointTests{
     @Test
     fun testWaypointConstructor(){
-        val waypoint = org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(1.0,2.0,Math.toDegrees(3.0),1.0)
+        val waypoint = Waypoint(1.0,2.0,Math.toDegrees(3.0),1.0)
         assert(waypoint.x == 1.0)
         assert(waypoint.y == 2.0)
         assert(waypoint.h == 3.0)
@@ -159,7 +160,7 @@ class WaypointTests{
     }
     @Test
     fun testWaypointConstructor2(){
-        val waypoint = org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(1.0,2.0,Angle(3.0, AngleUnit.DEGREES),1.0)
+        val waypoint = Waypoint(1.0,2.0,Angle(3.0, AngleUnit.DEGREES),1.0)
         assert(waypoint.x == 1.0)
         assert(waypoint.y == 2.0)
         assert(waypoint.h == Math.toRadians(3.0))
@@ -168,7 +169,7 @@ class WaypointTests{
     @Test
     fun testWaypointConstructor3() {
         val waypoint =
-            org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(
+            Waypoint(
                 Target2D(
                     1.0,
                     2.0,
@@ -185,9 +186,9 @@ class WaypointTests{
 class PathBuilderTests{
     @Test
     fun testPathBuilderBasics(){
-        val path = org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder()
-            .addWaypoint(org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(1.0,2.0,Math.toDegrees(3.0),1.0))
-            .addWaypoint(org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint(5.0,6.0,Math.toDegrees(7.0),1.0))
+        val path = PathBuilder()
+            .addWaypoint(Waypoint(1.0,2.0,Math.toDegrees(3.0),1.0))
+            .addWaypoint(Waypoint(5.0,6.0,Math.toDegrees(7.0),1.0))
             .build()
         assert(path.size == 2)
         assert(path[0].x() == 1.0)

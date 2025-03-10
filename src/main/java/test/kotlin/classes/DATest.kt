@@ -1,10 +1,7 @@
-package test.kotlin;
+package test.kotlin.classes
 
+import junit.framework.TestCase
 import org.gentrifiedApps.gentrifiedAppsUtil.driverAid.DriverAid
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.function.BooleanSupplier
 
@@ -15,7 +12,7 @@ public class DATest {
     @Test
     fun testDriverAidInitialization() {
         val driverAid = DriverAid(TestState::class.java)
-        assertNotNull(driverAid)
+        TestCase.assertNotNull(driverAid)
     }
 
     @Test
@@ -37,8 +34,8 @@ public class DATest {
         daFunc.runInit()
 
         driverAid.update()
-        assertEquals(TestState.IDLE, driverAid.daState)
-        assertNotNull(driverAid.getDAFunc())
+        TestCase.assertEquals(TestState.IDLE, driverAid.daState)
+        TestCase.assertNotNull(driverAid.getDAFunc())
     }
 
     @Test
@@ -60,8 +57,8 @@ public class DATest {
         daFunc.runInit()
 
         driverAid.update()
-        assertFalse(daFunc.isEnded())
-        assertTrue(true) // Just to ensure the test runs without exceptions
+        TestCase.assertFalse(daFunc.isEnded())
+        TestCase.assertTrue(true) // Just to ensure the test runs without exceptions
     }
     // test multiple functions
 
@@ -82,8 +79,8 @@ public class DATest {
         )
         daFunc.runInit()
         driverAid.update()
-        assertFalse(daFunc.isEnded())
-        assertTrue(true) // Just to ensure the test runs without exceptions
+        TestCase.assertFalse(daFunc.isEnded())
+        TestCase.assertTrue(true) // Just to ensure the test runs without exceptions
         // new test
 
         val funcs2 = Runnable { println("Running funcs 2") }
@@ -100,8 +97,8 @@ public class DATest {
         )
         daFunc2.runInit()
         driverAid.update()
-        assertFalse(daFunc2.isEnded())
-        assertTrue(true) // Just to ensure the test runs without exceptions
+        TestCase.assertFalse(daFunc2.isEnded())
+        TestCase.assertTrue(true) // Just to ensure the test runs without exceptions
     }
     @Test
     fun testAllAreRun(){
@@ -122,7 +119,7 @@ public class DATest {
         daFunc.runInit()
         driverAid.update()
         println(storage.contentToString())
-        assertTrue(daFunc.isEnded())
-        assertTrue(true) // Just to ensure the test runs without exceptions
+        TestCase.assertTrue(daFunc.isEnded())
+        TestCase.assertTrue(true) // Just to ensure the test runs without exceptions
     }
 }

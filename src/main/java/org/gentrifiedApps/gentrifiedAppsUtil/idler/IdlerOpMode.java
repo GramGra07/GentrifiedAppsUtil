@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp
 @Disabled
 public class IdlerOpMode extends LinearOpMode {
-    Idler idler = new Idler();
 
     @Override
     public void runOpMode() {
+        Idler idler = new Idler(this);
         waitForStart();
         if (opModeIsActive()) {
             idler.safeIdle(3, () -> {

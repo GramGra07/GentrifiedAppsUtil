@@ -9,10 +9,10 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 @TeleOp
 @Disabled
 public class SensorOpMode extends LinearOpMode {
-    SensorArray sensorArray = new SensorArray();
 
     @Override
     public void runOpMode() {
+        SensorArray sensorArray = new SensorArray();
         sensorArray.addSensor(new Sensor("sensor1", SensorType.DIST, () -> hardwareMap.get(DistanceSensor.class, "sensor1"), 1));
         waitForStart();
         while (opModeIsActive()) {

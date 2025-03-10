@@ -1,14 +1,11 @@
 package test.kotlin
 
-import org.gentrifiedApps.gentrifiedAppsUtil.driverAid.DriverAid
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.LoopTimeAnalyzer
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.TestableFunctions
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.mockito.Mockito
-import java.sql.Driver
 
 
 class LoopTimeAnalyzerTest {

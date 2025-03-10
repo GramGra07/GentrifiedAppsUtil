@@ -8,11 +8,11 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp
 @Disabled
 public class GamepadOpMode extends LinearOpMode {
-    GamepadPlus gamepad = new GamepadPlus(this.gamepad1, true);
-    GamepadPair gamepadPair = new GamepadPair(this.gamepad1, this.gamepad2, true);
 
     @Override
     public void runOpMode() {
+        GamepadPlus gamepad = new GamepadPlus(this.gamepad1, true);
+        GamepadPair gamepadPair = new GamepadPair(this.gamepad1, this.gamepad2, true);
         waitForStart();
         while (opModeIsActive()) {
             gamepadPair.loopSavingRead(); // only works when loopSaver is enabled // does both gamepads

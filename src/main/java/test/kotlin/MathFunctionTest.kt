@@ -1,7 +1,5 @@
-package test.kotlin.classes
+package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.Point
 import org.junit.Test
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertTrue
