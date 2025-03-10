@@ -13,14 +13,14 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
     constructor(gamepad: Gamepad) : this(gamepad, false)
     private var gamepad: Gamepad? = null
 
+    private var secondaryHash = HashMap<Button, Boolean>()
+    private var hash = HashMap<Button, Boolean>()
+
     init {
         this.gamepad = gamepad
         primarySync()
-        initMaps()
     }
 
-    private var secondaryHash = HashMap<Button, Boolean>()
-    private var hash = HashMap<Button, Boolean>()
 
     /**
      * This function is used to save the current state of the gamepad at the **BEGINNING** of your code
@@ -166,22 +166,18 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
         return gamepad!!.atRest()
     }
     fun getButtonsCurrentlyPressed():List<Button>{
-            val buttons = mutableListOf<Button>()
-            for (button in Button.values()){
-                if (loopSaveMode) {
-                    if (readBooleanButtonFromHash(button)) {
-                        buttons.add(button)
-                    }
-                }else{
-                    if (returnButton(button)){
-                        buttons.add(button)
-                    }
+        val buttons = mutableListOf<Button>()
+        for (button in Button.values()){
+            if (loopSaveMode) {
+                if (readBooleanButtonFromHash(button)) {
+                    buttons.add(button)
+                }
+            }else{
+                if (returnButton(button)){
+                    buttons.add(button)
                 }
             }
-            return buttons
-    }
-    fun initMaps(){
-        hash = HashMap()
-        secondaryHash = HashMap()
+        }
+        return buttons
     }
 }

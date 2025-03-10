@@ -5,4 +5,5 @@ enum class SensorType {
     DIST,
     COLOR,
     TOUCH,
+    ANALOG_ENC,
 }
