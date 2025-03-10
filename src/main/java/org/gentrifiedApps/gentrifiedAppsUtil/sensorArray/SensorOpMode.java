@@ -12,8 +12,8 @@ public class SensorOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        SensorArray sensorArray = new SensorArray();
-        sensorArray.addSensor(new Sensor("sensor1", SensorType.DIST, () -> hardwareMap.get(DistanceSensor.class, "sensor1"), 1));
+        SensorArray sensorArray = new SensorArray(hardwareMap);
+        sensorArray.addSensor(new Sensor("sensor1", SensorType.DIST, 1));
         waitForStart();
         while (opModeIsActive()) {
             sensorArray.readAllLoopSaving();

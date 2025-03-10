@@ -21,8 +21,7 @@ public class AnalogEncoderOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        analogEncoder = new AnalogEncoder("encoder",0.0,operations);
-        analogEncoder.init(hardwareMap);
+        analogEncoder = new AnalogEncoder(hardwareMap,"encoder",0.0,operations);
         waitForStart();
         while (opModeIsActive()) {
             double currentPose = analogEncoder.getCurrentPosition(); // get the current position of the encoder

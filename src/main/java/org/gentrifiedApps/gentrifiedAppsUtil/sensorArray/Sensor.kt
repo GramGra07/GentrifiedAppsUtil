@@ -22,7 +22,7 @@ class Sensor(
     var period: Int,
     var analogEncoder: AnalogEncoder?
 ) {
-    constructor (name: String,period: Int,analogEncoder: AnalogEncoder) : this(name, SensorType.ANALOG_ENC, period)
+    constructor (analogEncoder: AnalogEncoder,period: Int) : this(analogEncoder.name, SensorType.ANALOG_ENC, period,analogEncoder)
     constructor (name: String,sensorType: SensorType,period: Int) : this(name, sensorType, period,null)
     private lateinit var enc: DcMotorEx
     private lateinit var dist: DistanceSensor
