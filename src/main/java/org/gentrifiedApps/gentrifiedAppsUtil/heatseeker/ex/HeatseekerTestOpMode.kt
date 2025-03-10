@@ -22,20 +22,21 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.SparkFu
 @Autonomous
 @Disabled
 class HeatseekerTestOpMode : LinearOpMode() {
-    private val otos: OTOSLocalizer = OTOSLocalizer(
-        "spark", this.hardwareMap, Target2D.blank(),
-        SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
-    )
-    private val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
-    private val heatseeker = Heatseeker(driver, PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0))
-
-    private val path = PathBuilder()
-        .addWaypoint(Waypoint(1.0, 2.0, Angle(90.0, AngleUnit.DEGREES), 1.0))
-        .addWaypoint(Waypoint(3.0, 4.0, Angle(90.0, AngleUnit.DEGREES), 1.0))
-        .addWaypoint(Waypoint(5.0, 6.0, Angle(90.0, AngleUnit.DEGREES), 1.0))
-        .build()
 
     override fun runOpMode() {
+        val otos: OTOSLocalizer = OTOSLocalizer(
+            "spark", this.hardwareMap, Target2D.blank(),
+            SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
+        )
+        val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
+        val heatseeker = Heatseeker(driver, PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0))
+
+        val path = PathBuilder()
+            .addWaypoint(Waypoint(1.0, 2.0, Angle(90.0, AngleUnit.DEGREES), 1.0))
+            .addWaypoint(Waypoint(3.0, 4.0, Angle(90.0, AngleUnit.DEGREES), 1.0))
+            .addWaypoint(Waypoint(5.0, 6.0, Angle(90.0, AngleUnit.DEGREES), 1.0))
+            .build()
+        waitForStart()
         if (opModeIsActive()) {
             heatseeker.followPath(path, 1.0)
         }
@@ -45,15 +46,16 @@ class HeatseekerTestOpMode : LinearOpMode() {
 @TeleOp
 @Disabled
 class HeatseekerTeleTestOpMode : LinearOpMode() {
-    private val otos: OTOSLocalizer = OTOSLocalizer(
-        "spark", this.hardwareMap, Target2D.blank(),
-        SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
-    )
-    private val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
-    private val heatseeker = Heatseeker(driver, PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0))
-    private val teleOpCorrector = heatseeker.teleOpCorrector()
-
     override fun runOpMode() {
+
+        val otos: OTOSLocalizer = OTOSLocalizer(
+            "spark", this.hardwareMap, Target2D.blank(),
+            SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
+        )
+        val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
+        val heatseeker = Heatseeker(driver, PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0))
+        val teleOpCorrector = heatseeker.teleOpCorrector()
+        waitForStart()
         while (opModeIsActive()) {
             var powerCoefficients = driveMecanum(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x)
             if (!powerCoefficients.notZero()){

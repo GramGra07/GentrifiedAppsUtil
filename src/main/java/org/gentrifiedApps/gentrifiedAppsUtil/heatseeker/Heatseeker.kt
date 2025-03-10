@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.FeedforwardController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PIDController
@@ -31,6 +32,7 @@ open class Heatseeker(
     private val feedforward = FeedforwardController(0.1, 0.05, 0.01)
 
     fun followPath(path: List<Path>, tolerance: Double) {
+        Scribe.instance.logDebug("Following path")
         require(driver.localizer != null)
         this.path = path.map { it.waypoint() }.toMutableList()
         driver.drawer.drawPath(this.path)

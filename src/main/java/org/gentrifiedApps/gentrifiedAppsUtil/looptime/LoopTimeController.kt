@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.looptime
 
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.objects.PeriodicLoopTimeObject
 
 /**
@@ -62,6 +63,9 @@ open class LoopTimeController(
         }
         deltaTime = currentTimems - lastTime
         lastTime = currentTimems
+        if (lastSecond < 30){
+            Scribe.instance.logWarning("Loops dropped past 30, this may cause issues and lag")
+        }
     }
 
     /**

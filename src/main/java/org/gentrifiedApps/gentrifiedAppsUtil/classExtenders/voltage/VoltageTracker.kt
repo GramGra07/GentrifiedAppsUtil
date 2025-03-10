@@ -3,6 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.voltage
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.VoltageSensor
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.VoltageCompensator
 
 /**
@@ -36,6 +37,9 @@ class VoltageTracker(hardwareMap: HardwareMap, private val usesVoltageCompensato
         voltageDrop = initialVoltage - currentVoltage
         if (currentVoltage < lowestVoltage) {
             lowestVoltage = currentVoltage
+            if (lowestVoltage<9.0){
+                Scribe.instance.logWarning("Dropped Voltage to: $lowestVoltage")
+            }
         }
     }
 

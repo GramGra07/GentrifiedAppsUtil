@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.idler
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 
 /**
  * A class to help with safe sleep actions, which FTC typically does not have.
@@ -22,6 +23,7 @@ class Idler(private val opMode: LinearOpMode) {
         elapsed.reset()
         while (elapsed.seconds() < time && opMode.opModeIsActive() == true && !opMode.isStopRequested) {
             updateWhileIdling.run()
+            Scribe.instance.logDebug("Idling for $time seconds, $elapsed seconds elapsed")
         }
     }
 }

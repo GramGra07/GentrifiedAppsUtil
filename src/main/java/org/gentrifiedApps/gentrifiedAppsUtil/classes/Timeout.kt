@@ -28,8 +28,9 @@ init {
     fun update() :Boolean{
         currentTime = System.currentTimeMillis().toDouble()/1000
         elapsedTime = currentTime - startTime
-        if (elapsedTime > allowedTime || breakCondition() == true) {
+        if ((elapsedTime > allowedTime || breakCondition() == true)&&!isTimedOut) {
             isTimedOut = true
+            Scribe.instance.logDebug("Timeout reached")
         }
         return isTimedOut
     }

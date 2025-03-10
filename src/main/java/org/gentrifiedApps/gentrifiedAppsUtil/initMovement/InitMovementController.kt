@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.initMovement
 
 import com.qualcomm.robotcore.hardware.Gamepad
 import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad.GamepadPlus
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 
 /**
  * A class to check if the robot should move after running the robot
@@ -48,6 +49,7 @@ class InitMovementController {
         if (!hasMoved) {
             if ((!gamepadPlus.atRest() || !gamepadPlus2.atRest())) {
                 hasMoved = true
+                Scribe.instance.logDebug("Robot has moved")
             }
         }
     }

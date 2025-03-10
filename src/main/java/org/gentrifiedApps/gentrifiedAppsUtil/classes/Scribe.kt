@@ -2,7 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
 import android.util.Log
 
-class Scribe private constructor(val tagger: String){
+class Scribe private constructor(private val tagger: String){
     fun logData(data: Any){
         log(Log.INFO,data)
     }
@@ -20,7 +20,7 @@ class Scribe private constructor(val tagger: String){
     }
     companion object{
         @JvmStatic
-        val defaultTagger = "Scribe"
+        private val defaultTagger = "Scribe"
         @JvmStatic
         var instance : Scribe = Scribe(defaultTagger)
         @JvmStatic

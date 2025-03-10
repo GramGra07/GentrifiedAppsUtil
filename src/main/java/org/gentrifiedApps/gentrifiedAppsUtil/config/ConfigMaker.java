@@ -12,6 +12,9 @@ import java.io.IOException;
 public class ConfigMaker{
     private boolean hasBeenBuilt = false;
     private String XML = "";
+    String getXML(){
+        return XML;
+    }
     private String CHUB = "     <LynxModule name=\"Control Hub\" port=\"173\">\n";
     private String EHub = "";
     private String WC = "";
