@@ -26,6 +26,17 @@ class AnalogEncoder(private val hwMap: HardwareMap,val name: String, private val
     fun getCurrentPosition(): Int {
         return calculator.runOperations(analogEncoder.voltage).toInt() - startPosition.toInt()
     }
+
+    companion object{
+        @JvmStatic
+        fun axon(hwMap: HardwareMap,name: String):AnalogEncoder{
+            return AnalogEncoder(hwMap,name, listOf(Operation(Operand.DIVIDE,3.3),Operation(Operand.MULTIPLY,360.0)))
+        }
+        @JvmStatic
+        fun rev_potentiometer(hwMap: HardwareMap,name: String):AnalogEncoder{
+            return AnalogEncoder(hwMap,name, listOf(Operation(Operand.MULTIPLY,81.8)))
+        }
+    }
 }
 /**
  * Represents a calculator that performs a list of operations on an input value.
