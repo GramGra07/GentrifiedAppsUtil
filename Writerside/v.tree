@@ -14,6 +14,11 @@
         <toc-element topic="Timeout.md"/>
         <toc-element topic="Scribe.md"/>
     </toc-element>
+    <toc-element toc-title="Drivers">
+        <toc-element topic="TankDriver.md"/>
+        <toc-element topic="MecanumDriver.md"/>
+        <toc-element topic="fieldcentricdriver.md"/>
+    </toc-element>
     <toc-element toc-title="LoopTimeController">
         <toc-element topic="looptimecontroller_what-is-it.md"/>
         <toc-element topic="looptimecontroller_why-use-it.md"/>
@@ -36,30 +41,27 @@
         <toc-element topic="servoplus_how-to-use-it.md"/>
         <toc-element topic="DiffyServo.md"/>
     </toc-element>
-    <toc-element toc-title="Drivers">
-        <toc-element topic="TankDriver.md"/>
-        <toc-element topic="MecanumDriver.md"/>
-        <toc-element topic="fieldcentricdriver.md"/>
-    </toc-element>
     <toc-element toc-title="DriverAid">
         <toc-element topic="driveraid_how-to-use-it.md"/>
     </toc-element>
     <toc-element toc-title="Idler">
         <toc-element topic="idler_usage-instructions.md"/>
     </toc-element>
-    <toc-element toc-title="StateMachineFTC">
-        <toc-element topic="what-is-a-state-machine.md"/>
-        <toc-element topic="why-use-a-state-machine.md"/>
-        <toc-element topic="how-to-use-it.md"/>
-        <toc-element topic="other-useful-functions.md"/>
-    </toc-element>
-    <toc-element toc-title="ParallelRunSM">
-        <toc-element topic="parallel-run-sm_what-is-it.md"/>
-        <toc-element topic="parallel-run-sm_how-to-use-it.md"/>
-    </toc-element>
-    <toc-element toc-title="SequentialRunSM">
-        <toc-element topic="sequential-run-sm_what-is-it.md"/>
-        <toc-element topic="sequential-run-sm_how-to-use-it.md"/>
+    <toc-element toc-title="State Machines">
+        <toc-element toc-title="StateMachineFTC">
+            <toc-element topic="what-is-a-state-machine.md"/>
+            <toc-element topic="why-use-a-state-machine.md"/>
+            <toc-element topic="how-to-use-it.md"/>
+            <toc-element topic="other-useful-functions.md"/>
+        </toc-element>
+        <toc-element toc-title="ParallelRunSM">
+            <toc-element topic="parallel-run-sm_what-is-it.md"/>
+            <toc-element topic="parallel-run-sm_how-to-use-it.md"/>
+        </toc-element>
+        <toc-element toc-title="SequentialRunSM">
+            <toc-element topic="sequential-run-sm_what-is-it.md"/>
+            <toc-element topic="sequential-run-sm_how-to-use-it.md"/>
+        </toc-element>
     </toc-element>
     <toc-element toc-title="ConfigCreator">
         <toc-element topic="Config-Creator.md"/>

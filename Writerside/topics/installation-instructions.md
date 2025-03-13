@@ -28,7 +28,7 @@ repositories {
 }
 ```
 
-Inside your `build.common.gradle` file, add the following to your packaging options:
+Inside your `build.common.gradle` file, add the following to your packaging options in your `android` block:
 
 ```gradle
 packagingOptions {
