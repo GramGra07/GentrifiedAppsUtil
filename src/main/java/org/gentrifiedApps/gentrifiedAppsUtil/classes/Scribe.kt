@@ -31,9 +31,14 @@ class Scribe private constructor(private val tagger: String){
         fun reset(){
             this.instance = Scribe(defaultTagger)
         }
+        private fun isRunningTests(): Boolean {
+            return System.getProperty("java.class.path").contains("junit")
+        }
     }
 
     private fun log(priority: Int, data: Any){
-        Log.println(priority,tagger,data.toString())
+        if (!isRunningTests()) {
+            Log.println(priority, tagger, data.toString())
+        }
     }
 }

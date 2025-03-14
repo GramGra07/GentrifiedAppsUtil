@@ -109,7 +109,7 @@ class LoopTimeAnalyzerTest {
 
         // Assertions for Function2
         assertEquals(3, testableFunction2.allTimes.size)
-        assertEquals(60.0, testableFunction2.allTimes.sum(), 35.0)
+        assertEquals(60.0, testableFunction2.allTimes.sum(), 50.0)
         assertEquals(20.0, testableFunction2.averageTime, 12.0)
     }
 

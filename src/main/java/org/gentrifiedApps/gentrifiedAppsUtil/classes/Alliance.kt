@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
-import org.gentrifiedApps.velocityvision.enums.Color
+import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.enums.Color
 
 enum class Alliance {
     RED, BLUE;

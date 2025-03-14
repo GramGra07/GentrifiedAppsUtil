@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.0"
 dashboard = "0.4.16"
+easyopencv = "1.7.3"
 junitJunit = "4.12"
 kotlin = "1.9.0"
 coreKtx = "1.10.1"
@@ -8,6 +9,7 @@ junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.7.0"
+listenablefuture = "9999.0-empty-to-avoid-conflict-with-guava"
 material = "1.10.0"
 jetbrainsKotlinJvm = "1.9.0"
 coreKtxVersion = "1.13.1"
@@ -20,19 +22,21 @@ velocityvision = "1.1.1"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 dashboard = { module = "com.acmerobotics.dashboard:dashboard", version.ref = "dashboard" }
+easyopencv = { module = "org.openftc:easyopencv", version.ref = "easyopencv" }
 hardware = { module = "org.firstinspires.ftc:Hardware", version.ref = "robotcore" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 junit-v412 = { module = "junit:junit", version.ref = "junitJunit" }
+listenablefuture = { module = "com.google.guava:listenablefuture", version.ref = "listenablefuture" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 robotcore = { module = "org.firstinspires.ftc:RobotCore", version.ref = "robotcore" }
 testng = { module = "org.testng:testng", version.ref = "testng" }
-velocityvision = { module = "com.github.GramGra07:VelocityVision", version.ref = "velocityvision" }
+vision = { module = "org.firstinspires.ftc:Vision", version.ref = "robotcore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

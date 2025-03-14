@@ -64,7 +64,7 @@ open class LoopTimeController(
         deltaTime = currentTimems - lastTime
         lastTime = currentTimems
         if (lastSecond < 30){
-            Scribe.instance.logWarning("Loops dropped past 30, this may cause issues and lag")
+            Scribe.instance.logDebug("Loops dropped past 30, this may cause issues and lag")
         }
     }
 

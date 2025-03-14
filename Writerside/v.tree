@@ -7,12 +7,8 @@
 
     <toc-element topic="SUMMARY.md"/>
     <toc-element topic="installation-instructions.md"/>
-    <toc-element toc-title="Other Classes">
-        <toc-element topic="other-classes_binaryarray.md"/>
-        <toc-element topic="alliance.md"/>
-        <toc-element topic="other-classes_analogencoder.md"/>
-        <toc-element topic="Timeout.md"/>
-        <toc-element topic="Scribe.md"/>
+    <toc-element toc-title="ConfigCreator">
+        <toc-element topic="Config-Creator.md"/>
     </toc-element>
     <toc-element toc-title="Drivers">
         <toc-element topic="TankDriver.md"/>
@@ -27,51 +23,65 @@
         <toc-element topic="looptimecontroller_other-useful-functions.md"/>
         <toc-element topic="analyzer.md"/>
     </toc-element>
-    <toc-element toc-title="GamepadPlus">
-        <toc-element topic="gamepadplus_why-use-it.md"/>
-        <toc-element topic="gamepadplus_how-to-use-it.md"/>
-        <toc-element topic="gamepadplus_other-useful-functions.md"/>
-        <toc-element topic="Macros.md"/>
+    <toc-element toc-title="SensorArray">
+        <toc-element topic="sensor-array_how-to-use-it.md"/>
     </toc-element>
-    <toc-element toc-title="Voltage">
-        <toc-element topic="What-is-voltage-compensation.md"/>
-        <toc-element topic="What-is-the-voltage-tracker.md"/>
-    </toc-element>
-    <toc-element toc-title="ServoPlus">
-        <toc-element topic="servoplus_how-to-use-it.md"/>
-        <toc-element topic="DiffyServo.md"/>
+    <toc-element toc-title="Hardware">
+        <toc-element toc-title="Voltage">
+            <toc-element topic="What-is-voltage-compensation.md"/>
+            <toc-element topic="What-is-the-voltage-tracker.md"/>
+        </toc-element>
+        <toc-element toc-title="ServoPlus">
+            <toc-element topic="servoplus_how-to-use-it.md"/>
+            <toc-element topic="DiffyServo.md"/>
+        </toc-element>
+        <toc-element toc-title="GamepadPlus">
+            <toc-element topic="gamepadplus_why-use-it.md"/>
+            <toc-element topic="gamepadplus_how-to-use-it.md"/>
+            <toc-element topic="gamepadplus_other-useful-functions.md"/>
+            <toc-element topic="Macros.md"/>
+        </toc-element>
     </toc-element>
     <toc-element toc-title="DriverAid">
         <toc-element topic="driveraid_how-to-use-it.md"/>
     </toc-element>
-    <toc-element toc-title="Idler">
-        <toc-element topic="idler_usage-instructions.md"/>
-    </toc-element>
-    <toc-element toc-title="State Machines">
-        <toc-element toc-title="StateMachineFTC">
-            <toc-element topic="what-is-a-state-machine.md"/>
-            <toc-element topic="why-use-a-state-machine.md"/>
-            <toc-element topic="how-to-use-it.md"/>
-            <toc-element topic="other-useful-functions.md"/>
+    <toc-element toc-title="Autonomous">
+        <toc-element toc-title="State Machines">
+            <toc-element toc-title="StateMachineFTC">
+                <toc-element topic="what-is-a-state-machine.md"/>
+                <toc-element topic="why-use-a-state-machine.md"/>
+                <toc-element topic="how-to-use-it.md"/>
+                <toc-element topic="other-useful-functions.md"/>
+            </toc-element>
+            <toc-element toc-title="ParallelRunSM">
+                <toc-element topic="parallel-run-sm_what-is-it.md"/>
+                <toc-element topic="parallel-run-sm_how-to-use-it.md"/>
+            </toc-element>
+            <toc-element toc-title="SequentialRunSM">
+                <toc-element topic="sequential-run-sm_what-is-it.md"/>
+                <toc-element topic="sequential-run-sm_how-to-use-it.md"/>
+            </toc-element>
         </toc-element>
-        <toc-element toc-title="ParallelRunSM">
-            <toc-element topic="parallel-run-sm_what-is-it.md"/>
-            <toc-element topic="parallel-run-sm_how-to-use-it.md"/>
+        <toc-element toc-title="Idler">
+            <toc-element topic="idler_usage-instructions.md"/>
         </toc-element>
-        <toc-element toc-title="SequentialRunSM">
-            <toc-element topic="sequential-run-sm_what-is-it.md"/>
-            <toc-element topic="sequential-run-sm_how-to-use-it.md"/>
-        </toc-element>
-    </toc-element>
-    <toc-element toc-title="ConfigCreator">
-        <toc-element topic="Config-Creator.md"/>
-    </toc-element>
-    <toc-element toc-title="SensorArray">
-        <toc-element topic="sensor-array_how-to-use-it.md"/>
     </toc-element>
     <toc-element toc-title="Heatseeker">
         <toc-element toc-title="Simulator">
             <toc-element topic="Setup-Instructions.md"/>
         </toc-element>
+    </toc-element>
+    <toc-element toc-title="Other Classes">
+        <toc-element topic="other-classes_binaryarray.md"/>
+        <toc-element topic="alliance.md"/>
+        <toc-element topic="other-classes_analogencoder.md"/>
+        <toc-element topic="Timeout.md"/>
+        <toc-element topic="Scribe.md"/>
+    </toc-element>
+    <toc-element toc-title="Velocity Vision">
+        <toc-element topic="vision-portal.md"/>
+        <toc-element topic="black-and-white-dot-detection-bow.md"/>
+        <toc-element topic="mean-of-area-detection-meo.md"/>
+        <toc-element topic="sample-data-detector-sdd.md"/>
     </toc-element>
 </instance-profile>

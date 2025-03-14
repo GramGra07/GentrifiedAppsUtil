@@ -80,17 +80,20 @@ repositories {
 
 dependencies {
     implementation libs.hardware
-    implementation libs.robotcore
 
     compileOnly libs.dashboard
 
-    implementation libs.velocityvision
+
+    implementation libs.robotcore
+    implementation libs.easyopencv
+    implementation libs.vision
+
     implementation libs.core.ktx
     implementation libs.junit.v412
     implementation libs.junit.jupiter
     implementation libs.testng
 
-    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+    implementation libs.listenablefuture
 }
 
 afterEvaluate {

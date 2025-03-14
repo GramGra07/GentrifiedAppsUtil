@@ -4,6 +4,7 @@
 
 ### Contents:
 
+* VelocityVision
 * LoopTimeController
 * ServoPlus
 * AnalogEncoder

@@ -30,7 +30,6 @@ init {
         elapsedTime = currentTime - startTime
         if ((elapsedTime > allowedTime || breakCondition() == true)&&!isTimedOut) {
             isTimedOut = true
-            Scribe.instance.logDebug("Timeout reached")
         }
         return isTimedOut
     }
