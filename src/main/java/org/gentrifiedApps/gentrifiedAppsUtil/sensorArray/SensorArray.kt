@@ -2,11 +2,6 @@ package org.gentrifiedApps.gentrifiedAppsUtil.sensorArray
 
 import org.firstinspires.ftc.robotcore.external.Telemetry
 
-
-//ex
-
-//val sensorArray: SensorArray = SensorArray()
-//sensorArray.addSensor( Sensor("pitchEncoder",SensorType.ENC, { pitchMotor = hardwareMap.get(DcMotorEx::class.java, "pitchMotor") }, 1))
 /**
  * A way to represent the array of sensors, as well as reading them all at once
  * @see Sensor
