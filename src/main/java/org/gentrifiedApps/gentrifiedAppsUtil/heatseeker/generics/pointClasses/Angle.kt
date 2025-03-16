@@ -1,5 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses
 
+import kotlin.math.PI
+
 data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.RADIANS) {
     fun toRadians(): Double {
         return when (unit) {
@@ -37,6 +39,21 @@ data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.RADIANS) {
 
     fun errorToD(target: Angle): Double {
         return errorTo(target).angle
+    }
+
+    fun norm(angle: Double): Angle {
+        var normalizedAngle = angle % (2 * PI)
+        if (normalizedAngle < 0) {
+            normalizedAngle += 2 * PI
+        }
+        return Angle(normalizedAngle)
+    }
+    fun norm(): Angle {
+        var normalizedAngle = this.toRadians() % (2 * PI)
+        if (normalizedAngle < 0) {
+            normalizedAngle += 2 * PI
+        }
+        return Angle(normalizedAngle,AngleUnit.RADIANS).toAngleUnit(unit)
     }
 
     companion object {
