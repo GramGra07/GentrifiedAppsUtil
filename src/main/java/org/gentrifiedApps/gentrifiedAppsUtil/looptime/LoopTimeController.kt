@@ -1,5 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.looptime
 
+import com.qualcomm.hardware.lynx.LynxModule
+import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
@@ -87,17 +89,27 @@ open class LoopTimeController(
 //        telemetry.addData("lastsecondt",lastSecondT)
         telemetry.addData("Last Second LPS", "%.1f", lastSecond)
     }
+    /**
+     * A function to run a function every given amount of loops.
+     * @param period The amount of loops to wait to run the function
+     * @param func The function to run
+     */
+    fun every(period: Int, func: Runnable) {
+        if (this.loops % period == 0) {
+            func.run()
+        }
+    }
 
-    companion object {
-        /**
-         * A function to run a function every given amount of loops.
-         * @param period The amount of loops to wait to run the function
-         * @param func The function to run
-         */
-        fun LoopTimeController.every(period: Int, func: Runnable) {
-            if (this.loops % period == 0) {
-                func.run()
-            }
+    /**
+     * A function to save your loop times, potentially boosting by 30-40
+     * @param hw The hardware map to use
+     * @see LynxModule
+     */
+    fun setLoopSavingCache(hw: HardwareMap){
+        val allHubs: List<LynxModule> = hw.getAll(LynxModule::class.java)
+
+        for (hub in allHubs) {
+            hub.bulkCachingMode = LynxModule.BulkCachingMode.AUTO
         }
     }
 }
