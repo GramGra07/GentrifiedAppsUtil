@@ -21,8 +21,7 @@ class MecanumDriveDirectionTest : LinearOpMode() {
         DcMotorSimple.Direction.FORWARD,
         DcMotorSimple.Direction.FORWARD,
         DcMotorSimple.Direction.FORWARD,
-        DcMotorSimple.Direction.FORWARD,
-        null
+        DcMotorSimple.Direction.FORWARD
     )
 
     override fun runOpMode() {

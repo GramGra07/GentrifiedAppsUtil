@@ -37,8 +37,9 @@ class HeatseekerTestOpMode : LinearOpMode() {
             DcMotorSimple.Direction.REVERSE,
             DcMotorSimple.Direction.FORWARD,
             DcMotorSimple.Direction.FORWARD,
-            otos
         )
+        driver.localizer =
+            otos
         val heatseeker = Heatseeker(
             driver,
             PIDController(1.0, 0.0, 0.0),
@@ -77,8 +78,9 @@ class HeatseekerTeleTestOpMode : LinearOpMode() {
             DcMotorSimple.Direction.REVERSE,
             DcMotorSimple.Direction.FORWARD,
             DcMotorSimple.Direction.FORWARD,
-            otos
         )
+        driver.localizer =
+            otos
         val heatseeker = Heatseeker(
             driver,
             PIDController(1.0, 0.0, 0.0),

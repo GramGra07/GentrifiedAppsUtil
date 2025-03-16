@@ -258,7 +258,7 @@ class EncoderTests{
     fun testEncoderSpecsBasic(){
         val encoderSpecs = EncoderSpecs(1, 1.0, 1.0)
         assert(encoderSpecs.ticksPerInch == 1.0 / Math.PI)
-        val encoder = Encoder(encoderSpecs, "encoder", DcMotorSimple.Direction.FORWARD, 0.0,null)
+        val encoder = Encoder(encoderSpecs, "encoder", DcMotorSimple.Direction.FORWARD,null)
         assert(encoder.getTicks() == 0)
         assert(encoder.getDelta() == 0)
         assert(encoder.getInches() == 0.0)
