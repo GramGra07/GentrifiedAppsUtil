@@ -12,7 +12,7 @@ import org.opencv.android.Utils
 import org.opencv.core.Mat
 import java.util.concurrent.atomic.AtomicReference
 
-class HomographicProjection (
+class HomographicProjection(
     val cameraParams: CameraParams,
 ) : VisionProcessor,
     CameraStreamSource {

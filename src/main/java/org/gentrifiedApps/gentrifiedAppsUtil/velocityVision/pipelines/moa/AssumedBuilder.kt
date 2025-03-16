@@ -9,6 +9,7 @@ class AssumedBuilder(
     constructor(function: Runnable) : this("Assumed", function)
     constructor(name: String) : this(name, null)
     constructor() : this("Assumed", null)
+
     override fun execute() {
         function?.run()
     }

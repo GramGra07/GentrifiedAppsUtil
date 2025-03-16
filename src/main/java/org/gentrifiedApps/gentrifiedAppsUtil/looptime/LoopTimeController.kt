@@ -13,6 +13,7 @@ open class LoopTimeController(
     private val periodics: List<PeriodicLoopTimeObject?>? = null,
 ) {
     constructor() : this(null)
+
     private val timer = ElapsedTime()
     var loops: Int = 0
     private var lps = 0.0
@@ -63,7 +64,7 @@ open class LoopTimeController(
         }
         deltaTime = currentTimems - lastTime
         lastTime = currentTimems
-        if (lastSecond < 30){
+        if (lastSecond < 30) {
             Scribe.instance.logDebug("Loops dropped past 30, this may cause issues and lag")
         }
     }

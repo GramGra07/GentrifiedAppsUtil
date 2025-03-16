@@ -1,6 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.driverAid
 
-import org.gentrifiedApps.gentrifiedAppsUtil.driverAid.DriverAid.DAFunc
 import org.jetbrains.annotations.TestOnly
 
 /**
@@ -15,6 +14,12 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
     var daState: Enum<T>? = null
     private var daFunc: DAFunc<T>? = null
 
+    /**
+     * A function to get the current driver aid function
+     * Do not use this unless this is a test case
+     * @return The current driver aid function
+     * @see DAFunc
+     */
     @TestOnly
     fun getDAFunc() = daFunc
 

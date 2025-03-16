@@ -15,6 +15,7 @@ object Util {
         Imgproc.dilate(mask, mask, Mat(), Point(-1.0, -1.0), 2)
         return mask
     }
+
     fun findContours(mask: Mat): List<MatOfPoint> {
         val contours: List<MatOfPoint> = ArrayList()
         val hierarchy = Mat()
@@ -27,6 +28,7 @@ object Util {
         )
         return contours
     }
+
     fun getContourCenter(contour: MatOfPoint): Point? {
         val moments = Imgproc.moments(contour)
         if (moments._m00 != 0.0) {

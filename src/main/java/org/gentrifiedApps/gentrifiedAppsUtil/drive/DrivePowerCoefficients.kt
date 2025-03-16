@@ -12,13 +12,14 @@ data class DrivePowerCoefficients(
     val frontRight: Double,
     val backLeft: Double,
     val backRight: Double
-){
-    companion object{
-        fun zeros(): DrivePowerCoefficients{
-            return DrivePowerCoefficients(0.0,0.0,0.0,0.0)
+) {
+    companion object {
+        fun zeros(): DrivePowerCoefficients {
+            return DrivePowerCoefficients(0.0, 0.0, 0.0, 0.0)
         }
     }
-    fun notZero():Boolean{
+
+    fun notZero(): Boolean {
         return this != zeros()
     }
 }

@@ -17,11 +17,17 @@ public class ParallelRunSM<T extends Enum<T>> {
     private final List<T> states;
     private final Map<T, StateChangeCallback> onEnterCommands;
     private final Supplier<Boolean> exitTransition;
+    private final AbstractMap.SimpleEntry<Boolean, Integer> timeout;
     private boolean isStarted = false;
     private boolean isRunning = true;
     private long startTime;
 
-    private final AbstractMap.SimpleEntry<Boolean, Integer> timeout;
+    ParallelRunSM(ParallelRunSM.Builder<T> builder) {
+        this.states = builder.states;
+        this.exitTransition = builder.exitTransition;
+        this.onEnterCommands = builder.onEnterCommands;
+        this.timeout = builder.timeout;
+    }
 
     /**
      * Returns whether the state machine is running
@@ -41,11 +47,66 @@ public class ParallelRunSM<T extends Enum<T>> {
         return isStarted;
     }
 
-    ParallelRunSM(ParallelRunSM.Builder<T> builder) {
-        this.states = builder.states;
-        this.exitTransition = builder.exitTransition;
-        this.onEnterCommands = builder.onEnterCommands;
-        this.timeout = builder.timeout;
+    /**
+     * Starts the state machine
+     */
+    public void start() {
+        if (isStarted) {
+            throw new IllegalStateException("StateMachine has already been started");
+        }
+        isStarted = true;
+        startTime = System.currentTimeMillis();
+    }
+
+    /**
+     * Stops the state machine
+     */
+    public void stop() {
+        if (!isRunning) {
+            throw new IllegalStateException("StateMachine is already stopped");
+        }
+        isRunning = false;
+        //delete all actions
+        states.clear();
+        onEnterCommands.clear();
+    }
+
+    /**
+     * Updates the state machine, should only be done once
+     *
+     * @return boolean if the state machine has been updated
+     */
+    public boolean update() {
+        if (!states.isEmpty()) {
+            // run all states at once
+            for (T state : states) {
+                StateChangeCallback onEnterAction = onEnterCommands.get(state);
+                if (onEnterAction != null) {
+                    onEnterAction.onStateChange();
+                }
+            }
+        }
+        if (checkExitTransition()) {
+            isRunning = false;
+        }
+        return true;
+    }
+
+    /**
+     * Checks if the exit transition has been met, aka if the state machine should stop running OR if the timeout has been reached
+     *
+     * @return boolean if the exit transition has been met
+     */
+    public boolean checkExitTransition() {
+        boolean exitResult = exitTransition.get();
+        long elapsedTime = System.currentTimeMillis() - startTime;
+//        System.out.println("Checking exit transition: " + exitResult);
+//        System.out.println("Elapsed time: " + elapsedTime + "ms");
+        final boolean condition = exitResult || (timeout.getKey() && elapsedTime > timeout.getValue());
+        if (condition) {
+            isRunning = false;
+        }
+        return condition;
     }
 
     public static class Builder<T extends Enum<T>> {
@@ -153,67 +214,5 @@ public class ParallelRunSM<T extends Enum<T>> {
             this.machine = new ParallelRunSM<T>(this);
             return this.machine;
         }
-    }
-
-    /**
-     * Starts the state machine
-     */
-    public void start() {
-        if (isStarted) {
-            throw new IllegalStateException("StateMachine has already been started");
-        }
-        isStarted = true;
-        startTime = System.currentTimeMillis();
-    }
-
-    /**
-     * Stops the state machine
-     */
-    public void stop() {
-        if (!isRunning) {
-            throw new IllegalStateException("StateMachine is already stopped");
-        }
-        isRunning = false;
-        //delete all actions
-        states.clear();
-        onEnterCommands.clear();
-    }
-
-    /**
-     * Updates the state machine, should only be done once
-     *
-     * @return boolean if the state machine has been updated
-     */
-    public boolean update() {
-        if (!states.isEmpty()) {
-            // run all states at once
-            for (T state : states) {
-                StateChangeCallback onEnterAction = onEnterCommands.get(state);
-                if (onEnterAction != null) {
-                    onEnterAction.onStateChange();
-                }
-            }
-        }
-        if (checkExitTransition()) {
-            isRunning = false;
-        }
-        return true;
-    }
-
-    /**
-     * Checks if the exit transition has been met, aka if the state machine should stop running OR if the timeout has been reached
-     *
-     * @return boolean if the exit transition has been met
-     */
-    public boolean checkExitTransition() {
-        boolean exitResult = exitTransition.get();
-        long elapsedTime = System.currentTimeMillis() - startTime;
-//        System.out.println("Checking exit transition: " + exitResult);
-//        System.out.println("Elapsed time: " + elapsedTime + "ms");
-        final boolean condition = exitResult || (timeout.getKey() && elapsedTime > timeout.getValue());
-        if (condition) {
-            isRunning = false;
-        }
-        return condition;
     }
 }

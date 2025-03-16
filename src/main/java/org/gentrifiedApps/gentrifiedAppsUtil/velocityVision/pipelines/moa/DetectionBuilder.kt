@@ -23,6 +23,7 @@ class DetectionBuilder(
         scalarLow: Scalar,
         scalarHigh: Scalar,
     ) : this(rectangle, name, scalarLow, scalarHigh, null)
+
     override fun execute() {
         function?.run()
     }

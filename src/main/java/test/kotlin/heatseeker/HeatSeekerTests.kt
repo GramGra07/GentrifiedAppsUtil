@@ -68,7 +68,7 @@ class AngleTests{
     fun testAngle() {
         val angle = Angle.blank()
         assert(angle.angle == 0.0)
-        assert(angle.unit == AngleUnit.DEGREES)
+        assert(angle.unit == AngleUnit.RADIANS)
         assert(angle.toRadians() == 0.0)
         assert(angle.toDegrees() == 0.0)
         assert(angle.toAngleUnit(AngleUnit.DEGREES).angle == 0.0)

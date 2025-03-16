@@ -2,6 +2,8 @@ package test.kotlin.drive
 
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.FieldCentricDriver
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
 import org.junit.Test
 import org.testng.Assert.assertEquals
 
@@ -12,28 +14,28 @@ class FieldCentricTest {
         val x = 0.0
         val y = 1.0
         val rotation = 0.0
-        val gyroAngle = Math.toRadians(90.0)
+        val gyroAngle = Angle(90.0, AngleUnit.DEGREES)
 
         val result: DrivePowerCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
 
-        assertEquals(1.0, result.frontLeft, "Front left power should be 1.0")
+        assertEquals(-1.0, result.frontLeft, "Front left power should be 1.0")
         assertEquals(1.0, result.frontRight, "Front right power should be 1.0")
         assertEquals(1.0, result.backLeft, "Back left power should be 1.0")
-        assertEquals(1.0, result.backRight, "Back right power should be 1.0")
+        assertEquals(-1.0, result.backRight, "Back right power should be 1.0")
     }
     @Test
     fun testDriveFieldCentricBack() {
         val x = 0.0
         val y = -1.0
         val rotation = 0.0
-        val gyroAngle = Math.toRadians(90.0)
+        val gyroAngle = Angle(90.0, AngleUnit.DEGREES)
 
         val result: DrivePowerCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
 
-        assertEquals(-1.0, result.frontLeft, )
+        assertEquals(1.0, result.frontLeft, )
         assertEquals(-1.0, result.frontRight, )
         assertEquals(-1.0, result.backLeft, )
-        assertEquals(-1.0, result.backRight, )
+        assertEquals(1.0, result.backRight, )
     }
 
     @Test
@@ -41,7 +43,7 @@ class FieldCentricTest {
         val x = 0.0
         val y = 0.0
         val rotation = 1.0
-        val gyroAngle = 0.0
+        val gyroAngle = Angle(0.0, AngleUnit.DEGREES)
 
         val result: DrivePowerCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
 
@@ -56,11 +58,11 @@ class FieldCentricTest {
         val x = 0.0
         val y = 0.0
         val rotation = 0.0
-        val gyroAngle = Math.PI / 2
+        val gyroAngle = Angle(90.0, AngleUnit.DEGREES)
 
         val result: DrivePowerCoefficients = FieldCentricDriver.driveFieldCentric(x, y, rotation, gyroAngle)
 
-        assertEquals(0.0, result.frontLeft, "Front left power should be 0.0")
+        assertEquals(-0.0, result.frontLeft, "Front left power should be 0.0")
         assertEquals(0.0, result.frontRight, "Front right power should be 0.0")
         assertEquals(0.0, result.backLeft, "Back left power should be 0.0")
         assertEquals(0.0, result.backRight, "Back right power should be 0.0")
@@ -69,7 +71,7 @@ class FieldCentricTest {
 
     @Test
     fun testDriveFieldCentric_ZeroInput() {
-        val result = FieldCentricDriver.driveFieldCentric(0.0, 0.0, 0.0, 0.0)
+        val result = FieldCentricDriver.driveFieldCentric(0.0, 0.0, 0.0, Angle(0.0, AngleUnit.DEGREES))
         assertEquals(0.0, result.frontLeft, delta)
         assertEquals(0.0, result.frontRight, delta)
         assertEquals(0.0, result.backLeft, delta)
@@ -78,43 +80,43 @@ class FieldCentricTest {
 
     @Test
     fun testDriveFieldCentric_Forward() {
-        val result = FieldCentricDriver.driveFieldCentric(0.0, 1.0, 0.0, Math.toRadians(90.0))
-        assertEquals(1.0, result.frontLeft)
-        assertEquals(1.0, result.frontRight)
-        assertEquals(1.0, result.backLeft)
-        assertEquals(1.0, result.backRight)
-    }
-
-    @Test
-    fun testDriveFieldCentric_RightStrafe() {
-        val result = FieldCentricDriver.driveFieldCentric(1.0, 0.0, 0.0, Math.toRadians(90.0))
-        assertEquals(1.0, result.frontRight, delta)
-        assertEquals(-1.0, result.backRight, delta)
-        assertEquals(-1.0, result.frontLeft, delta)
-        assertEquals(1.0, result.backLeft, delta)
-    }
-
-    @Test
-    fun testDriveFieldCentric_DiagonalMovement() {
-        var result = FieldCentricDriver.driveFieldCentric(1.0, 1.0, 0.0, Math.toRadians(90.0))
-        println(result.frontRight)
-        println(result.backRight)
-        println(result.frontLeft)
-        println(result.backLeft)
-        assertEquals(1.0, result.frontRight)
-        assertEquals(1.0, result.backLeft)
-        result = FieldCentricDriver.driveFieldCentric(1.0, -1.0, 0.0, Math.toRadians(90.0))
-        println(result.frontRight)
-        println(result.backRight)
-        println(result.frontLeft)
-        println(result.backLeft)
+        val result = FieldCentricDriver.driveFieldCentric(0.0, 1.0, 0.0, Angle(90.0, AngleUnit.DEGREES))
         assertEquals(-1.0, result.frontLeft)
+        assertEquals(1.0, result.frontRight)
+        assertEquals(1.0, result.backLeft)
         assertEquals(-1.0, result.backRight)
     }
 
     @Test
+    fun testDriveFieldCentric_RightStrafe() {
+        val result = FieldCentricDriver.driveFieldCentric(1.0, 0.0, 0.0, Angle(90.0, AngleUnit.DEGREES))
+        assertEquals(-1.0, result.frontRight, delta)
+        assertEquals(-1.0, result.backRight, delta)
+        assertEquals(-1.0, result.frontLeft, delta)
+        assertEquals(-1.0, result.backLeft, delta)
+    }
+
+    @Test
+    fun testDriveFieldCentric_DiagonalMovement() {
+        var result = FieldCentricDriver.driveFieldCentric(1.0, 1.0, 0.0, Angle(90.0, AngleUnit.DEGREES))
+        println(result.frontRight)
+        println(result.backRight)
+        println(result.frontLeft)
+        println(result.backLeft)
+        assertEquals(0.0, result.frontRight,1e-5)
+        assertEquals(.0, result.backLeft,1e-5)
+        result = FieldCentricDriver.driveFieldCentric(1.0, -1.0, 0.0, Angle(90.0, AngleUnit.DEGREES))
+        println(result.frontRight)
+        println(result.backRight)
+        println(result.frontLeft)
+        println(result.backLeft)
+        assertEquals(0.0, result.frontLeft,1e-5)
+        assertEquals(0.0, result.backRight,1e-5)
+    }
+
+    @Test
     fun testDriveFieldCentric_RotationOnly() {
-        val result = FieldCentricDriver.driveFieldCentric(0.0, 0.0, 1.0, 0.0)
+        val result = FieldCentricDriver.driveFieldCentric(0.0, 0.0, 1.0, Angle(0.0, AngleUnit.DEGREES))
         assertEquals(-1.0, result.frontLeft, delta)
         assertEquals(1.0, result.frontRight, delta)
         assertEquals(-1.0, result.backLeft, delta)

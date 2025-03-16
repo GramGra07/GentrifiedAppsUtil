@@ -18,7 +18,7 @@ import org.opencv.imgproc.Imgproc
 import org.opencv.imgproc.Imgproc.FONT_HERSHEY_SIMPLEX
 import java.util.concurrent.atomic.AtomicReference
 
-class PoseSolver (
+class PoseSolver(
     val cameraParams: CameraParams,
     val knownMark: KnownMark,
 ) : VisionProcessor,
@@ -43,7 +43,15 @@ class PoseSolver (
         val imagePoints = MatOfPoint2f(*markerCenters.toTypedArray())
         val objectPoints = knownMark.toMatOfPoint3f()
         val robotPose = MarkLocalizer().estimateRobotPose(cameraParams, objectPoints, imagePoints)
-        Imgproc.putText(frame, "Robot pose: $robotPose", Point(10.0, 50.0), FONT_HERSHEY_SIMPLEX, 1.0, Scalar(255.0, 255.0, 255.0), 2)
+        Imgproc.putText(
+            frame,
+            "Robot pose: $robotPose",
+            Point(10.0, 50.0),
+            FONT_HERSHEY_SIMPLEX,
+            1.0,
+            Scalar(255.0, 255.0, 255.0),
+            2
+        )
 
         val b =
             Bitmap.createBitmap(frame.width(), frame.height(), Bitmap.Config.RGB_565)

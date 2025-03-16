@@ -26,7 +26,8 @@ class Drawer {
             .strokeCircle(target.x, target.y, roboRad)
             .strokeLine(p1s2.x, p1s2.y, newS2.x, newS2.y)
     }
-    fun drawPath(path:List<Waypoint>){
+
+    fun drawPath(path: List<Waypoint>) {
         val packet = TelemetryPacket()
         val fieldOverlay = packet.fieldOverlay()
         val color = "green"

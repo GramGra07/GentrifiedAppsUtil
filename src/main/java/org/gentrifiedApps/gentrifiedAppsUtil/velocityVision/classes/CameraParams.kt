@@ -7,7 +7,7 @@ data class CameraParams(
     val lensIntrinsics: LensIntrinsics,
     val translationalVector: TranslationalVector,
     val rotationalVector: RotationVector
-){
+) {
     fun toMat(): Mat {
         val cameraMatrix = Mat(3, 3, CvType.CV_64F)
         cameraMatrix.put(0, 0, this.lensIntrinsics.fx!!)

@@ -10,13 +10,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.stateMachine.StateMachine;
 @Autonomous
 @Disabled
 public class StateMachineLocal extends LinearOpMode {
-    public enum state {
-        INIT,
-        StateOne,
-        END,
-        STOP,
-    }
-
     @Override
     public void runOpMode() {
         StateMachine<state> machine = new StateMachine.Builder<state>()
@@ -51,5 +44,12 @@ public class StateMachineLocal extends LinearOpMode {
         while (machine.mainLoop(this)) {
             machine.update();
         }
+    }
+
+    public enum state {
+        INIT,
+        StateOne,
+        END,
+        STOP,
     }
 }

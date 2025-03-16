@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.ServoController
  */
 class ServoPlus(hardwareMap: HardwareMap, name: String, degree: Double = 180.0) : Servo {
     constructor(hardwareMap: HardwareMap, name: String) : this(hardwareMap, name, 180.0)
+
     private val servo: Servo = hardwareMap.get(Servo::class.java, name)
     private val multiplier = 1.0 / degree
 

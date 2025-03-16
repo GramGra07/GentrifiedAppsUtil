@@ -6,6 +6,7 @@ interface LensIntrinsics {
     var cx: Double?
     var cy: Double?
 }
+
 class DefaultLensIntrinsics(
     override var fx: Double? = 0.0,
     override var fy: Double? = 0.0,

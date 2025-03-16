@@ -1,7 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad
 
 import com.qualcomm.robotcore.hardware.Gamepad
-import java.util.EnumMap
 
 /**
  * A class to extend the Gamepad features with more functionality
@@ -11,6 +10,7 @@ import java.util.EnumMap
  */
 class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
     constructor(gamepad: Gamepad) : this(gamepad, false)
+
     private var gamepad: Gamepad? = null
 
     private var secondaryHash = HashMap<Button, Boolean>()
@@ -101,7 +101,7 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
 
     private fun returnButton(button: Button): Boolean {
         return when (button) {
-            Button.A-> gamepad!!.a
+            Button.A -> gamepad!!.a
             Button.B -> gamepad!!.b
             Button.X -> gamepad!!.x
             Button.Y -> gamepad!!.y
@@ -165,15 +165,16 @@ class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
     fun atRest(): Boolean {
         return gamepad!!.atRest()
     }
-    fun getButtonsCurrentlyPressed():List<Button>{
+
+    fun getButtonsCurrentlyPressed(): List<Button> {
         val buttons = mutableListOf<Button>()
-        for (button in Button.values()){
+        for (button in Button.values()) {
             if (loopSaveMode) {
                 if (readBooleanButtonFromHash(button)) {
                     buttons.add(button)
                 }
-            }else{
-                if (returnButton(button)){
+            } else {
+                if (returnButton(button)) {
                     buttons.add(button)
                 }
             }

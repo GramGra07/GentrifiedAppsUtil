@@ -12,8 +12,9 @@ class PathBuilder {
         waypoints.add(Path(waypoint))
         return this
     }
+
     fun turnTo(heading: Angle, velocity: Double, currentTarget: Target2D): PathBuilder {
-        waypoints.add(Path(heading,velocity,currentTarget))
+        waypoints.add(Path(heading, velocity, currentTarget))
         return this
     }
 

@@ -4,16 +4,18 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.CameraParams
-import org.opencv.core.*
-import org.opencv.imgproc.Imgproc
 import org.opencv.calib3d.Calib3d
-import org.opencv.core.Scalar
+import org.opencv.core.Core
+import org.opencv.core.CvType
+import org.opencv.core.Mat
+import org.opencv.core.MatOfDouble
 import org.opencv.core.MatOfPoint
 import org.opencv.core.MatOfPoint2f
 import org.opencv.core.MatOfPoint3f
 import org.opencv.core.Point
-import org.opencv.core.Mat
-import org.opencv.core.MatOfDouble
+import org.opencv.core.Rect
+import org.opencv.core.Scalar
+import org.opencv.imgproc.Imgproc
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -26,7 +28,13 @@ class MarkLocalizer {
         Core.inRange(hsvFrame, lowerColor, upperColor, mask)
 
         val contours = ArrayList<MatOfPoint>()
-        Imgproc.findContours(mask, contours, Mat(), Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE)
+        Imgproc.findContours(
+            mask,
+            contours,
+            Mat(),
+            Imgproc.RETR_EXTERNAL,
+            Imgproc.CHAIN_APPROX_SIMPLE
+        )
 
         val detectedMarkers = ArrayList<Rect>()
         for (contour in contours) {
@@ -59,6 +67,7 @@ class MarkLocalizer {
         Calib3d.Rodrigues(rvec, rotationMatrix)
         return Math.atan2(rotationMatrix.get(1, 0)[0], rotationMatrix.get(0, 0)[0])
     }
+
     fun eulerAnglesToRotationMatrix(yaw: Double, pitch: Double, roll: Double): Mat {
         // Yaw rotation matrix (around Z axis)
         val R_yaw = Mat(3, 3, CvType.CV_64F)
@@ -88,7 +97,11 @@ class MarkLocalizer {
     }
 
     // Function to estimate the robot's pose using solvePnP
-    fun estimateRobotPose(cameraParams: CameraParams, objectPoints: MatOfPoint3f, imagePoints: MatOfPoint2f): Pose2D {
+    fun estimateRobotPose(
+        cameraParams: CameraParams,
+        objectPoints: MatOfPoint3f,
+        imagePoints: MatOfPoint2f
+    ): Pose2D {
         val distCoeffs = MatOfDouble(0.0, 0.0, 0.0, 0.0, 0.0)
         val rvec = Mat()
         val tvec = Mat()
@@ -103,14 +116,26 @@ class MarkLocalizer {
         // cameraPose represents the transformation from the camera to the robot frame
 
         // Camera Pose includes position (x, y, z) and orientation (yaw, pitch, roll)
-        val cameraRotationMatrix = eulerAnglesToRotationMatrix(cameraParams.rotationalVector.yaw, cameraParams.rotationalVector.pitch, cameraParams.rotationalVector.roll)
+        val cameraRotationMatrix = eulerAnglesToRotationMatrix(
+            cameraParams.rotationalVector.yaw,
+            cameraParams.rotationalVector.pitch,
+            cameraParams.rotationalVector.roll
+        )
 
         // Apply camera position to the translation vector (robot to camera position)
         val correctedPosition = Mat(3, 1, CvType.CV_64F)
         Core.gemm(cameraRotationMatrix, tvec, 1.0, Mat(), 0.0, correctedPosition)
 
         // Apply camera translation to the corrected position
-        Core.add(correctedPosition, MatOfDouble(cameraParams.translationalVector.x, cameraParams.translationalVector.y, cameraParams.translationalVector.z), correctedPosition)
+        Core.add(
+            correctedPosition,
+            MatOfDouble(
+                cameraParams.translationalVector.x,
+                cameraParams.translationalVector.y,
+                cameraParams.translationalVector.z
+            ),
+            correctedPosition
+        )
 
         // Convert corrected position to 2D Pose
         val x = correctedPosition.get(0, 0)[0]

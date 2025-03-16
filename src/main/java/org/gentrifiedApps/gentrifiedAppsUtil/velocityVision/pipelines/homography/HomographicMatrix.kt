@@ -1,4 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.homography
+
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.CameraParams
 import org.opencv.core.Mat
 import org.opencv.core.MatOfPoint2f
@@ -7,14 +8,15 @@ import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 
 class HomographicMatrix {
-    fun warpToTopDown(input: Mat, cameraParams: CameraParams,): Mat {
+    fun warpToTopDown(input: Mat, cameraParams: CameraParams): Mat {
         // Extract intrinsics
         val fx = cameraParams.lensIntrinsics.fx!!
         val cx = cameraParams.lensIntrinsics.cx!!
-        val fy = cameraParams.lensIntrinsics.fy!!
-        val cy = cameraParams.lensIntrinsics.cy!!
+        cameraParams.lensIntrinsics.fy!!
+        cameraParams.lensIntrinsics.cy!!
         // Define real-world points (in inches) at the bottom of the camera view
-        val fieldHeight = cameraParams.translationalVector.z  // Distance from the camera to the field in inches
+        val fieldHeight =
+            cameraParams.translationalVector.z  // Distance from the camera to the field in inches
 
         // Image points (from the tilted camera)
         val imgPoints = MatOfPoint2f(
@@ -37,7 +39,12 @@ class HomographicMatrix {
 
         // Apply warp perspective
         val warped = Mat()
-        Imgproc.warpPerspective(input, warped, H, Size(input.cols().toDouble(), input.rows().toDouble()))
+        Imgproc.warpPerspective(
+            input,
+            warped,
+            H,
+            Size(input.cols().toDouble(), input.rows().toDouble())
+        )
 
         return warped
     }

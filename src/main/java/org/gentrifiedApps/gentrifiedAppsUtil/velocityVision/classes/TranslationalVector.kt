@@ -11,8 +11,9 @@ data class TranslationalVector(
     val x: Double,
     val y: Double,
     val z: Double
-){
+) {
     constructor() : this(0.0, 0.0, 0.0)
+
     fun toPoint3(): Point3 {
         return Point3(x, y, z)
     }

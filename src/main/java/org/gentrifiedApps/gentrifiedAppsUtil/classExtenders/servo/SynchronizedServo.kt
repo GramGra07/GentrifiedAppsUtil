@@ -1,7 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.servo
 
 import com.qualcomm.robotcore.hardware.HardwareMap
-import com.qualcomm.robotcore.hardware.Servo
 
 class SynchronizedServo(var hw: HardwareMap, var name: String, private var axonServo: Boolean) {
     private lateinit var servo1: ServoPlus
@@ -32,8 +31,8 @@ class SynchronizedServo(var hw: HardwareMap, var name: String, private var axonS
             }
 
             false -> {
-                servo1.position=(90 + pose)
-                servo2.position=(90 - pose)
+                servo1.position = (90 + pose)
+                servo2.position = (90 - pose)
             }
         }
     }

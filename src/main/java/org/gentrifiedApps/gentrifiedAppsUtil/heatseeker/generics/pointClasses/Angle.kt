@@ -40,8 +40,19 @@ data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.RADIANS) {
     }
 
     companion object {
+        @JvmStatic
         fun blank(): Angle {
-            return Angle(0.0, AngleUnit.DEGREES)
+            return Angle(0.0)
+        }
+
+        @JvmStatic
+        fun ofDegrees(degrees: Double): Angle {
+            return Angle(degrees, AngleUnit.DEGREES)
+        }
+
+        @JvmStatic
+        fun ofRadians(radians: Double): Angle {
+            return Angle(radians, AngleUnit.RADIANS)
         }
     }
 }

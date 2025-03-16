@@ -2,10 +2,9 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.tuners
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
-class TrackWidthTuner (private val driver: Driver) : LinearOpMode() {
+class TrackWidthTuner(private val driver: Driver) : LinearOpMode() {
     val turns = 5
     override fun runOpMode() {
         Scribe.instance.startLogger("TrackWidthTuner")

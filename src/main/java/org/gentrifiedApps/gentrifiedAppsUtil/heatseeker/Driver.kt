@@ -36,7 +36,19 @@ class Driver(
         frDirection: Direction,
         blDirection: Direction,
         brDirection: Direction
-    ) : this(opMode, flName, frName, blName, brName, flDirection, frDirection, blDirection, brDirection, null)
+    ) : this(
+        opMode,
+        flName,
+        frName,
+        blName,
+        brName,
+        flDirection,
+        frDirection,
+        blDirection,
+        brDirection,
+        null
+    )
+
     val driveType = DRIVETYPE.MECANUM
     private val hwMap: HardwareMap = opMode.hardwareMap
     private var fl: DcMotor = hwMap.get(DcMotor::class.java, flName)
@@ -79,6 +91,7 @@ class Driver(
             telemetry.sendTelemetryNoUpdate(opMode.telemetry, localizer!!.getPose())
         }
     }
+
     fun updateNoTelemetry() {
         updatePoseEstimate()
         if (localizer != null) {

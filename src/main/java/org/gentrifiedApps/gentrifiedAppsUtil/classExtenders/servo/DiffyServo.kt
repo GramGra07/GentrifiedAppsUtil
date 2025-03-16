@@ -14,10 +14,44 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.DiffyPreset
  * @param rightDirection The direction of the right servo
  * @param idlePosition The idle position of the servos
  */
-class DiffyServo(hardwareMap: HardwareMap, leftName: String, rightName: String, leftDirection: Servo.Direction, rightDirection: Servo.Direction, idlePosition: Double) {
-    constructor(hardwareMap: HardwareMap, leftName: String, rightName: String) : this(hardwareMap, leftName, rightName, Servo.Direction.FORWARD, Servo.Direction.FORWARD, 0.0)
-    constructor(hardwareMap: HardwareMap, leftName: String, rightName: String, leftDirection: Servo.Direction, rightDirection: Servo.Direction) : this(hardwareMap, leftName, rightName, leftDirection, rightDirection, 0.0)
-    constructor(hardwareMap: HardwareMap, leftName: String, rightName: String, idlePosition: Double) : this(hardwareMap, leftName, rightName, Servo.Direction.FORWARD, Servo.Direction.FORWARD, idlePosition)
+class DiffyServo(
+    hardwareMap: HardwareMap,
+    leftName: String,
+    rightName: String,
+    leftDirection: Servo.Direction,
+    rightDirection: Servo.Direction,
+    idlePosition: Double
+) {
+    constructor(hardwareMap: HardwareMap, leftName: String, rightName: String) : this(
+        hardwareMap,
+        leftName,
+        rightName,
+        Servo.Direction.FORWARD,
+        Servo.Direction.FORWARD,
+        0.0
+    )
+
+    constructor(
+        hardwareMap: HardwareMap,
+        leftName: String,
+        rightName: String,
+        leftDirection: Servo.Direction,
+        rightDirection: Servo.Direction
+    ) : this(hardwareMap, leftName, rightName, leftDirection, rightDirection, 0.0)
+
+    constructor(
+        hardwareMap: HardwareMap,
+        leftName: String,
+        rightName: String,
+        idlePosition: Double
+    ) : this(
+        hardwareMap,
+        leftName,
+        rightName,
+        Servo.Direction.FORWARD,
+        Servo.Direction.FORWARD,
+        idlePosition
+    )
 
     private var leftServo: ServoPlus = ServoPlus(hardwareMap, leftName)
     private var rightServo: Servo = ServoPlus(hardwareMap, rightName)

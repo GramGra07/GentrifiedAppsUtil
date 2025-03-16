@@ -22,11 +22,25 @@ public class StateMachine<T extends Enum<T>> {
     private final Map<T, StateChangeCallback> whileStateCommands;
     private final Map<T, Supplier<Boolean>> whileStateEscapeConditions;
     private final Map<T, Double> transitionDelayTimes;
+    private final List<T> stateHistory;
     private T currentState;
     private int currentStateIndex;
-    private final List<T> stateHistory;
     private boolean isStarted = false;
     private boolean isRunning = true;
+    private double startTime = 0;
+    private TYPES currentActionType = TYPES.IDLE;
+
+    StateMachine(Builder<T> builder) {
+        this.states = builder.states;
+        this.onEnterCommands = builder.onEnterCommands;
+        this.onExitCommands = builder.onExitCommands;
+        this.transitions = builder.transitions;
+        this.whileStateCommands = builder.whileStateCommands;
+        this.whileStateEscapeConditions = builder.whileStateEscapeConditions;
+        this.transitionDelayTimes = builder.delayTimes;
+        this.currentState = null;
+        this.stateHistory = new ArrayList<>();
+    }
 
     public T getCurrentState() {
         return currentState;
@@ -51,16 +65,155 @@ public class StateMachine<T extends Enum<T>> {
         return isRunning;
     }
 
-    StateMachine(Builder<T> builder) {
-        this.states = builder.states;
-        this.onEnterCommands = builder.onEnterCommands;
-        this.onExitCommands = builder.onExitCommands;
-        this.transitions = builder.transitions;
-        this.whileStateCommands = builder.whileStateCommands;
-        this.whileStateEscapeConditions = builder.whileStateEscapeConditions;
-        this.transitionDelayTimes = builder.delayTimes;
-        this.currentState = null;
-        this.stateHistory = new ArrayList<>();
+    /**
+     * Starts the state machine
+     */
+    public void start() {
+        if (isStarted) {
+            throw new IllegalStateException("StateMachine has already been started");
+        }
+        isStarted = true;
+        if (!states.isEmpty()) {
+            currentState = states.get(0);
+            StateChangeCallback onEnterAction = onEnterCommands.get(currentState);
+            if (onEnterAction != null) {
+                onEnterAction.onStateChange();
+            }
+        }
+    }
+
+    /**
+     * Stops the state machine
+     */
+    public void stop() {
+        isRunning = false;
+        stateHistory.clear();
+        currentState = null;
+        isStarted = false;
+        currentActionType = TYPES.IDLE;
+        currentStateIndex = (int) Double.POSITIVE_INFINITY;
+    }
+
+    /**
+     * Updates the state machine
+     *
+     * @return boolean if the state machine has been updated
+     */
+    public boolean update() {
+        if (currentActionType == TYPES.IDLE && isStarted) {
+            currentActionType = TYPES.ON_ENTER;
+        }
+        if (currentState == null || !isRunning) {
+            return false;
+        }
+
+        // Get the actions and conditions for the current state
+        StateChangeCallback onEnterAction = onEnterCommands.get(currentState);
+        StateChangeCallback whileStateAction = whileStateCommands.get(currentState);
+        Supplier<Boolean> escapeCondition = whileStateEscapeConditions.get(currentState);
+        StateChangeCallback onExitAction = onExitCommands.get(currentState);
+        Supplier<Boolean> transitionCondition = transitions.get(currentState);
+        Double delayTime = transitionDelayTimes.getOrDefault(currentState, 0.0);
+
+        // Handle STOP type
+        if (currentActionType == TYPES.STOP) {
+            stop();
+            return false;
+        }
+
+        // Execute onEnter if transitioning into the state
+        if (currentActionType == TYPES.ON_ENTER) {
+            if (onEnterAction != null) {
+                onEnterAction.onStateChange();
+            }
+            currentActionType = (whileStateAction != null) ? TYPES.WHILE_STATE : TYPES.TRANSITION;
+            return true;
+        }
+
+        // Execute whileState if defined
+        if (currentActionType == TYPES.WHILE_STATE) {
+            if (whileStateAction != null) {
+                whileStateAction.onStateChange();
+            }
+            if (escapeCondition != null && escapeCondition.get()) {
+                currentActionType = TYPES.ON_EXIT;
+            } else {
+                return true;
+            }
+        }
+
+        // Execute onExit if transitioning out of the state
+        if (currentActionType == TYPES.ON_EXIT) {
+            if (onExitAction != null) {
+                onExitAction.onStateChange();
+            }
+            currentActionType = TYPES.TRANSITION;
+            return true;
+        }
+
+        // Handle transition logic
+        if (currentActionType == TYPES.TRANSITION) {
+            if (transitionCondition != null && transitionCondition.get()) {
+                int nextIndex = currentStateIndex + 1;
+                isValidTransition(currentState, states.get(nextIndex));
+                if (nextIndex < states.size()) {
+                    // Handle transition delay
+                    if (delayTime > 0) {
+                        double elapsedTime = (System.currentTimeMillis() - startTime) / 1000.0;
+                        if (startTime == 0 || elapsedTime < delayTime) {
+                            if (startTime == 0) {
+                                startTime = System.currentTimeMillis();
+                            }
+                            return true; // Wait until delay passes
+                        }
+                    }
+                    startTime = 0; // Reset delay timer
+
+                    // Transition to the next state
+                    stateHistory.add(currentState);
+                    currentState = states.get(nextIndex);
+                    currentStateIndex = nextIndex;
+                    currentActionType = TYPES.ON_ENTER;
+                    return true;
+                } else {
+                    currentActionType = TYPES.STOP; // Transition to STOP
+                    return false;
+                }
+            }
+        }
+
+        return false; // No actions performed
+    }
+
+    public boolean isValidTransition(T fromState, T toState) {
+        if (fromState == toState) {
+            throw new IllegalArgumentException("Cannot transition to itself");
+        }
+        if (!states.contains(fromState) && !stateHistory.contains(fromState)) {
+            throw new IllegalArgumentException(fromState + " does not exist in the state machine");
+        }
+        if (!states.contains(toState)) {
+            throw new IllegalArgumentException(toState + " does not exist in the state machine");
+        }
+        Supplier<Boolean> transitionCondition = transitions.get(fromState);
+        if (transitionCondition == null) {
+            throw new IllegalStateException("No transition condition exists from state " + fromState);
+        }
+        return transitionCondition.get();
+    }
+
+    public List<T> getStateHistory() {
+        return stateHistory;
+    }
+
+
+    enum TYPES {
+        IDLE,
+        ON_ENTER,
+        WHILE_STATE,
+        ON_EXIT,
+        TRANSITION,
+        STOP,
     }
 
     public static class Builder<T extends Enum<T>> {
@@ -211,160 +364,5 @@ public class StateMachine<T extends Enum<T>> {
             this.machine = new StateMachine<>(this);
             return this.machine;
         }
-    }
-
-    /**
-     * Starts the state machine
-     */
-    public void start() {
-        if (isStarted) {
-            throw new IllegalStateException("StateMachine has already been started");
-        }
-        isStarted = true;
-        if (!states.isEmpty()) {
-            currentState = states.get(0);
-            StateChangeCallback onEnterAction = onEnterCommands.get(currentState);
-            if (onEnterAction != null) {
-                onEnterAction.onStateChange();
-            }
-        }
-    }
-
-    /**
-     * Stops the state machine
-     */
-    public void stop() {
-        isRunning = false;
-        stateHistory.clear();
-        currentState = null;
-        isStarted = false;
-        currentActionType = TYPES.IDLE;
-        currentStateIndex = (int) Double.POSITIVE_INFINITY;
-    }
-
-    private double startTime = 0;
-
-    enum TYPES {
-        IDLE,
-        ON_ENTER,
-        WHILE_STATE,
-        ON_EXIT,
-        TRANSITION,
-        STOP,
-    }
-
-    private TYPES currentActionType = TYPES.IDLE;
-
-    /**
-     * Updates the state machine
-     *
-     * @return boolean if the state machine has been updated
-     */
-    public boolean update() {
-        if (currentActionType == TYPES.IDLE && isStarted) {
-            currentActionType = TYPES.ON_ENTER;
-        }
-        if (currentState == null || !isRunning) {
-            return false;
-        }
-
-        // Get the actions and conditions for the current state
-        StateChangeCallback onEnterAction = onEnterCommands.get(currentState);
-        StateChangeCallback whileStateAction = whileStateCommands.get(currentState);
-        Supplier<Boolean> escapeCondition = whileStateEscapeConditions.get(currentState);
-        StateChangeCallback onExitAction = onExitCommands.get(currentState);
-        Supplier<Boolean> transitionCondition = transitions.get(currentState);
-        Double delayTime = transitionDelayTimes.getOrDefault(currentState, 0.0);
-
-        // Handle STOP type
-        if (currentActionType == TYPES.STOP) {
-            stop();
-            return false;
-        }
-
-        // Execute onEnter if transitioning into the state
-        if (currentActionType == TYPES.ON_ENTER) {
-            if (onEnterAction != null) {
-                onEnterAction.onStateChange();
-            }
-            currentActionType = (whileStateAction != null) ? TYPES.WHILE_STATE : TYPES.TRANSITION;
-            return true;
-        }
-
-        // Execute whileState if defined
-        if (currentActionType == TYPES.WHILE_STATE) {
-            if (whileStateAction != null) {
-                whileStateAction.onStateChange();
-            }
-            if (escapeCondition != null && escapeCondition.get()) {
-                currentActionType = TYPES.ON_EXIT;
-            } else {
-                return true;
-            }
-        }
-
-        // Execute onExit if transitioning out of the state
-        if (currentActionType == TYPES.ON_EXIT) {
-            if (onExitAction != null) {
-                onExitAction.onStateChange();
-            }
-            currentActionType = TYPES.TRANSITION;
-            return true;
-        }
-
-        // Handle transition logic
-        if (currentActionType == TYPES.TRANSITION) {
-            if (transitionCondition != null && transitionCondition.get()) {
-                int nextIndex = currentStateIndex + 1;
-                isValidTransition(currentState, states.get(nextIndex));
-                if (nextIndex < states.size()) {
-                    // Handle transition delay
-                    if (delayTime > 0) {
-                        double elapsedTime = (System.currentTimeMillis() - startTime) / 1000.0;
-                        if (startTime == 0 || elapsedTime < delayTime) {
-                            if (startTime == 0) {
-                                startTime = System.currentTimeMillis();
-                            }
-                            return true; // Wait until delay passes
-                        }
-                    }
-                    startTime = 0; // Reset delay timer
-
-                    // Transition to the next state
-                    stateHistory.add(currentState);
-                    currentState = states.get(nextIndex);
-                    currentStateIndex = nextIndex;
-                    currentActionType = TYPES.ON_ENTER;
-                    return true;
-                } else {
-                    currentActionType = TYPES.STOP; // Transition to STOP
-                    return false;
-                }
-            }
-        }
-
-        return false; // No actions performed
-    }
-
-
-    public boolean isValidTransition(T fromState, T toState) {
-        if (fromState == toState) {
-            throw new IllegalArgumentException("Cannot transition to itself");
-        }
-        if (!states.contains(fromState) && !stateHistory.contains(fromState)) {
-            throw new IllegalArgumentException(fromState + " does not exist in the state machine");
-        }
-        if (!states.contains(toState)) {
-            throw new IllegalArgumentException(toState + " does not exist in the state machine");
-        }
-        Supplier<Boolean> transitionCondition = transitions.get(fromState);
-        if (transitionCondition == null) {
-            throw new IllegalStateException("No transition condition exists from state " + fromState);
-        }
-        return transitionCondition.get();
-    }
-
-    public List<T> getStateHistory() {
-        return stateHistory;
     }
 }

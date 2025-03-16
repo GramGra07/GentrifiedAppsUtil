@@ -4,6 +4,7 @@ enum class ReturnType {
     ANGLE,
     CENTER,
     COLOR;
+
     companion object {
         @JvmStatic
         fun all(): List<ReturnType> {

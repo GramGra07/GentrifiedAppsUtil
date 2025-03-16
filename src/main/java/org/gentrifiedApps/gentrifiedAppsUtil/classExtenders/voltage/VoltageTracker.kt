@@ -12,12 +12,17 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.VoltageCompensator
  * @param usesVoltageCompensator Whether or not to use the voltage compensator
  * @param kf The kf value to use (and tune)
  */
-class VoltageTracker(hardwareMap: HardwareMap, private val usesVoltageCompensator:Boolean, kf:Double) {
-    constructor(hardwareMap: HardwareMap) : this(hardwareMap, false,0.0)
+class VoltageTracker(
+    hardwareMap: HardwareMap,
+    private val usesVoltageCompensator: Boolean,
+    kf: Double
+) {
+    constructor(hardwareMap: HardwareMap) : this(hardwareMap, false, 0.0)
+
     private val voltageCompensator = VoltageCompensator(kf)
 
 
-    private var voltageSensor :VoltageSensor = if (usesVoltageCompensator){
+    private var voltageSensor: VoltageSensor = if (usesVoltageCompensator) {
         voltageCompensator.voltageSensor
     } else {
         hardwareMap.voltageSensor.first()
@@ -27,17 +32,17 @@ class VoltageTracker(hardwareMap: HardwareMap, private val usesVoltageCompensato
     private var voltageDrop = 0.0
     private var lowestVoltage = 0.0
 
-    init{
+    init {
         initialVoltage = voltageSensor.voltage
         currentVoltage = initialVoltage
     }
 
-    fun update(){
+    fun update() {
         currentVoltage = voltageSensor.voltage
         voltageDrop = initialVoltage - currentVoltage
         if (currentVoltage < lowestVoltage) {
             lowestVoltage = currentVoltage
-            if (lowestVoltage<9.0){
+            if (lowestVoltage < 9.0) {
                 Scribe.instance.logWarning("Dropped Voltage to: $lowestVoltage")
             }
         }
@@ -47,14 +52,14 @@ class VoltageTracker(hardwareMap: HardwareMap, private val usesVoltageCompensato
      * Returns the current voltage and voltage drop in telemetry
      * @param telemetry The telemetry to use
      */
-    fun telemetry(telemetry: Telemetry){
+    fun telemetry(telemetry: Telemetry) {
         update()
         telemetry.addLine("Voltage: ${currentVoltage.format(3)}")
         telemetry.addLine("Voltage Drop: ${voltageDrop.format(2)}")
         telemetry.addLine("Lowest Voltage: ${lowestVoltage.format(2)}")
     }
 
-    fun calculateVoltageCompensatedKf(controlEffort:Double):Double{
+    fun calculateVoltageCompensatedKf(controlEffort: Double): Double {
         require(usesVoltageCompensator)
         return voltageCompensator.getVoltageCompensatedKf(controlEffort)
     }

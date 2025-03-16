@@ -6,16 +6,17 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe;
 
 //@TeleOp
 public class ConfigCreator extends LinearOpMode {
-    public ConfigCreator(ConfigMaker configMaker){
+    ConfigMaker configMaker;
+
+    public ConfigCreator(ConfigMaker configMaker) {
         this.configMaker = configMaker;
     }
-    ConfigMaker configMaker;
 
     @Override
     public void runOpMode() {
         configMaker.run();
         Scribe.getInstance().logDebug("Config Maker run");
-        Scribe.getInstance().logDebug("XML: "+configMaker.getXML());
+        Scribe.getInstance().logDebug("XML: " + configMaker.getXML());
         waitForStart();
     }
 }

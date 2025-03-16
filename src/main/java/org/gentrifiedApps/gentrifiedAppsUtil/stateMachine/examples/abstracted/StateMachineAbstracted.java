@@ -11,13 +11,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.stateMachine.StateMachine;
 @Disabled
 public class StateMachineAbstracted extends LinearOpMode {
 
-    public enum state {
-        INIT,
-        StateOne,
-        END,
-        STOP,
-    }
-
     @Override
     public void runOpMode() {
         StateMachine<state> machine = abstractedSM.machine();
@@ -26,5 +19,12 @@ public class StateMachineAbstracted extends LinearOpMode {
         while (machine.mainLoop(this)) {
             machine.update();
         }
+    }
+
+    public enum state {
+        INIT,
+        StateOne,
+        END,
+        STOP,
     }
 }

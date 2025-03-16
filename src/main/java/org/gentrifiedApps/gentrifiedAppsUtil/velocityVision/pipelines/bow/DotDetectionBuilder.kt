@@ -7,6 +7,6 @@ class DotDetectionBuilder(
     override val rectangle: Rect,
     override val minArea: Double,
     override val maxArea: Double
-) : DotDetectionInterface{
+) : DotDetectionInterface {
     constructor() : this(Rect(), 0.0, 1000000.0)
 }

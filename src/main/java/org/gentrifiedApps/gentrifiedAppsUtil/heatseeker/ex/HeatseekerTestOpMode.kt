@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.qualcomm.robotcore.hardware.DcMotorSimple
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.MecanumDriver.Companion.driveMecanum
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Heatseeker
@@ -28,8 +27,24 @@ class HeatseekerTestOpMode : LinearOpMode() {
             "spark", this.hardwareMap, Target2D.blank(),
             SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
         )
-        val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
-        val heatseeker = Heatseeker(driver, PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0))
+        val driver = Driver(
+            this,
+            "fl",
+            "fr",
+            "bl",
+            "br",
+            DcMotorSimple.Direction.FORWARD,
+            DcMotorSimple.Direction.REVERSE,
+            DcMotorSimple.Direction.FORWARD,
+            DcMotorSimple.Direction.FORWARD,
+            otos
+        )
+        val heatseeker = Heatseeker(
+            driver,
+            PIDController(1.0, 0.0, 0.0),
+            PIDController(1.0, 0.0, 0.0),
+            PIDController(1.0, 0.0, 0.0)
+        )
 
         val path = PathBuilder()
             .addWaypoint(Waypoint(1.0, 2.0, Angle(90.0, AngleUnit.DEGREES), 1.0))
@@ -52,16 +67,33 @@ class HeatseekerTeleTestOpMode : LinearOpMode() {
             "spark", this.hardwareMap, Target2D.blank(),
             SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
         )
-        val driver = Driver(this, "fl", "fr", "bl", "br",DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE ,DcMotorSimple.Direction.FORWARD,DcMotorSimple.Direction.FORWARD, otos)
-        val heatseeker = Heatseeker(driver, PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0), PIDController(1.0, 0.0, 0.0))
+        val driver = Driver(
+            this,
+            "fl",
+            "fr",
+            "bl",
+            "br",
+            DcMotorSimple.Direction.FORWARD,
+            DcMotorSimple.Direction.REVERSE,
+            DcMotorSimple.Direction.FORWARD,
+            DcMotorSimple.Direction.FORWARD,
+            otos
+        )
+        val heatseeker = Heatseeker(
+            driver,
+            PIDController(1.0, 0.0, 0.0),
+            PIDController(1.0, 0.0, 0.0),
+            PIDController(1.0, 0.0, 0.0)
+        )
         val teleOpCorrector = heatseeker.teleOpCorrector()
         waitForStart()
         while (opModeIsActive()) {
-            var powerCoefficients = driveMecanum(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x)
-            if (!powerCoefficients.notZero()){
+            var powerCoefficients =
+                driveMecanum(gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x)
+            if (!powerCoefficients.notZero()) {
                 // has no powers to move
                 teleOpCorrector.updateOrientation()
-            }else if (gamepad1.right_stick_x.toDouble() == 0.0){
+            } else if (gamepad1.right_stick_x.toDouble() == 0.0) {
                 powerCoefficients = teleOpCorrector.correctByAngle(powerCoefficients)
             }
 

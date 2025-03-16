@@ -4,7 +4,8 @@ package org.gentrifiedApps.gentrifiedAppsUtil.sensorArray;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.AnalogEncoder;
 
 @TeleOp
 @Disabled
@@ -12,8 +13,8 @@ public class SensorOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        SensorArray sensorArray = new SensorArray(hardwareMap);
-        sensorArray.addSensor(new Sensor("sensor1", SensorType.DIST, 1));
+        SensorArray sensorArray = new SensorArray();
+        sensorArray.addSensor(Sensor.touchSensor(this.hardwareMap, "touch")).addSensor(Sensor.analogEncoder(AnalogEncoder.rev_potentiometer(hardwareMap, "potent")));
         waitForStart();
         while (opModeIsActive()) {
             sensorArray.readAllLoopSaving();

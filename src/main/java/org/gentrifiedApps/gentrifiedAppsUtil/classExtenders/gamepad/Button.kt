@@ -4,7 +4,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad
  * Enum class for all boolean buttons on a gamepad
  */
 enum class Button {
-                  A,
+    A,
     B,
     X,
     Y,

@@ -18,7 +18,7 @@ class VelocityVisionBuilderTest {
     @Test
     fun testBOW() {
         assertDoesNotThrow {
-            var bow = BlackAndWhiteDotDetector(
+            BlackAndWhiteDotDetector(
                 DotColor.BLACK,
                 DotDetectionBuilder(
                     Rect(50, 50, 100, 75), 10.0, 100.0
@@ -26,6 +26,7 @@ class VelocityVisionBuilderTest {
             )
         }
     }
+
     @Test
     fun testSampleDataDetector() {
         assertDoesNotThrow {
@@ -35,6 +36,7 @@ class VelocityVisionBuilderTest {
             )
         }
     }
+
     @Test
     fun testMOA() {
         assertDoesNotThrow {

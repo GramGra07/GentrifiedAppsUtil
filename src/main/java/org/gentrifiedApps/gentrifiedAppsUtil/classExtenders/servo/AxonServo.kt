@@ -10,7 +10,7 @@ class AxonServo(hw: HardwareMap, val name: String) {
 
     init {
         encoder = initAEncoder(hw)
-        servo = ServoPlus(hw,name)
+        servo = ServoPlus(hw, name)
     }
 
     private fun initAEncoder(hw: HardwareMap): AnalogInput {
@@ -22,13 +22,14 @@ class AxonServo(hw: HardwareMap, val name: String) {
     }
 
     fun setPosition(degree: Double) {
-        servo.position=(degree)
+        servo.position = (degree)
     }
 
     fun getEncoderPosition(): Double {
         return (encoder.voltage / 3.3) * 360
     }
-    fun getEncoderPositionReversed(): Double{
-        return (((encoder.voltage-3.3)/3.3)*360) *-1
+
+    fun getEncoderPositionReversed(): Double {
+        return (((encoder.voltage - 3.3) / 3.3) * 360) * -1
     }
 }
