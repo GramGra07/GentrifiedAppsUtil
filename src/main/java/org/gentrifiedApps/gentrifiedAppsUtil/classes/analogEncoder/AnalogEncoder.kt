@@ -23,8 +23,8 @@ class AnalogEncoder(
         calculatorOperations
     )
 
-    private lateinit var analogEncoder: AnalogInput
-    private lateinit var calculator: AnalogEncoderCalculator
+    private var analogEncoder: AnalogInput
+    private var calculator: AnalogEncoderCalculator
 
     init {
         analogEncoder = hwMap.get(AnalogInput::class.java, name)

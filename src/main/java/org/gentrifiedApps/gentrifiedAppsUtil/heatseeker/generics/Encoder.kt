@@ -9,9 +9,14 @@ class Encoder(
     private val encoderSpecs: EncoderSpecs,
     name: String,
     direction: DcMotorSimple.Direction,
+    private val hardReverse: Boolean,
     val offset: Double,
     hwMap: HardwareMap?
 ) {
+    constructor(encoderSpecs: EncoderSpecs, name: String, direction: DcMotorSimple.Direction,hardReverse: Boolean, hwMap: HardwareMap?) :
+            this(encoderSpecs, name, direction,hardReverse, 0.0, hwMap)
+    constructor(encoderSpecs: EncoderSpecs, name: String, direction: DcMotorSimple.Direction, hwMap: HardwareMap?) :
+            this(encoderSpecs, name, direction,false, 0.0, hwMap)
     private var encoder: DcMotor?
     private var lastPosition = 0
 
@@ -23,6 +28,9 @@ class Encoder(
     }
 
     fun getTicks(): Int {
+        if (hardReverse) {
+            return encoder?.currentPosition?.times(-1) ?: 0
+        }
         return encoder?.currentPosition ?: 0
     }
 
@@ -43,6 +51,9 @@ class Encoder(
     fun getDelta(): Int {
         return getTicks() - lastPosition
     }
+    fun getDeltaInches(): Double {
+        return ticksToInches(getDelta())
+    }
 
     private fun ticksToInches(ticks: Int): Double {
         return ticks.toDouble() / encoderSpecs.ticksPerInch
@@ -54,15 +65,22 @@ class Encoder(
 }
 
 data class EncoderSpecs(
-    val ticksPerRev: Int,
-    val wheelDiameter: Double,
-    val gearRatio: Double = 1.0,
+    private val ticksPerRev: Int,
+    private val wheelDiameter: Double,
+    private val gearRatio: Double = 1.0,
+    var ticksPerInch: Double
 ) {
-    val ticksPerInch = (ticksPerRev * gearRatio) / (wheelDiameter * Math.PI)
+    constructor(ticksPerRev: Int, wheelDiameter: Double, gearRatio: Double) : this(ticksPerRev, wheelDiameter, gearRatio, 0.0)
+    constructor(ticksPerRev: Int, wheelDiameter: Double) : this(ticksPerRev, wheelDiameter,1.0,0.0)
+    constructor(ticksPerInch: Double): this(1,1.0,1.0,ticksPerInch)
 
     init {
-        require(ticksPerRev > 0) { "ticksPerRev must be greater than 0" }
-        require(wheelDiameter > 0) { "wheelDiameter must be greater than 0" }
-        require(gearRatio > 0) { "gearRatio must be greater than 0" }
+        if (ticksPerInch == 0.0)  ticksPerInch = (ticksPerRev * gearRatio) / (wheelDiameter * Math.PI)
+    }
+    companion object{
+        @JvmStatic
+        fun ticksPerIn(ticksPerInch: Double): EncoderSpecs {
+            return EncoderSpecs(ticksPerInch)
+        }
     }
 }

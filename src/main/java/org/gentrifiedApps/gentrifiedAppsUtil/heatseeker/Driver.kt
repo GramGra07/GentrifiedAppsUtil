@@ -16,41 +16,27 @@ enum class DRIVETYPE {
 
 class Driver(
     val opMode: LinearOpMode,
-    flName: String,
-    frName: String,
-    blName: String,
-    brName: String,
+    val flName: String,
+    val frName: String,
+    val blName: String,
+    val brName: String,
     private val flDirection: Direction,
     private val frDirection: Direction,
     private val blDirection: Direction,
     private val brDirection: Direction,
-    var localizer: Localizer?
 ) {
-    constructor(
-        opMode: LinearOpMode,
-        flName: String,
-        frName: String,
-        blName: String,
-        brName: String,
-        flDirection: Direction,
-        frDirection: Direction,
-        blDirection: Direction,
-        brDirection: Direction
-    ) : this(
-        opMode,
-        flName,
-        frName,
-        blName,
-        brName,
-        flDirection,
-        frDirection,
-        blDirection,
-        brDirection,
-        null
-    )
+    var localizer: Localizer? = null
+        set(value){
+            field = value
+            if (value != null) {
+                value.initLocalizer()
+                drawer.drawLocalization(value.getPose())
+                telemetry.sendTelemetryNoUpdate(opMode.telemetry, value.getPose())
+            }
+        }
 
     val driveType = DRIVETYPE.MECANUM
-    private val hwMap: HardwareMap = opMode.hardwareMap
+    val hwMap: HardwareMap = opMode.hardwareMap
     private var fl: DcMotor = hwMap.get(DcMotor::class.java, flName)
     private var fr: DcMotor = hwMap.get(DcMotor::class.java, frName)
     private var bl: DcMotor = hwMap.get(DcMotor::class.java, blName)
@@ -119,8 +105,8 @@ class Driver(
     }
 
 
-    fun sendEncoders(): List<DcMotor> {
-        return listOf(fl, fr, bl, br)
+    fun sendEncoders(): List<Pair<DcMotor, String>> {
+        return listOf(Pair(fl,flName), Pair(fr,frName), Pair(bl,blName), Pair(br,brName))
     }
 
     companion object {

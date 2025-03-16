@@ -1,11 +1,14 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking
 
-import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.TrackingLocalizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import kotlin.collections.get
+import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -22,45 +25,35 @@ class MecanumLocalizer(
         Target2D(0.0, 0.0, Angle.blank())
     )
 
-    private var fl: DcMotor = driver.sendEncoders()[0]
-    private var fr: DcMotor = driver.sendEncoders()[1]
-    private var bl: DcMotor = driver.sendEncoders()[2]
-    private var br: DcMotor = driver.sendEncoders()[3]
+    private var fl: Encoder = Encoder(EncoderSpecs.ticksPerIn(ticksPerIn),driver.sendEncoders()[0].second, driver.sendEncoders()[0].first.direction,driver.hwMap)
+    private var fr: Encoder = Encoder(EncoderSpecs.ticksPerIn(ticksPerIn),driver.sendEncoders()[1].second, driver.sendEncoders()[1].first.direction,true,driver.hwMap)
+    private var bl: Encoder = Encoder(EncoderSpecs.ticksPerIn(ticksPerIn),driver.sendEncoders()[2].second, driver.sendEncoders()[2].first.direction,true,driver.hwMap)
+    private var br: Encoder = Encoder(EncoderSpecs.ticksPerIn(ticksPerIn),driver.sendEncoders()[3].second, driver.sendEncoders()[3].first.direction,true,driver.hwMap)
 
-    private var lastFl = 0
-    private var lastFr = 0
-    private var lastBl = 0
-    private var lastBr = 0
-
-    private fun reset() {
-        lastFl = fl.currentPosition
-        lastFr = fr.currentPosition
-        lastBl = bl.currentPosition
-        lastBr = br.currentPosition
+    private fun setLast() {
+        fl.setLastPosition()
+        fr.setLastPosition()
+        bl.setLastPosition()
+        br.setLastPosition()
     }
 
 
     override fun initLocalizer() {
-        fl.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        fr.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        bl.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
-        br.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+        fl.reset()
+        fr.reset()
+        bl.reset()
+        br.reset()
 
-        reset()
-
-        fl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        fr.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        bl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        br.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+        setLast()
 
         setPose(startPose)
     }
 
     override fun update() {
-        val deltaFl = (fl.currentPosition - lastFl) / ticksPerIn
-        val deltaFr = (fr.currentPosition - lastFr) / ticksPerIn
-        val deltaBl = (bl.currentPosition - lastBl) / ticksPerIn
-        val deltaBr = (br.currentPosition - lastBr) / ticksPerIn
+        val deltaFl = fl.getDeltaInches()
+        val deltaFr = fr.getDeltaInches()
+        val deltaBl = bl.getDeltaInches()
+        val deltaBr = br.getDeltaInches()
 
         // calculate change in all positions
         val deltaFwd = ((deltaFl + deltaFr + deltaBl + deltaBr) / 4)
@@ -75,12 +68,9 @@ class MecanumLocalizer(
         val yNew = pose.y + deltaY
         val hNew = pose.h() + deltaTurn
 
-        setPose(Target2D(xNew, yNew, Angle(hNew)))
+        setPose(Target2D(xNew, yNew, Angle(hNew).norm()))
 
-        lastFl = fl.currentPosition
-        lastFr = fr.currentPosition
-        lastBl = bl.currentPosition
-        lastBr = br.currentPosition
+        setLast()
     }
 
     override fun getPose(): Target2D {
@@ -100,10 +90,10 @@ class MecanumLocalizer(
     }
 
     override fun testEncoderDirection(telemetry: Telemetry) {
-        telemetry.addData("FL Encoder", fl.currentPosition)
-        telemetry.addData("FR Encoder", fr.currentPosition)
-        telemetry.addData("BL Encoder", bl.currentPosition)
-        telemetry.addData("BR Encoder", br.currentPosition)
+        telemetry.addData("FL Encoder", fl.getTicks())
+        telemetry.addData("FR Encoder", fr.getTicks())
+        telemetry.addData("BL Encoder", bl.getTicks())
+        telemetry.addData("BR Encoder", br.getTicks())
         telemetry.update()
     }
 }
