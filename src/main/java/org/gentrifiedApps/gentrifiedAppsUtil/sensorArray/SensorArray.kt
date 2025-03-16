@@ -14,6 +14,9 @@ class SensorArray() {
         return this.value
     }
 
+    init {
+        array = HashMap()
+    }
     /**
      * Adds a sensor to the array
      * @param sensor The sensor to add
@@ -21,7 +24,6 @@ class SensorArray() {
      */
     fun addSensor(sensor: Sensor): SensorArray {
         array[sensor.sensorData.name] = sensor
-        array[sensor.sensorData.name]?.initialize()
         return this
     }
 

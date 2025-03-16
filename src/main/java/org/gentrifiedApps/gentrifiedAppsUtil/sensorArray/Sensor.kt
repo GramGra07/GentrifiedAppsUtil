@@ -83,19 +83,19 @@ open class Sensor(
         1
     )
 
-    private var lastRead = sensorData.returnType.getConstructor().newInstance()
+    private var lastRead:Any? = null
 
-    fun initialize() {
+    init {
         init.run()
     }
 
     fun lastRead(): Any {
-        return lastRead
+        return lastRead?:0
     }
 
     fun read(): Any {
-        lastRead = read
-        return lastRead
+        lastRead = read.invoke()
+        return lastRead?:0
     }
 
     fun readLoopSaving() {
@@ -108,10 +108,8 @@ open class Sensor(
             lateinit var sensorDistance: DistanceSensor
             return Sensor(
                 Runnable { sensorDistance = hw.get(DistanceSensor::class.java, name) },
-                SensorData.distanceSensor(name),
-                { sensorDistance.getDistance(DistanceUnit.INCH) },
-                1
-            )
+                SensorData.distanceSensor(name)
+            ) { sensorDistance.getDistance(DistanceUnit.INCH) }
         }
 
         @JvmStatic
@@ -119,19 +117,15 @@ open class Sensor(
             lateinit var sensorAnalogEncoder: AnalogEncoder
             return Sensor(
                 Runnable { sensorAnalogEncoder = AnalogEncoder(hw, name, operations) },
-                SensorData.analogEncoder(name),
-                { sensorAnalogEncoder.getCurrentPosition() },
-                1
-            )
+                SensorData.analogEncoder(name)
+            ) { sensorAnalogEncoder.getCurrentPosition() }
         }
 
         @JvmStatic
         fun analogEncoder(analogEncoder: AnalogEncoder): Sensor {
             return Sensor(
-                SensorData.analogEncoder(analogEncoder.name),
-                { analogEncoder.getCurrentPosition() },
-                1
-            )
+                SensorData.analogEncoder(analogEncoder.name)
+            ) { analogEncoder.getCurrentPosition() }
         }
 
         @JvmStatic
@@ -139,16 +133,14 @@ open class Sensor(
             lateinit var sensorColor: ColorSensor
             return Sensor(
                 Runnable { sensorColor = hw.get(ColorSensor::class.java, name) },
-                SensorData.colorSensor(name),
-                {
-                    doubleArrayOf(
-                        sensorColor.red().toDouble(),
-                        sensorColor.green().toDouble(),
-                        sensorColor.blue().toDouble()
-                    )
-                },
-                1
-            )
+                SensorData.colorSensor(name)
+            ) {
+                doubleArrayOf(
+                    sensorColor.red().toDouble(),
+                    sensorColor.green().toDouble(),
+                    sensorColor.blue().toDouble()
+                )
+            }
         }
 
         @JvmStatic
@@ -156,10 +148,8 @@ open class Sensor(
             lateinit var sensorTouch: TouchSensor
             return Sensor(
                 Runnable { sensorTouch = hw.get(TouchSensor::class.java, name) },
-                SensorData.touchSensor(name),
-                { sensorTouch.isPressed },
-                1
-            )
+                SensorData.touchSensor(name)
+            ) { sensorTouch.isPressed }
         }
 
         @JvmStatic
@@ -167,10 +157,8 @@ open class Sensor(
             lateinit var sensorEncoder: DcMotor
             return Sensor(
                 Runnable { sensorEncoder = hw.get(DcMotor::class.java, name) },
-                SensorData.encoder(name),
-                { sensorEncoder.currentPosition },
-                1
-            )
+                SensorData.encoder(name)
+            ) { sensorEncoder.currentPosition }
         }
 
         @JvmStatic
@@ -178,12 +166,14 @@ open class Sensor(
             lateinit var beamBreakSensor: BeamBreakSensor
             return Sensor(
                 Runnable { beamBreakSensor = BeamBreakSensor(hw, name) },
-                SensorData.beamBreak(name),
-                { beamBreakSensor.isBroken() },
-                1
-            )
+                SensorData.beamBreak(name)
+            ) { beamBreakSensor.isBroken() }
+        }
+        @JvmStatic
+        fun beamBreak(beamBreakSensor: BeamBreakSensor): Sensor{
+            return Sensor(
+                SensorData.beamBreak(beamBreakSensor.name)
+            ) { beamBreakSensor.isBroken() }
         }
     }
 }
-
-
