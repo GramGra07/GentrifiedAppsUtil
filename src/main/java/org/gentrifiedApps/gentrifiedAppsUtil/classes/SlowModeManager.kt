@@ -11,15 +11,29 @@ enum class SlowModeDefaults {
     NORMAL
 }
 
+/**
+ * A class to manage slow modes for a robot.
+ * @param slowModeDataList A map of slow mode data to their corresponding keys.
+ * @param gamepad The gamepad used to control the robot.
+ */
 class SlowModeManager(
     val slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
     val gamepad: GamepadPlus
 ) {
+    /**
+     * Constructor for SlowModeManager.
+     * @param slowModeDataList A map of slow mode data to their corresponding keys.
+     * @param gamepad The gamepad used to control the robot -> turns into a Gamepad +
+     */
     constructor(
         slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
         gamepad: Gamepad
     ) : this(slowModeDataList, GamepadPlus(gamepad))
 
+    /**
+     * Extremely basic slow mode manager
+     * @param gamepad Generic gamepad +
+     */
     constructor(gamepad: GamepadPlus) : this(
         hashMapOf(
             SlowModeDefaults.NORMAL to SlowModeMulti(SlowMode.basic(), Button.A),
@@ -28,7 +42,9 @@ class SlowModeManager(
     )
 
     /**
-     *
+     * Constructor using a list of pairs
+     * @param list A list of pairs of slow mode data and their corresponding keys.
+     * @param gamepad The gamepad used to control the robot.
      * Doesn't work well/easily
      */
     constructor(list: List<Pair<Enum<*>, SlowModeMulti>>, gamepad: GamepadPlus) : this(
@@ -47,6 +63,11 @@ class SlowModeManager(
         }
     }
 
+    /**
+     * Applies the slow mode to the given value.
+     * @param value The value to apply the slow mode to.
+     * @return The value after applying the slow mode.
+     */
     fun apply(value: Double): Double {
         update()
         var result = value
@@ -56,6 +77,11 @@ class SlowModeManager(
         return result
     }
 
+    /**
+     * Applies the slow mode to the given drive power coefficients.
+     * @param drivePowerCoefficients The drive power coefficients to apply the slow mode to.
+     * @return The drive power coefficients after applying the slow mode.
+     */
     fun apply(drivePowerCoefficients: DrivePowerCoefficients): DrivePowerCoefficients {
         update()
         var result = drivePowerCoefficients
@@ -65,6 +91,9 @@ class SlowModeManager(
         return result
     }
 
+    /**
+     * Updates the slow mode manager.
+     */
     fun update() {
         for (slowModeMulti in slowModeDataList) {
             if (slowModeMulti.value.slowMode) {
@@ -79,6 +108,10 @@ class SlowModeManager(
         }
     }
 
+    /**
+     * Reports the current slow mode to the telemetry.
+     * @param telemetry The telemetry to report to.
+     */
     fun telemetry(telemetry: Telemetry) {
         currentlyActive?.let {
             slowModeDataList[it]?.report(telemetry)
@@ -86,6 +119,12 @@ class SlowModeManager(
     }
 }
 
+/**
+ * A class to represent a slow mode multi selector, or 1
+ * @param slowModeData The slow mode data.
+ * @param activeButton The active button.
+ * @param deactiveButton The deactive button.
+ */
 data class SlowModeMulti(
     val slowModeData: SlowMode,
     val activeButton: Button,
@@ -103,6 +142,11 @@ data class SlowModeMulti(
         slowMode = false
     }
 
+    /**
+     * Applies the slow mode to the given value.
+     * @param value The value to apply the slow mode to.
+     * @return The value after applying the slow mode.
+     */
     fun apply(value: Double): Double {
         return if (slowMode) {
             slowModeData.apply(value)
@@ -118,6 +162,10 @@ data class SlowModeMulti(
     private var lastUpdateTime: Long = 0
     private val debounceTime: Long = 200 // 200 milliseconds
 
+    /**
+     * Updates the slow mode.
+     * @param gamepad The gamepad used to control the robot.
+     */
     fun update(gamepad: GamepadPlus) {
         val currentTime = System.currentTimeMillis()
         if (currentTime - lastUpdateTime > debounceTime) {
@@ -133,6 +181,10 @@ data class SlowModeMulti(
         }
     }
 
+    /**
+     * Reports the current slow mode to the telemetry.
+     * @param telemetry The telemetry to report to.
+     */
     fun report(telemetry: Telemetry) {
         telemetry.addData("SlowMode", "1/${slowModeData.slowModeFactor}, $slowMode")
     }
@@ -140,12 +192,19 @@ data class SlowModeMulti(
 
     companion object {
         @JvmStatic
+                /**
+                 * Creates a basic slow mode multi with a slow mode factor of 2.0 and the active button as A.
+                 */
         fun basic(): SlowModeMulti {
             return SlowModeMulti(SlowMode.basic(), Button.A)
         }
     }
 }
 
+/**
+ * A class to represent a slow mode.
+ * @param slowModeFactor The slow mode factor.
+ */
 data class SlowMode(val slowModeFactor: Double) {
     companion object {
         @JvmStatic
@@ -154,8 +213,16 @@ data class SlowMode(val slowModeFactor: Double) {
         }
 
         @JvmStatic
+        /**
+         * Creates a basic slow mode with a slow mode factor of 1.0.
+         */
         fun one(): SlowMode {
             return SlowMode(1.0)
+        }
+
+        @JvmStatic
+        fun of(slowModeFactor: Double): SlowMode {
+            return SlowMode(slowModeFactor)
         }
     }
 
