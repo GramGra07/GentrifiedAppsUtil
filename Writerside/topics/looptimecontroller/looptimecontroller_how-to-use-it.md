@@ -17,3 +17,14 @@ telemetry.update();
 ```
 
 Thats it! Just monitor it from your DS telemetry.
+
+## Other useful functions
+
+```java
+loopTimeController.setLoopSavingCache(hardwareMap); // sets the bulk caching mode, saving around 30-40 LPS
+
+loopTimeController.every(period,()->{//code goes here
+});
+// this allows you to control several things that don't need to be run 100% of the time, it only updates every "period" loops.
+```
+

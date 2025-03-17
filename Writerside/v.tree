@@ -26,6 +26,16 @@
     <toc-element toc-title="SensorArray">
         <toc-element topic="sensor-array_how-to-use-it.md"/>
     </toc-element>
+    <toc-element topic="Scribe.md"/>
+    <toc-element toc-title="GamepadPlus">
+        <toc-element topic="gamepadplus_why-use-it.md"/>
+        <toc-element topic="gamepadplus_how-to-use-it.md"/>
+        <toc-element topic="gamepadplus_other-useful-functions.md"/>
+        <toc-element topic="Macros.md"/>
+    </toc-element>
+    <toc-element toc-title="SlowModeManager">
+        <toc-element topic="How-to-use-the-slow-mode-manager.md"/>
+    </toc-element>
     <toc-element toc-title="Hardware">
         <toc-element toc-title="Voltage">
             <toc-element topic="What-is-voltage-compensation.md"/>
@@ -37,14 +47,8 @@
             <toc-element topic="AxonServo.md"/>
             <toc-element topic="SynchronizedServo.md"/>
         </toc-element>
-        <toc-element toc-title="GamepadPlus">
-            <toc-element topic="gamepadplus_why-use-it.md"/>
-            <toc-element topic="gamepadplus_how-to-use-it.md"/>
-            <toc-element topic="gamepadplus_other-useful-functions.md"/>
-            <toc-element topic="Macros.md"/>
-        </toc-element>
+        <toc-element topic="BeamBreak.md"/>
     </toc-element>
-    <toc-element topic="BeamBreak.md"/>
     <toc-element toc-title="DriverAid">
         <toc-element topic="driveraid_how-to-use-it.md"/>
     </toc-element>
@@ -79,7 +83,6 @@
         <toc-element topic="alliance.md"/>
         <toc-element topic="other-classes_analogencoder.md"/>
         <toc-element topic="Timeout.md"/>
-        <toc-element topic="Scribe.md"/>
     </toc-element>
     <toc-element toc-title="Velocity Vision">
         <toc-element topic="vision-portal.md"/>
