@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.driverAid
 
 import org.jetbrains.annotations.TestOnly
+import java.util.function.BooleanSupplier
 
 /**
  * A class to help with driver aid actions, automatically and continuously running functions
@@ -24,21 +25,21 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
     fun getDAFunc() = daFunc
 
     fun setDriverAidFunction(func: DAFunc<T>) {
-        daFunc = func
-        runInit()
+        func.runInit()
     }
     init {
-        require(enumClass.enumConstants?.any { it.name == "IDLE" } == true) {
-            "Enum class must have an IDLE constant"
-        }
     }
-
-    fun runInit() {
-        daFunc?.runInit()
-    }
+    // auto run on start
+//    fun runInit() {
+//        daFunc?.runInit()
+//    }
 
     fun update() {
         daFunc?.runALot()
+    }
+
+    fun idle(iEnum: T): DAFunc<T> {
+        return DAFunc(this, iEnum).apply { this.runInit() }
     }
 
     /**
@@ -56,10 +57,13 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
         val state: T,
         private val funcs: Runnable,
         private val runConstant: Runnable,
-        private val isEnded: java.util.function.BooleanSupplier?,
+        private val isEnded: BooleanSupplier?,
+        /**
+         * This can be used for things that need to be set to 0 when the function is initialized
+         */
         private val resetOnInit: Runnable?
     ) {
-        constructor(driverAid: DriverAid<T>, state: T, funcs: Runnable,runConstant: Runnable, isEnded: java.util.function.BooleanSupplier) : this(driverAid, state, funcs, runConstant, isEnded, null)
+        constructor(driverAid: DriverAid<T>, state: T, funcs: Runnable,runConstant: Runnable, isEnded: BooleanSupplier) : this(driverAid, state, funcs, runConstant, isEnded, null)
         constructor(driverAid: DriverAid<T>, state: T, funcs: Runnable, runConstant: Runnable) : this(driverAid, state, funcs, runConstant, null,null)
 
         /**
