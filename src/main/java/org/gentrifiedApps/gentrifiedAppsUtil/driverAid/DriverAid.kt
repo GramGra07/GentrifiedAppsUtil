@@ -25,6 +25,7 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
 
     fun setDriverAidFunction(func: DAFunc<T>) {
         daFunc = func
+        runInit()
     }
     init {
         require(enumClass.enumConstants?.any { it.name == "IDLE" } == true) {
