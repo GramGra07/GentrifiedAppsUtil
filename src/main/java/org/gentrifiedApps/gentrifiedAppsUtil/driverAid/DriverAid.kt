@@ -23,6 +23,10 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
     @TestOnly
     fun getDAFunc() = daFunc
 
+    fun setDAFunc(func: DAFunc<T>) {
+        func.runInit()
+    }
+
     init {
         require(enumClass.enumConstants?.any { it.name == "IDLE" } == true) {
             "Enum class must have an IDLE constant"
@@ -51,10 +55,17 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
         private val driverAid: DriverAid<T>,
         val state: T,
         private val funcs: Runnable,
-        private val runConstant: Runnable?,
-        private val isEnded: java.util.function.BooleanSupplier,
+        private val runConstant: Runnable,
+        private val isEnded: java.util.function.BooleanSupplier?,
         private val resetOnInit: Runnable?
     ) {
+        constructor(driverAid: DriverAid<T>, state: T, funcs: Runnable,runConstant: Runnable, isEnded: java.util.function.BooleanSupplier) : this(driverAid, state, funcs, runConstant, isEnded, null)
+        constructor(driverAid: DriverAid<T>, state: T, funcs: Runnable, runConstant: Runnable) : this(driverAid, state, funcs, runConstant, null,null)
+
+        /**
+         * IDLE constructor
+         */
+        constructor(driverAid: DriverAid<T>, state: T) : this(driverAid, state, Runnable {}, Runnable {}, null, null)
         fun runInit() {
             driverAid.daState = state
             funcs.run()
@@ -63,11 +74,11 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
         }
 
         fun runALot() {
-            runConstant?.run()
+            runConstant.run()
         }
 
         fun isEnded(): Boolean {
-            return isEnded.asBoolean
+            return isEnded?.asBoolean == true
         }
     }
 
