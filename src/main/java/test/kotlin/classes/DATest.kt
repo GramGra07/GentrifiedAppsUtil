@@ -99,7 +99,7 @@ public class DATest {
         driverAid.update()
         TestCase.assertFalse(daFunc2.isEnded())
         TestCase.assertTrue(true) // Just to ensure the test runs without exceptions
-        driverAid.setDAFunc(daFunc)
+        driverAid.setDriverAidFunction(daFunc)
         driverAid.update()
         TestCase.assertFalse(daFunc.isEnded())
         TestCase.assertTrue(true) // Just to ensure the test runs without exceptions

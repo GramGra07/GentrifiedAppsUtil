@@ -13,10 +13,6 @@ import org.jetbrains.annotations.TestOnly
 class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
     var daState: Enum<T>? = null
     private var daFunc: DAFunc<T>? = null
-        set(value) {
-            field = value
-            value?.runInit()
-        }
 
     /**
      * A function to get the current driver aid function
@@ -27,7 +23,9 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
     @TestOnly
     fun getDAFunc() = daFunc
 
-
+    fun setDriverAidFunction(func: DAFunc<T>) {
+        daFunc = func
+    }
     init {
         require(enumClass.enumConstants?.any { it.name == "IDLE" } == true) {
             "Enum class must have an IDLE constant"
