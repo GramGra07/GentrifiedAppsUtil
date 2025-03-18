@@ -17,7 +17,7 @@ class ForwardTicksTuner(private val driver: Driver) : LinearOpMode() {
             val multiplier = (driver.localizer!!.getPose().y / distance)
             telemetry.addData("Multiply Ticks Per in = ", multiplier)
             telemetry.update()
-            Scribe.instance.logData("Forward Ticks Mult: $multiplier")
+            Scribe.instance.setSet("HS-FTT").logData("Forward Ticks Mult: $multiplier")
         }
     }
 }

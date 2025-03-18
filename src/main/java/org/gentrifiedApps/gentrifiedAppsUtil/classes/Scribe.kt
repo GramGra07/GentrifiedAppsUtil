@@ -1,8 +1,24 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
 import android.util.Log
+import org.jetbrains.annotations.TestOnly
 
 class Scribe private constructor(private val tagger: String) {
+    private var set = ""
+    @TestOnly
+            /**
+             * Sets the tag for the logger
+             * ONLY FOR TESTING and debugging for GAU
+             * @param tag The tag to set
+             * @return The logger
+             */
+    fun setSet(tag: String): Scribe {
+        set = "-$tag"
+        return this
+    }
+    private fun removeTag() {
+        set = ""
+    }
     fun logData(data: Any) {
         log(Log.INFO, data)
     }
@@ -47,7 +63,8 @@ class Scribe private constructor(private val tagger: String) {
 
     private fun log(priority: Int, data: Any) {
         if (!isRunningTests()) {
-            Log.println(priority, tagger, data.toString())
+            Log.println(priority, tagger+set, data.toString())
         }
+        removeTag()
     }
 }

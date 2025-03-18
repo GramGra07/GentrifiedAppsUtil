@@ -43,7 +43,7 @@ class VoltageTracker(
         if (currentVoltage < lowestVoltage) {
             lowestVoltage = currentVoltage
             if (lowestVoltage < 9.0) {
-                Scribe.instance.logWarning("Dropped Voltage to: $lowestVoltage")
+                Scribe.instance.setSet("V").logWarning("Dropped Voltage to: $lowestVoltage")
             }
         }
     }

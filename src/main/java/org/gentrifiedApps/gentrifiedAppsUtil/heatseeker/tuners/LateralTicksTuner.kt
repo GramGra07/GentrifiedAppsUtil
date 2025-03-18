@@ -18,7 +18,7 @@ class LateralTicksTuner(private val driver: Driver) : LinearOpMode() {
             val mult = (driver.localizer!!.getPose().x / distance)
             telemetry.addData("Multiply Ticks Per in = ", mult)
             telemetry.update()
-            Scribe.instance.logData("Lateral Ticks Mult: $mult")
+            Scribe.instance.setSet("HS-LTT").logData("Lateral Ticks Mult: $mult")
         }
     }
 }

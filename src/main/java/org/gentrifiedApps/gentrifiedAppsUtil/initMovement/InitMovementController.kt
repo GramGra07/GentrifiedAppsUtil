@@ -49,7 +49,7 @@ class InitMovementController {
         if (!hasMoved) {
             if ((!gamepadPlus.atRest() || !gamepadPlus2.atRest())) {
                 hasMoved = true
-                Scribe.instance.logDebug("Robot has moved")
+                Scribe.instance.setSet("IMC").logDebug("Robot has moved")
             }
         }
     }

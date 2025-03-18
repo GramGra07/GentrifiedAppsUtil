@@ -23,7 +23,7 @@ class Idler(private val opMode: LinearOpMode) {
         elapsed.reset()
         while (elapsed.seconds() < time && opMode.opModeIsActive() == true && !opMode.isStopRequested) {
             updateWhileIdling.run()
-            Scribe.instance.logDebug("Idling for $time seconds, $elapsed seconds elapsed")
+            Scribe.instance.setSet("I").logDebug("Idling for $time seconds, $elapsed seconds elapsed")
         }
     }
 }

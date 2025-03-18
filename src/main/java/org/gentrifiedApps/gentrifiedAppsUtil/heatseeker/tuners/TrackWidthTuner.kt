@@ -22,7 +22,7 @@ class TrackWidthTuner(private val driver: Driver) : LinearOpMode() {
             telemetry.addData("Heading", heading)
             telemetry.addData("Recommended Track Width", correctedTrackWidth)
             telemetry.update()
-            Scribe.instance.logData("Track Width: $correctedTrackWidth")
+            Scribe.instance.setSet("HS-TWT").logData("Track Width: $correctedTrackWidth")
         }
     }
 }
