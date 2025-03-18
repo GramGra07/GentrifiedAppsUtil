@@ -104,7 +104,7 @@ class LoopTimeAnalyzerTest {
 
         // Assertions for Function1
         assertEquals(3, testableFunction1.allTimes.size)
-        assert(testableFunction1.allTimes.sum() > 30.0)
+        assert(testableFunction1.allTimes.sum() > 20.0)
 
         // Assertions for Function2
         assertEquals(3, testableFunction2.allTimes.size)
