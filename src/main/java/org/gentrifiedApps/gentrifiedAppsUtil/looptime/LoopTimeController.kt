@@ -95,6 +95,7 @@ open class LoopTimeController(
      * @param func The function to run
      */
     fun every(period: Int, func: Runnable) {
+        require(period>=1) { "Period must be greater than 1" }
         if (this.loops % period == 0) {
             func.run()
         }

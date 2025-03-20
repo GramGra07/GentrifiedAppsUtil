@@ -5,13 +5,15 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes
  * @param allowedTime the time in seconds that the timeout is allowed to run for in seconds
  * @param breakCondition a lambda that returns a boolean that will break the timeout if true
  */
-class Timeout(private var allowedTime: Double, private var breakCondition: () -> Boolean?) {
+class Timeout @JvmOverloads constructor(private var allowedTime: Double, private var breakCondition: () -> Boolean?= { false }) {
     private var startTime = 0.0
     private var currentTime = 0.0
     private var elapsedTime = 0.0
     private var isTimedOut = false
 
     init {
+        require(allowedTime > 0) { "Timeout time must be greater than 0" }
+        require(allowedTime<30) { "Timeout time must be less than 30" }
         start()
     }
 

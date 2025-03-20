@@ -20,6 +20,8 @@ class Idler(private val opMode: LinearOpMode) {
      * @param updateWhileIdling A lambda to run while idling.
      */
     fun safeIdle(time: Double, updateWhileIdling: Runnable) {
+        require(time>0) { "Time must be greater than 0" }
+        require(time<30.0){ "Time must be less than 30" }
         elapsed.reset()
         while (elapsed.seconds() < time && opMode.opModeIsActive() == true && !opMode.isStopRequested) {
             updateWhileIdling.run()

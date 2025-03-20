@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.sensorArray
 
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
 
 /**
  * A way to represent the array of sensors, as well as reading them all at once
@@ -68,6 +69,17 @@ class SensorArray() {
     fun autoLoop(loops: Int) {
         array.forEach { sensor ->
             if (loops % sensor.sensor().period == 0) {
+                sensor.sensor().readLoopSaving()
+            }
+        }
+    }
+    /**
+     * Reads all sensors at its periodic
+     * @param ltc The LoopTimeController to use
+     */
+    fun autoLoop(ltc: LoopTimeController) {
+        array.forEach { sensor ->
+            if (ltc.loops % sensor.sensor().period == 0) {
                 sensor.sensor().readLoopSaving()
             }
         }

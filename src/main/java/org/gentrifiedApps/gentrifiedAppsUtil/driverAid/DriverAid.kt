@@ -27,8 +27,6 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
     fun setDriverAidFunction(func: DAFunc<T>) {
         func.runInit()
     }
-    init {
-    }
     // auto run on start
 //    fun runInit() {
 //        daFunc?.runInit()
@@ -86,7 +84,7 @@ class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
         }
     }
 
-    //TODO show action implementation
+    //action implementation
 //    class DAActions(
 //        private val funcs: List<Runnable>,
 //    ) : Action {

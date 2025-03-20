@@ -8,6 +8,9 @@ import org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMa
  * @param kf The kf value to use (and tune)
  */
 class VoltageCompensator(private val kf: Double) {
+    init {
+        require(kf>0.0){ "kf must be greater than 0" }
+    }
 
     val voltageSensor: VoltageSensor = hardwareMap.voltageSensor.first()
     fun getVoltage(): Double {

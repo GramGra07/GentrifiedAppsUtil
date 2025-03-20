@@ -86,6 +86,7 @@ open class Sensor(
     private var lastRead:Any? = null
 
     init {
+        require(period>=1, { "Period must be greater than or equal to 1" })
         init.run()
     }
 

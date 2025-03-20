@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.sensorArray
 
-data class SensorReturn(
+data class SensorReturn @JvmOverloads constructor(
     var enc: Double = 0.0,
     var dist: Double = 0.0,
     var color: DoubleArray = doubleArrayOf(0.0, 0.0, 0.0),
