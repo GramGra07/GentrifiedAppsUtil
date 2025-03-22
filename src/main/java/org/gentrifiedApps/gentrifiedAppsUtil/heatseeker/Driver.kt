@@ -1,7 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
@@ -53,7 +52,7 @@ class Driver @JvmOverloads constructor(
             initialize()
         }
     }
-    fun setOpMode(opMode: LinearOpMode) {
+    fun setupOpMode(opMode: LinearOpMode) {
         this.opMode = opMode
         initialize()
     }

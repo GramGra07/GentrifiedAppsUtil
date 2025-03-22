@@ -8,7 +8,6 @@ import java.io.IOException
 
 class TrackedRunner(val name: String) {
     lateinit var file: File
-    lateinit var configFile: File
     lateinit var lines: List<String>
     init {
         getFiles()
@@ -28,23 +27,6 @@ class TrackedRunner(val name: String) {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
-        val configFilePath =
-            "${Environment.getExternalStorageDirectory().absolutePath}/FIRST/teleTracker/$name/${name}Config.txt"
-        try {
-            val configFile = File(configFilePath)
-            configFile.parentFile.mkdirs()
-            if (configFile.exists()) {
-                configFile.delete()
-            }
-            configFile.createNewFile()
-            this.configFile = configFile
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-    fun readConfigFile(): PreemptiveLog {
-        return PreemptiveLog(configFile.readText())
     }
     fun readFile(){
         val lines = file.readLines()

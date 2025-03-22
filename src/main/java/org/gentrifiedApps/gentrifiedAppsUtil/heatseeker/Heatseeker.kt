@@ -36,7 +36,7 @@ open class Heatseeker(
         require(driver.localizer != null)
         this.path = path.map { it.waypoint() }.toMutableList()
         driver.drawer.drawPath(this.path)
-        while (!isFinished(path) && driver.opMode.opModeIsActive() && !driver.opMode.isStopRequested) {
+        while (!isFinished(path) && driver.opMode!!.opModeIsActive() && !driver.opMode!!.isStopRequested) {
             if (currentIndex >= path.size) {
                 driver.setWheelPower(DrivePowerCoefficients.zeros())
                 break
