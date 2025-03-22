@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
@@ -8,35 +9,37 @@ import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.teleopTracker.MovementData
 
 
 enum class DRIVETYPE {
     MECANUM
 }
 
-class Driver(
-    val opMode: LinearOpMode,
+class Driver @JvmOverloads constructor(
+    var opMode: LinearOpMode?,
     val flName: String,
     val frName: String,
     val blName: String,
     val brName: String,
-    private val flDirection: Direction,
-    private val frDirection: Direction,
-    private val blDirection: Direction,
-    private val brDirection: Direction,
+    private val flDirection: Direction = Direction.FORWARD,
+    private val frDirection: Direction = Direction.FORWARD,
+    private val blDirection: Direction = Direction.FORWARD,
+    private val brDirection: Direction = Direction.FORWARD,
 ) {
+    constructor(flName: String, frName: String, blName: String, brName: String,flDirection: Direction, frDirection: Direction, blDirection: Direction, brDirection: Direction) : this(null, flName, frName, blName, brName, flDirection, frDirection, blDirection, brDirection)
     var localizer: Localizer? = null
         set(value){
             field = value
             if (value != null) {
                 value.initLocalizer()
                 drawer.drawLocalization(value.getPose())
-                telemetry.sendTelemetryNoUpdate(opMode.telemetry, value.getPose())
+                telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, value.getPose())
             }
         }
 
     val driveType = DRIVETYPE.MECANUM
-    val hwMap: HardwareMap = opMode.hardwareMap
+    val hwMap: HardwareMap = opMode!!.hardwareMap
     private var fl: DcMotor = hwMap.get(DcMotor::class.java, flName)
     private var fr: DcMotor = hwMap.get(DcMotor::class.java, frName)
     private var bl: DcMotor = hwMap.get(DcMotor::class.java, blName)
@@ -46,6 +49,12 @@ class Driver(
     private val telemetry: TelemetryMaker = TelemetryMaker()
 
     init {
+        if (opMode != null) {
+            initialize()
+        }
+    }
+    fun setOpMode(opMode: LinearOpMode) {
+        this.opMode = opMode
         initialize()
     }
 
@@ -66,7 +75,7 @@ class Driver(
         if (localizer != null) {
             localizer!!.initLocalizer()
             drawer.drawLocalization(localizer!!.getPose())
-            telemetry.sendTelemetryNoUpdate(opMode.telemetry, localizer!!.getPose())
+            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
         }
     }
 
@@ -74,7 +83,7 @@ class Driver(
         updatePoseEstimate()
         if (localizer != null) {
             drawer.drawLocalization(localizer!!.getPose())
-            telemetry.sendTelemetryNoUpdate(opMode.telemetry, localizer!!.getPose())
+            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
         }
     }
 
@@ -89,6 +98,12 @@ class Driver(
         localizer?.update()
     }
 
+    fun findWheelVectors(data: MovementData): DrivePowerCoefficients {
+        return findWheelVectorsXY(data.x,data.y,data.rotation)
+    }
+    fun findWheelVectorsXY(x: Double, y: Double,rotation: Double): DrivePowerCoefficients {
+        return findWheelVectors(y,x,rotation)
+    }
     fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {
         val frontLeft = fwd + strafe + turn
         val frontRight = fwd - strafe - turn

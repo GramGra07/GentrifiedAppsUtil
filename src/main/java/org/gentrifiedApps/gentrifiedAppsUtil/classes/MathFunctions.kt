@@ -88,6 +88,9 @@ class MathFunctions {
         fun inTolerance(value: Double, value2: Double, tolerance: Double): Boolean {
             return value in value2 - tolerance..value2 + tolerance
         }
+        fun inTolerance(value: Int, value2: Int, tolerance: Int): Boolean {
+            return inTolerance(value.toDouble(), value2.toDouble(), tolerance.toDouble())
+        }
 
         /**
          * Returns the angle between two points in degrees

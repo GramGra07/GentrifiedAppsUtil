@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.objects.PeriodicLoopTimeObject
+import org.jetbrains.annotations.TestOnly
 
 /**
  * A class to return loop time information and load periodic loop time objects and .every functions
@@ -18,7 +19,7 @@ open class LoopTimeController(
 
     private val timer = ElapsedTime()
     var loops: Int = 0
-    private var lps = 0.0
+    var lps = 0.0
     private var currentTime: Double = 0.0
     private var currentTimems: Double = 0.0
     private val correctedLPS: Double = 5.0
@@ -33,6 +34,12 @@ open class LoopTimeController(
     var deltaTime: Double = 0.0
 
     init {
+        timer.reset()
+        this.startTime = timer.milliseconds()
+        this.lastTime = startTime
+        reset()
+    }
+    fun reset(){
         timer.reset()
         this.startTime = timer.milliseconds()
         this.lastTime = startTime
