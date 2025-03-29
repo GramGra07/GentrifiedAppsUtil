@@ -1,14 +1,15 @@
-public class SquIDController {
-    double p, i, d;
-    public SquIDController() {
-        p=0;
-        i=0;
-        d=0;
+class SquIDController {
+    private var p: Double = 0.0
+    private var i: Double = 0.0
+    private var d: Double = 0.0
+
+    fun setPID(p: Double,d:Double) {
+        this.p = p
+        this.d= d
     }
-    public void setPID(double p) {
-        this.p = p;
-    }
-    public double calculate(double setpoint, double current) {
-        return Math.sqrt(Math.abs((setpoint-current)*p))*Math.signum(setpoint-current);
+
+    fun calculate(setpoint: Double, current: Double): Double {
+        return (kotlin.math.sqrt(kotlin.math.abs((setpoint - current) * p)) * kotlin.math.sign(setpoint - current)) +
+                (d * setpoint - current)
     }
 }
