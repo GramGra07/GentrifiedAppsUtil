@@ -1,21 +1,9 @@
-public class PIDController extends PIDFController {
+class PIDController(kP: Double, kI: Double, kD: Double) : PIDFController(kP, kI, kD, 0.0) {
 
-    /**
-     * Default constructor with just the coefficients
-     */
-    public PIDController(double kp, double ki, double kd) {
-        super(kp, ki, kd, 0);
+    constructor(kP: Double, kI: Double, kD: Double, sp: Double, pv: Double) : 
+        super(kP, kI, kD, 0.0, sp, pv)
+
+    fun setPID(kP: Double, kI: Double, kD: Double) {
+        setPIDF(kP, kI, kD, 0.0)
     }
-
-    /**
-     * The extended constructor.
-     */
-    public PIDController(double kp, double ki, double kd, double sp, double pv) {
-        super(kp, ki, kd, 0, sp, pv);
-    }
-
-    public void setPID(double kp, double ki, double kd) {
-        setPIDF(kp, ki, kd, 0);
-    }
-
 }
