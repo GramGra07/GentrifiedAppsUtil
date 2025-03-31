@@ -1,3 +1,5 @@
+package org.gentrifiedApps.gentrifiedAppsUtil.motionProfiles
+
 class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF: Double) {
     private var setPoint: Double = 0.0
     private var measuredValue: Double = 0.0
@@ -98,15 +100,4 @@ class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF: Dou
     fun clearTotalError() {
         totalError = 0.0
     }
-
-    fun setP(kP: Double) { this.kP = kP }
-    fun setI(kI: Double) { this.kI = kI }
-    fun setD(kD: Double) { this.kD = kD }
-    fun setF(kF: Double) { this.kF = kF }
-
-    fun getP(): Double = kP
-    fun getI(): Double = kI
-    fun getD(): Double = kD
-    fun getF(): Double = kF
-    fun getPeriod(): Double = period
 }

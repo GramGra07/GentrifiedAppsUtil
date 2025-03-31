@@ -1,12 +1,7 @@
-class SquIDController {
-    private var p: Double = 0.0
-    private var i: Double = 0.0
-    private var d: Double = 0.0
+package org.gentrifiedApps.gentrifiedAppsUtil.motionProfiles
 
-    fun setPID(p: Double,d:Double) {
-        this.p = p
-        this.d= d
-    }
+class SquIDController(var p:Double,var d:Double){
+    constructor(p:Double):this(p,0.0) 
 
     fun calculate(setpoint: Double, current: Double): Double {
         return (kotlin.math.sqrt(kotlin.math.abs((setpoint - current) * p)) * kotlin.math.sign(setpoint - current)) +

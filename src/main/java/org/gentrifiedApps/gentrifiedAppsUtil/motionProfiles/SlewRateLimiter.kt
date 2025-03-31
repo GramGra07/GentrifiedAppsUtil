@@ -1,6 +1,8 @@
+package org.gentrifiedApps.gentrifiedAppsUtil.motionProfiles
+
 import com.qualcomm.robotcore.util.ElapsedTime
 
-class SlewRateLimiter(private val rateLimit: Double) {
+class SlewRateLimiter(val rateLimit: Double) {
     private var lastOutput = 0.0
     private val timer = ElapsedTime()
 

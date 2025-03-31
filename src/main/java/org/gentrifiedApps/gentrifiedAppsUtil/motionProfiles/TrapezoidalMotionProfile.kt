@@ -1,3 +1,5 @@
+package org.gentrifiedApps.gentrifiedAppsUtil.motionProfiles
+
 /** Generates a trapezoidal velocity profile */
 class TrapezoidalMotionProfile(private val maxVel: Double, private val maxAccel: Double) {
     private var startTime = 0.0
@@ -40,6 +42,9 @@ class TrapezoidalMotionProfile(private val maxVel: Double, private val maxAccel:
         val currentTime = (System.nanoTime() / 1e9) - startTime
         val data = profile.find { it.first >= currentTime } ?: return Pair(0.0, 0.0)
         return Pair(data.second, data.third) // (velocity, acceleration)
+    }
+    fun getVelocity():Double{
+        return getTarget().first
     }
 }
 
