@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.voltage
 
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.VoltageSensor
+import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.VoltageCompensator
@@ -27,6 +28,19 @@ class VoltageTracker(
     } else {
         hardwareMap.voltageSensor.first()
     }
+
+    var voltageIndex: Int = 0
+
+    var cached: Boolean = false
+    fun clearCache() {
+        cached = false
+    }
+
+    var nominalVoltage: Double = 12.5
+
+    var cacheInvalidateSeconds: Double = 0.5
+    private val timer: ElapsedTime = ElapsedTime()
+
     private var initialVoltage = 0.0
     private var currentVoltage = 0.0
     private var voltageDrop = 0.0
@@ -35,11 +49,21 @@ class VoltageTracker(
     init {
         initialVoltage = voltageSensor.voltage
         currentVoltage = initialVoltage
+        timer.reset()
     }
 
     fun update() {
         currentVoltage = voltageSensor.voltage
         voltageDrop = initialVoltage - currentVoltage
+
+        if (timer.seconds() > cacheInvalidateSeconds && cacheInvalidateSeconds >= 0) {
+            clearCache()
+        }
+
+        if (!cached) {
+            cached = true
+
+        }
         if (currentVoltage < lowestVoltage) {
             lowestVoltage = currentVoltage
             if (lowestVoltage < 9.0) {
@@ -47,6 +71,9 @@ class VoltageTracker(
             }
         }
     }
+        fun getVoltagePercent(): Double {
+            return nominalVoltage / currentVoltage
+        }
 
     /**
      * Returns the current voltage and voltage drop in telemetry
@@ -54,7 +81,7 @@ class VoltageTracker(
      */
     fun telemetry(telemetry: Telemetry) {
         update()
-        telemetry.addLine("Voltage: ${currentVoltage.format(3)}")
+        telemetry.addLine("Voltage: ${currentVoltage.format(3)}, ${(getVoltagePercent() * 100).format(2)}%")
         telemetry.addLine("Voltage Drop: ${voltageDrop.format(2)}")
         telemetry.addLine("Lowest Voltage: ${lowestVoltage.format(2)}")
     }

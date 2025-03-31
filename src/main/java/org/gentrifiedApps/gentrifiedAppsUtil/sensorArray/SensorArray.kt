@@ -79,7 +79,7 @@ class SensorArray() {
      */
     fun autoLoop(ltc: LoopTimeController) {
         array.forEach { sensor ->
-            if (ltc.loops % sensor.sensor().period == 0) {
+            if (ltc.totalLoops % sensor.sensor().period == 0) {
                 sensor.sensor().readLoopSaving()
             }
         }

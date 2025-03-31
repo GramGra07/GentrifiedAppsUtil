@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.MecanumDriver.Companion.driveMecanum
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Heatseeker
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PIDController
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.ErrorPIDController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
@@ -42,9 +42,9 @@ class HeatseekerTestOpMode : LinearOpMode() {
             otos
         val heatseeker = Heatseeker(
             driver,
-            PIDController(1.0, 0.0, 0.0),
-            PIDController(1.0, 0.0, 0.0),
-            PIDController(1.0, 0.0, 0.0)
+            ErrorPIDController(1.0, 0.0, 0.0),
+            ErrorPIDController(1.0, 0.0, 0.0),
+            ErrorPIDController(1.0, 0.0, 0.0)
         )
 
         val path = PathBuilder()
@@ -83,9 +83,9 @@ class HeatseekerTeleTestOpMode : LinearOpMode() {
             otos
         val heatseeker = Heatseeker(
             driver,
-            PIDController(1.0, 0.0, 0.0),
-            PIDController(1.0, 0.0, 0.0),
-            PIDController(1.0, 0.0, 0.0)
+            ErrorPIDController(1.0, 0.0, 0.0),
+            ErrorPIDController(1.0, 0.0, 0.0),
+            ErrorPIDController(1.0, 0.0, 0.0)
         )
         val teleOpCorrector = heatseeker.teleOpCorrector()
         waitForStart()

@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.objects.PeriodicLoopTimeObject
-import org.jetbrains.annotations.TestOnly
 
 /**
  * A class to return loop time information and load periodic loop time objects and .every functions
@@ -18,15 +17,15 @@ open class LoopTimeController(
     constructor() : this(null)
 
     private val timer = ElapsedTime()
-    var loops: Int = 0
+    var totalLoops: Int = 0
     var lps = 0.0
-    private var currentTime: Double = 0.0
+    private var currentTimeS: Double = 0.0
     private var currentTimems: Double = 0.0
-    private val correctedLPS: Double = 5.0
-    private var lastSecond: Double = 0.0
+    private val calculationTimeDelay: Double = 5.0
+    private var lastSecondLoops: Double = 0.0
     private var lastSecondLPast: Double = 0.0
     private var lastSecondL: Double = 0.0
-    private var lastSecondT: Double = 0.0
+    private var lastSecondTimeDelay: Double = 0.0
 
 
     private var startTime: Double
@@ -46,15 +45,15 @@ open class LoopTimeController(
     }
 
     private fun doCalculations() {
-        lps = loops / (currentTime - correctedLPS)
-        if (currentTime > correctedLPS) {
-            loops++
+        lps = totalLoops / (currentTimeS - calculationTimeDelay)
+        if (currentTimeS > calculationTimeDelay) {
+            totalLoops++
         }
-        if (currentTime - 1 > lastSecondT) {
-            lastSecondL = loops - lastSecondLPast
-            lastSecond = lastSecondL / (currentTime - lastSecondT)
-            lastSecondLPast = loops.toDouble()
-            lastSecondT = currentTime
+        if (currentTimeS - 1 > lastSecondTimeDelay) {
+            lastSecondL = totalLoops - lastSecondLPast
+            lastSecondLoops = lastSecondL / (currentTimeS - lastSecondTimeDelay)
+            lastSecondLPast = totalLoops.toDouble()
+            lastSecondTimeDelay = currentTimeS
         }
     }
 
@@ -63,17 +62,17 @@ open class LoopTimeController(
      */
     open fun update() {
         currentTimems = timer.milliseconds()
-        currentTime = timer.seconds()
+        currentTimeS = timer.seconds()
         doCalculations()
         periodics?.forEach { obj ->
-            obj!!.rr(currentTime)
-            if (obj.check(loops)) {
+            obj!!.rr(currentTimeS)
+            if (obj.check(totalLoops)) {
                 obj.run()
             }
         }
         deltaTime = currentTimems - lastTime
         lastTime = currentTimems
-        if (lastSecond < 30) {
+        if (lastSecondLoops < 30) {
             Scribe.instance.setSet("LTC").logDebug("Loops dropped past 30, this may cause issues and lag")
         }
     }
@@ -84,17 +83,17 @@ open class LoopTimeController(
      */
 
     fun telemetry(telemetry: Telemetry) {
-        telemetry.addData("LOOP TIME", "")
-        telemetry.addData("Timer", "%.1f", currentTime)
-        telemetry.addData("Loops", loops)
+        telemetry.addLine("LOOP TIME")
+        telemetry.addData("Timer", "%.1f", currentTimeS)
+        telemetry.addData("Loops", totalLoops)
         telemetry.addData("Current LPS", "%.1f", lps)
         telemetry.addData("Time Elapsed", "%.1f", deltaTime)
-        telemetry.addData("Avg Time Elapsed", "%.1f", (currentTimems - startTime) / loops)
+        telemetry.addData("Avg Time Elapsed", "%.1f", (currentTimems - startTime) / totalLoops)
 //        telemetry.addData(comparisonDate, "%.1f", comparison-lps)
 //        telemetry.addData("lastsecondloops",lastSecondL)
 //        telemetry.addData("pastlastsecondloops",lastSecondLPast)
 //        telemetry.addData("lastsecondt",lastSecondT)
-        telemetry.addData("Last Second LPS", "%.1f", lastSecond)
+        telemetry.addData("Last Second LPS", "%.1f", lastSecondLoops)
     }
     /**
      * A function to run a function every given amount of loops.
@@ -103,7 +102,7 @@ open class LoopTimeController(
      */
     fun every(period: Int, func: Runnable) {
         require(period>=1) { "Period must be greater than 1" }
-        if (this.loops % period == 0) {
+        if (this.totalLoops % period == 0) {
             func.run()
         }
     }

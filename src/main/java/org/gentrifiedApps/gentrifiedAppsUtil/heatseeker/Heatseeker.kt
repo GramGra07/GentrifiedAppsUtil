@@ -3,7 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.FeedforwardController
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PIDController
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.ErrorPIDController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint
@@ -15,11 +15,11 @@ import kotlin.math.sin
 
 open class Heatseeker(
     private val driver: Driver,
-    private var xPID: PIDController,
-    private var yPID: PIDController,
-    private var hPID: PIDController
+    private var xPID: ErrorPIDController,
+    private var yPID: ErrorPIDController,
+    private var hPID: ErrorPIDController
 ) {
-    fun setPIDControllers(xPID: PIDController, yPID: PIDController, hPID: PIDController) {
+    fun setPIDControllers(xPID: ErrorPIDController, yPID: ErrorPIDController, hPID: ErrorPIDController) {
         this.xPID = xPID
         this.yPID = yPID
         this.hPID = hPID

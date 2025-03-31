@@ -47,19 +47,22 @@ class TrapezoidalMotionProfile(private val maxVel: Double, private val maxAccel:
         return getTarget().first
     }
 }
-
-/** PID + Feedforward controller */
-class VelocityController(private val kP: Double, private val kI: Double, private val kD: Double, private val kF: Double, private val kA: Double) {
-    private var prevError = 0.0
-    private var integral = 0.0
-
-    fun calculate(targetVel: Double, actualVel: Double, targetAccel: Double): Double {
-        val error = targetVel - actualVel
-        integral += error
-        val derivative = error - prevError
-        prevError = error
-
-        // Feedforward (FF) + PID control
-        return (kF * targetVel) + (kA * targetAccel) + (kP * error) + (kI * integral) + (kD * derivative)
-    }
-}
+//val motionProfile = TrapezoidalMotionProfile(maxVel = 2.0, maxAccel = 1.0)
+//
+//    // Generate a profile for a distance of 10 units
+//    motionProfile.generateProfile(distance = 10.0)
+//
+//    // Start the motion profile
+//    motionProfile.start()
+//
+//    // Simulate a loop to get the target velocity and acceleration
+//    while (true) {
+//        val (velocity, acceleration) = motionProfile.getTarget()
+//        println("Velocity: $velocity, Acceleration: $acceleration")
+//
+//        // Break the loop if the profile is complete
+//        if (velocity == 0.0 && acceleration == 0.0) break
+//
+//        // Sleep for 20ms to simulate a control loop
+//        Thread.sleep(20)
+//    }
