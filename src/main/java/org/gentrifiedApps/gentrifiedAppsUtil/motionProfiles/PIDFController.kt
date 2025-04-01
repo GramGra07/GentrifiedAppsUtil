@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.motionProfiles
 
-class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF: Double) {
+open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF: Double) {
     private var setPoint: Double = 0.0
     private var measuredValue: Double = 0.0
     private var minIntegral: Double = -1.0
