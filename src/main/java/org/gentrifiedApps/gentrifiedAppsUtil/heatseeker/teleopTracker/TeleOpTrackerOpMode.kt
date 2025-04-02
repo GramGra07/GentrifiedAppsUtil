@@ -59,6 +59,7 @@ class TeleOpTrackerOpMode(val name: String, val driver: Driver) : LinearOpMode()
                     telemetry.update()
                 }
                 terminateOpModeNow()
+                state = State.PAUSE
             }
         }
     }

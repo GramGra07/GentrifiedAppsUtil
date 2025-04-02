@@ -27,7 +27,6 @@ class TrackedRunner(val name: String) {
 
     fun readFile() {
         val lines = file.readLines()
-        Scribe.instance.setSet("OpModeTracker").logDebug("Lines: $lines")
         this.lines = verifyLines(lines)
     }
 

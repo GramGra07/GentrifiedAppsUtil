@@ -36,6 +36,7 @@ class Scribe private constructor(private val tagger: String) {
     }
 
     fun startLogger(name: String) {
+        setSet("OpMode")
         logData("Starting OpMode: $name")
     }
 
