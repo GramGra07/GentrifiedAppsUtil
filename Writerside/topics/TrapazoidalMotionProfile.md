@@ -2,6 +2,8 @@
 
 The trapezoidal motion profile is a type of motion profile that is commonly used in robotics and control systems. It is characterized by a trapezoidal shape, which consists of three phases: acceleration, constant velocity, and deceleration. This type of motion profile is often used to control the movement of robots, motors, and other mechanical systems.
 
+![download.png](download.png)
+
 ## How to use
 
 The trapezoidal motion profile is typically defined by four parameters: the maximum velocity, the maximum acceleration, the distance to travel, and the time to reach the target position. The motion profile can be calculated using these parameters, and the resulting trajectory can be used to control the movement of the system.
