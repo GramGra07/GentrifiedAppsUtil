@@ -2,10 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.motionProfiles
 
 import com.qualcomm.robotcore.util.ElapsedTime
 
-/**
- * Must be used with FLOAT zero power braking
- */
-class SlewRateLimiter(val rateLimit: Double) {
+class OnlyUpSlewRateLimiter(val rateLimit: Double) {
     private var lastOutput = 0.0
     private val timer = ElapsedTime()
 
@@ -18,9 +15,15 @@ class SlewRateLimiter(val rateLimit: Double) {
         timer.reset()
 
         val maxDelta = rateLimit * deltaTime
-        val delta = (input - lastOutput).coerceIn(-maxDelta, maxDelta)
+        val delta = input - lastOutput
 
-        lastOutput += delta
+        // Allow negative deltas and zero, limit only positive deltas
+        if (delta > maxDelta) {
+            lastOutput += maxDelta
+        } else {
+            lastOutput = input
+        }
+
         return lastOutput
     }
 }

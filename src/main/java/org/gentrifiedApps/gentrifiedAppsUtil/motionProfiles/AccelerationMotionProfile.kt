@@ -5,7 +5,10 @@ class AccelerationMotionProfile(private val maxVel: Double, private val maxAccel
     private var startTime = 0.0
     private var totalTime = 0.0
     private var profile = listOf<Triple<Double, Double, Double>>() // (time, velocity, acceleration)
-
+    fun regenerateProfile(distance: Double) {
+        reset()
+        generateProfile(distance)
+    }
     fun reset() {
         startTime = 0.0
         totalTime = 0.0
