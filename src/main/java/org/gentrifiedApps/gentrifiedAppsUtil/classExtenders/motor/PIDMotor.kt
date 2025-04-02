@@ -1,19 +1,31 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.motor
 
 import com.qualcomm.robotcore.hardware.DcMotor
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode.STOP_AND_RESET_ENCODER
 import com.qualcomm.robotcore.hardware.DcMotorController
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareDevice
+import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.pid.PIDFCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.PIDFController
 
-class PIDMotor: DcMotor {
-    constructor(p: Double, i: Double, d: Double, f: Double) {
-        this.pidController.setPIDF(p, i, d, f)
+class PIDMotor @JvmOverloads constructor(hwMap: HardwareMap,name: String,direction: DcMotorSimple.Direction? = DcMotorSimple.Direction.FORWARD,p: Double =0.0, i: Double=.0, d: Double=.0, f: Double=.0): DcMotor {
+    private var motor : DcMotor = hwMap.get(DcMotor::class.java, name)
+
+    constructor(hwMap: HardwareMap,name: String, p: Double, i: Double, d: Double, f: Double): this(hwMap, name, DcMotorSimple.Direction.FORWARD, p, i, d, f)
+    constructor(hwMap: HardwareMap,name: String, pidfCoefficients: PIDFCoefficients): this(hwMap, name){
+        this.setPIDF(pidfCoefficients.kP, pidfCoefficients.kI, pidfCoefficients.kD, pidfCoefficients.kF)
     }
+
+    private var currentReversed = false
+    private var currentReverseVal = 1
     private var pidController : PIDFController = PIDFController()
     private var target = 0.0
-
+    init {
+        this.setPIDF(p, i, d, f)
+        this.direction = direction
+    }
     fun setTarget(target: Double) {
         this.target = target
     }
@@ -32,108 +44,125 @@ class PIDMotor: DcMotor {
     fun setF(f: Double) {
         this.pidController.kF
     }
+    fun reset(){
+        this.target = 0.0
+        this.mode = STOP_AND_RESET_ENCODER
+        this.mode = DcMotor.RunMode.RUN_USING_ENCODER
+    }
+    fun currentReversed(){
+        if (currentReversed){
+            currentReversed = false
+            currentReverseVal = 1
+        } else {
+            currentReversed = true
+            currentReverseVal = -1
+        }
+    }
 
     fun setPIDF(p: Double, i: Double, d: Double, f: Double) {
         this.pidController.setPIDF(p, i, d, f)
     }
 
     fun setPIDPower() {
-        this.power = this.pidController.calculate(target, this.currentPosition.toDouble())
+        motor.power = this.pidController.calculate(target, motor.currentPosition.toDouble()*currentReverseVal)
     }
 
     override fun getMotorType(): MotorConfigurationType? {
-        return this.motorType
+        return motor.motorType
     }
 
     override fun setMotorType(motorType: MotorConfigurationType?) {
-        this.motorType = motorType
+        motor.motorType = motorType
     }
 
     override fun getController(): DcMotorController? {
-        return this.controller
+        return motor.controller
     }
 
     override fun getPortNumber(): Int {
-        return this.portNumber
+        return motor.portNumber
     }
 
     override fun setZeroPowerBehavior(zeroPowerBehavior: DcMotor.ZeroPowerBehavior?) {
-        this.zeroPowerBehavior = zeroPowerBehavior
+        motor.zeroPowerBehavior = zeroPowerBehavior
     }
 
     override fun getZeroPowerBehavior(): DcMotor.ZeroPowerBehavior? {
-        return this.zeroPowerBehavior
+        return motor.zeroPowerBehavior
     }
 
     override fun setPowerFloat() {
-        this.setPowerFloat()
+        motor.setPowerFloat()
     }
 
     override fun getPowerFloat(): Boolean {
-        return this.powerFloat
+        return motor.powerFloat
     }
 
+    /**
+     * DONT USE
+     */
     override fun setTargetPosition(position: Int) {
-        this.targetPosition = position
+        motor.targetPosition = position
     }
 
     override fun getTargetPosition(): Int {
-        return this.targetPosition
+        return motor.targetPosition
     }
 
     override fun isBusy(): Boolean {
-        return this.isBusy
+        return motor.isBusy
     }
 
     override fun getCurrentPosition(): Int {
-        return this.currentPosition
+        return motor.currentPosition
     }
 
     override fun setMode(mode: DcMotor.RunMode?) {
-        this.mode = mode
+        motor.mode = mode
     }
 
     override fun getMode(): DcMotor.RunMode? {
-        return this.mode
+        return motor.mode
     }
 
     override fun setDirection(direction: DcMotorSimple.Direction?) {
-        this.direction = direction
+        motor.direction = direction
     }
 
     override fun getDirection(): DcMotorSimple.Direction? {
-        return this.direction
+        return motor.direction
     }
 
     override fun setPower(power: Double) {
-        this.power = power
+        motor.power = power
     }
 
     override fun getPower(): Double {
-        return this.power
+        return motor.power
     }
 
     override fun getManufacturer(): HardwareDevice.Manufacturer? {
-        return this.manufacturer
+        return motor.manufacturer
     }
 
     override fun getDeviceName(): String? {
-        return this.deviceName
+        return motor.deviceName
     }
 
     override fun getConnectionInfo(): String? {
-        return this.connectionInfo
+        return motor.connectionInfo
     }
 
     override fun getVersion(): Int {
-        return this.version
+        return motor.version
     }
 
     override fun resetDeviceConfigurationForOpMode() {
-        this.resetDeviceConfigurationForOpMode()
+        motor.resetDeviceConfigurationForOpMode()
     }
 
     override fun close() {
-        this.close()
+        motor.close()
     }
 }

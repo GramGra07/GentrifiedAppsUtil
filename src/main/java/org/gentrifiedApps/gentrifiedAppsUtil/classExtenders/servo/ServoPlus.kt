@@ -27,50 +27,50 @@ class ServoPlus(hardwareMap: HardwareMap, name: String, degree: Double = 180.0) 
 
 
     override fun getManufacturer(): HardwareDevice.Manufacturer {
-        return this.manufacturer
+        return servo.manufacturer
     }
 
     override fun getDeviceName(): String {
-        return this.deviceName
+        return servo.deviceName
     }
 
     override fun getConnectionInfo(): String {
-        return this.connectionInfo
+        return servo.connectionInfo
     }
 
     override fun getVersion(): Int {
-        return this.version
+        return servo.version
     }
 
     override fun resetDeviceConfigurationForOpMode() {
-        return this.resetDeviceConfigurationForOpMode()
+        return servo.resetDeviceConfigurationForOpMode()
     }
 
     override fun close() {
-        return this.close()
+        return servo.close()
     }
 
     override fun getController(): ServoController {
-        return this.controller
+        return servo.controller
     }
 
     override fun getPortNumber(): Int {
-        return this.portNumber
+        return servo.portNumber
     }
 
     override fun setDirection(direction: Servo.Direction?) {
-        return this.setDirection(direction)
+        return servo.setDirection(direction)
     }
 
     override fun getDirection(): Servo.Direction {
-        return this.direction
+        return servo.direction
     }
 
     override fun getPosition(): Double {
-        return this.position
+        return servo.position
     }
 
     override fun scaleRange(min: Double, max: Double) {
-        return this.scaleRange(min, max)
+        return servo.scaleRange(min, max)
     }
 }
