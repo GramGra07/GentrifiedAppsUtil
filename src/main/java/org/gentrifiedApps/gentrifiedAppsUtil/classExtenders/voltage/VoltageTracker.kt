@@ -19,12 +19,17 @@ class VoltageTracker(
     kf: Double
 ) {
     constructor(hardwareMap: HardwareMap) : this(hardwareMap, false, 0.0)
+    constructor(hardwareMap: HardwareMap, kf: Double) : this(hardwareMap, true, kf)
 
-    private val voltageCompensator = VoltageCompensator(kf)
+    private var voltageCompensator : VoltageCompensator? = if (usesVoltageCompensator){
+        VoltageCompensator(kf)
+    }else{
+        null
+    }
 
 
     private var voltageSensor: VoltageSensor = if (usesVoltageCompensator) {
-        voltageCompensator.voltageSensor
+        voltageCompensator!!.voltageSensor
     } else {
         hardwareMap.voltageSensor.first()
     }
@@ -44,7 +49,7 @@ class VoltageTracker(
     private var initialVoltage = 0.0
     private var currentVoltage = 0.0
     private var voltageDrop = 0.0
-    private var lowestVoltage = 0.0
+    private var lowestVoltage = Double.POSITIVE_INFINITY
 
     init {
         initialVoltage = voltageSensor.voltage
@@ -71,9 +76,9 @@ class VoltageTracker(
             }
         }
     }
-        fun getVoltagePercent(): Double {
-            return nominalVoltage / currentVoltage
-        }
+    fun getVoltagePercent(): Double {
+        return currentVoltage/nominalVoltage
+    }
 
     /**
      * Returns the current voltage and voltage drop in telemetry
@@ -88,7 +93,7 @@ class VoltageTracker(
 
     fun calculateVoltageCompensatedKf(controlEffort: Double): Double {
         require(usesVoltageCompensator)
-        return voltageCompensator.getVoltageCompensatedKf(controlEffort)
+        return voltageCompensator!!.getVoltageCompensatedKf(controlEffort)
     }
 }
 

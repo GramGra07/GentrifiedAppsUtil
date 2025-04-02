@@ -5,11 +5,19 @@ class TrapezoidalMotionProfile(private val maxVel: Double, private val maxAccel:
     private var startTime = 0.0
     private var totalTime = 0.0
     private var profile = listOf<Triple<Double, Double, Double>>() // (time, velocity, acceleration)
-
+    fun reset(){
+        startTime = 0.0
+        totalTime = 0.0
+        profile = listOf()
+    }
     fun generateProfile(distance: Double) {
         val accelTime = maxVel / maxAccel
         val accelDistance = 0.5 * maxAccel * accelTime * accelTime
-        val cruiseDistance = distance - (2 * accelDistance)
+        val minDistance = 2 * accelDistance
+
+        require(distance >= minDistance) { "Distance is too small to reach max velocity and decelerate back to zero. Min is: $minDistance" }
+
+        val cruiseDistance = distance - minDistance
         val cruiseTime = cruiseDistance / maxVel
         totalTime = (2 * accelTime) + cruiseTime
 
@@ -39,6 +47,7 @@ class TrapezoidalMotionProfile(private val maxVel: Double, private val maxAccel:
     }
 
     fun getTarget(): Pair<Double, Double> {
+        if (startTime == 0.0) start()
         val currentTime = (System.nanoTime() / 1e9) - startTime
         val data = profile.find { it.first >= currentTime } ?: return Pair(0.0, 0.0)
         return Pair(data.second, data.third) // (velocity, acceleration)

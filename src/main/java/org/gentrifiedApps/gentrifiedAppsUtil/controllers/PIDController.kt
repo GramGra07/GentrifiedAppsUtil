@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.motionProfiles
+package org.gentrifiedApps.gentrifiedAppsUtil.controllers
 
 class PIDController(kP: Double, kI: Double, kD: Double) : PIDFController(kP, kI, kD, 0.0) {
 

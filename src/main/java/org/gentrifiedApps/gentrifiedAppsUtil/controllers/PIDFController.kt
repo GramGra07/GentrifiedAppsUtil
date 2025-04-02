@@ -1,4 +1,6 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.motionProfiles
+package org.gentrifiedApps.gentrifiedAppsUtil.controllers
+
+import kotlin.math.abs
 
 open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF: Double) {
     private var setPoint: Double = 0.0
@@ -23,6 +25,9 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         errorValP = setPoint - measuredValue
         reset()
     }
+    constructor():this(0.0,0.0,0.0,0.0){
+        reset()
+    }
 
     fun reset() {
         totalError = 0.0
@@ -44,7 +49,7 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
     }
 
     fun atSetPoint(): Boolean {
-        return kotlin.math.abs(errorValP) < errorToleranceP && kotlin.math.abs(errorValV) < errorToleranceV
+        return abs(errorValP) < errorToleranceP && abs(errorValV) < errorToleranceV
     }
 
     fun getCoefficients(): DoubleArray = doubleArrayOf(kP, kI, kD, kF)
@@ -73,7 +78,7 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         errorValP = setPoint - pv
         measuredValue = pv
 
-        errorValV = if (kotlin.math.abs(period) > 1E-6) {
+        errorValV = if (abs(period) > 1E-6) {
             (errorValP - prevErrorVal) / period
         } else {
             0.0
