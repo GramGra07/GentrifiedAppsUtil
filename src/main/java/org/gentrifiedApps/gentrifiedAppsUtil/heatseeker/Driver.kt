@@ -38,11 +38,11 @@ class Driver @JvmOverloads constructor(
         }
 
     val driveType = DRIVETYPE.MECANUM
-    val hwMap: HardwareMap = opMode!!.hardwareMap
-    private var fl: DcMotor = hwMap.get(DcMotor::class.java, flName)
-    private var fr: DcMotor = hwMap.get(DcMotor::class.java, frName)
-    private var bl: DcMotor = hwMap.get(DcMotor::class.java, blName)
-    private var br: DcMotor = hwMap.get(DcMotor::class.java, brName)
+    lateinit var hwMap: HardwareMap
+    private lateinit var fl: DcMotor
+    private lateinit var fr: DcMotor
+    private lateinit var bl: DcMotor
+    private lateinit var br: DcMotor
 
     val drawer = Drawer()
     private val telemetry: TelemetryMaker = TelemetryMaker()
@@ -58,6 +58,11 @@ class Driver @JvmOverloads constructor(
     }
 
     private fun initialize() {
+        hwMap = opMode!!.hardwareMap
+        fl = hwMap.get(DcMotor::class.java, flName)
+        fr = hwMap.get(DcMotor::class.java, frName)
+        bl = hwMap.get(DcMotor::class.java, blName)
+        br = hwMap.get(DcMotor::class.java, brName)
         fl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         fr.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         bl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
