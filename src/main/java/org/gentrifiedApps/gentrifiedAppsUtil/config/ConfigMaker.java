@@ -51,7 +51,15 @@ public class ConfigMaker {
         } else if (port < 0) {
             throw new IllegalArgumentException("Device port must be greater than 0");
         }
-        String s = String.format("         <%s name=\"%s\" port=\"%s\"/>\n", type.toString(), name, port);
+        String typeName;
+        if (type == DeviceType.REV_INTERNAL_BNO055_IMU){
+            typeName = "LynxEmbeddedIMU";
+        }else if (type == DeviceType.REV_INTERNAL_BHI260_IMU) {
+            typeName = "ControlHubImuBHI260AP";
+        }else{
+            typeName = type.toString();
+        }
+        String s = String.format("         <%s name=\"%s\" port=\"%s\"/>\n", typeName, name, port);
         if (type == DeviceType.RevColorSensorV3 || type == DeviceType.RevExternalImu || type == DeviceType.AdafruitBNO055IMU || type == DeviceType.HuskyLens || type == DeviceType.SparkFunOTOS) {
             s += "bus=\"undefined\"";
         }
@@ -171,6 +179,8 @@ public class ConfigMaker {
         DigitalDevice,
         OpticalDistanceSensor,
         ModernRoboticsAnalogTouchSensor,
+        REV_INTERNAL_BNO055_IMU,
+        REV_INTERNAL_BHI260_IMU,
     }
 
     public enum MotorType {
