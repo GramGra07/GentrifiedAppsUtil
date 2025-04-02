@@ -23,6 +23,7 @@ class TeleOpTrackerOpMode(val name: String, val driver: Driver) : LinearOpMode()
     val tracker = OpModeTracker(name)
     val ltc = LoopTimeController()
     val elapsedTime: ElapsedTime = ElapsedTime()
+    val currentTime = ElapsedTime()
     override fun runOpMode() {
         driver.setupOpMode(this)
         tracker.init()
@@ -43,7 +44,7 @@ class TeleOpTrackerOpMode(val name: String, val driver: Driver) : LinearOpMode()
                 val r = gamepad1.right_stick_x
                 val powerCoefficients = MecanumDriver.driveMecanum(x, y, r)
                 driver.setWheelPower(powerCoefficients)
-                tracker.writeToFile(MovementData(x, y, r))
+                tracker.writeToFile(MovementData(x.toDouble(), y.toDouble(), r.toDouble(), currentTime.milliseconds()))
                 if (elapsedTime.seconds() > trackerTime) {
                     state = State.ENDED
                 }
@@ -61,6 +62,7 @@ class TeleOpTrackerOpMode(val name: String, val driver: Driver) : LinearOpMode()
                 terminateOpModeNow()
                 state = State.PAUSE
             }
+            currentTime.reset()
         }
     }
 
