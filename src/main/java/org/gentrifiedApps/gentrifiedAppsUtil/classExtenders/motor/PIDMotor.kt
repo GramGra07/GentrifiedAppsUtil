@@ -10,6 +10,20 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.pid.PIDFCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.PIDFController
 
+/**
+ * A PID motor class that extends the DcMotor class
+ * This class is used to control a motor using PID control directly
+ * @param hwMap The hardware map to use
+ * @param name The name of the motor
+ * @param direction The direction of the motor
+ * @param p The proportional gain
+ * @param i The integral gain
+ * @param d The derivative gain
+ * @param f The feedforward gain
+ * @see DcMotor
+ * @see PIDFCoefficients
+ * @see PIDFController
+ */
 class PIDMotor @JvmOverloads constructor(hwMap: HardwareMap,name: String,direction: DcMotorSimple.Direction? = DcMotorSimple.Direction.FORWARD,p: Double =0.0, i: Double=.0, d: Double=.0, f: Double=.0): DcMotor {
     private var motor : DcMotor = hwMap.get(DcMotor::class.java, name)
 
@@ -26,6 +40,11 @@ class PIDMotor @JvmOverloads constructor(hwMap: HardwareMap,name: String,directi
         this.setPIDF(p, i, d, f)
         this.direction = direction
     }
+
+    /**
+     * Sets the target position of the motor
+     * @param target The target position
+     */
     fun setTarget(target: Double) {
         this.target = target
     }
@@ -44,11 +63,19 @@ class PIDMotor @JvmOverloads constructor(hwMap: HardwareMap,name: String,directi
     fun setF(f: Double) {
         this.pidController.kF
     }
+
+    /**
+     * Resets the motor encoder and sets the mode to RUN_USING_ENCODER
+     */
     fun reset(){
         this.target = 0.0
         this.mode = STOP_AND_RESET_ENCODER
         this.mode = DcMotor.RunMode.RUN_USING_ENCODER
     }
+
+    /**
+     * Reverses the current direction of the motor through the currentReverseVal, just negates val
+     */
     fun currentReversed(){
         if (currentReversed){
             currentReversed = false
@@ -59,10 +86,20 @@ class PIDMotor @JvmOverloads constructor(hwMap: HardwareMap,name: String,directi
         }
     }
 
+    /**
+     * Sets the PIDF coefficients of the motor
+     * @param p The proportional gain
+     * @param i The integral gain
+     * @param d The derivative gain
+     * @param f The feedforward gain
+     */
     fun setPIDF(p: Double, i: Double, d: Double, f: Double) {
         this.pidController.setPIDF(p, i, d, f)
     }
 
+    /**
+     * Sets power immediately to the motor via the PID controller
+     */
     fun setPIDPower() {
         motor.power = this.pidController.calculate(target, motor.currentPosition.toDouble()*currentReverseVal)
     }
