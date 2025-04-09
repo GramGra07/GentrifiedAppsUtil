@@ -38,6 +38,9 @@ class AnalogEncoder(
     fun getCurrentPosition(): Int {
         return calculator.runOperations(analogEncoder.voltage).toInt() - startPosition.toInt()
     }
+    fun getVoltage(): Double {
+        return analogEncoder.voltage
+    }
 
     companion object {
         @JvmStatic

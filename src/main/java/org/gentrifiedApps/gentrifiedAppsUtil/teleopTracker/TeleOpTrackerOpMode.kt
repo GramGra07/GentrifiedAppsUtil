@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.teleopTracker
+package org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime

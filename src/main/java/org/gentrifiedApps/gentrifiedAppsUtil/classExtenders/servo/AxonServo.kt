@@ -3,9 +3,10 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.servo
 import com.qualcomm.robotcore.hardware.AnalogInput
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.AnalogEncoder
 
 class AxonServo(hw: HardwareMap, val name: String) {
-    private val encoder: AnalogInput
+    private var encoder: AnalogEncoder
     private val servo: ServoPlus
 
     init {
@@ -13,8 +14,8 @@ class AxonServo(hw: HardwareMap, val name: String) {
         servo = ServoPlus(hw, name)
     }
 
-    private fun initAEncoder(hw: HardwareMap): AnalogInput {
-        return hw.get(AnalogInput::class.java, name + "Encoder")
+    private fun initAEncoder(hw: HardwareMap): AnalogEncoder {
+        return AnalogEncoder.axon(hw, name + "Encoder")
     }
 
     fun telemetry(telemetry: Telemetry) {
@@ -25,11 +26,11 @@ class AxonServo(hw: HardwareMap, val name: String) {
         servo.position = (degree)
     }
 
-    fun getEncoderPosition(): Double {
-        return (encoder.voltage / 3.3) * 360
+    fun getEncoderPosition(): Int {
+        return encoder.getCurrentPosition()
     }
 
     fun getEncoderPositionReversed(): Double {
-        return (((encoder.voltage - 3.3) / 3.3) * 360) * -1
+        return (((encoder.getVoltage() - 3.3) / 3.3) * 360) * -1
     }
 }

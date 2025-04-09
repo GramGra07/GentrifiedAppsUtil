@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.teleopTracker
+package org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker
 
 import android.os.Environment
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
@@ -35,7 +35,7 @@ class TrackedRunner(val name: String) {
             if (line.isEmpty()) {
                 input.drop(input.indexOf(line))
             }
-            if (line.split(',').size != 3) {
+            if (line.split(',').size != 4) {
                 Scribe.instance.setSet("TrackedRunner")
                     .logError("Line: ${input.indexOf(line)} is not in the correct format, is instead: $line")
             }

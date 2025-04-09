@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.teleopTracker
+package org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker
 
 import android.os.Environment
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe

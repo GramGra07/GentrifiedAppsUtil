@@ -8,7 +8,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.teleopTracker.MovementData
+import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.MovementData
 
 
 enum class DRIVETYPE {
