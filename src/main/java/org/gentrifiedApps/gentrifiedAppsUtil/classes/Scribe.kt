@@ -1,7 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
 import android.util.Log
-import org.jetbrains.annotations.TestOnly
 
 class Scribe private constructor(private val tagger: String) {
     private var set = ""
@@ -43,23 +42,22 @@ class Scribe private constructor(private val tagger: String) {
     }
 
     companion object {
-        @JvmStatic
-        private val defaultTagger = "Scribe"
+        private const val DEFAULT_TAG = "Scribe"
 
         @JvmStatic
-        var instance: Scribe = Scribe(defaultTagger)
+        var instance: Scribe = Scribe(DEFAULT_TAG)
 
         @JvmStatic
         fun create(tagger: String) {
-            this.instance = Scribe(defaultTagger + tagger)
+            this.instance = Scribe(DEFAULT_TAG + tagger)
         }
 
         @JvmStatic
         fun reset() {
-            this.instance = Scribe(defaultTagger)
+            this.instance = Scribe(DEFAULT_TAG)
         }
 
-        private fun isRunningTests(): Boolean {
+        internal fun isRunningTests(): Boolean {
             return System.getProperty("java.class.path").contains("junit")
         }
     }
