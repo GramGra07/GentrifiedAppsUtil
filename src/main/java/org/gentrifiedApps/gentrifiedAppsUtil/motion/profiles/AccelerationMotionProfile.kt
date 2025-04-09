@@ -1,7 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles
 
 /** Generates an acceleration-only velocity profile */
-class AccelerationMotionProfile(private val maxVel: Double, private val maxAccel: Double) {
+class AccelerationMotionProfile(private val maxVel: Double, internal val maxAccel: Double) {
     private var startTime = 0.0
     private var totalTime = 0.0
     private var profile = listOf<Triple<Double, Double, Double>>() // (time, velocity, acceleration)
@@ -17,6 +17,7 @@ class AccelerationMotionProfile(private val maxVel: Double, private val maxAccel
     }
 
     fun generateProfile(distance: Double) {
+        require(distance > 0)
         val accelTime = Math.sqrt(2 * distance / maxAccel)
         totalTime = accelTime
 
