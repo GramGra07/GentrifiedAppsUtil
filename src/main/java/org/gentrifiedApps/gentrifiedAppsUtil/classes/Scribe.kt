@@ -6,14 +6,13 @@ import org.jetbrains.annotations.TestOnly
 class Scribe private constructor(private val tagger: String) {
     private var set = ""
 
-    @TestOnly
-            /**
-             * Sets the tag for the logger
-             * ONLY FOR TESTING and debugging for GAU
-             * @param tag The tag to set
-             * @return The logger
-             */
-    fun setSet(tag: String): Scribe {
+    /**
+     * Sets the tag for the logger
+     * ONLY FOR TESTING and debugging for GAU
+     * @param tag The tag to set
+     * @return The logger
+     */
+    internal fun setSet(tag: String): Scribe {
         set = "-$tag"
         return this
     }

@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pid.PIDFCoefficients
-import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.controllers.PIDFController
+import org.gentrifiedApps.gentrifiedAppsUtil.motion.controllers.PIDFController
 
 /**
  * A PID motor class that extends the DcMotor class

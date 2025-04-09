@@ -46,5 +46,4 @@ data class DrivePowerCoefficients(
     fun notZero(): Boolean {
         return this != zeros()
     }
-
 }

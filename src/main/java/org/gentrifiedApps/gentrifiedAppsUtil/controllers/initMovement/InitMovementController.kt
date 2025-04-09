@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.controllers.driverAid.initMovement
+package org.gentrifiedApps.gentrifiedAppsUtil.controllers.initMovement
 
 import com.qualcomm.robotcore.hardware.Gamepad
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe

@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.controllers
+package org.gentrifiedApps.gentrifiedAppsUtil.motion.controllers
 
 import kotlin.math.abs
 import kotlin.math.sign

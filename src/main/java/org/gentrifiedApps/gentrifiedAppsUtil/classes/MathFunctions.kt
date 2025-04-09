@@ -111,5 +111,9 @@ class MathFunctions {
         fun distanceTo(P1: Point, P2: Point): Double {
             return hypot(P2.x - P1.x, P2.y - P1.y)
         }
+
+        fun getError(set: Double,current: Double): Double{
+            return abs(set-current)
+        }
     }
 }

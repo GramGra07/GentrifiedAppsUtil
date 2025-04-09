@@ -11,16 +11,16 @@ abstract class Subsystem(private val hwMap: HardwareMap, auto: Boolean = false) 
     abstract fun telemetry(telemetry: Telemetry)
 }
 
-class ArmSub(hwMap: HardwareMap) : Subsystem(hwMap) {
-    override fun init() {
-
-    }
-
-    override fun update() {
-
-    }
-
-    override fun telemetry(telemetry: Telemetry) {
-
-    }
-}
+//class ArmSub(hwMap: HardwareMap) : Subsystem(hwMap) {
+//    override fun init() {
+//
+//    }
+//
+//    override fun update() {
+//
+//    }
+//
+//    override fun telemetry(telemetry: Telemetry) {
+//
+//    }
+//}

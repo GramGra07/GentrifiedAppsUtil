@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.controllers.driverAid.initMovement;
+package org.gentrifiedApps.gentrifiedAppsUtil.controllers.initMovement;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;

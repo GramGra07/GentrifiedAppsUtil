@@ -1,5 +1,6 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.controllers
+package org.gentrifiedApps.gentrifiedAppsUtil.motion.controllers
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pid.PIDFCoefficients
 import kotlin.math.abs
 
 open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF: Double) {
@@ -28,6 +29,14 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         setPoint = sp
         measuredValue = pv
         errorValP = setPoint - measuredValue
+        reset()
+    }
+    constructor(pidfCoefficients: PIDFCoefficients) : this(
+        pidfCoefficients.kP,
+        pidfCoefficients.kI,
+        pidfCoefficients.kD,
+        pidfCoefficients.kF
+    ) {
         reset()
     }
 
@@ -104,6 +113,12 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         this.kI = kI
         this.kD = kD
         this.kF = kF
+    }
+    fun setPIDF(pidfCoefficients: PIDFCoefficients){
+        this.kP = pidfCoefficients.kP
+        this.kI = pidfCoefficients.kI
+        this.kD = pidfCoefficients.kD
+        this.kF = pidfCoefficients.kF
     }
 
     fun setIntegrationBounds(integralMin: Double, integralMax: Double) {

@@ -22,7 +22,7 @@ open class LoopTimeController(
     private var currentTimeS: Double = 0.0
     private var currentTimems: Double = 0.0
     private val calculationTimeDelay: Double = 5.0
-    private var lastSecondLoops: Double = 0.0
+    private var hz: Double = 0.0
     private var lastSecondLPast: Double = 0.0
     private var lastSecondL: Double = 0.0
     private var lastSecondTimeDelay: Double = 0.0
@@ -52,7 +52,7 @@ open class LoopTimeController(
         }
         if (currentTimeS - 1 > lastSecondTimeDelay) {
             lastSecondL = totalLoops - lastSecondLPast
-            lastSecondLoops = lastSecondL / (currentTimeS - lastSecondTimeDelay)
+            hz = lastSecondL / (currentTimeS - lastSecondTimeDelay)
             lastSecondLPast = totalLoops.toDouble()
             lastSecondTimeDelay = currentTimeS
         }
@@ -73,7 +73,7 @@ open class LoopTimeController(
         }
         deltaTime = currentTimems - lastTime
         lastTime = currentTimems
-        if (lastSecondLoops < 30) {
+        if (hz < 30) {
             Scribe.instance.setSet("LTC")
                 .logDebug("Loops dropped past 30, this may cause issues and lag")
         }
@@ -95,7 +95,7 @@ open class LoopTimeController(
 //        telemetry.addData("lastsecondloops",lastSecondL)
 //        telemetry.addData("pastlastsecondloops",lastSecondLPast)
 //        telemetry.addData("lastsecondt",lastSecondT)
-        telemetry.addData("Last Second LPS", "%.1f", lastSecondLoops)
+        telemetry.addData("Hz", "%.1f", hz)
     }
 
     /**
