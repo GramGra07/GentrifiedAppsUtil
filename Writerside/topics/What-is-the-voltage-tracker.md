@@ -18,6 +18,8 @@ Then, in your main loop, use the following code:
 voltageTracker.update();
 // to get telemetry, use instead
 voltageTracker.telemetry(telemetry);
+// or, you can use 
+voltageTracker.telemetrySimple(telemetry);
 ```
 
 If you want to use the voltage compensator with the tracker, you must add the parameters `true` and `kf` to the `VoltageTracker` object.

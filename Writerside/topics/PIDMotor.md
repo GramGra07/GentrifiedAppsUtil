@@ -25,11 +25,6 @@ Then, you can use the following methods to control the motor:
 ## Example
 
 ```Java
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.PIDMotor;
-
 @TeleOp
 public class GentrifiedAppsTestOpMode extends LinearOpMode {
 

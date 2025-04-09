@@ -23,13 +23,6 @@ gamepad.sync()
 Make sure you use the correct enum when calling the button, the full example is below.
 
 ```java
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.LoopTimeAnalyzer;
-import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.TestableFunctions;
-
 @TeleOp
 @Disabled
 public class GamepadOpMode extends LinearOpMode {

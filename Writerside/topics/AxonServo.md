@@ -22,10 +22,6 @@ The `AxonServo` class represents a servo motor with an analog encoder for positi
 ### Usage Example
 
 ```java
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.servo.AxonServo;
-
 public class ExampleOpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -47,3 +43,4 @@ public class ExampleOpMode extends LinearOpMode {
         }
     }
 }
+```

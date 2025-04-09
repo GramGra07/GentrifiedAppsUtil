@@ -91,10 +91,6 @@ DriverAid.DAFunc<DA> func3 = new DriverAid.DAFunc<>(
 ### Full Example
 
 ```java
-package org.firstinspires.ftc.teamcode.ggutil;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 enum DA{
     DRIVE,
     TURN,

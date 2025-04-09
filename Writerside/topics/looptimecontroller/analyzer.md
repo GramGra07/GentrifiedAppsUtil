@@ -7,15 +7,6 @@ You can create it by putting this file anywhere in your code, it will automatica
 Init loop will run to initialize things like servos and motors, testing functions have the name, then the function which allows you to test everything as shown below.
 
 ```java
-package org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer;
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
-import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
-
-import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
-import java.util.List;
-
 public final class AnalyzerOpModeRegistrar {
     static Integer testingLoops = 5; 
 

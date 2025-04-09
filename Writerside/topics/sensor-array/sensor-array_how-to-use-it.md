@@ -65,15 +65,6 @@ Reads all sensors at its periodic interval.
 ## Example
 
 ```java
-package org.firstinspires.ftc.teamcode.ggutil;
-
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.AnalogInput;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-import org.gentrifiedApps.gentrifiedAppsUtil.sensorArray.Sensor;
-import org.gentrifiedApps.gentrifiedAppsUtil.sensorArray.SensorArray;
-
 @TeleOp
 public class GentrifiedAppsTestOpMode extends LinearOpMode {
 

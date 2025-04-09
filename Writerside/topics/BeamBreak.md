@@ -20,10 +20,6 @@ The `BeamBreakSensor` class represents a digital beam break sensor.
 ### Usage Example
 
 ```java
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.sensors.BeamBreakSensor;
-
 public class ExampleOpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -43,3 +39,4 @@ public class ExampleOpMode extends LinearOpMode {
         }
     }
 }
+```

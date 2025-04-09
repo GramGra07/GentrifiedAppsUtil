@@ -23,10 +23,6 @@ On setup, you MUST start it at 90 degrees, or halfway through the servo rotation
 ### Usage Example
 
 ```java
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.servo.SynchronizedServo;
-
 public class ExampleOpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
@@ -48,3 +44,4 @@ public class ExampleOpMode extends LinearOpMode {
         }
     }
 }
+```
