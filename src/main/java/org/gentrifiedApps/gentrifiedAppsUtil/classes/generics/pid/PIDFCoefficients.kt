@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.classes.pid
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pid
 
 open class PIDFCoefficients(
     open var kP: Double,

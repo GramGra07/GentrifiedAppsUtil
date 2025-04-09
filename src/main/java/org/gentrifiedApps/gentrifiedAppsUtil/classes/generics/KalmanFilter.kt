@@ -1,5 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.classes
-
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics
 
 class KalmanFilter {
     class KalmanCoefficients(val Q: Double, val R: Double)

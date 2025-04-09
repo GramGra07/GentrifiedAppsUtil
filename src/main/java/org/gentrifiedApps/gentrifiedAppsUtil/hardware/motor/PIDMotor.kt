@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareDevice
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.pid.PIDFCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pid.PIDFCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.controllers.PIDFController
 
 /**
