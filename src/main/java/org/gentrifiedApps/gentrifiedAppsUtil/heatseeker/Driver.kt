@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
@@ -26,9 +26,29 @@ class Driver @JvmOverloads constructor(
     private val blDirection: Direction = Direction.FORWARD,
     private val brDirection: Direction = Direction.FORWARD,
 ) {
-    constructor(flName: String, frName: String, blName: String, brName: String,flDirection: Direction, frDirection: Direction, blDirection: Direction, brDirection: Direction) : this(null, flName, frName, blName, brName, flDirection, frDirection, blDirection, brDirection)
+    constructor(
+        flName: String,
+        frName: String,
+        blName: String,
+        brName: String,
+        flDirection: Direction,
+        frDirection: Direction,
+        blDirection: Direction,
+        brDirection: Direction
+    ) : this(
+        null,
+        flName,
+        frName,
+        blName,
+        brName,
+        flDirection,
+        frDirection,
+        blDirection,
+        brDirection
+    )
+
     var localizer: Localizer? = null
-        set(value){
+        set(value) {
             field = value
             if (value != null) {
                 value.initLocalizer()
@@ -52,6 +72,7 @@ class Driver @JvmOverloads constructor(
             initialize()
         }
     }
+
     fun setupOpMode(opMode: LinearOpMode) {
         this.opMode = opMode
         initialize()
@@ -103,11 +124,13 @@ class Driver @JvmOverloads constructor(
     }
 
     fun findWheelVectors(data: MovementData): DrivePowerCoefficients {
-        return findWheelVectorsXY(data.x,data.y,data.rotation)
+        return findWheelVectorsXY(data.x, data.y, data.rotation)
     }
-    fun findWheelVectorsXY(x: Double, y: Double,rotation: Double): DrivePowerCoefficients {
-        return findWheelVectors(y,x,rotation)
+
+    fun findWheelVectorsXY(x: Double, y: Double, rotation: Double): DrivePowerCoefficients {
+        return findWheelVectors(y, x, rotation)
     }
+
     fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {
         val frontLeft = fwd + strafe + turn
         val frontRight = fwd - strafe - turn
@@ -125,7 +148,7 @@ class Driver @JvmOverloads constructor(
 
 
     fun sendEncoders(): List<Pair<DcMotor, String>> {
-        return listOf(Pair(fl,flName), Pair(fr,frName), Pair(bl,blName), Pair(br,brName))
+        return listOf(Pair(fl, flName), Pair(fr, frName), Pair(bl, blName), Pair(br, brName))
     }
 
     companion object {

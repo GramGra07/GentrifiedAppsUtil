@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision
 
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.Alliance
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Alliance
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.BlackAndWhiteDotDetector
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.DotColor
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.DotDetectionBuilder

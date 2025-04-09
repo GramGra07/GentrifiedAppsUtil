@@ -3,7 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.tuners
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
 enum class MecanumMotors {

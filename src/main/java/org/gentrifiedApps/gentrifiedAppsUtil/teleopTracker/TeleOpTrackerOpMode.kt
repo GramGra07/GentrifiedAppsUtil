@@ -2,7 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.MecanumDriver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.idler.Idler
@@ -44,7 +44,14 @@ class TeleOpTrackerOpMode(val name: String, val driver: Driver) : LinearOpMode()
                 val r = gamepad1.right_stick_x
                 val powerCoefficients = MecanumDriver.driveMecanum(x, y, r)
                 driver.setWheelPower(powerCoefficients)
-                tracker.writeToFile(MovementData(x.toDouble(), y.toDouble(), r.toDouble(), currentTime.milliseconds()))
+                tracker.writeToFile(
+                    MovementData(
+                        x.toDouble(),
+                        y.toDouble(),
+                        r.toDouble(),
+                        currentTime.milliseconds()
+                    )
+                )
                 if (elapsedTime.seconds() > trackerTime) {
                     state = State.ENDED
                 }

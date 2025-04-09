@@ -38,7 +38,8 @@ open class LoopTimeController(
         this.lastTime = startTime
         reset()
     }
-    fun reset(){
+
+    fun reset() {
         timer.reset()
         this.startTime = timer.milliseconds()
         this.lastTime = startTime
@@ -73,7 +74,8 @@ open class LoopTimeController(
         deltaTime = currentTimems - lastTime
         lastTime = currentTimems
         if (lastSecondLoops < 30) {
-            Scribe.instance.setSet("LTC").logDebug("Loops dropped past 30, this may cause issues and lag")
+            Scribe.instance.setSet("LTC")
+                .logDebug("Loops dropped past 30, this may cause issues and lag")
         }
     }
 
@@ -95,13 +97,14 @@ open class LoopTimeController(
 //        telemetry.addData("lastsecondt",lastSecondT)
         telemetry.addData("Last Second LPS", "%.1f", lastSecondLoops)
     }
+
     /**
      * A function to run a function every given amount of loops.
      * @param period The amount of loops to wait to run the function
      * @param func The function to run
      */
     fun every(period: Int, func: Runnable) {
-        require(period>=1) { "Period must be greater than 1" }
+        require(period >= 1) { "Period must be greater than 1" }
         if (this.totalLoops % period == 0) {
             func.run()
         }
@@ -112,7 +115,7 @@ open class LoopTimeController(
      * @param hw The hardware map to use
      * @see LynxModule
      */
-    fun setLoopSavingCache(hw: HardwareMap){
+    fun setLoopSavingCache(hw: HardwareMap) {
         val allHubs: List<LynxModule> = hw.getAll(LynxModule::class.java)
 
         for (hub in allHubs) {

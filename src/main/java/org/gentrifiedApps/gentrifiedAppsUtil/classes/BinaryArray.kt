@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Alliance
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.enums.Color
 
 /**

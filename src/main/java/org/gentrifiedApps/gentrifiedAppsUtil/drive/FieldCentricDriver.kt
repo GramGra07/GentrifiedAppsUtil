@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.drive
 
 import com.qualcomm.robotcore.util.Range
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
 import kotlin.math.abs
@@ -19,7 +20,7 @@ class FieldCentricDriver {
          * @param gyroAngle The angle of the gyro. ex imu.getAngularOrientation().firstAngle in **radians**
          * @param offset The offset to add to the gyro angle. ex Angle(90.0, AngleUnit.DEGREES)
          * @return The coefficients to drive the robot.
-         * @see DrivePowerCoefficients
+         * @see org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
          */
         @JvmStatic
         fun driveFieldCentric(

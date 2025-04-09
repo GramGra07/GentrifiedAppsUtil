@@ -18,6 +18,7 @@ class SensorArray() {
     init {
         array = HashMap()
     }
+
     /**
      * Adds a sensor to the array
      * @param sensor The sensor to add
@@ -73,6 +74,7 @@ class SensorArray() {
             }
         }
     }
+
     /**
      * Reads all sensors at its periodic
      * @param ltc The LoopTimeController to use

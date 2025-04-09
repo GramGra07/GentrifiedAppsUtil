@@ -3,7 +3,7 @@ package test.kotlin.gamepadMacroTest
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad.*
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.*
 import org.junit.Test
 
 class GamepadMacroTest {

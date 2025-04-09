@@ -1,7 +1,7 @@
 package test.kotlin.classes
 
 import junit.framework.TestCase
-import org.gentrifiedApps.gentrifiedAppsUtil.driverAid.DriverAid
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.driverAid.DriverAid
 import org.junit.Test
 import java.util.function.BooleanSupplier
 

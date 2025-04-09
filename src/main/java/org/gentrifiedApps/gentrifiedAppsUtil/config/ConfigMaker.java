@@ -52,11 +52,11 @@ public class ConfigMaker {
             throw new IllegalArgumentException("Device port must be greater than 0");
         }
         String typeName;
-        if (type == DeviceType.REV_INTERNAL_BNO055_IMU){
+        if (type == DeviceType.REV_INTERNAL_BNO055_IMU) {
             typeName = "LynxEmbeddedIMU";
-        }else if (type == DeviceType.REV_INTERNAL_BHI260_IMU) {
+        } else if (type == DeviceType.REV_INTERNAL_BHI260_IMU) {
             typeName = "ControlHubImuBHI260AP";
-        }else{
+        } else {
             typeName = type.toString();
         }
         String s = String.format("         <%s name=\"%s\" port=\"%s\"/>\n", typeName, name, port);

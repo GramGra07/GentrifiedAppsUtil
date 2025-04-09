@@ -13,10 +13,23 @@ class Encoder(
     val offset: Double,
     hwMap: HardwareMap?
 ) {
-    constructor(encoderSpecs: EncoderSpecs, name: String, direction: DcMotorSimple.Direction,hardReverse: Boolean, hwMap: HardwareMap?) :
-            this(encoderSpecs, name, direction,hardReverse, 0.0, hwMap)
-    constructor(encoderSpecs: EncoderSpecs, name: String, direction: DcMotorSimple.Direction, hwMap: HardwareMap?) :
-            this(encoderSpecs, name, direction,false, 0.0, hwMap)
+    constructor(
+        encoderSpecs: EncoderSpecs,
+        name: String,
+        direction: DcMotorSimple.Direction,
+        hardReverse: Boolean,
+        hwMap: HardwareMap?
+    ) :
+            this(encoderSpecs, name, direction, hardReverse, 0.0, hwMap)
+
+    constructor(
+        encoderSpecs: EncoderSpecs,
+        name: String,
+        direction: DcMotorSimple.Direction,
+        hwMap: HardwareMap?
+    ) :
+            this(encoderSpecs, name, direction, false, 0.0, hwMap)
+
     private var encoder: DcMotor?
     private var lastPosition = 0
 
@@ -51,6 +64,7 @@ class Encoder(
     fun getDelta(): Int {
         return getTicks() - lastPosition
     }
+
     fun getDeltaInches(): Double {
         return ticksToInches(getDelta())
     }
@@ -70,14 +84,28 @@ data class EncoderSpecs(
     private val gearRatio: Double = 1.0,
     var ticksPerInch: Double
 ) {
-    constructor(ticksPerRev: Int, wheelDiameter: Double, gearRatio: Double) : this(ticksPerRev, wheelDiameter, gearRatio, 0.0)
-    constructor(ticksPerRev: Int, wheelDiameter: Double) : this(ticksPerRev, wheelDiameter,1.0,0.0)
-    constructor(ticksPerInch: Double): this(1,1.0,1.0,ticksPerInch)
+    constructor(ticksPerRev: Int, wheelDiameter: Double, gearRatio: Double) : this(
+        ticksPerRev,
+        wheelDiameter,
+        gearRatio,
+        0.0
+    )
+
+    constructor(ticksPerRev: Int, wheelDiameter: Double) : this(
+        ticksPerRev,
+        wheelDiameter,
+        1.0,
+        0.0
+    )
+
+    constructor(ticksPerInch: Double) : this(1, 1.0, 1.0, ticksPerInch)
 
     init {
-        if (ticksPerInch == 0.0)  ticksPerInch = (ticksPerRev * gearRatio) / (wheelDiameter * Math.PI)
+        if (ticksPerInch == 0.0) ticksPerInch =
+            (ticksPerRev * gearRatio) / (wheelDiameter * Math.PI)
     }
-    companion object{
+
+    companion object {
         @JvmStatic
         fun ticksPerIn(ticksPerInch: Double): EncoderSpecs {
             return EncoderSpecs(ticksPerInch)

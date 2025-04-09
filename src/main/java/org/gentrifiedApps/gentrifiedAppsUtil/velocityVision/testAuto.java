@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.Alliance;
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Alliance;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.CameraLock;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.ReturnType;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.SampleDataDetector;

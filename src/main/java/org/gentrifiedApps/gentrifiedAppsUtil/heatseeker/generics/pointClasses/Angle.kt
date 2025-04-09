@@ -48,12 +48,13 @@ data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.RADIANS) {
         }
         return Angle(normalizedAngle)
     }
+
     fun norm(): Angle {
         var normalizedAngle = this.toRadians() % (2 * PI)
         if (normalizedAngle < 0) {
             normalizedAngle += 2 * PI
         }
-        return Angle(normalizedAngle,AngleUnit.RADIANS).toAngleUnit(unit)
+        return Angle(normalizedAngle, AngleUnit.RADIANS).toAngleUnit(unit)
     }
 
     companion object {

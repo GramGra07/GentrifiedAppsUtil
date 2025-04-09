@@ -6,9 +6,9 @@ import com.qualcomm.robotcore.hardware.DistanceSensor
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.TouchSensor
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.sensors.BeamBreakSensor
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.AnalogEncoder
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.Operation
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.sensors.BeamBreakSensor
 
 /**
  * A class to represent the data of a sensor
@@ -83,20 +83,20 @@ open class Sensor(
         1
     )
 
-    private var lastRead:Any? = null
+    private var lastRead: Any? = null
 
     init {
-        require(period>=1, { "Period must be greater than or equal to 1" })
+        require(period >= 1, { "Period must be greater than or equal to 1" })
         init.run()
     }
 
     fun lastRead(): Any {
-        return lastRead?:0
+        return lastRead ?: 0
     }
 
     fun read(): Any {
         lastRead = read.invoke()
-        return lastRead?:0
+        return lastRead ?: 0
     }
 
     fun readLoopSaving() {
@@ -170,8 +170,9 @@ open class Sensor(
                 SensorData.beamBreak(name)
             ) { beamBreakSensor.isBroken() }
         }
+
         @JvmStatic
-        fun beamBreak(beamBreakSensor: BeamBreakSensor): Sensor{
+        fun beamBreak(beamBreakSensor: BeamBreakSensor): Sensor {
             return Sensor(
                 SensorData.beamBreak(beamBreakSensor.name)
             ) { beamBreakSensor.isBroken() }

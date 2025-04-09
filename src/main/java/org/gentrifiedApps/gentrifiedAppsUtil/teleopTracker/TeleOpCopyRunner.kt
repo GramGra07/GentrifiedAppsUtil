@@ -1,7 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.idler.Idler
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
@@ -22,10 +22,10 @@ class TeleOpCopyRunner(val name: String, val driver: Driver) : LinearOpMode() {
             ltc.telemetry(telemetry)
             if (movementData != null) {
                 driver.setWheelPower(driver.findWheelVectors(movementData))
-                Idler(this).safeIdle(movementData.time.toDouble()/1000){
+                Idler(this).safeIdle(movementData.time.toDouble() / 1000) {
                     telemetry.addLine("Running")
                 }
-            }else{
+            } else {
                 driver.setWheelPower(DrivePowerCoefficients.zeros())
             }
             telemetry.update()

@@ -1,5 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.drive
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
+
 
 class MecanumDriver {
     companion object {
@@ -9,7 +11,7 @@ class MecanumDriver {
          * @param y_ The y value of the controller. ex leftStickY
          * @param rotation_ The rotation value of the controller. ex rightStickX
          * @return The coefficients to drive the robot.
-         * @see DrivePowerCoefficients
+         * @see org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
          */
         @Suppress("LocalVariableName")
         @JvmStatic

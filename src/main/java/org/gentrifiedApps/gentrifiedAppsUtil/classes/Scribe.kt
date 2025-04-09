@@ -5,6 +5,7 @@ import org.jetbrains.annotations.TestOnly
 
 class Scribe private constructor(private val tagger: String) {
     private var set = ""
+
     @TestOnly
             /**
              * Sets the tag for the logger
@@ -16,9 +17,11 @@ class Scribe private constructor(private val tagger: String) {
         set = "-$tag"
         return this
     }
+
     private fun removeTag() {
         set = ""
     }
+
     fun logData(data: Any) {
         log(Log.INFO, data)
     }
@@ -64,7 +67,7 @@ class Scribe private constructor(private val tagger: String) {
 
     private fun log(priority: Int, data: Any) {
         if (!isRunningTests()) {
-            Log.println(priority, tagger+set, data.toString())
+            Log.println(priority, tagger + set, data.toString())
         }
         removeTag()
     }

@@ -1,7 +1,7 @@
 package test.kotlin.drive
 
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.FieldCentricDriver
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
 import org.junit.Test

@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Point
 import org.junit.Test
 import org.testng.Assert.assertEquals
 import org.testng.Assert.assertTrue

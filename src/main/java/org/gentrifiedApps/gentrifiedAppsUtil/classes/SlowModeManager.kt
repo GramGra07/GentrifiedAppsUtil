@@ -3,9 +3,9 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
 import com.qualcomm.robotcore.hardware.Gamepad
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad.Button
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad.GamepadPlus
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
 
 enum class SlowModeDefaults {
     NORMAL
@@ -56,7 +56,7 @@ class SlowModeManager(
 
     init {
         require(slowModeDataList.isNotEmpty(), { "SlowModeDataList must be empty" })
-        require(slowModeDataList.size<10, { "SlowModeDataList must be less than 10" })
+        require(slowModeDataList.size < 10, { "SlowModeDataList must be less than 10" })
         if (slowModeDataList.size > 1) {
             currentlyActive = null
         } else if (slowModeDataList.size == 1) {
@@ -214,9 +214,9 @@ data class SlowMode(val slowModeFactor: Double) {
         }
 
         @JvmStatic
-        /**
-         * Creates a basic slow mode with a slow mode factor of 1.0.
-         */
+                /**
+                 * Creates a basic slow mode with a slow mode factor of 1.0.
+                 */
         fun one(): SlowMode {
             return SlowMode(1.0)
         }
@@ -226,9 +226,11 @@ data class SlowMode(val slowModeFactor: Double) {
             return SlowMode(slowModeFactor)
         }
     }
-init {
-    require(slowModeFactor>=1.0, { "SlowModeFactor must be greater than or equal to 1.0" })
-}
+
+    init {
+        require(slowModeFactor >= 1.0, { "SlowModeFactor must be greater than or equal to 1.0" })
+    }
+
     fun apply(value: Double): Double {
         return value / slowModeFactor
     }

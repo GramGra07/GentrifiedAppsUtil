@@ -50,6 +50,11 @@ class TrackedRunner(val name: String) {
         }
         val line = lines[currentIndex].split(',')
         currentIndex++
-        return MovementData(line[0].toDouble(), line[1].toDouble(), line[2].toDouble(),line[3].toDouble())
+        return MovementData(
+            line[0].toDouble(),
+            line[1].toDouble(),
+            line[2].toDouble(),
+            line[3].toDouble()
+        )
     }
 }

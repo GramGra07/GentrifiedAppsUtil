@@ -1,17 +1,15 @@
 package test.kotlin
 
 import com.qualcomm.robotcore.hardware.Gamepad
-import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad.Button
-import org.gentrifiedApps.gentrifiedAppsUtil.classExtenders.gamepad.GamepadPlus
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowMode
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowModeDefaults
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowModeManager
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowModeMulti
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.junit.Assert.*
 import org.junit.Test
-import kotlin.apply
 
 class SlowModeManagerTest {
     @Test

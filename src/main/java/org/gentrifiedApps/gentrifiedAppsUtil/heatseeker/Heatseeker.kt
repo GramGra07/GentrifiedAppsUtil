@@ -1,9 +1,9 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
-import org.gentrifiedApps.gentrifiedAppsUtil.drive.DrivePowerCoefficients
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.FeedforwardController
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.ErrorPIDController
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.FeedforwardController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint
@@ -19,7 +19,11 @@ open class Heatseeker(
     private var yPID: ErrorPIDController,
     private var hPID: ErrorPIDController
 ) {
-    fun setPIDControllers(xPID: ErrorPIDController, yPID: ErrorPIDController, hPID: ErrorPIDController) {
+    fun setPIDControllers(
+        xPID: ErrorPIDController,
+        yPID: ErrorPIDController,
+        hPID: ErrorPIDController
+    ) {
         this.xPID = xPID
         this.yPID = yPID
         this.hPID = hPID

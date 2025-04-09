@@ -50,8 +50,8 @@ class OpModeTracker(val name: String) {
     }
 }
 
-data class MovementData(val x: Double, val y: Double, val rotation: Double,val time: Double) {
-    constructor(x: Float, y: Float, rotation: Float,time: Double) : this(
+data class MovementData(val x: Double, val y: Double, val rotation: Double, val time: Double) {
+    constructor(x: Float, y: Float, rotation: Float, time: Double) : this(
         x.toDouble(),
         y.toDouble(),
         rotation.toDouble(),
@@ -64,6 +64,11 @@ data class MovementData(val x: Double, val y: Double, val rotation: Double,val t
 
     fun fromString(input: String): MovementData {
         val data = input.split(",")
-        return MovementData(data[0].toDouble(), data[1].toDouble(), data[2].toDouble(), data[3].toDouble())
+        return MovementData(
+            data[0].toDouble(),
+            data[1].toDouble(),
+            data[2].toDouble(),
+            data[3].toDouble()
+        )
     }
 }

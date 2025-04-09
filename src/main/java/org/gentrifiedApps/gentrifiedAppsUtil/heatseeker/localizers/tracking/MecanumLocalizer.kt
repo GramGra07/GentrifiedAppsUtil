@@ -7,8 +7,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.TrackingLocalizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
-import kotlin.collections.get
-import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -25,10 +23,33 @@ class MecanumLocalizer(
         Target2D(0.0, 0.0, Angle.blank())
     )
 
-    private var fl: Encoder = Encoder(EncoderSpecs.ticksPerIn(ticksPerIn),driver.sendEncoders()[0].second, driver.sendEncoders()[0].first.direction,driver.hwMap)
-    private var fr: Encoder = Encoder(EncoderSpecs.ticksPerIn(ticksPerIn),driver.sendEncoders()[1].second, driver.sendEncoders()[1].first.direction,true,driver.hwMap)
-    private var bl: Encoder = Encoder(EncoderSpecs.ticksPerIn(ticksPerIn),driver.sendEncoders()[2].second, driver.sendEncoders()[2].first.direction,true,driver.hwMap)
-    private var br: Encoder = Encoder(EncoderSpecs.ticksPerIn(ticksPerIn),driver.sendEncoders()[3].second, driver.sendEncoders()[3].first.direction,true,driver.hwMap)
+    private var fl: Encoder = Encoder(
+        EncoderSpecs.ticksPerIn(ticksPerIn),
+        driver.sendEncoders()[0].second,
+        driver.sendEncoders()[0].first.direction,
+        driver.hwMap
+    )
+    private var fr: Encoder = Encoder(
+        EncoderSpecs.ticksPerIn(ticksPerIn),
+        driver.sendEncoders()[1].second,
+        driver.sendEncoders()[1].first.direction,
+        true,
+        driver.hwMap
+    )
+    private var bl: Encoder = Encoder(
+        EncoderSpecs.ticksPerIn(ticksPerIn),
+        driver.sendEncoders()[2].second,
+        driver.sendEncoders()[2].first.direction,
+        true,
+        driver.hwMap
+    )
+    private var br: Encoder = Encoder(
+        EncoderSpecs.ticksPerIn(ticksPerIn),
+        driver.sendEncoders()[3].second,
+        driver.sendEncoders()[3].first.direction,
+        true,
+        driver.hwMap
+    )
 
     private fun setLast() {
         fl.setLastPosition()

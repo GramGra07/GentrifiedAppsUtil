@@ -1,5 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.drive
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
+
 
 class TankDriver {
     companion object {
@@ -8,7 +10,7 @@ class TankDriver {
          * @param l The left value of the controller. ex leftStickY
          * @param r The right value of the controller. ex rightStickY
          * @return The coefficients to drive the robot.
-         * @see DrivePowerCoefficients
+         * @see org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
          */
         @JvmStatic
         fun driveTank(

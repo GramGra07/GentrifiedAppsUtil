@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Point
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.hypot
@@ -88,6 +89,7 @@ class MathFunctions {
         fun inTolerance(value: Double, value2: Double, tolerance: Double): Boolean {
             return value in value2 - tolerance..value2 + tolerance
         }
+
         fun inTolerance(value: Int, value2: Int, tolerance: Int): Boolean {
             return inTolerance(value.toDouble(), value2.toDouble(), tolerance.toDouble())
         }
