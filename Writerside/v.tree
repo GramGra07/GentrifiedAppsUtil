@@ -103,5 +103,10 @@
         <toc-element topic="mean-of-area-detection-meo.md"/>
         <toc-element topic="sample-data-detector-sdd.md"/>
     </toc-element>
-    <toc-element toc-title="TeleOpRepeater"/>
+    <toc-element toc-title="TeleOpRepeater">
+        <toc-element topic="Warnings-and-Specifications.md"/>
+        <toc-element topic="Setup.md"/>
+        <toc-element topic="OpModeTracker.md"/>
+        <toc-element topic="OpModeRepeater.md"/>
+    </toc-element>
 </instance-profile>
