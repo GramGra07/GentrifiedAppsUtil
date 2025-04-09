@@ -59,7 +59,7 @@ class TeleOpTrackerOpMode(val name: String, val driver: Driver) : LinearOpMode()
                 telemetry.update()
             } else if (state == State.ENDED) {
                 driver.setWheelPower(DrivePowerCoefficients.zeros())
-                Idler(this).safeIdle(5.0) {
+                Idler.safeIdle(5.0, this) {
                     telemetry.addData(
                         "Ended",
                         "Saved to file, please run the runner to test it out!"

@@ -94,13 +94,12 @@ class Operation(private val operation: Operand, private val value: Double) {
      * @return The result after performing the operation.
      */
     fun runOperation(input: Double): Double {
-        val returnable = when (operation) {
+        return when (operation) {
             Operand.MULTIPLY -> input * value
             Operand.DIVIDE -> input / value
             Operand.ADD -> input + value
             Operand.SUBTRACT -> input - value
         }
-        return returnable
     }
 }
 

@@ -31,6 +31,7 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         errorValP = setPoint - measuredValue
         reset()
     }
+
     constructor(pidfCoefficients: PIDFCoefficients) : this(
         pidfCoefficients.kP,
         pidfCoefficients.kI,
@@ -114,7 +115,8 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         this.kD = kD
         this.kF = kF
     }
-    fun setPIDF(pidfCoefficients: PIDFCoefficients){
+
+    fun setPIDF(pidfCoefficients: PIDFCoefficients) {
         this.kP = pidfCoefficients.kP
         this.kI = pidfCoefficients.kI
         this.kD = pidfCoefficients.kD

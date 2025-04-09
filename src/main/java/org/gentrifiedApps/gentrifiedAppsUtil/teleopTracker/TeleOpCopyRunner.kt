@@ -22,7 +22,7 @@ class TeleOpCopyRunner(val name: String, val driver: Driver) : LinearOpMode() {
             ltc.telemetry(telemetry)
             if (movementData != null) {
                 driver.setWheelPower(driver.findWheelVectors(movementData))
-                Idler(this).safeIdle(movementData.time.toDouble() / 1000) {
+                Idler.safeIdle(movementData.time.toDouble() / 1000, this) {
                     telemetry.addLine("Running")
                 }
             } else {

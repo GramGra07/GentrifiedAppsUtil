@@ -1,7 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.idler
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.util.ElapsedTime
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 
 /**
@@ -15,9 +14,10 @@ class Idler {
             resetTimer()
         }
 
-        private fun resetTimer(){
+        private fun resetTimer() {
             startTime = System.currentTimeMillis().toDouble()
         }
+
         private fun getElapsedSeconds(): Double {
             return (System.currentTimeMillis().toDouble() - startTime) / 1000
         }

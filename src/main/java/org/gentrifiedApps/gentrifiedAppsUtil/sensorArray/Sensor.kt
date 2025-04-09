@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.ColorSensor
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DistanceSensor
 import com.qualcomm.robotcore.hardware.HardwareMap
-import com.qualcomm.robotcore.hardware.IMU
 import com.qualcomm.robotcore.hardware.TouchSensor
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.AnalogEncoder

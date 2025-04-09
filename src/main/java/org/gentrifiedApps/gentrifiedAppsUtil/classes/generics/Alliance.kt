@@ -13,13 +13,15 @@ enum class Alliance {
             BLUE -> "B"
         }
     }
+
     override fun toString(): String {
         return when (this) {
             RED -> "Red"
             BLUE -> "Blue"
         }
     }
-    fun toStringLower():String{
+
+    fun toStringLower(): String {
         return this.toString().lowercase()
     }
 

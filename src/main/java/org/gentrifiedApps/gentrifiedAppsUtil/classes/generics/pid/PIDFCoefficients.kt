@@ -5,7 +5,9 @@ open class PIDFCoefficients(
     open var kI: Double,
     open var kD: Double,
     var kF: Double
-){constructor(kP: Double,kI: Double,kD: Double):this(kP,kI,kD,0.0)}
+) {
+    constructor(kP: Double, kI: Double, kD: Double) : this(kP, kI, kD, 0.0)
+}
 
 data class PIDCoefficients(
     override var kP: Double,
