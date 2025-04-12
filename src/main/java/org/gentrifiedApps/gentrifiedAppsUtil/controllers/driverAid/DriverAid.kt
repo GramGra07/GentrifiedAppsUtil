@@ -12,7 +12,7 @@ import java.util.function.BooleanSupplier
  * @see DAFunc
  */
 class DriverAid<T : Enum<T>>(enumClass: Class<T>) {
-    var daState: Enum<T>? = null
+    internal var daState: Enum<T>? = null
     private var daFunc: DAFunc<T>? = null
 
     /**

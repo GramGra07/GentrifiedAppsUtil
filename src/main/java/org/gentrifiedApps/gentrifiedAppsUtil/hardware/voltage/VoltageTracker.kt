@@ -33,16 +33,14 @@ class VoltageTracker(
         hardwareMap.voltageSensor.first()
     }
 
-    var voltageIndex: Int = 0
-
-    var cached: Boolean = false
-    fun clearCache() {
+    private var cached: Boolean = false
+    private fun clearCache() {
         cached = false
     }
 
-    var nominalVoltage: Double = 12.5
+    private var nominalVoltage: Double = 12.5
 
-    var cacheInvalidateSeconds: Double = 0.5
+    private var cacheInvalidateSeconds: Double = 0.5
     private val timer: ElapsedTime = ElapsedTime()
 
     private var initialVoltage = 0.0

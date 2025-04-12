@@ -12,9 +12,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap
  */
 class AnalogEncoder(
     hwMap: HardwareMap,
-    val name: String,
+    internal val name: String,
     private val startPosition: Double,
-    val calculatorOperations: List<Operation>
+    private val calculatorOperations: List<Operation>
 ) {
     constructor(hwMap: HardwareMap, name: String, calculatorOperations: List<Operation>) : this(
         hwMap,

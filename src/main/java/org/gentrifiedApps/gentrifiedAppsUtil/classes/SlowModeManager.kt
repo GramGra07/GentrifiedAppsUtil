@@ -17,8 +17,8 @@ enum class SlowModeDefaults {
  * @param gamepad The gamepad used to control the robot.
  */
 class SlowModeManager(
-    val slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
-    val gamepad: GamepadPlus
+    internal val slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
+    private val gamepad: GamepadPlus
 ) {
     /**
      * Constructor for SlowModeManager.
@@ -128,8 +128,8 @@ class SlowModeManager(
  */
 data class SlowModeMulti(
     val slowModeData: SlowMode,
-    val activeButton: Button,
-    val deactiveButton: Button
+    internal val activeButton: Button,
+    internal val deactiveButton: Button
 ) {
     constructor(slowModeData: SlowMode, activeButton: Button) : this(
         slowModeData,

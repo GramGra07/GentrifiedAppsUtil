@@ -17,7 +17,7 @@ public class ConfigMaker {
      * @param type
      * @param name
      */
-    boolean added = false;
+    private boolean added = false;
     private boolean hasBeenBuilt = false;
     private String XML = "";
     private String CHUB = "     <LynxModule name=\"Control Hub\" port=\"173\">\n";

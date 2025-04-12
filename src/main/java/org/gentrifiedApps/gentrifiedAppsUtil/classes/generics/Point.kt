@@ -1,5 +1,8 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics
 
+import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+
 /**
  * A class to represent a point in 2D space
  * @param x The x coordinate of the point
@@ -7,6 +10,12 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics
  * @constructor Creates a point with the given x and y coordinates
  */
 data class Point(var x: Double, var y: Double) {
+    fun store(){
+        DataStorage.setPose(this.toTarget2D())
+    }
+    fun toTarget2D(): Target2D {
+        return Target2D(this.x, this.y,0.0)
+    }
     operator fun times(b: Double): Point {
         return Point(this.x * b, this.y * b)
     }

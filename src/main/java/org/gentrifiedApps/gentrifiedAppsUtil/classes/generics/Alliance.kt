@@ -1,11 +1,14 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.BinaryArray
+import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.enums.Color
 
 enum class Alliance {
     RED, BLUE;
-
+    fun store(){
+        DataStorage.setAlliance(this)
+    }
     fun toChar(): String {
 
         return when (this) {

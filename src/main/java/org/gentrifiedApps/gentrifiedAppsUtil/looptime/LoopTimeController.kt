@@ -17,8 +17,8 @@ open class LoopTimeController(
     constructor() : this(null)
 
     private val timer = ElapsedTime()
-    var totalLoops: Int = 0
-    var lps = 0.0
+    internal var totalLoops: Int = 0
+    internal var lps = 0.0
     private var currentTimeS: Double = 0.0
     private var currentTimems: Double = 0.0
     private val calculationTimeDelay: Double = 5.0
@@ -30,7 +30,7 @@ open class LoopTimeController(
 
     private var startTime: Double
     private var lastTime: Double
-    var deltaTime: Double = 0.0
+    internal var deltaTime: Double = 0.0
 
     init {
         timer.reset()
@@ -61,7 +61,7 @@ open class LoopTimeController(
     /**
      * Updates the loop time controller
      */
-    open fun update() {
+    fun update() {
         currentTimems = timer.milliseconds()
         currentTimeS = timer.seconds()
         doCalculations()
