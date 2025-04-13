@@ -41,7 +41,8 @@ class Scribe private constructor(private val tagger: String) {
         setSet("OpMode")
         logData("Starting OpMode: $name")
     }
-    fun startLogger(opMode: LinearOpMode){
+
+    fun startLogger(opMode: LinearOpMode) {
         startLogger(opMode.javaClass.simpleName)
     }
 

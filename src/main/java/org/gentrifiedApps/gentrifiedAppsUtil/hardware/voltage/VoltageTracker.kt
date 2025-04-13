@@ -71,7 +71,7 @@ class VoltageTracker(
         if (currentVoltage < lowestVoltage) {
             lowestVoltage = currentVoltage
             if (lowestVoltage < 9.0) {
-                if (pingTime - timer.seconds()> pingDelay) {
+                if (pingTime - timer.seconds() > pingDelay) {
                     pingTime = timer.seconds()
                     Scribe.instance.setSet("V").logWarning("Voltage Dropped to: $lowestVoltage")
                 }
