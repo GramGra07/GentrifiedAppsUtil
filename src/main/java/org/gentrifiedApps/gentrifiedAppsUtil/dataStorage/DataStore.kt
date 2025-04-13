@@ -38,7 +38,7 @@ internal class DataStore {
         val dataStore = DataStorage.getData()
         val alliance = dataStore.first
         val pose = dataStore.second.toPose2D() // everything in rad
-        val data = "$alliance,$pose.x,$pose.y,$pose.heading"
+        val data = "$alliance,${pose.x},${pose.y},${pose.h}"
         if (file.exists()) {
             try {
                 val fileWriter = FileWriter(file, false)
