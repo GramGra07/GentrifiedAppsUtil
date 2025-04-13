@@ -11,20 +11,20 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
     private var onEnterCommands: Map<T, StateChangeCallback> = builder.onEnterCommands
     private var transitions: Map<T, () -> Boolean> = builder.transitions
     private var transitionDelayTimes: Map<T, Double> = builder.delayTimes
-    var currentState: T? = null
+    internal var currentState: T? = null
     private var stateHistory: MutableList<T> = ArrayList()
-    var isStarted = false
-    var isRunning = true
+    internal var isStarted = false
+    internal var isRunning = true
     private var shouldRestart = true
     private var sustainOnEnter: Map<T, StateChangeCallback> = HashMap(builder.onEnterCommands)
-    var sustainStates: List<T> = ArrayList(builder.states)
+    internal var sustainStates: List<T> = ArrayList(builder.states)
     private var sustainTransitions: Map<T, () -> Boolean> = HashMap(builder.transitions)
 
     class Builder<T : Enum<T>> {
-        var states: MutableList<T> = ArrayList()
-        var onEnterCommands: MutableMap<T, StateChangeCallback> = HashMap()
-        var transitions: MutableMap<T, () -> Boolean> = HashMap()
-        var delayTimes: MutableMap<T, Double> = HashMap()
+        internal var states: MutableList<T> = ArrayList()
+        internal var onEnterCommands: MutableMap<T, StateChangeCallback> = HashMap()
+        internal var transitions: MutableMap<T, () -> Boolean> = HashMap()
+        internal var delayTimes: MutableMap<T, Double> = HashMap()
         private var machine: SequentialRunSM<T>? = null
         private var stopRunningIncluded = 0
 
