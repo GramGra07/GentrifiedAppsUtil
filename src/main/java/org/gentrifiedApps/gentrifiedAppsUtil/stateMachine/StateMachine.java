@@ -2,6 +2,8 @@ package org.gentrifiedApps.gentrifiedAppsUtil.stateMachine;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.except.ExceptionThrower;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,6 +44,10 @@ public class StateMachine<T extends Enum<T>> {
         this.stateHistory = new ArrayList<>();
     }
 
+    private static void throwException(Exception e) {
+        ExceptionThrower.throwException$gentrifiedAppsUtil_debug("StateMachine", e);
+    }
+
     public T getCurrentState() {
         return currentState;
     }
@@ -70,7 +76,7 @@ public class StateMachine<T extends Enum<T>> {
      */
     public void start() {
         if (isStarted) {
-            throw new IllegalStateException("StateMachine has already been started");
+            throwException(new IllegalStateException("StateMachine has already been started"));
         }
         isStarted = true;
         if (!states.isEmpty()) {
@@ -187,17 +193,17 @@ public class StateMachine<T extends Enum<T>> {
 
     public boolean isValidTransition(T fromState, T toState) {
         if (fromState == toState) {
-            throw new IllegalArgumentException("Cannot transition to itself");
+            throwException(new IllegalArgumentException("Cannot transition to itself"));
         }
         if (!states.contains(fromState) && !stateHistory.contains(fromState)) {
-            throw new IllegalArgumentException(fromState + " does not exist in the state machine");
+            throwException(new IllegalArgumentException(fromState + " does not exist in the state machine"));
         }
         if (!states.contains(toState)) {
-            throw new IllegalArgumentException(toState + " does not exist in the state machine");
+            throwException(new IllegalArgumentException(toState + " does not exist in the state machine"));
         }
         Supplier<Boolean> transitionCondition = transitions.get(fromState);
         if (transitionCondition == null) {
-            throw new IllegalStateException("No transition condition exists from state " + fromState);
+            throwException(new IllegalStateException("No transition condition exists from state " + fromState));
         }
         return transitionCondition.get();
     }
@@ -205,7 +211,6 @@ public class StateMachine<T extends Enum<T>> {
     public List<T> getStateHistory() {
         return stateHistory;
     }
-
 
     enum TYPES {
         IDLE,
@@ -244,7 +249,7 @@ public class StateMachine<T extends Enum<T>> {
          */
         public Builder<T> state(T state) {
             if (states.contains(state)) {
-                throw new IllegalArgumentException("State already exists");
+                throwException(new IllegalArgumentException("State already exists"));
             }
             states.add(state);
             return this;
@@ -271,7 +276,7 @@ public class StateMachine<T extends Enum<T>> {
          */
         public Builder<T> onEnter(T state, StateChangeCallback command) {
             if (!states.contains(state)) {
-                throw new IllegalArgumentException("State does not exist");
+                throwException(new IllegalArgumentException("State does not exist"));
             }
             onEnterCommands.put(state, command);
             return this;
@@ -285,7 +290,7 @@ public class StateMachine<T extends Enum<T>> {
          */
         public Builder<T> onExit(T state, StateChangeCallback command) {
             if (!states.contains(state)) {
-                throw new IllegalArgumentException("State does not exist");
+                throwException(new IllegalArgumentException("State does not exist"));
             }
             onExitCommands.put(state, command);
             return this;
@@ -299,10 +304,10 @@ public class StateMachine<T extends Enum<T>> {
          */
         public Builder<T> transition(T state, Supplier<Boolean> condition, double delaySeconds) {
             if (!states.contains(state)) {
-                throw new IllegalArgumentException("State does not exist");
+                throwException(new IllegalArgumentException("State does not exist"));
             }
             if (delaySeconds < 0) {
-                throw new IllegalArgumentException("Delay cannot be negative");
+                throwException(new IllegalArgumentException("Delay cannot be negative"));
             }
             transitions.put(state, condition);
             delayTimes.put(state, delaySeconds);
@@ -317,11 +322,11 @@ public class StateMachine<T extends Enum<T>> {
         public Builder<T> stopRunning(T state) {
             this.stopRunningIncluded++;
             if (states.contains(state)) {
-                throw new IllegalArgumentException("State already exists");
+                throwException(new IllegalArgumentException("State already exists"));
             }
             states.add(state);
             if (!states.contains(state)) {
-                throw new IllegalArgumentException("State does not exist");
+                throwException(new IllegalArgumentException("State does not exist"));
             }
             onEnterCommands.put(state, () -> {
                 this.machine.isRunning = false;
@@ -340,25 +345,25 @@ public class StateMachine<T extends Enum<T>> {
          */
         public StateMachine<T> build() {
             if (states == null || states.isEmpty() || transitions == null || transitions.isEmpty()) {
-                throw new IllegalArgumentException("States and transitions cannot be null or empty");
+                throwException(new IllegalArgumentException("States and transitions cannot be null or empty"));
             }
 
             if (new HashSet<>(states).size() != states.size()) {
-                throw new IllegalArgumentException("States cannot have duplicates");
+                throwException(new IllegalArgumentException("States cannot have duplicates"));
             }
 
             if (states.size() != transitions.size()) {
-                throw new IllegalArgumentException("Mismatched states and transitions");
+                throwException(new IllegalArgumentException("Mismatched states and transitions"));
             }
 
             if (onEnterCommands.get(states.get(0)) == null) {
-                throw new IllegalArgumentException("Initial state must have a corresponding onEnter command");
+                throwException(new IllegalArgumentException("Initial state must have a corresponding onEnter command"));
             }
             if (this.stopRunningIncluded != 1) {
                 if (this.stopRunningIncluded == 0) {
-                    throw new IllegalArgumentException("Missing stopRunning command");
+                    throwException(new IllegalArgumentException("Missing stopRunning command"));
                 } else {
-                    throw new IllegalArgumentException("Too many stopRunning commands");
+                    throwException(new IllegalArgumentException("Too many stopRunning commands"));
                 }
             }
             this.machine = new StateMachine<>(this);

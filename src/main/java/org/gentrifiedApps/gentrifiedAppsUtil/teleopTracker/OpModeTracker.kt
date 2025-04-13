@@ -10,6 +10,7 @@ class OpModeTracker(val name: String) {
     private lateinit var file: File
     fun init() {
         createFiles()
+        Scribe.instance.startLogger("OpModeTracker")
     }
 
     fun createFiles() {

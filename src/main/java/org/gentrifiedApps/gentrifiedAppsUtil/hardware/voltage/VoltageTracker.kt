@@ -54,6 +54,8 @@ class VoltageTracker(
         timer.reset()
     }
 
+    internal var pingTime: Double = 0.0
+    internal var pingDelay: Double = 30.0
     fun update() {
         currentVoltage = voltageSensor.voltage
         voltageDrop = initialVoltage - currentVoltage
@@ -69,7 +71,10 @@ class VoltageTracker(
         if (currentVoltage < lowestVoltage) {
             lowestVoltage = currentVoltage
             if (lowestVoltage < 9.0) {
-                Scribe.instance.setSet("V").logWarning("Dropped Voltage to: $lowestVoltage")
+                if (pingTime - timer.seconds()> pingDelay) {
+                    pingTime = timer.seconds()
+                    Scribe.instance.setSet("V").logWarning("Voltage Dropped to: $lowestVoltage")
+                }
             }
         }
     }

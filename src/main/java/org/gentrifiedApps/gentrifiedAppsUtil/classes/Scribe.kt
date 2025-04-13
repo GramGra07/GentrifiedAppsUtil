@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
 import android.util.Log
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 
 class Scribe private constructor(private val tagger: String) {
     private var set = ""
@@ -39,6 +40,9 @@ class Scribe private constructor(private val tagger: String) {
     fun startLogger(name: String) {
         setSet("OpMode")
         logData("Starting OpMode: $name")
+    }
+    fun startLogger(opMode: LinearOpMode){
+        startLogger(opMode.javaClass.simpleName)
     }
 
     companion object {

@@ -1,5 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.stateMachine
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.except.ExceptionThrower
+
 /**
  * A class to represent a sequential state machine
  * @param T The enum class for the states
@@ -34,7 +36,7 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
          */
         fun state(state: T): Builder<T> {
             if (states.contains(state)) {
-                throw IllegalArgumentException("State already exists")
+                throwException(IllegalArgumentException("State already exists"))
             }
             states.add(state)
             return this
@@ -47,7 +49,7 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
          */
         fun onEnter(state: T, command: StateChangeCallback): Builder<T> {
             if (!states.contains(state)) {
-                throw IllegalArgumentException("State does not exist")
+                throwException(IllegalArgumentException("State does not exist"))
             }
             onEnterCommands[state] = command
             return this
@@ -60,10 +62,10 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
          */
         fun transition(state: T, condition: () -> Boolean, delaySeconds: Double): Builder<T> {
             if (!states.contains(state)) {
-                throw IllegalArgumentException("State does not exist")
+                throwException(IllegalArgumentException("State does not exist"))
             }
             if (delaySeconds < 0) {
-                throw IllegalArgumentException("Delay cannot be negative")
+                throwException(IllegalArgumentException("Delay cannot be negative"))
             }
             transitions[state] = condition
             delayTimes[state] = delaySeconds
@@ -77,11 +79,11 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
         fun stopRunning(state: T): Builder<T> {
             stopRunningIncluded++
             if (states.contains(state)) {
-                throw IllegalArgumentException("State already exists")
+                throwException(IllegalArgumentException("State already exists"))
             }
             states.add(state)
             if (!states.contains(state)) {
-                throw IllegalArgumentException("State does not exist")
+                throwException(IllegalArgumentException("State does not exist"))
             }
             onEnterCommands[state] = StateChangeCallback {
                 machine!!.isRunning = false
@@ -99,27 +101,35 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
          */
         fun build(): SequentialRunSM<T> {
             if (states.isEmpty() || transitions.isEmpty()) {
-                throw IllegalArgumentException("States and transitions cannot be null or empty")
+                throwException(IllegalArgumentException("States and transitions cannot be null or empty"))
             }
             if (states.toSet().size != states.size) {
-                throw IllegalArgumentException("States cannot have duplicates")
+                throwException(IllegalArgumentException("States cannot have duplicates"))
             }
             if (states.size != transitions.size) {
-                throw IllegalArgumentException("Mismatched states and transitions")
+                throwException(IllegalArgumentException("Mismatched states and transitions"))
             }
             if (onEnterCommands[states[0]] == null) {
-                throw IllegalArgumentException("Initial state must have a corresponding onEnter command")
+                throwException(IllegalArgumentException("Initial state must have a corresponding onEnter command"))
             }
             if (stopRunningIncluded != 1) {
                 if (stopRunningIncluded == 0) {
-                    throw IllegalArgumentException("Missing stopRunning command")
+                    throwException(IllegalArgumentException("Missing stopRunning command"))
                 } else {
-                    throw IllegalArgumentException("Too many stopRunning commands")
+                    throwException(IllegalArgumentException("Too many stopRunning commands"))
                 }
             }
             machine = SequentialRunSM(this)
             return machine!!
         }
+
+        private fun throwException(e: Exception) {
+            ExceptionThrower.throwException("SequentialRunSM", e)
+        }
+    }
+
+    private fun throwException(e: Exception) {
+        ExceptionThrower.throwException("SequentialRunSM", e)
     }
 
     /**
@@ -127,7 +137,7 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
      */
     fun start() {
         if (isStarted) {
-            throw IllegalStateException("StateMachine has already been started")
+            throwException(IllegalStateException("StateMachine has already been started"))
         }
         isStarted = true
         shouldRestart = true
@@ -143,7 +153,7 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
      */
     fun stop() {
         if (!isRunning) {
-            throw IllegalStateException("StateMachine is already stopped")
+            throwException(IllegalStateException("StateMachine is already stopped"))
         }
         isRunning = false
         states = emptyList()
@@ -229,21 +239,21 @@ class SequentialRunSM<T : Enum<T>>(builder: Builder<T>) {
     private fun isValidTransition(fromState: T, toState: T): Boolean {
         if (fromState == toState) {
             println("Cannot transition to itself")
-            throw IllegalArgumentException("Cannot transition to itself")
+            throwException(IllegalArgumentException("Cannot transition to itself"))
         }
         if (!states.contains(fromState) && !stateHistory.contains(fromState)) {
             println("Cannot transition to itself")
-            throw IllegalArgumentException("$fromState does not exist in the state machine")
+            throwException(IllegalArgumentException("$fromState does not exist in the state machine"))
         }
         if (!states.contains(toState)) {
             println("Cannot transition to itself")
-            throw IllegalArgumentException("$toState does not exist in the state machine")
+            throwException(IllegalArgumentException("$toState does not exist in the state machine"))
         }
         val transitionCondition = transitions[fromState]
         if (transitionCondition == null) {
             println("Cannot transition to itself")
-            throw IllegalStateException("No transition condition exists from state $fromState")
+            throwException(IllegalStateException("No transition condition exists from state $fromState"))
         }
-        return transitionCondition()
+        return transitionCondition?.invoke() == true
     }
 }

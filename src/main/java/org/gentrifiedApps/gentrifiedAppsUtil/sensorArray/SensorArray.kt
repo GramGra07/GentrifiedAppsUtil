@@ -59,7 +59,6 @@ class SensorArray() {
      * @param name The name of the sensor
      */
     fun read(name: String, type: SensorData): Any {
-        array[name]?.readLoopSaving()
         return array[name]?.read()!!
     }
 

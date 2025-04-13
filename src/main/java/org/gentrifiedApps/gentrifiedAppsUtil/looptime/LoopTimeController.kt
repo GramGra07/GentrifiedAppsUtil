@@ -7,6 +7,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.objects.PeriodicLoopTimeObject
 
+enum class LTCState {
+    INITIALIZING,
+    RUNNING
+}
+
 /**
  * A class to return loop time information and load periodic loop time objects and .every functions
  * @param periodics The periodic loop time objects to load
@@ -26,6 +31,8 @@ open class LoopTimeController(
     private var lastSecondLPast: Double = 0.0
     private var lastSecondL: Double = 0.0
     private var lastSecondTimeDelay: Double = 0.0
+
+    internal var ltcState = LTCState.INITIALIZING
 
 
     private var startTime: Double
@@ -49,6 +56,9 @@ open class LoopTimeController(
         lps = totalLoops / (currentTimeS - calculationTimeDelay)
         if (currentTimeS > calculationTimeDelay) {
             totalLoops++
+            if (totalLoops == 1) {
+                ltcState = LTCState.RUNNING
+            }
         }
         if (currentTimeS - 1 > lastSecondTimeDelay) {
             lastSecondL = totalLoops - lastSecondLPast
@@ -57,6 +67,9 @@ open class LoopTimeController(
             lastSecondTimeDelay = currentTimeS
         }
     }
+
+    private var pingTime: Double = 0.0
+    private var pingDelay: Double = 30.0
 
     /**
      * Updates the loop time controller
@@ -73,9 +86,12 @@ open class LoopTimeController(
         }
         deltaTime = currentTimems - lastTime
         lastTime = currentTimems
-        if (hz < 30) {
-            Scribe.instance.setSet("LTC")
-                .logDebug("Loops dropped past 30, this may cause issues and lag")
+        if (hz < 30 && ltcState == LTCState.RUNNING) {
+            if (currentTimeS - pingTime > pingDelay) {
+                Scribe.instance.setSet("LTC")
+                    .logDebug("Hz dropped past 30, this may cause issues and lag")
+                pingTime = currentTimeS
+            }
         }
     }
 

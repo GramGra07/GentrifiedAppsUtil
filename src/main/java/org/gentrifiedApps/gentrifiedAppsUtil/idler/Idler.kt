@@ -40,7 +40,14 @@ class Idler {
             while (getElapsedSeconds() < time && opMode.opModeIsActive() == true && !opMode.isStopRequested) {
                 updateWhileIdling.run()
                 Scribe.instance.setSet("I")
-                    .logDebug("Idling for $time seconds, ${getElapsedSeconds()} seconds elapsed")
+                    .logDebug(
+                        "Idling for $time seconds, ${
+                            String.format(
+                                "%.0f",
+                                (getElapsedSeconds() / time) * 100
+                            )
+                        }%"
+                    )
             }
         }
     }

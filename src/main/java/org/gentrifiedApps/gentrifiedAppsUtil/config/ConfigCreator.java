@@ -14,6 +14,7 @@ public class ConfigCreator extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        Scribe.getInstance().startLogger("ConfigMaker");
         configMaker.run();
         Scribe.getInstance().logDebug("Config Maker run");
         Scribe.getInstance().logDebug("XML: " + configMaker.getXML());

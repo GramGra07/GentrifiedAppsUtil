@@ -11,6 +11,7 @@ class TrackedRunner(val name: String) {
     fun init() {
         getFiles()
         readFile()
+        Scribe.instance.startLogger("TrackedRunner")
     }
 
     fun getFiles() {

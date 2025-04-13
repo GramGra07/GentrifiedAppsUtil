@@ -1,5 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
+
 class GamepadMacro(private val macro: List<ButtonPress>, private val func: Runnable) {
     private val macroButtons = macro.map { it.button } // Store macro sequence
     private var progress = 0 // Tracks position in macro sequence
@@ -15,6 +17,7 @@ class GamepadMacro(private val macro: List<ButtonPress>, private val func: Runna
         }
         if (progress == macroButtons.size) {
             func.run()
+            Scribe.instance.setSet("Macro").logDebug("Macro completed: $macro")
             progress = 0
         }
     }
