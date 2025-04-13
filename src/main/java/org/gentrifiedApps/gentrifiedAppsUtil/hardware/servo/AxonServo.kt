@@ -18,7 +18,7 @@ enum class AxonAlgorithm {
     }
 }
 
-class AxonServo(hw: HardwareMap,private val name: String) {
+class AxonServo(hw: HardwareMap, private val name: String) {
     private var encoder: AnalogEncoder
     private val servo: ServoPlus
     private var algorithm: AxonAlgorithm = AxonAlgorithm.REGULAR

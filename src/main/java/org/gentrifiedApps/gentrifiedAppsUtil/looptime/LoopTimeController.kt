@@ -85,16 +85,31 @@ open class LoopTimeController(
      */
 
     fun telemetry(telemetry: Telemetry) {
-        telemetry.addLine("LOOP TIME")
-        telemetry.addData("Timer", "%.1f", currentTimeS)
-        telemetry.addData("Loops", totalLoops)
-        telemetry.addData("Current LPS", "%.1f", lps)
+        minimalTelemetry(telemetry)
         telemetry.addData("Time Elapsed", "%.1f", deltaTime)
         telemetry.addData("Avg Time Elapsed", "%.1f", (currentTimems - startTime) / totalLoops)
 //        telemetry.addData(comparisonDate, "%.1f", comparison-lps)
 //        telemetry.addData("lastsecondloops",lastSecondL)
 //        telemetry.addData("pastlastsecondloops",lastSecondLPast)
 //        telemetry.addData("lastsecondt",lastSecondT)
+//        telemetry.addData("Current LPS", "%.1f", lps)
+    }
+
+    /**
+     * Minimal telemetry for the loop time controller
+     * @param telemetry The telemetry to use, opmode.telemetry
+     */
+    fun minimalTelemetry(telemetry: Telemetry) {
+        telemetry.addLine("LOOP TIME")
+//        telemetry.addData("Timer", "%.1f", currentTimeS)
+//        telemetry.addData("Loops", totalLoops)
+        telemetry.addData("Time Elapsed", "%.1f", deltaTime)
+//        telemetry.addData("Avg Time Elapsed", "%.1f", (currentTimems - startTime) / totalLoops)
+//        telemetry.addData(comparisonDate, "%.1f", comparison-lps)
+//        telemetry.addData("lastsecondloops",lastSecondL)
+//        telemetry.addData("pastlastsecondloops",lastSecondLPast)
+//        telemetry.addData("lastsecondt",lastSecondT)
+//        telemetry.addData("Current LPS", "%.1f", lps)
         telemetry.addData("Hz", "%.1f", hz)
     }
 

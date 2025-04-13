@@ -10,12 +10,14 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Ta
  * @constructor Creates a point with the given x and y coordinates
  */
 data class Point(var x: Double, var y: Double) {
-    fun store(){
+    fun store() {
         DataStorage.setPose(this.toTarget2D())
     }
+
     fun toTarget2D(): Target2D {
-        return Target2D(this.x, this.y,0.0)
+        return Target2D(this.x, this.y, 0.0)
     }
+
     operator fun times(b: Double): Point {
         return Point(this.x * b, this.y * b)
     }

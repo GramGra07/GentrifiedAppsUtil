@@ -6,9 +6,11 @@ import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.enums.Color
 
 enum class Alliance {
     RED, BLUE;
-    fun store(){
+
+    fun store() {
         DataStorage.setAlliance(this)
     }
+
     fun toChar(): String {
 
         return when (this) {
@@ -21,6 +23,16 @@ enum class Alliance {
         return when (this) {
             RED -> "Red"
             BLUE -> "Blue"
+        }
+    }
+
+    companion object {
+        fun fromString(alliance: String): Alliance {
+            return when (alliance) {
+                "Red" -> RED
+                "Blue" -> BLUE
+                else -> throw IllegalArgumentException("Invalid alliance: $alliance")
+            }
         }
     }
 

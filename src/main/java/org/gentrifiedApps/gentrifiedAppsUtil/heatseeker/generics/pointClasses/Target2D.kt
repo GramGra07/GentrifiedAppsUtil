@@ -11,6 +11,7 @@ import kotlin.math.sqrt
 
 data class Target2D(val x: Double, val y: Double, val angle: Angle) {
     constructor(x: Double, y: Double, angle: Double) : this(x, y, Angle(angle))
+
     fun distanceTo(target: Target2D): Double {
         return sqrt((target.x - x).pow(2) + (target.y - y).pow(2))
     }
@@ -36,6 +37,7 @@ data class Target2D(val x: Double, val y: Double, val angle: Angle) {
             angle.toRadians()
         )
     }
+
     fun toPoint(): Point {
         return Point(x, y)
     }
@@ -44,7 +46,8 @@ data class Target2D(val x: Double, val y: Double, val angle: Angle) {
         fun blank(): Target2D {
             return Target2D(0.0, 0.0, Angle.blank())
         }
-        fun zeros(): Target2D{
+
+        fun zeros(): Target2D {
             return blank()
         }
     }

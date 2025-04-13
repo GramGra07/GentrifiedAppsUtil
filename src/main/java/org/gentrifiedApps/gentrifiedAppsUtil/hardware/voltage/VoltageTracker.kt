@@ -87,7 +87,8 @@ class VoltageTracker(
         telemetry.addLine("Voltage Drop: ${voltageDrop.format(2)}")
         telemetry.addLine("Lowest Voltage: ${lowestVoltage.format(2)}")
     }
-    fun telemetrySimple(telemetry: Telemetry){
+
+    fun telemetrySimple(telemetry: Telemetry) {
         update()
         telemetry.addLine(
             "Voltage: ${currentVoltage.format(3)}, ${
