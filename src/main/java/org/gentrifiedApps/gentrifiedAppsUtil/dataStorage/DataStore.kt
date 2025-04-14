@@ -15,7 +15,6 @@ internal class DataStore {
     private val tag = "store"
     internal fun init() {
         createFiles()
-        writeToFile()
     }
 
     internal fun createFiles() {

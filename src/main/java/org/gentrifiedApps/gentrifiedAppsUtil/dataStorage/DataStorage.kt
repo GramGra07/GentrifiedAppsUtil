@@ -57,7 +57,7 @@ class DataStorage {
         @JvmStatic
         fun setData(alliance: Alliance, pose: Target2D) {
             this.alliance = alliance
-            currentPose = pose
+            this.currentPose = pose
         }
 
         internal val dataStore = DataStore()
