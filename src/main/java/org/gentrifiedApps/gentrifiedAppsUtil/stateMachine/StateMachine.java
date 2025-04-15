@@ -45,7 +45,7 @@ public class StateMachine<T extends Enum<T>> {
     }
 
     private static void throwException(Exception e) {
-        ExceptionThrower.throwException$gentrifiedAppsUtil_debug("StateMachine", e);
+        ExceptionThrower.throwException("StateMachine", e);
     }
 
     public T getCurrentState() {

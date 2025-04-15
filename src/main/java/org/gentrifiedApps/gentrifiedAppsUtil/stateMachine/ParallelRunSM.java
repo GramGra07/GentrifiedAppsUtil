@@ -32,7 +32,7 @@ public class ParallelRunSM<T extends Enum<T>> {
     }
 
     private static void throwException(Exception e) {
-        ExceptionThrower.throwException$gentrifiedAppsUtil_debug("ParallelRunSM", e);
+        ExceptionThrower.throwException("ParallelRunSM", e);
     }
 
     /**
