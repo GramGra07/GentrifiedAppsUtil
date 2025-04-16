@@ -69,6 +69,10 @@ internal class DataStore {
                     .logError("Line: ${lines.indexOf(line)} is not in the correct format, is instead: $line")
             }
         }
+        if (lines.isEmpty()) {
+            Scribe.instance.setSet("DataStore").logError("File is empty")
+            return Pair(Alliance.RED, Target2D(0.0, 0.0, Angle(0.0, AngleUnit.RADIANS)))
+        }
         val line = lines[0].split(',')
         return Pair(
             Alliance.fromString(line[0]),
