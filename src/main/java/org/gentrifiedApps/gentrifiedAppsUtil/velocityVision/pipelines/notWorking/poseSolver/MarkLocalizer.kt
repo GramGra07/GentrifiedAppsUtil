@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.poseSolver
+package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.notWorking.poseSolver
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
@@ -19,7 +19,7 @@ import org.opencv.imgproc.Imgproc
 import kotlin.math.cos
 import kotlin.math.sin
 
-class MarkLocalizer {
+internal class MarkLocalizer {
     // Function to detect tape markers in the image
     fun detectTapeMarkers(frame: Mat, lowerColor: Scalar, upperColor: Scalar): List<Rect> {
         val hsvFrame = Mat()

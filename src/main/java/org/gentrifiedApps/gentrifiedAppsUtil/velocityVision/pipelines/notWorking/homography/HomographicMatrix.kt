@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.homography
+package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.notWorking.homography
 
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.CameraParams
 import org.opencv.core.Mat
@@ -7,7 +7,7 @@ import org.opencv.core.Point
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 
-class HomographicMatrix {
+internal class HomographicMatrix {
     fun warpToTopDown(input: Mat, cameraParams: CameraParams): Mat {
         // Extract intrinsics
         val fx = cameraParams.lensIntrinsics.fx!!

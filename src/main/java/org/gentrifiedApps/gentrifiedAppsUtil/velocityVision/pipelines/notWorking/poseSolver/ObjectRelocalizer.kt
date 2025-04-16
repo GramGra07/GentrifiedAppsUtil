@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.poseSolver
+package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.notWorking.poseSolver
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
@@ -9,7 +9,7 @@ import org.opencv.core.MatOfDouble
 import org.opencv.core.MatOfPoint2f
 import org.opencv.core.MatOfPoint3f
 
-class ObjectRelocalizer {
+private class ObjectRelocalizer {
 
     fun findRobotPose(
         cameraMatrix: Mat,

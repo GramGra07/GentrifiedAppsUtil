@@ -7,7 +7,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.Translationa
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.BlackAndWhiteDotDetector;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.DotColor;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.DotDetectionBuilder;
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.homography.HomographicProjection;
 import org.opencv.core.Rect;
 
 public class javaTestOpMode {
@@ -16,8 +15,5 @@ public class javaTestOpMode {
             new DotDetectionBuilder(
                     new Rect(50, 50, 100, 75), 10.0, 100.0
             )
-    );
-    HomographicProjection homographicProjection = new HomographicProjection(
-            new CameraParams(new DefaultLensIntrinsics(), new TranslationalVector(0.0, 0.0, 0.0), new RotationVector(0.0, 0.0, 0.0))
     );
 }
