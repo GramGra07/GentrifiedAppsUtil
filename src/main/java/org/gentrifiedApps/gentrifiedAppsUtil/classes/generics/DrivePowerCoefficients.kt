@@ -1,6 +1,8 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowModeManager
+import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.MultiSlewLimiter
 
 /**
  * A class to hold the coefficients for field centric driving.
@@ -45,5 +47,14 @@ data class DrivePowerCoefficients(
 
     fun notZero(): Boolean {
         return this != zeros()
+    }
+
+    fun applySlew(rLimiter: MultiSlewLimiter, quad:Quadruple<String>) : DrivePowerCoefficients{
+        val frontLeft = rLimiter.calculate(quad.first,this.frontLeft)
+        val frontRight = rLimiter.calculate(quad.second,this.frontRight)
+        val backLeft = rLimiter.calculate(quad.third,this.backLeft)
+        val backRight = rLimiter.calculate(quad.fourth,this.backRight)
+
+        return DrivePowerCoefficients(frontLeft, frontRight, backLeft, backRight)
     }
 }
