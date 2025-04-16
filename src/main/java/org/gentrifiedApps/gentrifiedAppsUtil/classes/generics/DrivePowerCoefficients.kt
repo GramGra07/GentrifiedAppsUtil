@@ -50,6 +50,7 @@ data class DrivePowerCoefficients(
     }
 
     fun applySlew(rLimiter: MultiSlewLimiter, quad:Quadruple<String>) : DrivePowerCoefficients{
+        require(rLimiter.length() == 4) { "Slew limiter must have 4 values" }
         val frontLeft = rLimiter.calculate(quad.first,this.frontLeft)
         val frontRight = rLimiter.calculate(quad.second,this.frontRight)
         val backLeft = rLimiter.calculate(quad.third,this.backLeft)

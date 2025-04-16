@@ -6,6 +6,9 @@ class MultiSlewLimiter {
         limiters[name to maxRate] = SlewRateLimiter(maxRate)
         return this
     }
+    internal fun length(): Int {
+        return limiters.size
+    }
 
     fun calculate(name: String, input: Double): Double {
         val limiter =
