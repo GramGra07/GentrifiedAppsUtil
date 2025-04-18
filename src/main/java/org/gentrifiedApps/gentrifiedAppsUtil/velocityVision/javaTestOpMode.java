@@ -1,9 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision;
 
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.CameraParams;
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.DefaultLensIntrinsics;
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.RotationVector;
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.TranslationalVector;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.BlackAndWhiteDotDetector;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.DotColor;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.DotDetectionBuilder;

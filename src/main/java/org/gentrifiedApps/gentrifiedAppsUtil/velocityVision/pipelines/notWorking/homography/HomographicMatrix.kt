@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.notWorking.homography
 
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.CameraParams
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.CameraParams
 import org.opencv.core.Mat
 import org.opencv.core.MatOfPoint2f
 import org.opencv.core.Point

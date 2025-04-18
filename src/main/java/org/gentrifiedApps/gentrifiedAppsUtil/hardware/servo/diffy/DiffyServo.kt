@@ -1,9 +1,9 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo
+package org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.diffy
 
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.util.Range
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.DiffyPreset
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.ServoPlus
 
 /**
  * A class to give you easy control over two servos
@@ -109,7 +109,7 @@ class DiffyServo(
     /**
      * Uses a DiffyPreset to set the left and right positions
      * @param preset The preset to use
-     * @see org.gentrifiedApps.gentrifiedAppsUtil.classes.DiffyPreset
+     * @see DiffyPreset
      */
     fun applyPreset(preset: DiffyPreset) {
         lPos = preset.left

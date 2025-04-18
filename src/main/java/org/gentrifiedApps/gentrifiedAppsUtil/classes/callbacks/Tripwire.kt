@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.classes
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.callbacks
 
 class Tripwire(private val callback: () -> Boolean) {
     fun isTripped(): Boolean {

@@ -3,7 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.notWorkin
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.CameraParams
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.CameraParams
 import org.opencv.calib3d.Calib3d
 import org.opencv.core.Core
 import org.opencv.core.CvType

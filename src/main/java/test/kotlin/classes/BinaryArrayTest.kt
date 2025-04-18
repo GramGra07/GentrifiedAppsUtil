@@ -1,7 +1,7 @@
 package test.kotlin.classes
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.BinaryArray
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.enums.Color
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.Color
 import org.junit.Test
 
 class BinaryArrayTest {

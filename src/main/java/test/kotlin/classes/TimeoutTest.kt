@@ -1,7 +1,7 @@
 package test.kotlin.classes
 
 import junit.framework.TestCase
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.Timeout
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.callbacks.Timeout
 import org.junit.Test
 
 class TimeoutTest {

@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.classes
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.callbacks
 
 /**
  * A class that allows for a timeout to be set and checked for

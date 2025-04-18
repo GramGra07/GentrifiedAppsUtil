@@ -2,7 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.BinaryArray
 import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.enums.Color
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.Color
 
 enum class Alliance {
     RED, BLUE;

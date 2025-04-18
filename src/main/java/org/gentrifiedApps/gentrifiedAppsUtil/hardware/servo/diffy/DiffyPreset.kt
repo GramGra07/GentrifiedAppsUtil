@@ -1,9 +1,9 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.classes
+package org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.diffy
 
 /**
  * A class to store the left and right values of a diffy drive, allows to be used with DiffyServo apply preset
  * @param left The left value
  * @param right The right value
- * @see org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.DiffyServo.applyPreset
+ * @see DiffyServo.applyPreset
  */
 data class DiffyPreset(val left: Double, val right: Double)

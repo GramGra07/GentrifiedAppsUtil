@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample
 
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.enums.Color
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.Color
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.extensions.Drawables.cross
 import org.opencv.core.Mat
 import org.opencv.core.Point

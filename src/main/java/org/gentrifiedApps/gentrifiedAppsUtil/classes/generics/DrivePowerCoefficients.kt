@@ -1,7 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowModeManager
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
 import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.MultiSlewLimiter
 
 /**

@@ -3,10 +3,10 @@ package test.kotlin
 import com.qualcomm.robotcore.hardware.Gamepad
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowMode
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowModeDefaults
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowModeManager
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.SlowModeMulti
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowMode
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeDefaults
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeMulti
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.junit.Assert.*
 import org.junit.Test

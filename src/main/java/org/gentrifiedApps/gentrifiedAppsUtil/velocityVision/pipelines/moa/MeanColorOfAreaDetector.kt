@@ -7,7 +7,7 @@ import org.firstinspires.ftc.robotcore.external.function.Continuation
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration
 import org.firstinspires.ftc.vision.VisionProcessor
-import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.enums.CSpace
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.CSpace
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.moa.DetectionExtensions.first
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.moa.DetectionExtensions.second
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.moa.builderInterfaces.AssumedDetectionBuilder

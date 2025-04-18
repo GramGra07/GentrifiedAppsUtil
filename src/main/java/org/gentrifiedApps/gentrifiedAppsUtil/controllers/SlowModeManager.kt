@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.classes
+package org.gentrifiedApps.gentrifiedAppsUtil.controllers
 
 
 import com.qualcomm.robotcore.hardware.Gamepad
@@ -6,6 +6,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
+import kotlin.collections.get
+import kotlin.collections.iterator
 
 enum class SlowModeDefaults {
     NORMAL
