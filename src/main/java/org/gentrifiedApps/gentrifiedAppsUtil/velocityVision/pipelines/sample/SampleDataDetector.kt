@@ -37,12 +37,17 @@ class SampleDataDetector(
     private var cameraLock: CameraLock = CameraLock.empty()
     private val lastFrame = AtomicReference(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565))
 
-    private fun createMask(hsv: Mat, lower: Scalar, upper: Scalar): Mat {
+    internal fun createMask(hsv: Mat, lower: Scalar, upper: Scalar): Mat {
         val mask = Mat()
         Core.inRange(hsv, lower, upper, mask)
         Imgproc.erode(mask, mask, Mat(), Point(-1.0, -1.0), 2)
         Imgproc.dilate(mask, mask, Mat(), Point(-1.0, -1.0), 2)
-        return mask
+
+        try {
+            return mask
+        }finally {
+            mask.release()
+        }
     }
 
     private fun findContours(mask: Mat): List<MatOfPoint> {
@@ -55,6 +60,7 @@ class SampleDataDetector(
             Imgproc.RETR_EXTERNAL,
             Imgproc.CHAIN_APPROX_SIMPLE
         )
+        hierarchy.release()
         return contours
     }
 
