@@ -10,6 +10,9 @@ import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibra
 import org.firstinspires.ftc.vision.VisionProcessor
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Alliance
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.Color
+import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.VisionHelpers.maskED
+import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.VisionHelpers.findContours
+import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.VisionHelpers.getContourCenter
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.CameraLock.Companion.ofReturnables
 import org.opencv.android.Utils
 import org.opencv.core.Core
@@ -37,43 +40,6 @@ class SampleDataDetector(
     private var cameraLock: CameraLock = CameraLock.empty()
     private val lastFrame = AtomicReference(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565))
 
-    internal fun createMask(hsv: Mat, lower: Scalar, upper: Scalar): Mat {
-        val mask = Mat()
-        Core.inRange(hsv, lower, upper, mask)
-        Imgproc.erode(mask, mask, Mat(), Point(-1.0, -1.0), 2)
-        Imgproc.dilate(mask, mask, Mat(), Point(-1.0, -1.0), 2)
-
-        try {
-            return mask
-        }finally {
-            mask.release()
-        }
-    }
-
-    private fun findContours(mask: Mat): List<MatOfPoint> {
-        val contours: List<MatOfPoint> = ArrayList()
-        val hierarchy = Mat()
-        Imgproc.findContours(
-            mask,
-            contours,
-            hierarchy,
-            Imgproc.RETR_EXTERNAL,
-            Imgproc.CHAIN_APPROX_SIMPLE
-        )
-        hierarchy.release()
-        return contours
-    }
-
-    private fun getContourCenter(contour: MatOfPoint): Point? {
-        val moments = Imgproc.moments(contour)
-        if (moments._m00 != 0.0) {
-            val cX = (moments._m10 / moments._m00).toInt()
-            val cY = (moments._m01 / moments._m00).toInt()
-            return Point(cX.toDouble(), cY.toDouble())
-        }
-        return null
-    }
-
     override fun init(width: Int, height: Int, calibration: CameraCalibration) {
         lastFrame.set(Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565))
     }
@@ -94,15 +60,15 @@ class SampleDataDetector(
         val lowerYellow = Scalar(25.0, 100.0, 100.0)
         val upperYellow = Scalar(70.0, 255.0, 255.0)
 
-        val yellowMask = createMask(hsv, lowerYellow, upperYellow)
+        val yellowMask = maskED(hsv, lowerYellow, upperYellow)
 
         var colorMask: Mat
         val colorName = if (isBlue) {
-            colorMask = createMask(hsv, lowerBlue, upperBlue)
+            colorMask = maskED(hsv, lowerBlue, upperBlue)
             "blue"
         } else {
-            val mask1 = createMask(hsv, lowerRed1, upperRed1)
-            val mask2 = createMask(hsv, lowerRed2, upperRed2)
+            val mask1 = maskED(hsv, lowerRed1, upperRed1)
+            val mask2 = maskED(hsv, lowerRed2, upperRed2)
             Core.bitwise_or(mask1, mask2, Mat().also { colorMask = it })
             "red"
         }

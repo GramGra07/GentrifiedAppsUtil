@@ -1,7 +1,13 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.vision
 
+import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.classes.VisionHelpers
+import org.opencv.core.Mat
 import org.opencv.core.Scalar
 
-class ScalarPair(var low: Scalar, var high: Scalar){
-    constructor(low: Double, high: Double): this(Scalar(low), Scalar(high))
+
+class ScalarPair(val low: Scalar,val high: Scalar) : DualScalarPair(low, high, null, null){
+
+    override fun applyThresh(input: Mat): Mat {
+        return VisionHelpers.createMask(input,low,high)
+    }
 }
