@@ -8,8 +8,7 @@ import com.qualcomm.robotcore.hardware.Gamepad
  * @param loopSaveMode Whether to enable loop save mode (could reduce performance)
  * @throws IllegalArgumentException If loopSaveMode is not enabled and you call loopSavingRead
  */
-class GamepadPlus(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
-    constructor(gamepad: Gamepad) : this(gamepad, false)
+class GamepadPlus @JvmOverloads constructor(gamepad: Gamepad, private val loopSaveMode: Boolean = false) {
 
     private var gamepad: Gamepad? = null
 

@@ -146,11 +146,12 @@ open class LoopTimeController(
      * @param hw The hardware map to use
      * @see LynxModule
      */
-    fun setLoopSavingCache(hw: HardwareMap) {
+    fun setLoopSavingCache(hw: HardwareMap): LoopTimeController {
         val allHubs: List<LynxModule> = hw.getAll(LynxModule::class.java)
 
         for (hub in allHubs) {
             hub.bulkCachingMode = LynxModule.BulkCachingMode.AUTO
         }
+        return this
     }
 }

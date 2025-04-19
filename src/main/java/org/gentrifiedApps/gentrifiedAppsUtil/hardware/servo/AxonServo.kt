@@ -28,8 +28,9 @@ class AxonServo(hw: HardwareMap, private val name: String) {
         servo = ServoPlus(hw, name)
     }
 
-    fun setAlgo(algorithm: AxonAlgorithm) {
+    fun setAlgo(algorithm: AxonAlgorithm): AxonServo {
         this.algorithm = algorithm
+        return this
     }
 
     fun checkError() {

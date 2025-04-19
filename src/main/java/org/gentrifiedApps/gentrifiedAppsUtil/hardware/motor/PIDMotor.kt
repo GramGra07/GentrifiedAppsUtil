@@ -97,10 +97,11 @@ class PIDMotor @JvmOverloads constructor(
     /**
      * Resets the motor encoder and sets the mode to RUN_USING_ENCODER
      */
-    fun reset() {
+    fun reset(): PIDMotor {
         this.target = 0.0
         this.mode = STOP_AND_RESET_ENCODER
         this.mode = DcMotor.RunMode.RUN_USING_ENCODER
+        return this
     }
 
     /**

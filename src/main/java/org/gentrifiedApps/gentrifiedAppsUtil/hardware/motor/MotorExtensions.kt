@@ -4,14 +4,16 @@ import com.qualcomm.robotcore.hardware.DcMotor
 
 class MotorExtensions {
     companion object {
-        fun resetMotor(motor: DcMotor) {
+        fun resetMotor(motor: DcMotor): DcMotor {
             motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
             motor.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
+            return motor
         }
 
-        fun resetMotor(motor: DcMotor, mode: DcMotor.RunMode) {
+        fun resetMotor(motor: DcMotor, mode: DcMotor.RunMode): DcMotor {
             motor.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
             motor.mode = mode
+            return motor
         }
     }
 }

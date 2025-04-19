@@ -32,8 +32,9 @@ class SensorArray() {
     /**
      * Reads all sensors, should be used every loop at the beginning
      */
-    fun readAllLoopSaving() {
+    fun readAllLoopSaving(): SensorArray {
         array.forEach { sensor -> sensor.sensor().readLoopSaving() }
+        return this
     }
 
     /**
