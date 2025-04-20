@@ -7,11 +7,10 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
-class DriftTunerOpMode @JvmOverloads constructor(val totalTime: Int = 5 ) : LinearOpMode() {
+class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTime: Int = 5 ) : LinearOpMode() {
 
     override fun runOpMode() {
         Scribe.instance.startLogger(this)
-        val driver = Driver(this, "fl", "fr", "bl", "br")
         driver.setupOpMode(this)
         val timer = ElapsedTime()
         timer.reset()
@@ -38,7 +37,7 @@ class DriftTunerOpMode @JvmOverloads constructor(val totalTime: Int = 5 ) : Line
                     telemetry.addData("Back Left", velocitiesP.backLeft)
                     telemetry.addData("Back Right", velocitiesP.backRight)
                     Scribe.instance.setSet("Drift Tuner").logDebug(
-                        "Drift detected: ${driftV.first}, ${driftV.second}, ${driftV.third}, ${driftV.fourth}"
+                        "Drift detected: ${velocitiesP.frontLeft}, ${velocitiesP.frontRight}, ${velocitiesP.backLeft}, ${velocitiesP.backRight}"
                     )
                     telemetry.addLine(
                     "${round(driftV.first, 2)},${round(driftV.second, 2)},${round(driftV.third, 2)},${round(driftV.fourth,2)}")
