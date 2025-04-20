@@ -17,16 +17,17 @@ class DriftTunerOpMode : LinearOpMode() {
                 driver.setWheelPower(DrivePowerCoefficients(1.0))
             }
             driver.setWheelPower(DrivePowerCoefficients(0.0))
-            val velocities = driver.getPositions().asPercent().applyDriftNormalizer()
+            val velocitiesP = driver.getPositions().asPercent().applyDriftNormalizer()
+            val driftV =
             while (opModeIsActive() && !isStopRequested) {
                 if (velocities.all0()) {
                     telemetry.addData("Drift Tuner", "No drift detected")
                 } else {
                     telemetry.addData("Drift Tuner", "Drift detected")
-                    telemetry.addData("Front Left", velocities.first)
-                    telemetry.addData("Front Right", velocities.second)
-                    telemetry.addData("Back Left", velocities.third)
-                    telemetry.addData("Back Right", velocities.fourth)
+                    telemetry.addData("Front Left", velocitiesP.first)
+                    telemetry.addData("Front Right", velocitiesP.second)
+                    telemetry.addData("Back Left", velocitiesP.third)
+                    telemetry.addData("Back Right", velocitiesP.fourth)
                 }
                 telemetry.update()
             }
