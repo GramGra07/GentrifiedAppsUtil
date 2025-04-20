@@ -115,5 +115,18 @@ class MathFunctions {
         fun getError(set: Double, current: Double): Double {
             return abs(set - current)
         }
+        fun clip(input: Double, min: Double, max: Double): Double {
+    return when {
+        input < min -> min
+        input > max -> max
+        else -> input
+    }
+}
+
+fun round(input: Double, places: Int): Double {
+    require(places >= 0) { "Decimal places must be non-negative." }
+    val factor = Math.pow(10.0, places.toDouble())
+    return kotlin.math.round(input * factor) / factor
+}
     }
 }
