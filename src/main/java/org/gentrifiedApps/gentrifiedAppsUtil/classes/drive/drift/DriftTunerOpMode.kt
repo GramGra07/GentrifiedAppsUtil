@@ -7,7 +7,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
-class DriftTunerOpMode @JvmOverloads constructor(val time: Int = 5 ) : LinearOpMode() {
+class DriftTunerOpMode @JvmOverloads constructor(val totalTime: Int = 5 ) : LinearOpMode() {
 
     override fun runOpMode() {
         Scribe.instance.startLogger(this)
@@ -18,8 +18,8 @@ class DriftTunerOpMode @JvmOverloads constructor(val time: Int = 5 ) : LinearOpM
         waitForStart()
         if (opModeIsActive()) {
             while (opModeIsActive() && !isStopRequested) {
-                Scribe.instance.setSet("Drift Tuner").logDebug("${timer.seconds()}, $time")
-                if (timer.seconds() >= time) {
+                Scribe.instance.setSet("Drift Tuner").logDebug("${timer.seconds()}, $totalTime")
+                if (timer.seconds() >= totalTime) {
                     break
                 }
                 driver.setWheelPower(DrivePowerCoefficients(1.0))
@@ -30,14 +30,21 @@ class DriftTunerOpMode @JvmOverloads constructor(val time: Int = 5 ) : LinearOpM
             while (opModeIsActive() && !isStopRequested) {
                 if (driftV.all0()) {
                     telemetry.addData("Drift Tuner", "No drift detected")
+                    Scribe.instance.setSet("Drift Tuner").logDebug("No drift detected")
                 } else {
                     telemetry.addData("Drift Tuner", "Drift detected")
                     telemetry.addData("Front Left", velocitiesP.frontLeft)
                     telemetry.addData("Front Right", velocitiesP.frontRight)
                     telemetry.addData("Back Left", velocitiesP.backLeft)
                     telemetry.addData("Back Right", velocitiesP.backRight)
+                    Scribe.instance.setSet("Drift Tuner").logDebug(
+                        "Drift detected: ${driftV.first}, ${driftV.second}, ${driftV.third}, ${driftV.fourth}"
+                    )
                     telemetry.addLine(
                     "${round(driftV.first, 2)},${round(driftV.second, 2)},${round(driftV.third, 2)},${round(driftV.fourth,2)}")
+                    Scribe.instance.setSet("Drift Tuner").logDebug(
+                        "Drift Constraints: ${driftV.first}, ${driftV.second}, ${driftV.third}, ${driftV.fourth}"
+                    )
                 }
                 telemetry.update()
             }
