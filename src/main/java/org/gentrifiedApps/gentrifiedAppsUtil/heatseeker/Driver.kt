@@ -169,7 +169,7 @@ class Driver @JvmOverloads constructor(
     companion object {
 
         var driftCoefficients: DrivePowerConstraint? = null
-        fun applyDriftCorrection(coefficients: DrivePowerCoefficients): DrivePowerCoefficients {
+        @JvmStatic fun applyDriftCorrection(coefficients: DrivePowerCoefficients): DrivePowerCoefficients {
             return if (driftCoefficients != null) {
                 coefficients.applyConstraint(driftCoefficients!!)
             } else {
