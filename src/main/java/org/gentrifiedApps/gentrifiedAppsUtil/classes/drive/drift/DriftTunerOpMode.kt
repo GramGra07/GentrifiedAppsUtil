@@ -13,8 +13,8 @@ class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTim
         Scribe.instance.startLogger(this)
         driver.setupOpMode(this)
         val timer = ElapsedTime()
-        timer.reset()
         waitForStart()
+        timer.reset()
         if (opModeIsActive()) {
             while (opModeIsActive() && !isStopRequested) {
                 Scribe.instance.setSet("Drift Tuner").logDebug("${timer.seconds()}, $totalTime")
