@@ -15,7 +15,10 @@ class DriftTunerOpMode @JvmOverloads constructor(val time: Int = 5 ) : LinearOpM
         waitForStart()
         timer.reset()
         if (opModeIsActive()) {
-            while (timer.seconds() < time ||( opModeIsActive() && !isStopRequested)) {
+            while (opModeIsActive() && !isStopRequested) {
+                if (timer.seconds() >= time) {
+                    break
+                }
                 driver.setWheelPower(DrivePowerCoefficients(1.0))
             }
             driver.setWheelPower(DrivePowerCoefficients(0.0))
