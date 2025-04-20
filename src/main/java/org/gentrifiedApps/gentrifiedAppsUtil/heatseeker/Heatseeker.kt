@@ -1,7 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.ErrorPIDController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.FeedforwardController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle

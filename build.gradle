@@ -94,6 +94,8 @@ dependencies {
     implementation libs.testng
 
     implementation libs.listenablefuture
+    testImplementation libs.kotlin.test
+    testImplementation libs.kotlinx.coroutines.test
 }
 
 afterEvaluate {
@@ -102,7 +104,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = 'org.gentrifiedApps'
                 artifactId = 'gentrifiedApps'
-                version = 'v1.0.6'
+                version = 'v1.0.0'
 
                 afterEvaluate {
                     from components.release

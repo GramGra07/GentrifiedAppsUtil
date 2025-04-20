@@ -7,7 +7,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowMode
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeDefaults
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeMulti
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.junit.Assert.*
 import org.junit.Test
 

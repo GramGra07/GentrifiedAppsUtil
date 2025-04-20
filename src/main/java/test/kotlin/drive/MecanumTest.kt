@@ -1,6 +1,6 @@
 package test.kotlin.drive
 
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.MecanumDriver
 import org.junit.Test
 import org.testng.Assert.assertEquals

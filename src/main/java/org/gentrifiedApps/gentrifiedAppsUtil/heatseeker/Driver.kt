@@ -4,7 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
@@ -56,6 +58,29 @@ class Driver @JvmOverloads constructor(
                 telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, value.getPose())
             }
         }
+
+    internal fun getPositions() : DriveVelocities{
+        return DriveVelocities(
+            fl.currentPosition,
+            fr.currentPosition,
+            bl.currentPosition,
+            br.currentPosition
+        )
+    }
+    internal var driftCorrect = false
+    internal var driftCoefficients: DrivePowerConstraint? = null
+    fun addDriftCorrection(constraint: DrivePowerConstraint): Driver{
+        driftCorrect = true
+        driftCoefficients = constraint
+        return this
+    }
+    fun applyDriftCorrection(coefficients: DrivePowerCoefficients): DrivePowerCoefficients {
+        return if (driftCorrect && driftCoefficients != null) {
+            coefficients.applyConstraint(driftCoefficients!!)
+        } else {
+            coefficients
+        }
+    }
 
     val driveType = DRIVETYPE.MECANUM
     lateinit var hwMap: HardwareMap

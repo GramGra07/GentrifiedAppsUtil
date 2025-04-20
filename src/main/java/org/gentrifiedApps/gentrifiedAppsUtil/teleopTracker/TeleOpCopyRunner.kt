@@ -1,7 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.idler.Idler
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
