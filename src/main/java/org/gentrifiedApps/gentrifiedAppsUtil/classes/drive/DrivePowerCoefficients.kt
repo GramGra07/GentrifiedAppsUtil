@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive
 
 import com.qualcomm.robotcore.util.Range
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
@@ -28,10 +29,10 @@ data class DrivePowerCoefficients(
 
     fun applyConstraint(constraint: DrivePowerConstraint): DrivePowerCoefficients{
         return DrivePowerCoefficients(
-            Range.clip(frontLeft,-constraint.frontLeft,constraint.frontLeft),
-            Range.clip(frontRight,-constraint.frontRight,constraint.frontRight),
-            Range.clip(backLeft,-constraint.backLeft,constraint.backLeft),
-            Range.clip(backRight,-constraint.backRight,constraint.backRight)
+            clip(frontLeft,-constraint.frontLeft,constraint.frontLeft),
+            clip(frontRight,-constraint.frontRight,constraint.frontRight),
+            clip(backLeft,-constraint.backLeft,constraint.backLeft),
+            clip(backRight,-constraint.backRight,constraint.backRight)
         )
     }
 

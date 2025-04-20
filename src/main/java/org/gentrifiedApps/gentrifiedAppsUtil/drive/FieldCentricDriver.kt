@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.drive
 
 import com.qualcomm.robotcore.util.Range
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
@@ -33,7 +34,7 @@ class FieldCentricDriver {
             val controllerAngle = atan2(y, x)
             val robotAngle = gyroAngle.toRadians() + offset.toRadians()
             val movementAngle = controllerAngle - robotAngle
-            val gamepadHypot = Range.clip(hypot(x, y), 0.0, 1.0)
+            val gamepadHypot = clip(hypot(x, y), 0.0, 1.0)
             val yControl = cos(movementAngle) * gamepadHypot
             val xControl = sin(movementAngle) * gamepadHypot
             val frontRightPower = yControl * abs(yControl) - xControl * abs(xControl) + rotation

@@ -3,6 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.diffy
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
 import com.qualcomm.robotcore.util.Range
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.ServoPlus
 
 /**
@@ -75,11 +76,11 @@ class DiffyServo(
     }
 
     private fun getlPos(): Double {
-        return Range.clip(lPos, -1.0, 1.0)
+        return clip(lPos, -1.0, 1.0)
     }
 
     private fun getrPos(): Double {
-        return Range.clip(rPos, -1.0, 1.0)
+        return clip(rPos, -1.0, 1.0)
     }
 
     fun rotateDown(position: Double) {

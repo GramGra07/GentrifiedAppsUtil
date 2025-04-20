@@ -39,4 +39,13 @@ class DriveVelocitiesTest {
         assertEquals(1.0, velocities.min())
         assertEquals(4.0, velocities.max())
     }
+    @Test
+    fun testApplyDriftNormalizerFULL() {
+        val velocities = DriveVelocities(1000, 800, 900, 1000)
+        val result = velocities.asPercent().applyDriftNormalizer()
+
+        // Expected values based on the logic in applyDriftNormalizer
+        val expected = Quadruple(0.8, 1.0, 0.9, 0.8) // Adjust based on expected behavior
+        assertEquals(expected, result)
+    }
 }

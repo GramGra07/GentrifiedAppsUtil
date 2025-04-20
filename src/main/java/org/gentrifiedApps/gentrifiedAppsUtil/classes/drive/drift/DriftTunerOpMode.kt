@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.round
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
@@ -20,21 +21,19 @@ class DriftTunerOpMode : LinearOpMode() {
             val velocitiesP = driver.getPositions().asPercent()
             val driftV = velocitiesP.applyDriftNormalizer()
             while (opModeIsActive() && !isStopRequested) {
-                if (velocities.all0()) {
+                if (driftV.all0()) {
                     telemetry.addData("Drift Tuner", "No drift detected")
                 } else {
                     telemetry.addData("Drift Tuner", "Drift detected")
-                    telemetry.addData("Front Left", velocitiesP.first)
-                    telemetry.addData("Front Right", velocitiesP.second)
-                    telemetry.addData("Back Left", velocitiesP.third)
-                    telemetry.addData("Back Right", velocitiesP.fourth)
+                    telemetry.addData("Front Left", velocitiesP.frontLeft)
+                    telemetry.addData("Front Right", velocitiesP.frontRight)
+                    telemetry.addData("Back Left", velocitiesP.backLeft)
+                    telemetry.addData("Back Right", velocitiesP.backRight)
                     telemetry.addLine(
-                    "$round(driftV.first,2),$round(driftV.second,2),$round(driftV.third,2),$round(driftV.fourth,2)")
+                    "${round(driftV.first, 2)},${round(driftV.second, 2)},${round(driftV.third, 2)},${round(driftV.fourth,2)}")
                 }
                 telemetry.update()
             }
-
         }
     }
-
 }
