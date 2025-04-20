@@ -67,20 +67,6 @@ class Driver @JvmOverloads constructor(
             br.currentPosition
         )
     }
-    internal var driftCorrect = false
-    internal var driftCoefficients: DrivePowerConstraint? = null
-    fun addDriftCorrection(constraint: DrivePowerConstraint): Driver{
-        driftCorrect = true
-        driftCoefficients = constraint
-        return this
-    }
-    fun applyDriftCorrection(coefficients: DrivePowerCoefficients): DrivePowerCoefficients {
-        return if (driftCorrect && driftCoefficients != null) {
-            coefficients.applyConstraint(driftCoefficients!!)
-        } else {
-            coefficients
-        }
-    }
 
     val driveType = DRIVETYPE.MECANUM
     lateinit var hwMap: HardwareMap
@@ -176,7 +162,20 @@ class Driver @JvmOverloads constructor(
         return listOf(Pair(fl, flName), Pair(fr, frName), Pair(bl, blName), Pair(br, brName))
     }
 
+    fun addDriftCorrection(constraint: DrivePowerConstraint): Driver {
+        driftCoefficients = constraint
+        return this
+    }
     companion object {
+
+        var driftCoefficients: DrivePowerConstraint? = null
+        fun applyDriftCorrection(coefficients: DrivePowerCoefficients): DrivePowerCoefficients {
+            return if (driftCoefficients != null) {
+                coefficients.applyConstraint(driftCoefficients!!)
+            } else {
+                coefficients
+            }
+        }
         fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {
             val frontLeft = fwd + strafe + turn
             val frontRight = fwd - strafe - turn

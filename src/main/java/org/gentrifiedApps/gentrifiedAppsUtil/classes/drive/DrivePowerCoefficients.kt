@@ -5,6 +5,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.cli
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver.Companion.driftCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.MultiSlewLimiter
 
 /**

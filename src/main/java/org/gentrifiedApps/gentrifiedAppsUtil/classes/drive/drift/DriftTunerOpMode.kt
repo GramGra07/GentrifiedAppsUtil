@@ -6,15 +6,16 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.rou
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
-class DriftTunerOpMode : LinearOpMode() {
-    val driver = Driver(this, "fl", "fr", "bl", "br")
-    val timer = ElapsedTime()
+class DriftTunerOpMode @JvmOverloads constructor(val time: Int = 5 ) : LinearOpMode() {
 
     override fun runOpMode() {
+        val driver = Driver(this, "fl", "fr", "bl", "br")
+        driver.setupOpMode(this)
+        val timer = ElapsedTime()
         waitForStart()
         timer.reset()
         if (opModeIsActive()) {
-            while (timer.seconds() < 5 && opModeIsActive() && !isStopRequested) {
+            while (timer.seconds() < time && opModeIsActive() && !isStopRequested) {
                 driver.setWheelPower(DrivePowerCoefficients(1.0))
             }
             driver.setWheelPower(DrivePowerCoefficients(0.0))
