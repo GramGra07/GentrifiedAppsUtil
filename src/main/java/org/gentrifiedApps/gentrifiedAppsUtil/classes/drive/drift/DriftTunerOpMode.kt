@@ -26,24 +26,27 @@ class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTim
             driver.setWheelPower(DrivePowerCoefficients(0.0))
             val velocitiesP = driver.getPositions().asPercent()
             val driftV = velocitiesP.applyDriftNormalizer()
+            if (driftV.all0()) {
+                Scribe.instance.setSet("Drift Tuner").logDebug("No drift detected")
+            } else {
+                Scribe.instance.setSet("Drift Tuner").logDebug(
+                    "Drift detected: ${velocitiesP.frontLeft}, ${velocitiesP.frontRight}, ${velocitiesP.backLeft}, ${velocitiesP.backRight}"
+                )
+                Scribe.instance.setSet("Drift Tuner").logDebug(
+                    "Drift Constraints: ${driftV.first}, ${driftV.second}, ${driftV.third}, ${driftV.fourth}"
+                )
+            }
             while (opModeIsActive() && !isStopRequested) {
                 if (driftV.all0()) {
                     telemetry.addData("Drift Tuner", "No drift detected")
-                    Scribe.instance.setSet("Drift Tuner").logDebug("No drift detected")
                 } else {
                     telemetry.addData("Drift Tuner", "Drift detected")
                     telemetry.addData("Front Left", velocitiesP.frontLeft)
                     telemetry.addData("Front Right", velocitiesP.frontRight)
                     telemetry.addData("Back Left", velocitiesP.backLeft)
                     telemetry.addData("Back Right", velocitiesP.backRight)
-                    Scribe.instance.setSet("Drift Tuner").logDebug(
-                        "Drift detected: ${velocitiesP.frontLeft}, ${velocitiesP.frontRight}, ${velocitiesP.backLeft}, ${velocitiesP.backRight}"
-                    )
                     telemetry.addLine(
                     "${round(driftV.first, 2)},${round(driftV.second, 2)},${round(driftV.third, 2)},${round(driftV.fourth,2)}")
-                    Scribe.instance.setSet("Drift Tuner").logDebug(
-                        "Drift Constraints: ${driftV.first}, ${driftV.second}, ${driftV.third}, ${driftV.fourth}"
-                    )
                 }
                 telemetry.update()
             }
