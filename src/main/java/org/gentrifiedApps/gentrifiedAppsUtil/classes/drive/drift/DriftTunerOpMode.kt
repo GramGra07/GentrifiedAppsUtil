@@ -3,19 +3,22 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.round
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
 class DriftTunerOpMode @JvmOverloads constructor(val time: Int = 5 ) : LinearOpMode() {
 
     override fun runOpMode() {
+        Scribe.instance.startLogger(this)
         val driver = Driver(this, "fl", "fr", "bl", "br")
         driver.setupOpMode(this)
         val timer = ElapsedTime()
-        waitForStart()
         timer.reset()
+        waitForStart()
         if (opModeIsActive()) {
             while (opModeIsActive() && !isStopRequested) {
+                Scribe.instance.setSet("Drift Tuner").logDebug("${timer.seconds()}, $time")
                 if (timer.seconds() >= time) {
                     break
                 }
