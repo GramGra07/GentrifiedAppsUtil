@@ -57,6 +57,10 @@
         </toc-element>
         <toc-element topic="BeamBreak.md"/>
     </toc-element>
+    <toc-element toc-title="DriftDetector/Tuner">
+        <toc-element topic="DriftDetection.md"/>
+        <toc-element topic="DriftTuner.md"/>
+    </toc-element>
     <toc-element toc-title="DriverAid">
         <toc-element topic="driveraid_how-to-use-it.md"/>
     </toc-element>
