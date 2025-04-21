@@ -107,7 +107,7 @@ internal class MarkLocalizer {
         val tvec = Mat()
 
         // SolvePnP to get the rotation and translation vectors
-        Calib3d.solvePnP(objectPoints, imagePoints, cameraParams.toMat(), distCoeffs, rvec, tvec)
+        Calib3d.solvePnP(objectPoints, imagePoints, cameraParams.lensIntrinsics.toMat(), distCoeffs, rvec, tvec)
 
         // Convert rotation vector to yaw (heading)
         val yaw = rotationToYaw(rvec)

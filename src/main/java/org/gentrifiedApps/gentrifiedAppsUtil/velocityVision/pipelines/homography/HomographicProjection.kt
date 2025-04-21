@@ -1,7 +1,8 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.notWorking.homography
+package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.homography
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Paint
 import org.firstinspires.ftc.robotcore.external.function.Consumer
 import org.firstinspires.ftc.robotcore.external.function.Continuation
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource
@@ -9,28 +10,45 @@ import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibra
 import org.firstinspires.ftc.vision.VisionProcessor
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.CameraParams
 import org.opencv.android.Utils
+import org.opencv.core.CvType
 import org.opencv.core.Mat
+import org.opencv.core.Size
+import org.opencv.imgproc.Imgproc
 import java.util.concurrent.atomic.AtomicReference
 
 private class HomographicProjection(
     val cameraParams: CameraParams,
 ) : VisionProcessor,
     CameraStreamSource {
-
+    private lateinit var homography: Mat
     private val lastFrame = AtomicReference(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565))
 
     override fun init(width: Int, height: Int, calibration: CameraCalibration) {
-        lastFrame.set(Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565))
+        homography = HomographicMatrix.computeHomography(cameraParams)
     }
 
     override fun processFrame(frame: Mat, captureTimeNanos: Long): Any {
-        val warped = HomographicMatrix().warpToTopDown(frame, cameraParams)
+        val H_inv = homography.inv()
 
-        val b =
-            Bitmap.createBitmap(frame.width(), frame.height(), Bitmap.Config.RGB_565)
-        Utils.matToBitmap(frame, b)
+        // Output size set manually
+        val outputSize = Size(frame.width().toDouble(), frame.height().toDouble())
+        val output = Mat(outputSize, CvType.CV_8UC3)
+
+        // Just apply the inverted homography directly
+        Imgproc.warpPerspective(frame, output, H_inv, outputSize)
+
+        // Convert to bitmap for rendering
+        val b = Bitmap.createBitmap(output.width(), output.height(), Bitmap.Config.ARGB_8888)
+
+        Utils.matToBitmap(output, b)
         lastFrame.set(b)
-        return warped
+
+        try {
+            return output
+        }finally {
+            output.release()
+            H_inv.release()
+        }
     }
 
     override fun onDrawFrame(
@@ -41,6 +59,10 @@ private class HomographicProjection(
         scaleCanvasDensity: Float,
         userContext: Any
     ) {
+        val bitmap = lastFrame.get()
+        canvas.scale(scaleBmpPxToCanvasPx, scaleBmpPxToCanvasPx)
+        canvas.drawRect(0F, 0F, onscreenWidth.toFloat(), onscreenHeight.toFloat(), Paint())
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
     }
 
     override fun getFrameBitmap(continuation: Continuation<out Consumer<Bitmap>?>) {
