@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp
-@Disabled
+//@Disabled
 public class ServoOpMode extends LinearOpMode {
     ServoPlus servo = null;
 

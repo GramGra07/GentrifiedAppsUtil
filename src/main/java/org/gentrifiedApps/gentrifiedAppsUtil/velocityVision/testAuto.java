@@ -4,6 +4,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision;
 
 import android.util.Size;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -13,7 +14,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.Cam
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.ReturnType;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.SampleDataDetector;
 
-//@Autonomous
+@Autonomous
 public class testAuto extends LinearOpMode {
     private SampleDataDetector processor;
     private VisionPortal portal;

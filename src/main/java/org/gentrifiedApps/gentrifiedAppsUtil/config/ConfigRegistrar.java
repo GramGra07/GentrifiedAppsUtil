@@ -15,7 +15,7 @@ public final class ConfigRegistrar {
             .addMotor("bl", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 1)
             .addMotor("br", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 3);
 
-    static boolean isEnabled = false;
+    static boolean isEnabled = true;
 
     private ConfigRegistrar() {
     }
