@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.AnalogEncoder;
 
 @TeleOp
-//@Disabled
+@Disabled
 public class SensorOpMode extends LinearOpMode {
 
     @Override

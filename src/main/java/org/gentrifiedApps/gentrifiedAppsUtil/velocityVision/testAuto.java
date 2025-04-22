@@ -14,7 +14,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.Cam
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.ReturnType;
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.SampleDataDetector;
 
-@Autonomous
+//@Autonomous
 public class testAuto extends LinearOpMode {
     private SampleDataDetector processor;
     private VisionPortal portal;

@@ -8,7 +8,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.stateMachine.StateMachine;
 
 
 @Autonomous
-//@Disabled
+@Disabled
 public class StateMachineLocal extends LinearOpMode {
     @Override
     public void runOpMode() {

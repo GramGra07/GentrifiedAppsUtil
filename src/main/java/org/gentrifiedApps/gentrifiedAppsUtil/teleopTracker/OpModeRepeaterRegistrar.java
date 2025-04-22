@@ -13,7 +13,7 @@ public final class OpModeRepeaterRegistrar {
     static String name = "Test2";
     static Driver driver = new Driver("fl", "fr", "bl", "br", DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE);
 
-    static boolean isEnabled = true;
+    static boolean isEnabled = false;
 
     private OpModeRepeaterRegistrar() {
     }

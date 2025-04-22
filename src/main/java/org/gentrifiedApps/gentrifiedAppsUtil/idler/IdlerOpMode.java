@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp
-//@Disabled
+@Disabled
 public class IdlerOpMode extends LinearOpMode {
 
     @Override
