@@ -9,6 +9,7 @@ import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration
 import org.firstinspires.ftc.vision.VisionProcessor
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.CameraParams
+import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.homography.HomographicMatrix.Companion.fullHomography
 import org.opencv.android.Utils
 import org.opencv.core.CvType
 import org.opencv.core.Mat
@@ -20,22 +21,13 @@ private class HomographicProjection(
     val cameraParams: CameraParams,
 ) : VisionProcessor,
     CameraStreamSource {
-    private lateinit var homography: Mat
     private val lastFrame = AtomicReference(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565))
 
     override fun init(width: Int, height: Int, calibration: CameraCalibration) {
-        homography = HomographicMatrix.computeHomography(cameraParams)
     }
 
     override fun processFrame(frame: Mat, captureTimeNanos: Long): Any {
-        val H_inv = homography.inv()
-
-        // Output size set manually
-        val outputSize = Size(frame.width().toDouble(), frame.height().toDouble())
-        val output = Mat(outputSize, CvType.CV_8UC3)
-
-        // Just apply the inverted homography directly
-        Imgproc.warpPerspective(frame, output, H_inv, outputSize)
+        val output = fullHomography(frame, cameraParams)
 
         // Convert to bitmap for rendering
         val b = Bitmap.createBitmap(output.width(), output.height(), Bitmap.Config.ARGB_8888)
@@ -47,7 +39,6 @@ private class HomographicProjection(
             return output
         }finally {
             output.release()
-            H_inv.release()
         }
     }
 

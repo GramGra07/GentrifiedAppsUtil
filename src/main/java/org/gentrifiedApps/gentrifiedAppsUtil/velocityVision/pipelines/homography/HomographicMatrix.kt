@@ -4,8 +4,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.CameraParams
 import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
-import org.opencv.core.MatOfPoint2f
-import org.opencv.core.Point
 import org.opencv.core.Size
 import org.opencv.imgproc.Imgproc
 import kotlin.math.cos
@@ -13,6 +11,21 @@ import kotlin.math.sin
 
 class HomographicMatrix {
     companion object {
+        fun fullHomography(input: Mat, cameraParams: CameraParams): Mat {
+            val H = computeHomography(cameraParams)
+            val outputSize = Size(input.width().toDouble(), input.height().toDouble())
+            val output = Mat(outputSize, CvType.CV_8UC3)
+
+            Imgproc.warpPerspective(input, output, H, outputSize)
+
+            try {
+                return output
+            } finally {
+                H.release()
+                output.release()
+            }
+        }
+
         @JvmStatic
         fun computeHomography(cameraParams: CameraParams): Mat {
             val fx = cameraParams.lensIntrinsics.fx
@@ -23,10 +36,7 @@ class HomographicMatrix {
             val pitch = cameraParams.rotationalVector.pitch
             val roll = cameraParams.rotationalVector.roll
             // Intrinsics
-            val K = Mat(3, 3, CvType.CV_64F)
-            K.put(0, 0, fx, 0.0, cx)
-            K.put(1, 0, 0.0, fy, cy)
-            K.put(2, 0, 0.0, 0.0, 1.0)
+            val K = cameraParams.lensIntrinsics.toMat()
 
             // Rotation from yaw/pitch/roll (ZYX)
             val cyaw = cos(yaw);
@@ -53,7 +63,7 @@ class HomographicMatrix {
             )
 
             // Add translation: camera height (Z axis)
-            val cameraHeight = 12.0 // inches, tweak this!
+            val cameraHeight = cameraParams.translationalVector.z // inches, tweak this!
             val T = Mat(3, 1, CvType.CV_64F)
             T.put(0, 0, 0.0)
             T.put(1, 0, 0.0)
@@ -78,7 +88,18 @@ class HomographicMatrix {
             Core.gemm(RT3x3, Kinv, 1.0, Mat(), 0.0, temp)
             Core.gemm(K, temp, 1.0, Mat(), 0.0, H)
 
-            return H
+            try {
+                return H.inv()
+            } finally {
+                H.release()
+                RT.release()
+                RT3x3.release()
+                K.release()
+                Kinv.release()
+                temp.release()
+                R.release()
+                T.release()
+            }
         }
     }
 }
