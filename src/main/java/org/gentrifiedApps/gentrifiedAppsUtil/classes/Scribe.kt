@@ -52,13 +52,11 @@ class Scribe private constructor(private val tagger: String) {
         @JvmStatic
         var instance: Scribe = Scribe(DEFAULT_TAG)
 
-        @JvmStatic
-        fun create(tagger: String) {
+        internal fun create(tagger: String) {
             this.instance = Scribe(DEFAULT_TAG + tagger)
         }
 
-        @JvmStatic
-        fun reset() {
+        internal fun reset() {
             this.instance = Scribe(DEFAULT_TAG)
         }
 
