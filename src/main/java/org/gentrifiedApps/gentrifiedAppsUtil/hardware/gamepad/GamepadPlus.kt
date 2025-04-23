@@ -30,10 +30,10 @@ class GamepadPlus @JvmOverloads constructor(gamepad: Gamepad, private val loopSa
         secondaryHash[Button.CIRCLE] = gamepad!!.circle
         secondaryHash[Button.TRIANGLE] = gamepad!!.triangle
         secondaryHash[Button.SQUARE] = gamepad!!.square
-        secondaryHash[Button.A] = gamepad!!.a
-        secondaryHash[Button.B] = gamepad!!.b
-        secondaryHash[Button.X] = gamepad!!.x
-        secondaryHash[Button.Y] = gamepad!!.y
+        secondaryHash[Button.A] = secondaryHash[Button.CROSS]!!
+        secondaryHash[Button.B] = secondaryHash[Button.CIRCLE]!!
+        secondaryHash[Button.X] = secondaryHash[Button.SQUARE]!!
+        secondaryHash[Button.Y] = secondaryHash[Button.TRIANGLE]!!
         secondaryHash[Button.L1] = gamepad!!.left_bumper
         secondaryHash[Button.R1] = gamepad!!.right_bumper
         secondaryHash[Button.SHARE] = gamepad!!.back
@@ -71,10 +71,10 @@ class GamepadPlus @JvmOverloads constructor(gamepad: Gamepad, private val loopSa
         hash[Button.CIRCLE] = gamepad!!.circle
         hash[Button.TRIANGLE] = gamepad!!.triangle
         hash[Button.SQUARE] = gamepad!!.square
-        hash[Button.A] = gamepad!!.a
-        hash[Button.B] = gamepad!!.b
-        hash[Button.X] = gamepad!!.x
-        hash[Button.Y] = gamepad!!.y
+        hash[Button.A] = hash[Button.CROSS]!!
+        hash[Button.B] = hash[Button.CIRCLE]!!
+        hash[Button.X] = hash[Button.SQUARE]!!
+        hash[Button.Y] = hash[Button.TRIANGLE]!!
         hash[Button.L1] = gamepad!!.left_bumper
         hash[Button.R1] = gamepad!!.right_bumper
         hash[Button.SHARE] = gamepad!!.back
@@ -100,14 +100,14 @@ class GamepadPlus @JvmOverloads constructor(gamepad: Gamepad, private val loopSa
 
     private fun returnButton(button: Button): Boolean {
         return when (button) {
-            Button.A -> gamepad!!.a
-            Button.B -> gamepad!!.b
-            Button.X -> gamepad!!.x
-            Button.Y -> gamepad!!.y
-            Button.CROSS -> gamepad!!.cross
-            Button.CIRCLE -> gamepad!!.circle
-            Button.TRIANGLE -> gamepad!!.triangle
+            Button.A,
+                Button.CROSS -> gamepad!!.cross
+            Button.B ,
+           Button.CIRCLE -> gamepad!!.circle
+            Button.X,
             Button.SQUARE -> gamepad!!.square
+            Button.Y,
+            Button.TRIANGLE -> gamepad!!.triangle
             Button.L1 -> gamepad!!.left_bumper
             Button.R1 -> gamepad!!.right_bumper
             Button.SHARE -> gamepad!!.back

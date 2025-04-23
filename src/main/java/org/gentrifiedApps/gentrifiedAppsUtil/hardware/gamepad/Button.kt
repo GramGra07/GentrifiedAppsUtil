@@ -24,7 +24,41 @@ enum class Button {
     DPAD_LEFT,
     DPAD_RIGHT,
     RIGHT_BUMPER,
-    LEFT_BUMPER,
+    LEFT_BUMPER;
+    companion object {
+        @JvmStatic
+        fun aToPS(): Button {
+            return CROSS
+        }
+        @JvmStatic
+        fun bToPS(): Button {
+            return CIRCLE
+        }
+        @JvmStatic
+        fun xToPS(): Button {
+            return SQUARE
+        }
+        @JvmStatic
+        fun yToPS(): Button {
+            return TRIANGLE
+        }
+        @JvmStatic
+        fun triangleToX(): Button {
+            return Y
+        }
+        @JvmStatic
+        fun squareToX(): Button {
+            return X
+        }
+        @JvmStatic
+        fun circleToX(): Button {
+            return B
+        }
+        @JvmStatic
+        fun crossToX(): Button {
+            return A
+        }
+    }
 }
 
 /**
