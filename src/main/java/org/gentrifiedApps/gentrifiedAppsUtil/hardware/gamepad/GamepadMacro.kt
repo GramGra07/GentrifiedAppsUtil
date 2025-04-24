@@ -3,13 +3,16 @@ package org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 
 class GamepadMacro(private val macro: List<ButtonPress>, private val func: Runnable) {
+    constructor(vararg macro:ButtonPress, func: Runnable) : this(macro.toList(), func)
+
     private val macroButtons = macro.map { it.button } // Store macro sequence
     private var progress = 0 // Tracks position in macro sequence
 
-    internal var nextExpectedButton: Button? = null
-    internal var lastButton: Button? = null
+    private var nextExpectedButton: Button? = null
+    private var lastButton: Button? = null
 
-    fun updateNext(){
+
+ private fun updateNext(){
         nextExpectedButton = if (progress < macro.size) {
             macro[progress].button
         } else {
@@ -41,6 +44,7 @@ class GamepadMacro(private val macro: List<ButtonPress>, private val func: Runna
             func.run()
             Scribe.instance.setSet("Macro").logDebug("Macro completed: $macro")
             progress = 0
+            lastButton = null
         }
     }
     internal fun updateWithButton(buttonJustPressed: Button){
