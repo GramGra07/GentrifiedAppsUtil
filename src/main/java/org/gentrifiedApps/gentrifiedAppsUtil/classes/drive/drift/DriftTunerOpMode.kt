@@ -7,10 +7,14 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
-class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTime: Int = 5 ) : LinearOpMode() {
+class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTime: Int = 5, val threshold: Double = 0.1) : LinearOpMode() {
+    constructor(driver:Driver,threshold:Double = 0.1) : this(driver, 5, threshold)
 
     override fun runOpMode() {
         Scribe.instance.startLogger(this)
+        require(threshold>0 && threshold<0.9) {
+            Scribe.instance.setSet("Drift Tuner").logError("Threshold must be between 0 and 0.9")
+            "Threshold must be between 0 and 0.9" }
         driver.setupOpMode(this)
         val timer = ElapsedTime()
         waitForStart()
@@ -25,7 +29,7 @@ class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTim
             }
             driver.setWheelPower(DrivePowerCoefficients(0.0))
             val velocitiesP = driver.getPositions().asPercent()
-            val driftV = velocitiesP.applyDriftNormalizer()
+            val driftV = velocitiesP.applyDriftNormalizer(threshold)
             if (driftV.all0()) {
                 Scribe.instance.setSet("Drift Tuner").logDebug("No drift detected")
             } else {

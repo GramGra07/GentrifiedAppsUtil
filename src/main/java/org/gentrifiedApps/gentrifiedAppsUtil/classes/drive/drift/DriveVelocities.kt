@@ -27,9 +27,11 @@ data class DriveVelocities(
     fun asPercent() : DriveVelocities {
         return this / max()
     }
-    internal val tolerance = 0.1
 
     internal fun applyDriftNormalizer(): Quadruple<Double>{
+        return applyDriftNormalizer(0.1)
+    }
+    internal fun applyDriftNormalizer(tolerance: Double): Quadruple<Double>{
         val min = min()
         val max = max()
         val dif = abs(max-min)
