@@ -11,10 +11,10 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Heatseeker
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.ErrorPIDController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Waypoint
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.OTOSLocalizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.SparkFunOTOSParams
 

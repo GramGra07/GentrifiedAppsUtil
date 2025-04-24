@@ -3,9 +3,9 @@ package org.gentrifiedApps.gentrifiedAppsUtil.dataStorage
 import android.os.Environment
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Alliance
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException

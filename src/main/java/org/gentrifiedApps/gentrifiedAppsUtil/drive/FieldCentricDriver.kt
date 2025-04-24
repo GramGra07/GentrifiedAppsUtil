@@ -1,10 +1,9 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.drive
 
-import com.qualcomm.robotcore.util.Range
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.cos

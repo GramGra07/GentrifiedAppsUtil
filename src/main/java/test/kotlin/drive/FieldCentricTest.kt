@@ -2,8 +2,8 @@ package test.kotlin.drive
 
 import org.gentrifiedApps.gentrifiedAppsUtil.drive.FieldCentricDriver
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
 import org.junit.Test
 import org.testng.Assert.assertEquals
 

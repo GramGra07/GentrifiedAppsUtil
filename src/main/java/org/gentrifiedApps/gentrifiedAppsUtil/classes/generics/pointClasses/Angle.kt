@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses
 
 import kotlin.math.PI
 

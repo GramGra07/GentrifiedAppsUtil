@@ -1,7 +1,6 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses
 
 import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
 
 /**
  * A class to represent a point in 2D space
@@ -11,7 +10,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Ta
  */
 data class Point(var x: Double, var y: Double) {
     fun store() {
-        DataStorage.setPose(this.toTarget2D())
+        DataStorage.Storage.setPose(this.toTarget2D())
     }
 
     fun toTarget2D(): Target2D {

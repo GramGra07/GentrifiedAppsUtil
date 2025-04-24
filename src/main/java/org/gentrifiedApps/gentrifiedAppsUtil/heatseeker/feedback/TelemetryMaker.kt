@@ -3,7 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback
 import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 
 class TelemetryMaker {
     fun sendTelemetry(telemetry: Telemetry, pose: Target2D, update: Boolean = true) {

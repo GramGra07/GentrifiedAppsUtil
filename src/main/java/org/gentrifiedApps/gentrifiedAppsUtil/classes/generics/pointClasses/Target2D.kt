@@ -1,10 +1,10 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Point
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
 import kotlin.math.atan2
 import kotlin.math.pow

@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Point
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.hypot

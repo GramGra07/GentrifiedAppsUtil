@@ -7,8 +7,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.PointLocalizer
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 
 data class SparkFunOTOSParams(
     val offset: Pose2D,
@@ -73,7 +73,7 @@ class OTOSLocalizer(
             this.y,
             Angle(
                 this.h,
-                org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit.RADIANS
+                org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit.RADIANS
             )
         )
     }

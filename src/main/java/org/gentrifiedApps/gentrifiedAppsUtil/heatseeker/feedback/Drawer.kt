@@ -2,8 +2,8 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS.Pose2D
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Waypoint
 import kotlin.math.cos
 import kotlin.math.sin
 

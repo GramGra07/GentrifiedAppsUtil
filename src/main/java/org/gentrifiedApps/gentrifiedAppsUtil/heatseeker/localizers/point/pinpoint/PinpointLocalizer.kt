@@ -5,10 +5,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Point
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.PointLocalizer
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.pinpoint.GoBildaPinpointDriver.GoBildaOdometryPods
 
 data class GoBildaPinpointParams(
@@ -74,7 +74,7 @@ class PinpointLocalizer(
             this.getY(DistanceUnit.INCH),
             Angle(
                 this.getHeading(AngleUnit.RADIANS),
-                org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit.RADIANS
+                org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit.RADIANS
             )
         )
     }

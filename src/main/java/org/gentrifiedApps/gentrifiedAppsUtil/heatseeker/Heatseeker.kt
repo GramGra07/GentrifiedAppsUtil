@@ -4,9 +4,9 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.ErrorPIDController
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.FeedforwardController
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Angle
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.AngleUnit
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Waypoint
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Waypoint
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.Path
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.PathType
 import kotlin.math.cos

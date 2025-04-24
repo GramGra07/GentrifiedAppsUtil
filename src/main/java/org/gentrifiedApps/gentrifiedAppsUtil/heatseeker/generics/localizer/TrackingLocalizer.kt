@@ -1,7 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer
 
 import org.firstinspires.ftc.robotcore.external.Telemetry
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 
 abstract class TrackingLocalizer : Localizer() {
     abstract override fun update()

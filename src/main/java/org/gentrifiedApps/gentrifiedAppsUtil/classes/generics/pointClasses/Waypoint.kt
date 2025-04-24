@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses
+package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses
 
 data class Waypoint(val target2D: Target2D, val velocity: Double) {
     constructor(x: Double, y: Double, h: Double, velocity: Double) : this(

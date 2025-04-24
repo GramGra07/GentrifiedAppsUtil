@@ -1,7 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.dataStorage
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Alliance
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 
 class DataStorage {
     companion object Storage {

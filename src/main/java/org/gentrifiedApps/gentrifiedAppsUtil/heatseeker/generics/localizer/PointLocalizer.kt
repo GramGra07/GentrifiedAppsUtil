@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer
 
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.pointClasses.Target2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 
 abstract class PointLocalizer : Localizer() {
     abstract override fun initLocalizer()

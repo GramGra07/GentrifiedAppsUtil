@@ -3,7 +3,7 @@ package test.kotlin
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.round
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Point
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.junit.Test
 import org.junit.jupiter.api.assertThrows
 import org.testng.Assert.assertEquals
