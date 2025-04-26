@@ -50,7 +50,7 @@ class Driver @JvmOverloads constructor(
         brDirection
     )
 
-    var localizer: Localizer? = null
+   internal var localizer: Localizer? = null
         set(value) {
             field = value
             if (value != null) {
@@ -69,7 +69,6 @@ class Driver @JvmOverloads constructor(
         )
     }
 
-    val driveType = DRIVETYPE.MECANUM
     lateinit var hwMap: HardwareMap
     private lateinit var fl: DcMotor
     private lateinit var fr: DcMotor
@@ -116,7 +115,7 @@ class Driver @JvmOverloads constructor(
         }
     }
 
-    fun update() {
+    internal fun update() {
         updatePoseEstimate()
         if (localizer != null) {
             drawer.drawLocalization(localizer!!.getPose())
@@ -124,14 +123,14 @@ class Driver @JvmOverloads constructor(
         }
     }
 
-    fun updateNoTelemetry() {
+    internal fun updateNoTelemetry() {
         updatePoseEstimate()
         if (localizer != null) {
             drawer.drawLocalization(localizer!!.getPose())
         }
     }
 
-    private fun updatePoseEstimate() {
+   internal fun updatePoseEstimate() {
         localizer?.update()
     }
 

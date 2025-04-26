@@ -71,6 +71,19 @@ public class ConfigMaker {
         return this;
     }
 
+    public ConfigMaker addCustom(String XMLTag, String name, ModuleType moduleType, String port) {
+        if (port == null) {
+            throw new IllegalArgumentException("Port must not be null");
+        }
+        String s = String.format("         <%s name=\"%s\" port=\"%s\"/>\n", XMLTag, name, port);
+        if (moduleType == ModuleType.CONTROL_HUB) {
+            CHUB += s;
+        } else if (moduleType == ModuleType.EXPANSION_HUB) {
+            EHub += s;
+        }
+        return this;
+    }
+
     public ConfigMaker addModule(ModuleType type, String name) {
 
         if (type == ModuleType.EXPANSION_HUB && !added) {

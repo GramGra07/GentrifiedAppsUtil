@@ -2,6 +2,8 @@
 
 Basically, the config creator allows you to make your config in your code, then build it from an opmode you can run. There are two ways you can do this, one is incredibly preferred over the other for simplicity.
 
+**You MUST run the configuration scan first to see what expansion hub and IMU you have, it will not work without this.**
+
 ## Primary Method
 
 **The preferred method is to use the Config Creator website.**
@@ -26,8 +28,7 @@ ConfigMaker config = new ConfigMaker("pinkbot")
 .addMotor("br", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 3);
 ```
 
-Then, use `config.run()` in the beginning of a new opmode to generate the config.
-
+Then, you can run the ConfigCreator opmode (below) to generate the config. This will create a config file in your teamcode folder.
 
 ## List of Types
 
