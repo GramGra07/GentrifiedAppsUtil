@@ -12,14 +12,11 @@ appcompat = "1.7.0"
 kotlinTest = "1.9.0"
 kotlinxCoroutinesTest = "1.7.3"
 listenablefuture = "9999.0-empty-to-avoid-conflict-with-guava"
-material = "1.10.0"
 jetbrainsKotlinJvm = "1.9.0"
 coreKtxVersion = "1.13.1"
 junitJupiter = "5.8.1"
-mockitoCore = "5.2.0"
 robotcore = "10.2.0"
 testng = "6.9.6"
-velocityvision = "1.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,10 +31,8 @@ junit-v412 = { module = "junit:junit", version.ref = "junitJunit" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlinTest" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 listenablefuture = { module = "com.google.guava:listenablefuture", version.ref = "listenablefuture" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
-mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 robotcore = { module = "org.firstinspires.ftc:RobotCore", version.ref = "robotcore" }
 testng = { module = "org.testng:testng", version.ref = "testng" }
 vision = { module = "org.firstinspires.ftc:Vision", version.ref = "robotcore" }
