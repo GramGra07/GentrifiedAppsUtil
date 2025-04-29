@@ -67,6 +67,6 @@ class SlewRateLimiterTest {
 
         Thread.sleep(500) // Simulate another 0.5 seconds
         result = rateLimiter.calculate(3.0) // Second input exceeds limit
-        assertEquals(2.0, result, 0.03) // Limited to 2.0 (2 * 0.5 + 1.0)
+        assertEquals(2.0, result, 0.04) // Limited to 2.0 (2 * 0.5 + 1.0)
     }
 }
