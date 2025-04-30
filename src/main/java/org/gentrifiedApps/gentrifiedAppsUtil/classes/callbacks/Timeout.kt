@@ -20,6 +20,13 @@ class Timeout @JvmOverloads constructor(
         start()
     }
 
+    fun reset() {
+        isTimedOut = false
+        startTime = System.currentTimeMillis().toDouble() / 1000
+        currentTime = 0.0
+        elapsedTime = 0.0
+    }
+
     /**
      * Starts the timeout
      * This is already called in class creation
