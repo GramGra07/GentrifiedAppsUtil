@@ -23,10 +23,9 @@ internal class DataStore {
         try {
             val file = File(filePath)
             file.parentFile.mkdirs()
-            if (file.exists()) {
-                file.delete()
+            if (!file.exists()) {
+                file.createNewFile()
             }
-            file.createNewFile()
             this.file = file
         } catch (e: IOException) {
             e.printStackTrace()
