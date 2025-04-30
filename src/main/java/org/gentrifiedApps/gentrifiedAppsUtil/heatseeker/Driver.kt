@@ -4,12 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
 import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.MovementData
 import kotlin.math.abs
 
@@ -18,7 +18,7 @@ enum class DRIVETYPE {
     MECANUM
 }
 
-class Driver @JvmOverloads constructor(
+abstract class Driver @JvmOverloads constructor(
     var opMode: LinearOpMode?,
     val flName: String,
     val frName: String,
@@ -50,23 +50,30 @@ class Driver @JvmOverloads constructor(
         brDirection
     )
 
-   internal var localizer: Localizer? = null
-        set(value) {
-            field = value
-            if (value != null) {
-                value.initLocalizer()
-                drawer.drawLocalization(value.getPose())
-                telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, value.getPose())
-            }
-        }
+//    internal var localizer: Localizer? = null
+//        set(value) {
+//            field = value
+//            if (value != null) {
+//                value.initLocalizer()
+//                drawer.drawLocalization(value.getPose())
+//                telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, value.getPose())
+//            }
+//        }
 
-    internal fun getPositions() : DriveVelocities{
+    internal fun getPositions(): DriveVelocities {
         return DriveVelocities(
             abs(fl.currentPosition),
             abs(fr.currentPosition),
             abs(bl.currentPosition),
             abs(br.currentPosition)
         )
+    }
+
+    fun showEncoderPositions(telemetry: Telemetry) {
+        telemetry.addData("FL", fl.currentPosition)
+        telemetry.addData("FR", fr.currentPosition)
+        telemetry.addData("BL", bl.currentPosition)
+        telemetry.addData("BR", br.currentPosition)
     }
 
     lateinit var hwMap: HardwareMap
@@ -108,30 +115,30 @@ class Driver @JvmOverloads constructor(
         bl.direction = blDirection
         br.direction = brDirection
 
-        if (localizer != null) {
-            localizer!!.initLocalizer()
-            drawer.drawLocalization(localizer!!.getPose())
-            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
-        }
+//        if (localizer != null) {
+//            localizer!!.initLocalizer()
+//            drawer.drawLocalization(localizer!!.getPose())
+//            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
+//        }
     }
 
     internal fun update() {
         updatePoseEstimate()
-        if (localizer != null) {
-            drawer.drawLocalization(localizer!!.getPose())
-            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
-        }
+//        if (localizer != null) {
+//            drawer.drawLocalization(localizer!!.getPose())
+//            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
+//        }
     }
 
     internal fun updateNoTelemetry() {
         updatePoseEstimate()
-        if (localizer != null) {
-            drawer.drawLocalization(localizer!!.getPose())
-        }
+//        if (localizer != null) {
+//            drawer.drawLocalization(localizer!!.getPose())
+//        }
     }
 
-   internal fun updatePoseEstimate() {
-        localizer?.update()
+    internal fun updatePoseEstimate() {
+//        localizer?.update()
     }
 
     fun findWheelVectors(data: MovementData): DrivePowerCoefficients {
@@ -166,16 +173,20 @@ class Driver @JvmOverloads constructor(
         driftCoefficients = constraint
         return this
     }
+
     companion object {
 
         var driftCoefficients: DrivePowerConstraint? = null
-        @JvmStatic fun applyDriftCorrection(coefficients: DrivePowerCoefficients): DrivePowerCoefficients {
+
+        @JvmStatic
+        fun applyDriftCorrection(coefficients: DrivePowerCoefficients): DrivePowerCoefficients {
             return if (driftCoefficients != null) {
                 coefficients.applyConstraint(driftCoefficients!!)
             } else {
                 coefficients
             }
         }
+
         fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {
             val frontLeft = fwd + strafe + turn
             val frontRight = fwd - strafe - turn
