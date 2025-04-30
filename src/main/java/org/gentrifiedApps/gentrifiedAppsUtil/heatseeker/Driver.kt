@@ -18,7 +18,7 @@ enum class DRIVETYPE {
     MECANUM
 }
 
-abstract class Driver @JvmOverloads constructor(
+class Driver @JvmOverloads constructor(
     var opMode: LinearOpMode?,
     val flName: String,
     val frName: String,

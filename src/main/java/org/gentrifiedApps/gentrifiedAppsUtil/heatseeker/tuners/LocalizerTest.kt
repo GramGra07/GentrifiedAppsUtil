@@ -8,10 +8,10 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 class LocalizerTest(val driver: Driver) : LinearOpMode() {
     override fun runOpMode() {
         Scribe.instance.startLogger("LocalizerTest")
-        require(driver.localizer != null)
-        waitForStart()
-        while (opModeIsActive()) {
-            driver.update()
-        }
+//        require(driver.localizer != null)
+//        waitForStart()
+//        while (opModeIsActive()) {
+//            driver.update()
+//        }
     }
 }
