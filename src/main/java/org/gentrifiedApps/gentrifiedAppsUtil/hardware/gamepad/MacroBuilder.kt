@@ -1,15 +1,14 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad
 
 class MacroBuilder {
-    private val macro = mutableListOf<ButtonPress>()
+    private val macro = mutableListOf<Button>()
+
     fun buttonPress(button: Button): MacroBuilder {
-        macro.add(ButtonPress(button))
+        macro.add((button))
         return this
     }
 
-    fun build(): List<ButtonPress> {
+    fun build(): List<Button> {
         return macro
     }
 }
-
-data class ButtonPress(val button: Button)

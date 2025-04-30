@@ -9,11 +9,10 @@ import com.qualcomm.robotcore.hardware.Gamepad
  * @param gamepad2 The second gamepad
  * @param loopSaver Whether to enable loop save mode (could reduce performance)
  */
-class GamepadPair(gamepad1: Gamepad, gamepad2: Gamepad, val loopSaver: Boolean = false) {
-    constructor(gamepad1: Gamepad, gamepad2: Gamepad) : this(gamepad1, gamepad2, false)
+class GamepadPair(gamepad1: Gamepad, gamepad2: Gamepad) {
 
-    val gamepad1Plus = GamepadPlus(gamepad1, loopSaver)
-    val gamepad2Plus = GamepadPlus(gamepad2, loopSaver)
+    val gamepad1Plus = GamepadPlus(gamepad1)
+    val gamepad2Plus = GamepadPlus(gamepad2)
 
     /**
      * Syncs the gamepads, must be run at the **end** of your loop
@@ -21,14 +20,5 @@ class GamepadPair(gamepad1: Gamepad, gamepad2: Gamepad, val loopSaver: Boolean =
     fun sync() {
         gamepad1Plus.sync()
         gamepad2Plus.sync()
-    }
-
-    /**
-     * This function is used to save the current state of the gamepad at the **BEGINNING** of your code
-     */
-    fun loopSavingRead() {
-        require(loopSaver) { "Loop save mode is not enabled" }
-        gamepad1Plus.loopSavingRead()
-        gamepad2Plus.loopSavingRead()
     }
 }

@@ -3,17 +3,19 @@ package org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad
 /**
  * Enum class for all boolean buttons on a gamepad
  */
-enum class Button {
+enum class Button(val alias: Button? = null) {
     A,
     B,
     X,
     Y,
-    CROSS,
-    CIRCLE,
-    TRIANGLE,
-    SQUARE,
+    CROSS(A),
+    CIRCLE(B),
+    TRIANGLE(Y),
+    SQUARE(X),
     L1,
+    LEFT_BUMPER(L1), // Alias for L1
     R1,
+    RIGHT_BUMPER(R1), // Alias for R1
     SHARE,
     OPTIONS,
     TOUCHPAD,
@@ -22,42 +24,10 @@ enum class Button {
     DPAD_UP,
     DPAD_DOWN,
     DPAD_LEFT,
-    DPAD_RIGHT,
-    RIGHT_BUMPER,
-    LEFT_BUMPER;
-    companion object {
-        @JvmStatic
-        fun aToPS(): Button {
-            return CROSS
-        }
-        @JvmStatic
-        fun bToPS(): Button {
-            return CIRCLE
-        }
-        @JvmStatic
-        fun xToPS(): Button {
-            return SQUARE
-        }
-        @JvmStatic
-        fun yToPS(): Button {
-            return TRIANGLE
-        }
-        @JvmStatic
-        fun triangleToX(): Button {
-            return Y
-        }
-        @JvmStatic
-        fun squareToX(): Button {
-            return X
-        }
-        @JvmStatic
-        fun circleToX(): Button {
-            return B
-        }
-        @JvmStatic
-        fun crossToX(): Button {
-            return A
-        }
+    DPAD_RIGHT;
+
+    fun resolveAlias(): Button {
+        return alias ?: this
     }
 }
 
