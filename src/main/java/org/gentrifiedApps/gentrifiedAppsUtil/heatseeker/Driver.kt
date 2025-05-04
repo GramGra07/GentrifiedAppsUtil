@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
 import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.MovementData
@@ -68,12 +69,12 @@ class Driver @JvmOverloads constructor(
             abs(br.currentPosition)
         )
     }
-    
-    fun resetDriveEncoders(){
-    resetEncoder(fl,DcMotor.RunMode.RUN_WITHOUT_ENCODER)
-    resetEncoder(fr,DcMotor.RunMode.RUN_WITHOUT_ENCODER)
-    resetEncoder(bl,DcMotor.RunMode.RUN_WITHOUT_ENCODER)
-    resetEncoder(br,DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+
+    fun resetDriveEncoders() {
+        resetMotor(fl, DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+        resetMotor(fr, DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+        resetMotor(bl, DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+        resetMotor(br, DcMotor.RunMode.RUN_WITHOUT_ENCODER)
     }
 
     fun showEncoderPositions(telemetry: Telemetry) {
