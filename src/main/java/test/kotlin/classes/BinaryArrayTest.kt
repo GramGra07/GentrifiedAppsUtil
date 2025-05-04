@@ -175,4 +175,34 @@ class BinaryArrayTest {
         assertEquals(1, result.size())
         assertEquals(0.0, result[0])
     }
+
+    @Test
+    fun testFromStringWithoutDelimiter() {
+        val binaryArray = BinaryArray(3)
+        val result = binaryArray.fromString("101")
+        assertEquals(3, result.size())
+        assertEquals(1.0, result[0])
+        assertEquals(0.0, result[1])
+        assertEquals(1.0, result[2])
+    }
+
+    @Test
+    fun testFromStringWithDelimiter() {
+        val binaryArray = BinaryArray(3)
+        val result = binaryArray.fromString("1,0,1", ",")
+        assertEquals(3, result.size())
+        assertEquals(1.0, result[0])
+        assertEquals(0.0, result[1])
+        assertEquals(1.0, result[2])
+    }
+
+    @Test
+    fun testFromStringWithDelimiter2() {
+        val binaryArray = BinaryArray(3)
+        val result = binaryArray.fromString("0,0,1", ",")
+        assertEquals(3, result.size())
+        assertEquals(0.0, result[0])
+        assertEquals(0.0, result[1])
+        assertEquals(1.0, result[2])
+    }
 }

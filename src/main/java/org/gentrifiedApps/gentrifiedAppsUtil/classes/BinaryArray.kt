@@ -36,6 +36,15 @@ class BinaryArray(size: Int) {
         return array.joinToString(", ")
     }
 
+    fun fromString(string: String, delimiter: String = ""): BinaryArray {
+        val elements = if (delimiter.isEmpty()) {
+            string.map { it.toString().toDouble() }
+        } else {
+            string.split(delimiter).map { it.toDouble() }
+        }
+        return BinaryArray(*elements.toDoubleArray())
+    }
+
     /**
      * Converts the binary array to a color with the size of 1
      */
