@@ -16,6 +16,7 @@ class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTim
             Scribe.instance.setSet("Drift Tuner").logError("Threshold must be between 0 and 0.9")
             "Threshold must be between 0 and 0.9" }
         driver.setupOpMode(this)
+        driver.resetDriveEncoders()
         val timer = ElapsedTime()
         waitForStart()
         timer.reset()

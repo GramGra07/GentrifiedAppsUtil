@@ -68,6 +68,13 @@ class Driver @JvmOverloads constructor(
             abs(br.currentPosition)
         )
     }
+    
+    fun resetDriveEncoders(){
+    resetEncoder(fl,DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+    resetEncoder(fr,DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+    resetEncoder(bl,DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+    resetEncoder(br,DcMotor.RunMode.RUN_WITHOUT_ENCODER)
+    }
 
     fun showEncoderPositions(telemetry: Telemetry) {
         telemetry.addData("FL", fl.currentPosition)
