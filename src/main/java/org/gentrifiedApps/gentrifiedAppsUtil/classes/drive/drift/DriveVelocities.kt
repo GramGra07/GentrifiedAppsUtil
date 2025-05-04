@@ -25,6 +25,15 @@ data class DriveVelocities(
         )
     }
 
+    operator fun minus(b: DriveVelocities): DriveVelocities {
+        return DriveVelocities(
+            this.frontLeft - b.frontLeft,
+            this.frontRight - b.frontRight,
+            this.backLeft - b.backLeft,
+            this.backRight - b.backRight
+        )
+    }
+
     fun min(): Double {
         return minOf(frontLeft, frontRight, backLeft, backRight)
     }

@@ -35,6 +35,7 @@ abstract class Odometer(open val opMode: OpMode?) {
     abstract fun applyMultiplier(): Double
     open fun switchMult(ticksPerIn: Double) {}
     open fun switchMult() {}
+    abstract fun reset()
 
     companion object {
         @JvmStatic
@@ -53,12 +54,18 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
     override val odometerFileManager: OdometerFileManager = OdometerFileManager()
     override var ODO: Double = odometerFileManager.readOdometryData()
     override var encoderSpecs: EncoderSpecs? = odometerFileManager.readConfigData()
+    var lastPoses = driver.getPositions()
+    override fun reset() {
+        ODO = 0.0
+        odometerFileManager.writeOdometryData(ODO)
+    }
 
     override fun update() {
         val poses = driver.getPositions()
-        ODO += poses.abs().average()
+        ODO += (poses.abs() - lastPoses.abs()).abs().average()
         odometerFileManager.writeOdometryData(ODO)
         encoderSpecs = odometerFileManager.readConfigData()
+        lastPoses = poses
     }
 
     override fun addConstraint(encoderSpecs: EncoderSpecs) {
@@ -110,6 +117,11 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
     override val odometerFileManager: OdometerFileManager = OdometerFileManager()
     override var ODO: Double = odometerFileManager.readOdometryData()
     var lastPoint = startPoint
+    override fun reset() {
+        ODO = 0.0
+        odometerFileManager.writeOdometryData(ODO)
+    }
+
     override fun update(point: Point) {
         // get hypotenuse
         val x = point.x - lastPoint.x
