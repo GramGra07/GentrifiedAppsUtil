@@ -68,6 +68,10 @@ class Driver @JvmOverloads constructor(
             abs(br.currentPosition)
         )
     }
+    
+    fun resetDriveEncoders(){
+    fl.reset
+    }
 
     fun showEncoderPositions(telemetry: Telemetry) {
         telemetry.addData("FL", fl.currentPosition)
