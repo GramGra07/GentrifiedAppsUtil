@@ -5,6 +5,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
+import kotlin.math.absoluteValue
 import kotlin.math.sqrt
 
 abstract class Odometer(open val opMode: OpMode?) {
@@ -62,7 +63,7 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
 
     override fun update() {
         val poses = driver.getPositions()
-        ODO += (poses.abs() - lastPoses.abs()).abs().average()
+        ODO += (poses.abs() - lastPoses.abs()).abs().average().absoluteValue
         odometerFileManager.writeOdometryData(ODO)
         encoderSpecs = odometerFileManager.readConfigData()
         lastPoses = poses

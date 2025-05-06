@@ -47,6 +47,7 @@ class DriveSpeedometer(val driver: Driver, val encoderSpecs: EncoderSpecs) :
         speed = (ticksToInches(
             (lastPoses.abs() - driver.getPositions().abs()).average().toInt()
         ) * 0.0254) / (elapsedTime.seconds() - lastTime)
+        lastTime = elapsedTime.seconds()
     }
 }
 
