@@ -57,6 +57,14 @@
         </toc-element>
         <toc-element topic="BeamBreak.md"/>
     </toc-element>
+    <toc-element toc-title="DataReadout">
+        <toc-element toc-title="Odometer">
+            <toc-element topic="Odometer.md"/>
+        </toc-element>
+        <toc-element toc-title="Speedometer">
+            <toc-element topic="Speedometer.md"/>
+        </toc-element>
+    </toc-element>
     <toc-element toc-title="DriftDetector/Tuner">
         <toc-element topic="DriftDetection.md"/>
         <toc-element topic="DriftTuner.md"/>
