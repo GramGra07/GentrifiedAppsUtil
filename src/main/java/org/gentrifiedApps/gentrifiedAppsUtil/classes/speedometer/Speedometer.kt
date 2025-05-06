@@ -6,6 +6,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
+import kotlin.math.absoluteValue
 import kotlin.math.sqrt
 
 abstract class Speedometer(open val opMode: OpMode?) {
@@ -44,9 +45,9 @@ class DriveSpeedometer(val driver: Driver, val encoderSpecs: EncoderSpecs) :
     }
 
     override fun update() {
-        speed = (ticksToInches(
+        speed = ((ticksToInches(
             (lastPoses.abs() - driver.getPositions().abs()).average().toInt()
-        ) * 0.0254) / (elapsedTime.seconds() - lastTime)
+        ) * 0.0254) / (elapsedTime.seconds() - lastTime)).absoluteValue
         lastTime = elapsedTime.seconds()
         lastPoses = driver.getPositions()
     }

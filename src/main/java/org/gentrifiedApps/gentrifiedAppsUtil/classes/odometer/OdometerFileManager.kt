@@ -60,7 +60,7 @@ class OdometerFileManager {
             file.createNewFile()
             this.odometerFile = file
             this.odoFileExists = true
-            writeOdometryData(0.0)
+//            writeOdometryData(0.0)
         } catch (e: IOException) {
             e.printStackTrace()
         }
