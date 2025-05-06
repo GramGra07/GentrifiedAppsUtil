@@ -129,5 +129,9 @@ class MathFunctions {
             val factor = Math.pow(10.0, places.toDouble())
             return kotlin.math.round(input * factor) / factor
         }
+
+        fun ticksToInches(ticks: Int, ticksPerIn: Double): Double {
+            return ticks.toDouble() / ticksPerIn
+        }
     }
 }

@@ -16,7 +16,7 @@ class TrapezoidalMotionProfile(private val maxVel: Double, private val maxAccel:
         profile = listOf()
     }
 
-    fun generateProfile(distance: Double) {
+    fun generateProfile(distance: Double): TrapezoidalMotionProfile {
         val accelTime = maxVel / maxAccel
         val accelDistance = 0.5 * maxAccel * accelTime * accelTime
         val minDistance = 2 * accelDistance
@@ -46,6 +46,7 @@ class TrapezoidalMotionProfile(private val maxVel: Double, private val maxAccel:
             time += timeStep
         }
         profile = tempProfile
+        return this
     }
 
     fun start() {

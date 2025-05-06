@@ -79,7 +79,7 @@ class OdometerFileManager {
             }
         } else {
             Scribe.instance.setSet("Odometer").logWarning("File does not exist")
-            throw IOException("File does not exist")
+//             IOException("File does not exist")
         }
     }
 
@@ -96,7 +96,7 @@ class OdometerFileManager {
             }
         } else {
             Scribe.instance.setSet("Odometer").logWarning("File does not exist")
-            throw IOException("File does not exist")
+//             IOException("File does not exist")
         }
     }
 
@@ -114,7 +114,7 @@ class OdometerFileManager {
             }
         } else {
             Scribe.instance.setSet("Odometer").logWarning("File does not exist")
-            throw IOException("File does not exist")
+//             IOException("File does not exist")
         }
         return 0.0
     }
@@ -139,7 +139,7 @@ class OdometerFileManager {
             }
         } else {
             Scribe.instance.setSet("Odometer").logWarning("File does not exist")
-            throw IOException("File does not exist")
+//             IOException("File does not exist")
         }
         return null
     }
