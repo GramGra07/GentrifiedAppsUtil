@@ -54,9 +54,9 @@ class OdometerFileManager {
         try {
             val file = File(filePath)
             file.parentFile.mkdirs()
-            if (file.exists()) {
-                file.delete()
-            }
+//            if (file.exists()) {
+//                file.delete()
+//            }
             file.createNewFile()
             this.odometerFile = file
             this.odoFileExists = true
@@ -77,9 +77,6 @@ class OdometerFileManager {
                 e.printStackTrace()
                 Scribe.instance.setSet("Odometer").logError("Failed to write to file: ${e.message}")
             }
-        } else {
-            Scribe.instance.setSet("Odometer").logWarning("File does not exist")
-//             IOException("File does not exist")
         }
     }
 
@@ -94,9 +91,6 @@ class OdometerFileManager {
                 e.printStackTrace()
                 Scribe.instance.setSet("Odometer").logError("Failed to write to file: ${e.message}")
             }
-        } else {
-            Scribe.instance.setSet("Odometer").logWarning("File does not exist")
-//             IOException("File does not exist")
         }
     }
 
@@ -112,9 +106,6 @@ class OdometerFileManager {
                 Scribe.instance.setSet("Odometer")
                     .logError("Failed to read odometry data: ${e.message}")
             }
-        } else {
-            Scribe.instance.setSet("Odometer").logWarning("File does not exist")
-//             IOException("File does not exist")
         }
         return 0.0
     }
@@ -137,9 +128,6 @@ class OdometerFileManager {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        } else {
-            Scribe.instance.setSet("Odometer").logWarning("File does not exist")
-//             IOException("File does not exist")
         }
         return null
     }

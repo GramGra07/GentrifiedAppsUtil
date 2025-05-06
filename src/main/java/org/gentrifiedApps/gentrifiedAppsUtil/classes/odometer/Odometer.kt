@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.odometer
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
@@ -63,6 +64,8 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
 
     override fun update() {
         val poses = driver.getPositions()
+        Scribe.instance.setSet("Odometer")
+            .logDebug((poses.abs() - lastPoses.abs()).abs().average().absoluteValue)
         ODO += (poses.abs() - lastPoses.abs()).abs().average().absoluteValue
         odometerFileManager.writeOdometryData(ODO)
         encoderSpecs = odometerFileManager.readConfigData()
