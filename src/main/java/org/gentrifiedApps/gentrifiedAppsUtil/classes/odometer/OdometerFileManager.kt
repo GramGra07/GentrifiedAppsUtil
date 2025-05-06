@@ -30,7 +30,7 @@ class OdometerFileManager {
             if (file.exists()) {
                 this.odoFileExists = true
             }
-            Scribe.instance.setSet("Odometer").logDebug("File path: $filePath")
+//            Scribe.instance.setSet("Odometer").logDebug("File path: $filePath")
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -42,7 +42,7 @@ class OdometerFileManager {
             if (file.exists()) {
                 this.odoConfigFileExists = true
             }
-            Scribe.instance.setSet("Odometer").logDebug("File path: $configPath")
+//            Scribe.instance.setSet("Odometer").logDebug("File path: $configPath")
         } catch (e: IOException) {
             e.printStackTrace()
         }
