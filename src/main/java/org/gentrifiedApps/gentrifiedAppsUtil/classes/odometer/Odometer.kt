@@ -33,7 +33,7 @@ abstract class Odometer(open val opMode: OpMode?) {
     open var encoderSpecs: EncoderSpecs? = null
     abstract fun telemetry(telemetry: Telemetry)
     abstract fun applyMultiplier(): Double
-    open fun switchMult(ticksPerIn: Double) {}
+    open fun switchMult(ticksPerIn: Double?) {}
     open fun switchMult() {}
     abstract fun reset()
 
@@ -90,8 +90,8 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
         return ticks.toDouble() / encoderSpecs!!.ticksPerInch
     }
 
-    override fun switchMult(ticksPerIn: Double) {
-        if (encoderSpecs == null) {
+    override fun switchMult(ticksPerIn: Double?) {
+        if (ticksPerIn == null) {
             return
         }
         val inches = ticksToInches(ODO.toInt())
@@ -104,7 +104,7 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
     }
 
     override fun toString(): String {
-        switchMult(encoderSpecs!!.ticksPerInch)
+        switchMult(encoderSpecs?.ticksPerInch)
         return "DriveOdometer - ${applyMultiplier()}"
     }
 
