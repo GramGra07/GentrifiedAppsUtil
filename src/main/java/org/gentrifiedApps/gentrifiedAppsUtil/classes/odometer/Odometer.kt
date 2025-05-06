@@ -63,7 +63,7 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
 
     override fun update() {
         val poses = driver.getPositions()
-        ODO += (poses.abs() - lastPoses.abs()).abs().average().absoluteValue * -1
+        ODO += (poses.abs() - lastPoses.abs()).abs().average().absoluteValue
         odometerFileManager.writeOdometryData(ODO)
         encoderSpecs = odometerFileManager.readConfigData()
         lastPoses = poses
@@ -91,8 +91,8 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
         return ticks.toDouble() / encoderSpecs!!.ticksPerInch
     }
 
-    override fun switchMult(ticksPerIn: Double?) {
-        if (ticksPerIn == null) {
+    override fun switchMult() {
+        if (encoderSpecs?.ticksPerInch == null) {
             return
         }
         val inches = ticksToInches(ODO.toInt())
@@ -106,7 +106,7 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
 
     override fun toString(): String {
         switchMult(encoderSpecs?.ticksPerInch)
-        return "DriveOdometer - ${applyMultiplier()}"
+        return "DriveOdometer: ${applyMultiplier()} ${returnType.getUnit()}"
     }
 
     override fun telemetry(telemetry: Telemetry) {
@@ -128,7 +128,7 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
         val x = point.x - lastPoint.x
         val y = point.y - lastPoint.y
         val hypotenuse = sqrt(x * x + y * y)
-        ODO += hypotenuse
+        ODO += hypotenuse.absoluteValue
         lastPoint = point
     }
 
@@ -152,7 +152,7 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
     }
 
     override fun toString(): String {
-        return "LocalizerOdometer - ${applyMultiplier()}"
+        return "LocalizerOdometer: ${applyMultiplier()} ${returnType.getUnit()}"
     }
 
     override fun telemetry(telemetry: Telemetry) {

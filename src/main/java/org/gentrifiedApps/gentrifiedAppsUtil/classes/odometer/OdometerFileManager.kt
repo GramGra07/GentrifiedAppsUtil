@@ -72,7 +72,7 @@ class OdometerFileManager {
                 val fileWriter = FileWriter(odometerFile, false) // Overwrite mode
                 fileWriter.write(total.toString())
                 fileWriter.close()
-                Scribe.instance.setSet("Odometer").logDebug("Data written to file: $total")
+//                Scribe.instance.setSet("Odometer").logDebug("Data written to file: $total")
             } catch (e: IOException) {
                 e.printStackTrace()
                 Scribe.instance.setSet("Odometer").logError("Failed to write to file: ${e.message}")
@@ -86,7 +86,7 @@ class OdometerFileManager {
                 val fileWriter = FileWriter(odometerConfigFile, false) // Overwrite mode
                 fileWriter.write(config)
                 fileWriter.close()
-                Scribe.instance.setSet("Odometer").logDebug("Data written to file: $config")
+//                Scribe.instance.setSet("Odometer").logDebug("Data written to file: $config")
             } catch (e: IOException) {
                 e.printStackTrace()
                 Scribe.instance.setSet("Odometer").logError("Failed to write to file: ${e.message}")
