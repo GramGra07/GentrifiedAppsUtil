@@ -1,11 +1,9 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive
 
-import com.qualcomm.robotcore.util.Range
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver.Companion.driftCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.MultiSlewLimiter
 
 /**
@@ -22,23 +20,28 @@ data class DrivePowerCoefficients(
     val backRight: Double
 ) {
     constructor(one: Double) : this(one, one, one, one)
+
     companion object {
         fun zeros(): DrivePowerCoefficients {
             return DrivePowerCoefficients(0.0, 0.0, 0.0, 0.0)
         }
     }
 
-    fun applyConstraint(constraint: DrivePowerConstraint): DrivePowerCoefficients{
+    fun applyConstraint(constraint: DrivePowerConstraint): DrivePowerCoefficients {
         return DrivePowerCoefficients(
-            clip(frontLeft,-constraint.frontLeft,constraint.frontLeft),
-            clip(frontRight,-constraint.frontRight,constraint.frontRight),
-            clip(backLeft,-constraint.backLeft,constraint.backLeft),
-            clip(backRight,-constraint.backRight,constraint.backRight)
+            clip(frontLeft, -constraint.frontLeft, constraint.frontLeft),
+            clip(frontRight, -constraint.frontRight, constraint.frontRight),
+            clip(backLeft, -constraint.backLeft, constraint.backLeft),
+            clip(backRight, -constraint.backRight, constraint.backRight)
         )
     }
 
     fun applySlowMode(slowModeManager: SlowModeManager): DrivePowerCoefficients {
         return slowModeManager.apply(this)
+    }
+
+    fun applySlowMode(divisor: Double): DrivePowerCoefficients {
+        return this / divisor
     }
 
     operator fun times(b: Double): DrivePowerCoefficients {
@@ -63,12 +66,12 @@ data class DrivePowerCoefficients(
         return this != zeros()
     }
 
-    fun applySlew(rLimiter: MultiSlewLimiter, quad: Quadruple<String>) : DrivePowerCoefficients{
+    fun applySlew(rLimiter: MultiSlewLimiter, quad: Quadruple<String>): DrivePowerCoefficients {
         require(rLimiter.length() == 4) { "Slew limiter must have 4 values" }
-        val frontLeft = rLimiter.calculate(quad.first,this.frontLeft)
-        val frontRight = rLimiter.calculate(quad.second,this.frontRight)
-        val backLeft = rLimiter.calculate(quad.third,this.backLeft)
-        val backRight = rLimiter.calculate(quad.fourth,this.backRight)
+        val frontLeft = rLimiter.calculate(quad.first, this.frontLeft)
+        val frontRight = rLimiter.calculate(quad.second, this.frontRight)
+        val backLeft = rLimiter.calculate(quad.third, this.backLeft)
+        val backRight = rLimiter.calculate(quad.fourth, this.backRight)
 
         return DrivePowerCoefficients(frontLeft, frontRight, backLeft, backRight)
     }
