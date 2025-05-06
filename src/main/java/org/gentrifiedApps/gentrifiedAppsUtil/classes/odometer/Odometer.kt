@@ -6,6 +6,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
+import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
 import kotlin.math.absoluteValue
 import kotlin.math.sqrt
 
@@ -65,9 +66,21 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
     override fun update() {
         val poses = driver.getPositions()
         ODO += (poses.abs() - lastPoses.abs()).abs().average().absoluteValue
-        odometerFileManager.writeOdometryData(ODO)
-        encoderSpecs = odometerFileManager.readConfigData()
         lastPoses = poses
+    }
+
+    fun writeRead(loopTimeController: LoopTimeController, interval: Int) {
+        loopTimeController.every(interval) {
+            odometerFileManager.writeOdometryData(ODO)
+            encoderSpecs = odometerFileManager.readConfigData()
+        }
+    }
+
+    fun writeRead(loopTimeController: LoopTimeController) {
+        loopTimeController.every(1) {
+            odometerFileManager.writeOdometryData(ODO)
+            encoderSpecs = odometerFileManager.readConfigData()
+        }
     }
 
     override fun addConstraint(encoderSpecs: EncoderSpecs) {
@@ -132,6 +145,20 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
         val hypotenuse = sqrt(x * x + y * y)
         ODO += hypotenuse.absoluteValue
         lastPoint = point
+    }
+
+    fun writeRead(loopTimeController: LoopTimeController, interval: Int) {
+        loopTimeController.every(interval) {
+            odometerFileManager.writeOdometryData(ODO)
+            encoderSpecs = odometerFileManager.readConfigData()
+        }
+    }
+
+    fun writeRead(loopTimeController: LoopTimeController) {
+        loopTimeController.every(1) {
+            odometerFileManager.writeOdometryData(ODO)
+            encoderSpecs = odometerFileManager.readConfigData()
+        }
     }
 
     override var returnType: ReturnType = ReturnType.INCHES

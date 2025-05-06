@@ -68,7 +68,7 @@ class LocalizerSpeedometer(override val opMode: OpMode, val startPosition: Point
             (point.x - lastPosition.x) * (point.x - lastPosition.x) +
                     (point.y - lastPosition.y) * (point.y - lastPosition.y)
         )
-        speed = (distance * 0.0254) / elapsedTime.seconds()
+        speed = ((distance * 0.0254) / elapsedTime.seconds()).absoluteValue
         lastTime = elapsedTime.seconds()
         lastPosition = point
     }
