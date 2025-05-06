@@ -59,7 +59,7 @@ class LocalizerSpeedometer(override val opMode: OpMode, val startPosition: Point
     override val elapsedTime: ElapsedTime = ElapsedTime()
     override var lastTime: Double = 0.0
     override fun telemetry(telemetry: Telemetry) {
-        telemetry.addData("Speed", speed)
+        telemetry.addLine("Speed $speed m/s ")
     }
 
     private var lastPosition = startPosition
@@ -69,6 +69,7 @@ class LocalizerSpeedometer(override val opMode: OpMode, val startPosition: Point
                     (point.y - lastPosition.y) * (point.y - lastPosition.y)
         )
         speed = (distance * 0.0254) / elapsedTime.seconds()
+        lastTime = elapsedTime.seconds()
         lastPosition = point
     }
 }
