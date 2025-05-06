@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.odometer
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
@@ -93,6 +94,7 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
 
     override fun switchMult() {
         if (encoderSpecs?.ticksPerInch == null) {
+            Scribe.instance.setSet("Odometer").logError("Encoder specs not set")
             return
         }
         val inches = ticksToInches(ODO.toInt())
