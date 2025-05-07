@@ -9,6 +9,13 @@ class Timeout @JvmOverloads constructor(
     private var allowedTime: Double,
     private var breakCondition: () -> Boolean? = { false }
 ) {
+    companion object {
+        @JvmStatic
+        fun newTimeout(allowedTime: Double, breakCondition: () -> Boolean? = { false }): Timeout {
+            return Timeout(allowedTime, breakCondition)
+        }
+    }
+
     private var startTime = 0.0
     private var currentTime = 0.0
     private var elapsedTime = 0.0

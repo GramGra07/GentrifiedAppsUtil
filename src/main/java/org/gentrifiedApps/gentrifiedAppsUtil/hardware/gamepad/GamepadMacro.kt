@@ -6,6 +6,18 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 class GamepadMacro(private val macro: List<Button>, private val func: Runnable) {
     constructor(vararg macro: Button, func: Runnable) : this(macro.toList(), func)
 
+    companion object {
+        @JvmStatic
+        fun newInstance(macro: List<Button>, func: Runnable): GamepadMacro {
+            return GamepadMacro(macro, func)
+        }
+
+        @JvmStatic
+        fun newInstance(vararg macro: Button, func: Runnable): GamepadMacro {
+            return GamepadMacro(macro.toList(), func)
+        }
+    }
+
     private val macroButtons = macro.map { it } // Store macro sequence
     private var progress = 0 // Tracks position in macro sequence
 

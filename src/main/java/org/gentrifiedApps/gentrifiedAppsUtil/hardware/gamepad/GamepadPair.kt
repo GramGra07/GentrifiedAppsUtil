@@ -10,6 +10,12 @@ import com.qualcomm.robotcore.hardware.Gamepad
  * @param loopSaver Whether to enable loop save mode (could reduce performance)
  */
 class GamepadPair(gamepad1: Gamepad, gamepad2: Gamepad) {
+    companion object {
+        @JvmStatic
+        fun newInstance(gamepad1: Gamepad, gamepad2: Gamepad): GamepadPair {
+            return GamepadPair(gamepad1, gamepad2)
+        }
+    }
 
     val gamepad1Plus = GamepadPlus(gamepad1)
     val gamepad2Plus = GamepadPlus(gamepad2)

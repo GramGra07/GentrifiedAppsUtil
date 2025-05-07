@@ -6,8 +6,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
-import kotlin.collections.get
-import kotlin.collections.iterator
 
 enum class SlowModeDefaults {
     NORMAL
@@ -22,6 +20,16 @@ class SlowModeManager(
     internal val slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
     private val gamepad: GamepadPlus
 ) {
+    companion object {
+        @JvmStatic
+        fun newInstance(
+            slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
+            gamepad: Gamepad
+        ): SlowModeManager {
+            return SlowModeManager(slowModeDataList, gamepad)
+        }
+    }
+
     /**
      * Constructor for SlowModeManager.
      * @param slowModeDataList A map of slow mode data to their corresponding keys.

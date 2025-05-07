@@ -3,6 +3,12 @@ package org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad
 import com.qualcomm.robotcore.hardware.Gamepad
 
 class GamepadPlus(private val gamepad: Gamepad) {
+    companion object {
+        @JvmStatic
+        fun newInstance(gamepad: Gamepad): GamepadPlus {
+            return GamepadPlus(gamepad)
+        }
+    }
 
     private val currentState = mutableMapOf<Button, Boolean>()
     private val previousState = mutableMapOf<Button, Boolean>()

@@ -5,6 +5,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 
 class BeamBreakSensor(hw: HardwareMap, internal val name: String) {
+    companion object {
+        @JvmStatic
+        fun newInstance(hw: HardwareMap, name: String): BeamBreakSensor {
+            return BeamBreakSensor(hw, name)
+        }
+    }
+
     private val beamBreak: DigitalChannel
 
     init {

@@ -9,6 +9,13 @@ import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
  * @constructor Can use Gamepad or GamepadPlus
  */
 class InitMovementController {
+    companion object {
+        @JvmStatic
+        fun newInstance(gamepad: Gamepad, gamepad2: Gamepad): InitMovementController {
+            return InitMovementController(gamepad, gamepad2)
+        }
+    }
+
     private var gamepadPlus: GamepadPlus
     private var gamepadPlus2: GamepadPlus
 
