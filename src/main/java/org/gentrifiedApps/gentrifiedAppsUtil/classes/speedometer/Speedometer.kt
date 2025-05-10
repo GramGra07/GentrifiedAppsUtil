@@ -36,7 +36,7 @@ class DriveSpeedometer(val driver: Driver, val encoderSpecs: EncoderSpecs) :
     override val elapsedTime: ElapsedTime = ElapsedTime()
     override var lastTime: Double = 0.0
     override fun telemetry(telemetry: Telemetry) {
-        telemetry.addLine("Speed $speed m/s ")
+        telemetry.addLine("Speed ${round(speed,2)} m/s ")
     }
 
     var lastPoses = driver.getPositions()
