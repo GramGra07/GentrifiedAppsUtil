@@ -27,6 +27,13 @@ data class DrivePowerCoefficients(
         }
     }
 
+    /**
+     * Applies a constraint to the coefficients.
+     * @param constraint The constraint to apply.
+     * @return The coefficients with the constraint applied.
+     * @see DrivePowerConstraint
+     * @see DrivePowerCoefficients
+     */
     fun applyConstraint(constraint: DrivePowerConstraint): DrivePowerCoefficients {
         return DrivePowerCoefficients(
             clip(frontLeft, -constraint.frontLeft, constraint.frontLeft),
@@ -36,10 +43,23 @@ data class DrivePowerCoefficients(
         )
     }
 
+    /**
+     * Applies a constraint to the coefficients.
+     * @param slowModeManager The constraint to apply.
+     * @return The coefficients with the constraint applied.
+     * @see DrivePowerConstraint
+     * @see DrivePowerCoefficients
+     */
     fun applySlowMode(slowModeManager: SlowModeManager): DrivePowerCoefficients {
         return slowModeManager.apply(this)
     }
 
+    /**
+     * Applies a slow mode to the coefficients.
+     * @param divisor The divisor to apply.
+     * @return The coefficients with the slow mode applied.
+     * @see DrivePowerCoefficients
+     */
     fun applySlowMode(divisor: Double): DrivePowerCoefficients {
         return this / divisor
     }
@@ -66,6 +86,12 @@ data class DrivePowerCoefficients(
         return this != zeros()
     }
 
+    /**
+     * Applies a slew rate limiter to the coefficients.
+     * @param rLimiter The slew rate limiter to apply.
+     * @param quad The quadruple of values to apply the slew rate limiter to.
+     * @return The coefficients with the slew rate limiter applied.
+     */
     fun applySlew(rLimiter: MultiSlewLimiter, quad: Quadruple<String>): DrivePowerCoefficients {
         require(rLimiter.length() == 4) { "Slew limiter must have 4 values" }
         val frontLeft = rLimiter.calculate(quad.first, this.frontLeft)

@@ -58,17 +58,29 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
     override var ODO: Double = odometerFileManager.readOdometryData()
     override var encoderSpecs: EncoderSpecs? = odometerFileManager.readConfigData()
     var lastPoses = driver.getPositions()
+
+    /**
+     * Resets the odometer to 0.
+     */
     override fun reset() {
         ODO = 0.0
         odometerFileManager.writeOdometryData(ODO)
     }
 
+    /**
+     * Updates the odometer with the current position of the driver.
+     */
     override fun update() {
         val poses = driver.getPositions()
         ODO += (poses.abs() - lastPoses.abs()).abs().average().absoluteValue
         lastPoses = poses
     }
 
+    /**
+     * Updates the odometer with the current position of the driver.
+     * @param loopTimeController The loop time controller to use.
+     * @param interval The interval to use.
+     */
     fun writeRead(loopTimeController: LoopTimeController, interval: Int) {
         loopTimeController.every(interval) {
             odometerFileManager.writeOdometryData(ODO)
@@ -76,6 +88,10 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
         }
     }
 
+    /**
+     * Updates the odometer with the current position of the driver.
+     * @param loopTimeController The loop time controller to use.
+     */
     fun writeRead(loopTimeController: LoopTimeController) {
         loopTimeController.every(1) {
             odometerFileManager.writeOdometryData(ODO)
@@ -83,12 +99,20 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
         }
     }
 
+    /**
+     * Adds a constraint to the odometer.
+     * @param encoderSpecs The encoder specs to use.
+     */
     override fun addConstraint(encoderSpecs: EncoderSpecs) {
         this.encoderSpecs = encoderSpecs
         odometerFileManager.writeConfigData(encoderSpecs.ticksPerInch.toString())
     }
 
     override var returnType: ReturnType = ReturnType.RAW_TICKS
+
+    /**
+     * Applies the multiplier to the odometer value.
+     */
     override fun applyMultiplier(): Double {
         if (encoderSpecs == null) {
             return ODO
@@ -124,6 +148,10 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
         return "DriveOdometer: ${applyMultiplier()} ${returnType.getUnit()}"
     }
 
+    /**
+     * Telemetry for the odometer.
+     * @param telemetry The telemetry to use.
+     */
     override fun telemetry(telemetry: Telemetry) {
         telemetry.addLine(this.toString())
     }
@@ -133,11 +161,19 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
     override val odometerFileManager: OdometerFileManager = OdometerFileManager()
     override var ODO: Double = odometerFileManager.readOdometryData()
     var lastPoint = startPoint
+
+    /**
+     * Resets the odometer to 0.
+     */
     override fun reset() {
         ODO = 0.0
         odometerFileManager.writeOdometryData(ODO)
     }
 
+    /**
+     * Updates the odometer with the current position of the driver.
+     * @param point The current position of the driver.
+     */
     override fun update(point: Point) {
         // get hypotenuse
         val x = point.x - lastPoint.x
@@ -147,6 +183,11 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
         lastPoint = point
     }
 
+    /**
+     * Updates the odometer with the current position of the driver.
+     * @param loopTimeController The loop time controller to use.
+     * @param interval The interval to use.
+     */
     fun writeRead(loopTimeController: LoopTimeController, interval: Int) {
         loopTimeController.every(interval) {
             odometerFileManager.writeOdometryData(ODO)
@@ -154,6 +195,10 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
         }
     }
 
+    /**
+     * Updates the odometer with the current position of the driver.
+     * @param loopTimeController The loop time controller to use.
+     */
     fun writeRead(loopTimeController: LoopTimeController) {
         loopTimeController.every(1) {
             odometerFileManager.writeOdometryData(ODO)
@@ -162,6 +207,10 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
     }
 
     override var returnType: ReturnType = ReturnType.INCHES
+
+    /**
+     * Applies the multiplier to the odometer value.
+     */
     override fun applyMultiplier(): Double {
         return when (returnType) {
             ReturnType.INCHES -> ODO
@@ -184,6 +233,10 @@ class LocalizerOdometer(override val opMode: OpMode, val startPoint: Point) : Od
         return "LocalizerOdometer: ${applyMultiplier()} ${returnType.getUnit()}"
     }
 
+    /**
+     * Telemetry for the odometer.
+     * @param telemetry The telemetry to use.
+     */
     override fun telemetry(telemetry: Telemetry) {
         telemetry.addLine(this.toString())
     }

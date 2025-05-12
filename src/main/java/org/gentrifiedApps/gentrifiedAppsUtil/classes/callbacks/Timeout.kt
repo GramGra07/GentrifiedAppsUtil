@@ -27,6 +27,9 @@ class Timeout @JvmOverloads constructor(
         start()
     }
 
+    /**
+     * Resets the timeout
+     */
     fun reset() {
         isTimedOut = false
         startTime = System.currentTimeMillis().toDouble() / 1000
@@ -55,6 +58,10 @@ class Timeout @JvmOverloads constructor(
         return isTimedOut
     }
 
+    /**
+     * Checks if the timeout has been reached
+     * @return true if the timeout has been reached
+     */
     fun isTimedOut(): Boolean {
         return isTimedOut
     }

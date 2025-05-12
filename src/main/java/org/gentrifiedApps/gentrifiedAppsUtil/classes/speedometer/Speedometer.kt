@@ -36,6 +36,11 @@ class DriveSpeedometer(val driver: Driver, val encoderSpecs: EncoderSpecs) :
     override var speed: Double = 0.0
     override val elapsedTime: ElapsedTime = ElapsedTime()
     override var lastTime: Double = 0.0
+
+    /**
+     * Telemetry function to display the speed of the robot.
+     * @param telemetry The telemetry object to display the speed.
+     */
     override fun telemetry(telemetry: Telemetry) {
         telemetry.addLine("Speed ${round(speed, 2)} m/s ")
     }
@@ -45,6 +50,9 @@ class DriveSpeedometer(val driver: Driver, val encoderSpecs: EncoderSpecs) :
         return ticks.toDouble() / encoderSpecs.ticksPerInch
     }
 
+    /**
+     * Updates the speed of the robot based on the difference in encoder positions.
+     */
     override fun update() {
         speed = ((ticksToInches(
             (lastPoses.abs() - driver.getPositions().abs()).average().toInt()
@@ -59,11 +67,20 @@ class LocalizerSpeedometer(override val opMode: OpMode, val startPosition: Point
     override var speed: Double = 0.0
     override val elapsedTime: ElapsedTime = ElapsedTime()
     override var lastTime: Double = 0.0
+
+    /**
+     * Telemetry function to display the speed of the robot.
+     * @param telemetry The telemetry object to display the speed.
+     */
     override fun telemetry(telemetry: Telemetry) {
         telemetry.addLine("Speed $speed m/s ")
     }
 
     private var lastPosition = startPosition
+
+    /**
+     * Updates the speed of the robot based on the difference in encoder positions.
+     */
     override fun update(point: Point) {
         val distance = sqrt(
             (point.x - lastPosition.x) * (point.x - lastPosition.x) +
