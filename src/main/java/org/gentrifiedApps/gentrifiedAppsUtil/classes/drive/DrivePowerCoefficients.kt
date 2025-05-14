@@ -5,6 +5,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
 import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.MultiSlewLimiter
+import kotlin.math.sign
 
 /**
  * A class to hold the coefficients for field centric driving.
@@ -82,6 +83,24 @@ data class DrivePowerCoefficients(
         )
     }
 
+    operator fun plus(b: DrivePowerCoefficients): DrivePowerCoefficients {
+        return DrivePowerCoefficients(
+            this.frontLeft + b.frontLeft,
+            this.frontRight + b.frontRight,
+            this.backLeft + b.backLeft,
+            this.backRight + b.backRight
+        )
+    }
+
+    fun clip(min: Double, max: Double): DrivePowerCoefficients {
+        return DrivePowerCoefficients(
+            clip(this.frontLeft, min, max),
+            clip(this.frontRight, min, max),
+            clip(this.backLeft, min, max),
+            clip(this.backRight, min, max)
+        )
+    }
+
     fun notZero(): Boolean {
         return this != zeros()
     }
@@ -100,5 +119,34 @@ data class DrivePowerCoefficients(
         val backRight = rLimiter.calculate(quad.fourth, this.backRight)
 
         return DrivePowerCoefficients(frontLeft, frontRight, backLeft, backRight)
+    }
+
+
+    fun applyAvoidance(drivePowerCoefficients: DrivePowerCoefficients): DrivePowerCoefficients {
+        return (this + drivePowerCoefficients).clip(0.0, 1.0)
+    }
+
+    class TestCases() {
+        // all same
+        companion object {
+            fun assertAllEqual(a: Double, result: DrivePowerCoefficients) {
+                val drivePowerCoefficients = result
+                assert(drivePowerCoefficients.frontLeft == a)
+                assert(drivePowerCoefficients.frontRight == a)
+                assert(drivePowerCoefficients.backLeft == a)
+                assert(drivePowerCoefficients.backRight == a)
+            }
+
+            fun assertSigns(signs: Quadruple<Double>, result: DrivePowerCoefficients) {
+                val drivePowerCoefficients = result
+                // and PRINT
+                println("DrivePowerCoefficients: $drivePowerCoefficients")
+                println("Signs: $signs")
+                assert(drivePowerCoefficients.frontLeft.sign == signs.first)
+                assert(drivePowerCoefficients.frontRight.sign == signs.second)
+                assert(drivePowerCoefficients.backLeft.sign == signs.third)
+                assert(drivePowerCoefficients.backRight.sign == signs.fourth)
+            }
+        }
     }
 }

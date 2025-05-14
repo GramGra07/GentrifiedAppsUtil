@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
 import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
 
 /**
@@ -51,5 +52,9 @@ data class Point(var x: Double, var y: Double) {
     operator fun minusAssign(b: Point) {
         this.x -= b.x
         this.y -= b.y
+    }
+
+    fun distanceTo(point: Point): Double {
+        return MathFunctions.distanceTo(this, point)
     }
 }

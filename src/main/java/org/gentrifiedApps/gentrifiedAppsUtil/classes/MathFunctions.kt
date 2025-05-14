@@ -112,6 +112,10 @@ class MathFunctions {
             return hypot(P2.x - P1.x, P2.y - P1.y)
         }
 
+        fun angleBetween(P1: Point, P2: Point): Double {
+            return Math.toDegrees(atan2(P2.y - P1.y, P2.x - P1.x))
+        }
+
         fun getError(set: Double, current: Double): Double {
             return abs(set - current)
         }
