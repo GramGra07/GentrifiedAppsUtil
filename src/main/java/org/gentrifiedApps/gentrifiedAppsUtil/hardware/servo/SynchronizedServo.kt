@@ -2,7 +2,11 @@ package org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo
 
 import com.qualcomm.robotcore.hardware.HardwareMap
 
-class SynchronizedServo @JvmOverloads constructor(var hw: HardwareMap, var name: String, private var axonServo: Boolean = false) {
+class SynchronizedServo @JvmOverloads constructor(
+    var hw: HardwareMap,
+    var name: String,
+    private var axonServo: Boolean = false
+) {
     private lateinit var servo1: ServoPlus
     private lateinit var servo2: ServoPlus
 

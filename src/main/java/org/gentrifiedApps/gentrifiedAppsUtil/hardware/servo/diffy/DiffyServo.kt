@@ -2,7 +2,6 @@ package org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.diffy
 
 import com.qualcomm.robotcore.hardware.HardwareMap
 import com.qualcomm.robotcore.hardware.Servo
-import com.qualcomm.robotcore.util.Range
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.ServoPlus
 

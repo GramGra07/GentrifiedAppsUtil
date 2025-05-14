@@ -1,6 +1,10 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Async {
     companion object {
@@ -25,7 +29,7 @@ class Async {
             }
         }
 
-        fun whenAction(bool : Boolean, action: () -> Unit) {
+        fun whenAction(bool: Boolean, action: () -> Unit) {
             if (bool) {
                 action()
             }

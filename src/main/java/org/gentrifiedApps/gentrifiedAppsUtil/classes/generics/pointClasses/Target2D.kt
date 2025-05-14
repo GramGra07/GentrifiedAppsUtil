@@ -4,7 +4,6 @@ import com.qualcomm.hardware.sparkfun.SparkFunOTOS
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
 import kotlin.math.atan2
 import kotlin.math.pow
@@ -13,7 +12,7 @@ import kotlin.math.sqrt
 data class Target2D(val x: Double, val y: Double, val angle: Angle) {
     constructor(x: Double, y: Double, angle: Double) : this(x, y, Angle(angle))
 
-    fun store(){
+    fun store() {
         DataStorage.setPose(this)
     }
 

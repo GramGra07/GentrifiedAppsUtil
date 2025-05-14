@@ -10,30 +10,32 @@ enum class Color {
     fun cSpace(colorSpace: ColorSpace): DualScalarPair {
         return when (colorSpace) {
             ColorSpace.YCrCb -> when (this) {
-                Color.RED -> ScalarPair(Scalar(0.0, 150.0, 85.0), Scalar(255.0, 200.0, 135.0))
-                Color.BLUE -> ScalarPair(Scalar(0.0, 100.0, 140.0), Scalar(255.0, 130.0, 180.0))
-                Color.YELLOW -> ScalarPair(Scalar(0.0, 140.0, 100.0), Scalar(255.0, 170.0, 130.0))
-                Color.NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
+                RED -> ScalarPair(Scalar(0.0, 150.0, 85.0), Scalar(255.0, 200.0, 135.0))
+                BLUE -> ScalarPair(Scalar(0.0, 100.0, 140.0), Scalar(255.0, 130.0, 180.0))
+                YELLOW -> ScalarPair(Scalar(0.0, 140.0, 100.0), Scalar(255.0, 170.0, 130.0))
+                NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
             }
 
             ColorSpace.HSV -> when (this) {
-                Color.RED -> DualScalarPair(
+                RED -> DualScalarPair(
                     Scalar(0.0, 100.0, 100.0), Scalar(10.0, 255.0, 255.0),
                     Scalar(170.0, 100.0, 100.0), Scalar(180.0, 255.0, 255.0)
                 )
-                Color.BLUE -> ScalarPair(Scalar(100.0, 150.0, 0.0), Scalar(130.0, 255.0, 255.0))
-                Color.YELLOW -> ScalarPair(Scalar(20.0, 100.0, 100.0), Scalar(30.0, 255.0, 255.0))
-                Color.NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
+
+                BLUE -> ScalarPair(Scalar(100.0, 150.0, 0.0), Scalar(130.0, 255.0, 255.0))
+                YELLOW -> ScalarPair(Scalar(20.0, 100.0, 100.0), Scalar(30.0, 255.0, 255.0))
+                NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
             }
 
             ColorSpace.RGB -> when (this) {
-                Color.RED -> ScalarPair(Scalar(150.0, 0.0, 0.0), Scalar(255.0, 80.0, 80.0))
-                Color.BLUE -> ScalarPair(Scalar(0.0, 0.0, 150.0), Scalar(80.0, 80.0, 255.0))
-                Color.YELLOW -> ScalarPair(Scalar(150.0, 150.0, 0.0), Scalar(255.0, 255.0, 100.0))
-                Color.NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
+                RED -> ScalarPair(Scalar(150.0, 0.0, 0.0), Scalar(255.0, 80.0, 80.0))
+                BLUE -> ScalarPair(Scalar(0.0, 0.0, 150.0), Scalar(80.0, 80.0, 255.0))
+                YELLOW -> ScalarPair(Scalar(150.0, 150.0, 0.0), Scalar(255.0, 255.0, 100.0))
+                NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
             }
         }
     }
+
     companion object {
         fun fromString(color: String): Color {
             return when (color.lowercase()) {
@@ -43,6 +45,7 @@ enum class Color {
                 else -> NONE
             }
         }
+
         fun toString(color: Color): String {
             return when (color) {
                 RED -> "red"
@@ -51,6 +54,7 @@ enum class Color {
                 NONE -> "none"
             }
         }
+
         fun fromBinaryArray(array: BinaryArray): Color {
             return when {
                 array[0] == 0.0 && array[1] == 1.0 -> RED
@@ -59,6 +63,7 @@ enum class Color {
                 else -> NONE
             }
         }
+
         fun toBinaryArray(color: Color): BinaryArray {
             return when (color) {
                 RED -> BinaryArray(2).apply { this[0] = 0.0; this[1] = 1.0 }

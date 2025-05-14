@@ -5,9 +5,9 @@ import org.opencv.core.Mat
 import org.opencv.core.Scalar
 
 
-class ScalarPair(val low: Scalar,val high: Scalar) : DualScalarPair(low, high, null, null){
+class ScalarPair(val low: Scalar, val high: Scalar) : DualScalarPair(low, high, null, null) {
 
     override fun applyThresh(input: Mat): Mat {
-        return VisionHelpers.createMask(input,low,high)
+        return VisionHelpers.createMask(input, low, high)
     }
 }

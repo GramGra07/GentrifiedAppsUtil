@@ -9,8 +9,12 @@ data class Quadruple<T>(
     val fourth: T
 ) {
     constructor(one: T) : this(one, one, one, one)
-    fun all0(): Boolean{
-        return sum(first as Double, sum(second as Double, sum(third as Double, fourth as Double)))==0.0
+
+    fun all0(): Boolean {
+        return sum(
+            first as Double,
+            sum(second as Double, sum(third as Double, fourth as Double))
+        ) == 0.0
     }
 
     override fun toString(): String {

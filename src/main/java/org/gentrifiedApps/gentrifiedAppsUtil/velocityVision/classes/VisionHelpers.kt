@@ -13,10 +13,11 @@ object VisionHelpers {
         Core.inRange(input, lower, upper, mask)
         try {
             return mask
-        }finally {
+        } finally {
             mask.release()
         }
     }
+
     fun getContourCenter(contour: MatOfPoint): Point? {
         val moments = Imgproc.moments(contour)
         if (moments._m00 != 0.0) {
@@ -26,6 +27,7 @@ object VisionHelpers {
         }
         return null
     }
+
     fun findContours(mask: Mat): List<MatOfPoint> {
         val contours: List<MatOfPoint> = ArrayList()
         val hierarchy = Mat()
@@ -39,14 +41,16 @@ object VisionHelpers {
         hierarchy.release()
         return contours
     }
+
     fun maskED(input: Mat, lower: Scalar, upper: Scalar): Mat {
         val mask = erodeDilate(createMask(input, lower, upper))
         try {
             return mask
-        }finally {
+        } finally {
             mask.release()
         }
     }
+
     fun erodeDilate(input: Mat): Mat {
         val mask = Mat()
         Imgproc.erode(input, mask, Mat(), Point(-1.0, -1.0), 2)
@@ -54,7 +58,7 @@ object VisionHelpers {
 
         try {
             return mask
-        }finally {
+        } finally {
             mask.release()
         }
     }

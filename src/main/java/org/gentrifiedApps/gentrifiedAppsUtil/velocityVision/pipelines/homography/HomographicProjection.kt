@@ -11,10 +11,7 @@ import org.firstinspires.ftc.vision.VisionProcessor
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.CameraParams
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.homography.HomographicMatrix.Companion.fullHomography
 import org.opencv.android.Utils
-import org.opencv.core.CvType
 import org.opencv.core.Mat
-import org.opencv.core.Size
-import org.opencv.imgproc.Imgproc
 import java.util.concurrent.atomic.AtomicReference
 
 private class HomographicProjection(
@@ -37,7 +34,7 @@ private class HomographicProjection(
 
         try {
             return output
-        }finally {
+        } finally {
             output.release()
         }
     }

@@ -28,10 +28,10 @@ class HomographicMatrix {
 
         @JvmStatic
         fun computeHomography(cameraParams: CameraParams): Mat {
-            val fx = cameraParams.lensIntrinsics.fx
-            val fy = cameraParams.lensIntrinsics.fy
-            val cx = cameraParams.lensIntrinsics.cx
-            val cy = cameraParams.lensIntrinsics.cy
+            cameraParams.lensIntrinsics.fx
+            cameraParams.lensIntrinsics.fy
+            cameraParams.lensIntrinsics.cx
+            cameraParams.lensIntrinsics.cy
             val yaw = cameraParams.rotationalVector.yaw
             val pitch = cameraParams.rotationalVector.pitch
             val roll = cameraParams.rotationalVector.roll
@@ -39,11 +39,11 @@ class HomographicMatrix {
             val K = cameraParams.lensIntrinsics.toMat()
 
             // Rotation from yaw/pitch/roll (ZYX)
-            val cyaw = cos(yaw);
+            val cyaw = cos(yaw)
             val syaw = sin(yaw)
-            val cpitch = cos(pitch);
+            val cpitch = cos(pitch)
             val spitch = sin(pitch)
-            val croll = cos(roll);
+            val croll = cos(roll)
             val sroll = sin(roll)
 
             val R = Mat(3, 3, CvType.CV_64F)

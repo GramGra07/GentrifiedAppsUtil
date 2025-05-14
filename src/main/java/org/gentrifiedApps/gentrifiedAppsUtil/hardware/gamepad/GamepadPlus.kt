@@ -27,7 +27,7 @@ class GamepadPlus(private val gamepad: Gamepad) {
 
     fun updateButtonStates() {
         Button.values().forEach { button ->
-            previousState[button] = currentState[button] ?: false
+            previousState[button] = currentState[button] == true
             currentState[button] = readButtonState(button)
         }
     }
@@ -62,15 +62,15 @@ class GamepadPlus(private val gamepad: Gamepad) {
     }
 
     fun buttonJustReleased(button: Button): Boolean {
-        return (previousState[button] ?: false) && !(currentState[button] ?: false)
+        return (previousState[button] == true) && currentState[button] != true
     }
 
     fun buttonPressed(button: Button): Boolean {
-        return currentState[button] ?: false
+        return currentState[button] == true
     }
 
     fun buttonReleased(button: Button): Boolean {
-        return !(currentState[button] ?: false)
+        return currentState[button] != true
     }
 
     fun getButtonsCurrentlyPressed(): List<Button> {

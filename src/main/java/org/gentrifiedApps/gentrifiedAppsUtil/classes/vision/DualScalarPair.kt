@@ -5,7 +5,12 @@ import org.opencv.core.Core
 import org.opencv.core.Mat
 import org.opencv.core.Scalar
 
-open class DualScalarPair constructor(var lower1: Scalar, var upper1: Scalar, var lower2: Scalar?, var upper2: Scalar?) {
+open class DualScalarPair(
+    var lower1: Scalar,
+    var upper1: Scalar,
+    var lower2: Scalar?,
+    var upper2: Scalar?
+) {
     constructor(lower1: Scalar, upper1: Scalar) : this(lower1, upper1, null, null)
 
     constructor(lower1: Double, upper1: Double, lower2: Double, upper2: Double) : this(
@@ -18,6 +23,7 @@ open class DualScalarPair constructor(var lower1: Scalar, var upper1: Scalar, va
     fun toScalarPair(): ScalarPair {
         return ScalarPair(lower1, upper1)
     }
+
     fun isPair(): Boolean {
         return lower2 == null && upper2 == null
     }
@@ -26,7 +32,7 @@ open class DualScalarPair constructor(var lower1: Scalar, var upper1: Scalar, va
      * Applies the threshold to the input image and returns a mask.
      * Make sure that the cSpace is the correct type when applying the threshold.
      */
-    open fun applyThresh(input: Mat): Mat{
+    open fun applyThresh(input: Mat): Mat {
         val mask1 = VisionHelpers.createMask(input, lower1, upper1)
         if (isPair()) {
             return mask1

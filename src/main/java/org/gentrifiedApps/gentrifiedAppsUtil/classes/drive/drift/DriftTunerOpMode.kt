@@ -7,14 +7,19 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 
-class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTime: Int = 5, val threshold: Double = 0.1) : LinearOpMode() {
-    constructor(driver:Driver,threshold:Double = 0.1) : this(driver, 5, threshold)
+class DriftTunerOpMode @JvmOverloads constructor(
+    val driver: Driver,
+    val totalTime: Int = 5,
+    val threshold: Double = 0.1
+) : LinearOpMode() {
+    constructor(driver: Driver, threshold: Double = 0.1) : this(driver, 5, threshold)
 
     override fun runOpMode() {
         Scribe.instance.startLogger(this)
-        require(threshold>0 && threshold<0.9) {
+        require(threshold > 0 && threshold < 0.9) {
             Scribe.instance.setSet("Drift Tuner").logError("Threshold must be between 0 and 0.9")
-            "Threshold must be between 0 and 0.9" }
+            "Threshold must be between 0 and 0.9"
+        }
         driver.setupOpMode(this)
         driver.resetDriveEncoders()
         val timer = ElapsedTime()
@@ -51,7 +56,13 @@ class DriftTunerOpMode @JvmOverloads constructor(val driver:Driver, val totalTim
                     telemetry.addData("Back Left", velocitiesP.backLeft)
                     telemetry.addData("Back Right", velocitiesP.backRight)
                     telemetry.addLine(
-                    "${round(driftV.first, 2)},${round(driftV.second, 2)},${round(driftV.third, 2)},${round(driftV.fourth,2)}")
+                        "${round(driftV.first, 2)},${round(driftV.second, 2)},${
+                            round(
+                                driftV.third,
+                                2
+                            )
+                        },${round(driftV.fourth, 2)}"
+                    )
                 }
                 telemetry.update()
             }

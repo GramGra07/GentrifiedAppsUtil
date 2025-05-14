@@ -5,7 +5,7 @@ data class DrivePowerConstraint(
     val frontRight: Double,
     val backLeft: Double,
     val backRight: Double
-){
+) {
     companion object {
         fun zeros(): DrivePowerConstraint {
             return DrivePowerConstraint(0.0, 0.0, 0.0, 0.0)

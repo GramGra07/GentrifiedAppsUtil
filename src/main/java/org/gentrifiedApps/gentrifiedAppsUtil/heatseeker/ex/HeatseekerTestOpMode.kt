@@ -14,7 +14,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.SparkFu
 class HeatseekerTestOpMode : LinearOpMode() {
 
     override fun runOpMode() {
-        val otos: OTOSLocalizer = OTOSLocalizer(
+        OTOSLocalizer(
             "spark", this.hardwareMap, Target2D.blank(),
             SparkFunOTOSParams(Pose2D(1.0, 2.0, Math.toRadians(90.0)))
         )

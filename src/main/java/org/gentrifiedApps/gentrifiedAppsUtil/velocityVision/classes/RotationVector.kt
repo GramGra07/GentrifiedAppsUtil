@@ -15,5 +15,6 @@ data class RotationVector(
         roll = Math.toRadians(roll)
         yaw = Math.toRadians(yaw)
     }
+
     constructor() : this(0.0, 0.0, 0.0)
 }
