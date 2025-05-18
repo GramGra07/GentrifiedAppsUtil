@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance
 
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 
@@ -26,5 +27,17 @@ class AvoidanceController(vararg fields: VectorField) {
 
     fun addField(field: VectorField) {
         fields.add(field)
+    }
+
+    fun removeField(field: VectorField) {
+        fields.remove(field)
+    }
+
+    fun drawFields() {
+        val packet = TelemetryPacket()
+        val canvas = packet.fieldOverlay()
+        for (field in fields) {
+            field.draw(packet, canvas)
+        }
     }
 }
