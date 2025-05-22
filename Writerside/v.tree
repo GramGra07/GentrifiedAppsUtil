@@ -113,6 +113,7 @@
         <toc-element topic="alliance.md"/>
         <toc-element topic="other-classes_analogencoder.md"/>
         <toc-element topic="Timeout.md"/>
+        <toc-element topic="Avoidance.md"/>
     </toc-element>
     <toc-element toc-title="Velocity Vision">
         <toc-element topic="vision-portal.md"/>

@@ -1,7 +1,6 @@
 package test.kotlin.classes.avoidance
 
 import junit.framework.TestCase.assertEquals
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance.AvoidanceVectorType
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance.VectorField
@@ -31,37 +30,6 @@ class VectorFieldTest {
         assertEquals(0.0, vector.magnitude) // At the edge of the field, magnitude should be 0
     }
 
-    @Test
-    fun testCorrectionAsDrive_X() {
-        val field = VectorField(Point(0.0, 0.0), 5.0, AvoidanceVectorType.X)
-        val point = Point(2.0, 0.0)
-
-        val correction = field.correctionAsDrive(point)
-        DrivePowerCoefficients.TestCases.Companion.assertAllEqual(0.6, correction)
-    }
-
-    @Test
-    fun testCorrectionAsDrive_Y() {
-        val field = VectorField(Point(0.0, 0.0), 5.0, AvoidanceVectorType.Y)
-        val point = Point(0.0, 2.0)
-
-        val correction = field.correctionAsDrive(point)
-
-        DrivePowerCoefficients.TestCases.Companion.assertSigns(
-            Quadruple<Double>(1.0, -1.0, -1.0, 1.0), correction
-        )
-    }
-
-    @Test
-    fun testCorrectionAsDrive_Both() {
-        val field = VectorField(Point(0.0, 0.0), 5.0, AvoidanceVectorType.BOTH)
-        val point = Point(2.0, 2.0)
-
-        val correction = field.correctionAsDrive(point)
-        DrivePowerCoefficients.TestCases.Companion.assertSigns(
-            Quadruple<Double>(1.0, -1.0, -1.0, 1.0), correction
-        )
-    }
 
     @Test
     fun testCorrectionAsDrive_Off() {

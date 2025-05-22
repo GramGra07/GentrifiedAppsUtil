@@ -33,11 +33,13 @@ class AvoidanceController(vararg fields: VectorField) {
         fields.remove(field)
     }
 
-    fun drawFields() {
+    fun drawFields(): MutableList<TelemetryPacket> {
         val packet = TelemetryPacket()
         val canvas = packet.fieldOverlay()
+        var list: MutableList<TelemetryPacket> = mutableListOf()
         for (field in fields) {
-            field.draw(packet, canvas)
+            list.add(field.draw(packet, canvas))
         }
+        return list
     }
 }

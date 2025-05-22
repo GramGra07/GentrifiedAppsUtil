@@ -1,6 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance
 
-import com.acmerobotics.dashboard.FtcDashboard
 import com.acmerobotics.dashboard.canvas.Canvas
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
@@ -56,11 +55,11 @@ data class VectorField @JvmOverloads constructor(
     fun correctionAsDrive(point: Point): DrivePowerCoefficients {
         val correction = getCorrection(point)
         return when (avoidanceVectorType) {
-            AvoidanceVectorType.X -> Driver.findWheelVectors(correction.xComponent(), 0.0, 0.0)
-            AvoidanceVectorType.Y -> Driver.findWheelVectors(0.0, correction.yComponent(), 0.0)
+            AvoidanceVectorType.X -> Driver.findWheelVectors(0.0, correction.xComponent(), 0.0)
+            AvoidanceVectorType.Y -> Driver.findWheelVectors(correction.yComponent(), 0.0, 0.0)
             AvoidanceVectorType.BOTH -> Driver.findWheelVectors(
-                correction.xComponent(),
                 correction.yComponent(),
+                correction.xComponent(),
                 0.0
             )
 
@@ -68,10 +67,10 @@ data class VectorField @JvmOverloads constructor(
         }
     }
 
-    internal fun draw(packet: TelemetryPacket, canvas: Canvas) {
+    internal fun draw(packet: TelemetryPacket, canvas: Canvas): TelemetryPacket {
         canvas.setFill("red").setAlpha(.6).setStroke("red")
             .fillCircle(this.point.x, this.point.y, radius)
-        FtcDashboard.getInstance().sendTelemetryPacket(packet)
+        return packet
     }
 }
 
