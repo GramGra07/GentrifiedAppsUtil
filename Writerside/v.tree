@@ -115,6 +115,7 @@
         <toc-element topic="Timeout.md"/>
         <toc-element topic="Avoidance.md"/>
     </toc-element>
+    <toc-element topic="ServoTesterOpMode.md"/>
     <toc-element toc-title="Velocity Vision">
         <toc-element topic="vision-portal.md"/>
         <toc-element topic="black-and-white-dot-detection-bow.md"/>
