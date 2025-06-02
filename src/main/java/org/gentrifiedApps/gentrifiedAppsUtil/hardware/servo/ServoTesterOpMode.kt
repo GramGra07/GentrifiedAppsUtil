@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.Servo
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
 
@@ -16,8 +17,10 @@ class ServoTesterOpMode @JvmOverloads constructor(
         -1.0
     )
 ) : LinearOpMode() {
+
     var index = 0
     override fun runOpMode() {
+        Scribe.instance.startLogger(this)
         val servo = hardwareMap.get(Servo::class.java, servoName)
         val gamepad = GamepadPlus(gamepad1)
         servo.position = positions[index]

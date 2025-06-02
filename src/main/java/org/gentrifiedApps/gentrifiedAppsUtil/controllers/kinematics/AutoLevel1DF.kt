@@ -13,8 +13,8 @@ class AutoLevel1DF @JvmOverloads constructor(
     ),
     var servo: ServoPlus?
 ) {
-    var thetaTracker: TimeMachinePair<Double> = TimeMachinePair(0.0, 0.0)
-    var alpha = 0.0
+    private var thetaTracker: TimeMachinePair<Double> = TimeMachinePair(0.0, 0.0)
+    private var alpha = 0.0
     fun findAlphaVal(theta: Double): Double {
         thetaTracker.current = theta
         alpha = ceil(slopeIntercept.getY(theta - offSetInitial))

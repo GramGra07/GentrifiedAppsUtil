@@ -30,6 +30,9 @@
     <toc-element toc-title="Controllers">
         <toc-element topic="SquIDController.md"/>
         <toc-element topic="PIDFController.md"/>
+        <toc-element toc-title="Kinematics">
+            <toc-element topic="1DfAutoLevel.md"/>
+        </toc-element>
     </toc-element>
     <toc-element topic="Scribe.md"/>
     <toc-element toc-title="GamepadPlus">
