@@ -61,7 +61,6 @@ class TimeMachinePair<T>(var previous: T, var current: T) :
         require(previous is Number && current is Number && tolerance is Number) { "Tolerance can only be applied to numeric types" }
         val firstValue = previous as Number
         val secondValue = current as Number
-        val toleranceValue = tolerance as Number
         return MathFunctions.inTolerance(
             firstValue.toDouble(),
             secondValue.toDouble(),
