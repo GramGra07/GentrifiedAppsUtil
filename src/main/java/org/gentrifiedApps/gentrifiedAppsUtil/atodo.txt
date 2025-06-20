@@ -11,3 +11,4 @@ PIDTuner
 // to document
 1dfautolevel
 command base
+cachemanager
