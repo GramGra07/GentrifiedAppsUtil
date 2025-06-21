@@ -19,13 +19,10 @@ AutoLevel1DF(slope, offsetInitial, slopeIntercept, servo);
 
 ```java
 AutoLevel1DF autoLevel = new AutoLevel1DF(0.5, -30.0, new SlopeIntercept(0.5, 20), servo);
-autoLevel.
 
 findAlphaVal(30); // where 30 is the angle of the lift in degrees AKA theta input - this returns the calculated servo position
-autoLevel.
 
 setServoPosition(theta, servo); // where theta is the angle of the lift in degrees, servo is the servo to set
-autoLevel.
 
 setServoPositionWithOffset(theta, servo, offset); // where offset is the offset to apply to the servo position AKA not 100% level
 ```

@@ -11,7 +11,6 @@ class AutoLevel1DF @JvmOverloads constructor(
     var slopeIntercept: SlopeIntercept = SlopeIntercept.autoLevel1DF(
         slope
     ),
-    var servo: ServoPlus?
 ) {
     private var thetaTracker: TimeMachinePair<Double> = TimeMachinePair(0.0, 0.0)
     private var alpha = 0.0
@@ -21,26 +20,24 @@ class AutoLevel1DF @JvmOverloads constructor(
         return alpha
     }
 
-    private fun setServo(theta: Double, s: ServoPlus, offset: Double = 0.0) {
+    private fun setServo(theta: Double, s: ServoPlus, offset: Double = 0.0): Double {
         thetaTracker.current = theta
         if (checkLast()) {
-            if (servo == null) {
-                servo = s
-            }
-            servo!!.position = findAlphaVal(theta) + offset
+            s.position = findAlphaVal(theta) + offset
         }
         thetaTracker.previous = thetaTracker.current
+        return s.position
     }
 
-    fun setServoPosition(theta: Double, s: ServoPlus) {
-        setServo(theta, s)
+    fun setServoPosition(theta: Double, s: ServoPlus): Double {
+        return setServo(theta, s)
     }
 
-    fun setServoPositionWithOffset(theta: Double, s: ServoPlus, offset: Double) {
-        setServo(theta, s, offset)
+    fun setServoPositionWithOffset(theta: Double, s: ServoPlus, offset: Double): Double {
+        return setServo(theta, s, offset)
     }
 
-    fun checkLast(): Boolean {
+    private fun checkLast(): Boolean {
         return thetaTracker.isDifferent()
     }
 }

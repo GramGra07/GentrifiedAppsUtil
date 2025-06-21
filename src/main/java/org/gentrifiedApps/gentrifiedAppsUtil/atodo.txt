@@ -1,7 +1,6 @@
 // to test
 servotesterop
-1dfautolevel
-pid motor
+1dfautolevel tuner
 command base
 
 //todo
