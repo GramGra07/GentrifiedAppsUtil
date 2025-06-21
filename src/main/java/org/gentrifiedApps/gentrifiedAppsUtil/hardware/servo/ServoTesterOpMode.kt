@@ -36,6 +36,7 @@ class ServoTesterOpMode @JvmOverloads constructor(
 
             telemetry.addData("Servo Position", servo.position)
             telemetry.update()
+            gamepad.sync()
         }
     }
 

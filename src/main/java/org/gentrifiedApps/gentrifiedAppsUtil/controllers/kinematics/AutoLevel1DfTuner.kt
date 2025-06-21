@@ -157,6 +157,7 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                     }
                 }
             }
+            gamepad.sync()
             telemetry.update()
         }
     }
