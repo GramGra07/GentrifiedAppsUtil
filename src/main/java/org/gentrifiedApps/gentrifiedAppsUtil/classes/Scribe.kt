@@ -37,6 +37,21 @@ class Scribe private constructor(private val tagger: String) {
         log(Log.DEBUG, data)
     }
 
+    fun logDataOnce(data: Any) {
+        if (onceMap[data.toString()] == null) {
+            onceMap[data.toString()] = true
+            logData(data)
+        }
+    }
+
+    var onceMap: MutableMap<String, Boolean> = mutableMapOf()
+    fun logDebugOnce(data: Any) {
+        if (onceMap[data.toString()] == null) {
+            onceMap[data.toString()] = true
+            log(Log.DEBUG, data)
+        }
+    }
+
     fun startLogger(name: String) {
         setSet("OpMode")
         logData("Starting OpMode: $name")

@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.caching
 
-enum class CacheState {
+internal enum class CacheState {
     CACHED,
     NOT_CACHED
 }

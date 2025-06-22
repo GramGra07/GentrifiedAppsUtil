@@ -105,5 +105,6 @@ class GamepadPlus(private val gamepad: Gamepad) {
     private fun checkHasSynced() {
         if (!hasSynced) Scribe.instance.setSet("GamepadPlus")
             .logData("Gamepad not synced - did you forget to call sync()?")
+        else Scribe.instance.setSet("GamepadPlus").logDataOnce("Gamepad synced")
     }
 }

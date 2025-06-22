@@ -1,16 +1,15 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.controllers.kinematics
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
-import com.qualcomm.robotcore.hardware.Servo
+import com.qualcomm.robotcore.hardware.DcMotor
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.AnalogEncoder
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.equations.SlopeIntercept
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
-import org.gentrifiedApps.gentrifiedAppsUtil.controllers.kinematics.AutoLevel1DfTuner.States.USING_ENCODER
-import org.gentrifiedApps.gentrifiedAppsUtil.controllers.kinematics.AutoLevel1DfTuner.States.USING_POTENTIOMETER
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
+import org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.ServoPlus
 
 class AutoLevel1DfTuner @JvmOverloads constructor(
     val outputServoName: String,
@@ -18,7 +17,7 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
     val potentiometerName: String?,
     var convertFactor: Double = 1.0,
 ) : LinearOpMode() {
-    var state = States.NEEDS_CONVERT
+    var state: States = States.NEEDS_CONVERT
 
     enum class States {
         NEEDS_CONVERT,
@@ -29,10 +28,10 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
     }
 
     fun setup(usingPotent: Boolean, usingEncoder: Boolean) {
-        if (usingPotent && !usingEncoder) {
-            state == USING_POTENTIOMETER
+        state = if (usingPotent && !usingEncoder) {
+            States.USING_POTENTIOMETER
         } else if (!usingPotent && usingEncoder) {
-            state == USING_ENCODER
+            States.USING_ENCODER
         } else {
             throw IllegalArgumentException("You must provide either an encoder or a potentiometer name to use this tuner and not both.")
         }
@@ -54,29 +53,28 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
         require(usingPotent() and !usingEncoder() || !usingPotent() && usingEncoder()) {
             "You must provide either an encoder or a potentiometer name to use this tuner and not both."
         }
-        if (convertFactor == 1.0 || convertFactor == 0.0) {
-            state = States.NEEDS_CONVERT
+        state = if (convertFactor == 1.0 || convertFactor == 0.0) {
+            States.NEEDS_CONVERT
         } else {
-            state = States.CONVERTED
-            setup(usingPotent(), usingEncoder())
+            States.CONVERTED
         }
     }
 
     override fun runOpMode() {
         var startPotent = 0.0
-        val output = hardwareMap.get(Servo::class.java, outputServoName)
+        val output = ServoPlus(hardwareMap, outputServoName)
         val input = if (usingEncoder()) {
-            hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor::class.java, inputEncoderName!!)
+            hardwareMap.get(DcMotor::class.java, inputEncoderName!!)
         } else {
             AnalogEncoder.rev_potentiometer(hardwareMap, potentiometerName!!)
         }
         if (usingEncoder()) {
-            input as com.qualcomm.robotcore.hardware.DcMotor
+            input as DcMotor
             resetMotor(input)
         }
         fun getInputValue(): Double {
             return if (usingEncoder()) {
-                input as com.qualcomm.robotcore.hardware.DcMotor
+                input as DcMotor
                 input.currentPosition.toDouble()
             } else {
                 input as AnalogEncoder
@@ -114,7 +112,8 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                     telemetry.addLine("State: CONVERTED")
                     telemetry.addData("Conversion Factor", convertFactor)
                     telemetry.addLine("Make sure this looks right, then move the lift to 45 degrees and press gamepad1.x (SQUARE) to finish the test.")
-                    Scribe.instance.setSet("1DfTuner").logData("Conversion Factor $convertFactor")
+                    Scribe.instance.setSet("AutoLevelTuner")
+                        .logDataOnce("Conversion Factor $convertFactor")
                     if (gamepad.buttonJustPressed(Button.X)) {
                         setup(usingPotent(), usingEncoder())
                     }
@@ -125,19 +124,22 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                 States.USING_ENCODER,
                 States.USING_POTENTIOMETER -> {
                     telemetry.addLine("Now press gamepad1.up or down to move the servo and tune the offset.")
-                    if (gamepad.buttonJustPressed(Button.DPAD_UP)) {
+                    if (gamepad.buttonPressed(Button.DPAD_UP)) {
                         servoPose++
-                    } else if (gamepad.buttonJustPressed(Button.DPAD_DOWN)) {
+                    } else if (gamepad.buttonPressed(Button.DPAD_DOWN)) {
                         servoPose--
                     }
                     telemetry.addData("Servo Position", output.position)
                     output.position = servoPose.toDouble()
-                    telemetry.addData("OffsetInitial", output.position - (90 - getInputValue()))
-                    offset = output.position - (90 - getInputValue())
+                    telemetry.addData(
+                        "OffsetInitial",
+                        90 * output.position - (90 - getInputValue() * convertFactor)
+                    )
+                    offset = output.position * 90 - (90 - getInputValue() * convertFactor)
                     telemetry.addLine("Press gamepad1.b (CIRCLE) to start the slope tuning process.")
                     if (gamepad.buttonJustPressed(Button.B)) {
                         half = Point(45.0, output.position - offset)
-                        Scribe.instance.setSet("1DfTuner").logData("Offset Initial: $offset")
+                        Scribe.instance.setSet("AutoLevelTuner").logData("Offset Initial: $offset")
                         state = States.SLOPE_TUNING
                     }
                     telemetry.update()
@@ -146,12 +148,12 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
 
                 States.SLOPE_TUNING -> {
                     var servoSlope =
-                        SlopeIntercept.fromPoints(half.x, half.y, 0, output.position - offset)
+                        SlopeIntercept.fromPoints(half.x, half.y, 0, output.position * 90 - offset)
                     telemetry.addLine("Put the lift at 0 degrees")
                     telemetry.addLine("Press gamepad1.left or right to adjust the servo.")
-                    if (gamepad.buttonJustPressed(Button.DPAD_LEFT)) {
+                    if (gamepad.buttonPressed(Button.DPAD_LEFT)) {
                         servoPose -= 1
-                    } else if (gamepad.buttonJustPressed(Button.DPAD_RIGHT)) {
+                    } else if (gamepad.buttonPressed(Button.DPAD_RIGHT)) {
                         servoPose += 1
                     }
                     output.position = servoPose.toDouble()
@@ -161,7 +163,7 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                         telemetry.addLine("Slope Tuning Finished")
                         telemetry.addData("Final Slope", servoSlope)
                         telemetry.addData("Final Offset", offset)
-                        Scribe.instance.setSet("1DfTuner").logData("Final Slope: $servoSlope")
+                        Scribe.instance.setSet("AutoLevelTuner").logData("Final Slope: $servoSlope")
                     }
                     telemetry.update()
                     gamepad.sync()

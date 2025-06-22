@@ -1,11 +1,4 @@
-// to test
-1dfautolevel tuner
-command base
-
 //todo
 PIDTuner
-HeatSeeker
-
-// to document
 command base
-cachemanager
+HeatSeeker

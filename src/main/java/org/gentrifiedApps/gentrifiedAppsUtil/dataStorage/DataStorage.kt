@@ -70,6 +70,12 @@ class DataStorage {
             dataStore.init()
         }
 
+        @JvmStatic
+        fun initReadDataStore() {
+            initDataStore()
+            readDataStore()
+        }
+
         /**
          * Writes the data store to file direct from the DataStorage
          */

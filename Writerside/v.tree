@@ -11,6 +11,10 @@
         <toc-element topic="Scribe.md"/>
         <toc-element toc-title="LoopTimeController">
             <toc-element topic="looptimecontroller_what-is-it.md"/>
+            <toc-element toc-title="Voltage">
+                <toc-element topic="What-is-voltage-compensation.md"/>
+                <toc-element topic="What-is-the-voltage-tracker.md"/>
+            </toc-element>
             <toc-element topic="looptimecontroller_why-use-it.md"/>
             <toc-element topic="looptimecontroller_how-to-use-it.md"/>
             <toc-element topic="looptimecontroller_data-analysis.md"/>
@@ -23,6 +27,7 @@
             <toc-element topic="gamepadplus_other-useful-functions.md"/>
             <toc-element topic="Macros.md"/>
         </toc-element>
+        <toc-element topic="InitMovementController.md"/>
     </toc-element>
     <toc-element toc-title="Intermediate Topics">
         <toc-element toc-title="ConfigCreator">
@@ -36,15 +41,12 @@
         <toc-element topic="PIDMotor.md"/>
         <toc-element topic="PIDFController.md"/>
         <toc-element topic="SquIDController.md"/>
+        <toc-element topic="ComparablePair.md"/>
         <toc-element toc-title="ServoPlus">
             <toc-element topic="servoplus_how-to-use-it.md"/>
             <toc-element topic="DiffyServo.md"/>
             <toc-element topic="AxonServo.md"/>
             <toc-element topic="SynchronizedServo.md"/>
-        </toc-element>
-        <toc-element toc-title="Voltage">
-            <toc-element topic="What-is-voltage-compensation.md"/>
-            <toc-element topic="What-is-the-voltage-tracker.md"/>
         </toc-element>
     </toc-element>
     <toc-element toc-title="Advanced Topics">
@@ -87,6 +89,7 @@
             <toc-element topic="DataStorage.md"/>
             <toc-element topic="DataStore.md"/>
         </toc-element>
+        <toc-element topic="CacheManager.md"/>
     </toc-element>
     <toc-element toc-title="Test OpModes">
         <toc-element toc-title="TeleOpRepeater">
