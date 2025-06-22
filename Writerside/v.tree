@@ -7,75 +7,50 @@
 
     <toc-element topic="SUMMARY.md"/>
     <toc-element topic="installation-instructions.md"/>
-    <toc-element toc-title="ConfigCreator">
-        <toc-element topic="Config-Creator.md"/>
+    <toc-element toc-title="Beginner Topics">
+        <toc-element topic="Scribe.md"/>
+        <toc-element toc-title="LoopTimeController">
+            <toc-element topic="looptimecontroller_what-is-it.md"/>
+            <toc-element topic="looptimecontroller_why-use-it.md"/>
+            <toc-element topic="looptimecontroller_how-to-use-it.md"/>
+            <toc-element topic="looptimecontroller_data-analysis.md"/>
+            <toc-element topic="looptimecontroller_other-useful-functions.md"/>
+            <toc-element topic="analyzer.md"/>
+        </toc-element>
+        <toc-element toc-title="GamepadPlus">
+            <toc-element topic="gamepadplus_why-use-it.md"/>
+            <toc-element topic="gamepadplus_how-to-use-it.md"/>
+            <toc-element topic="gamepadplus_other-useful-functions.md"/>
+            <toc-element topic="Macros.md"/>
+        </toc-element>
     </toc-element>
-    <toc-element toc-title="Drivers">
-        <toc-element topic="TankDriver.md"/>
-        <toc-element topic="MecanumDriver.md"/>
-        <toc-element topic="fieldcentricdriver.md"/>
-    </toc-element>
-    <toc-element toc-title="LoopTimeController">
-        <toc-element topic="looptimecontroller_what-is-it.md"/>
-        <toc-element topic="looptimecontroller_why-use-it.md"/>
-        <toc-element topic="looptimecontroller_how-to-use-it.md"/>
-        <toc-element topic="looptimecontroller_data-analysis.md"/>
-        <toc-element topic="looptimecontroller_other-useful-functions.md"/>
-        <toc-element topic="analyzer.md"/>
-    </toc-element>
-    <toc-element toc-title="DataStorage">
-        <toc-element topic="DataStorage.md"/>
-        <toc-element topic="DataStore.md"/>
-    </toc-element>
-    <toc-element toc-title="Controllers">
-        <toc-element topic="SquIDController.md"/>
+    <toc-element toc-title="Intermediate Topics">
+        <toc-element toc-title="ConfigCreator">
+            <toc-element topic="Config-Creator.md"/>
+        </toc-element>
+        <toc-element toc-title="Drivers">
+            <toc-element topic="TankDriver.md"/>
+            <toc-element topic="MecanumDriver.md"/>
+            <toc-element topic="fieldcentricdriver.md"/>
+        </toc-element>
+        <toc-element topic="PIDMotor.md"/>
         <toc-element topic="PIDFController.md"/>
-        <toc-element toc-title="Kinematics">
-            <toc-element topic="1DfAutoLevel.md"/>
-        </toc-element>
-    </toc-element>
-    <toc-element topic="Scribe.md"/>
-    <toc-element toc-title="GamepadPlus">
-        <toc-element topic="gamepadplus_why-use-it.md"/>
-        <toc-element topic="gamepadplus_how-to-use-it.md"/>
-        <toc-element topic="gamepadplus_other-useful-functions.md"/>
-        <toc-element topic="Macros.md"/>
-    </toc-element>
-    <toc-element toc-title="SlowModeManager">
-        <toc-element topic="How-to-use-the-slow-mode-manager.md"/>
-    </toc-element>
-    <toc-element toc-title="Hardware">
-        <toc-element toc-title="Motor">
-            <toc-element topic="PIDMotor.md"/>
-        </toc-element>
-        <toc-element toc-title="Voltage">
-            <toc-element topic="What-is-voltage-compensation.md"/>
-            <toc-element topic="What-is-the-voltage-tracker.md"/>
-        </toc-element>
+        <toc-element topic="SquIDController.md"/>
         <toc-element toc-title="ServoPlus">
             <toc-element topic="servoplus_how-to-use-it.md"/>
             <toc-element topic="DiffyServo.md"/>
             <toc-element topic="AxonServo.md"/>
             <toc-element topic="SynchronizedServo.md"/>
         </toc-element>
-        <toc-element topic="BeamBreak.md"/>
-    </toc-element>
-    <toc-element toc-title="DataReadout">
-        <toc-element toc-title="Odometer">
-            <toc-element topic="Odometer.md"/>
-        </toc-element>
-        <toc-element toc-title="Speedometer">
-            <toc-element topic="Speedometer.md"/>
+        <toc-element toc-title="Voltage">
+            <toc-element topic="What-is-voltage-compensation.md"/>
+            <toc-element topic="What-is-the-voltage-tracker.md"/>
         </toc-element>
     </toc-element>
-    <toc-element toc-title="DriftDetector/Tuner">
-        <toc-element topic="DriftDetection.md"/>
-        <toc-element topic="DriftTuner.md"/>
-    </toc-element>
-    <toc-element toc-title="DriverAid">
-        <toc-element topic="driveraid_how-to-use-it.md"/>
-    </toc-element>
-    <toc-element toc-title="Autonomous">
+    <toc-element toc-title="Advanced Topics">
+        <toc-element toc-title="Idler">
+            <toc-element topic="idler_usage-instructions.md"/>
+        </toc-element>
         <toc-element toc-title="State Machines">
             <toc-element toc-title="StateMachineFTC">
                 <toc-element topic="what-is-a-state-machine.md"/>
@@ -92,43 +67,60 @@
                 <toc-element topic="sequential-run-sm_how-to-use-it.md"/>
             </toc-element>
         </toc-element>
-        <toc-element toc-title="Idler">
-            <toc-element topic="idler_usage-instructions.md"/>
+        <toc-element toc-title="DriverAid">
+            <toc-element topic="driveraid_how-to-use-it.md"/>
+        </toc-element>
+        <toc-element topic="1DfAutoLevel.md"/>
+        <toc-element toc-title="SlowModeManager">
+            <toc-element topic="How-to-use-the-slow-mode-manager.md"/>
+        </toc-element>
+        <toc-element toc-title="MotionProfiles">
+            <toc-element topic="SlewRateLimiter.md"/>
+            <toc-element topic="OnlyUpSlewRateLimiter.md"/>
+            <toc-element topic="TrapazoidalMotionProfile.md"/>
+            <toc-element topic="AccelerationMotionProfile.md"/>
+        </toc-element>
+        <toc-element toc-title="SensorArray">
+            <toc-element topic="sensor-array_how-to-use-it.md"/>
+        </toc-element>
+        <toc-element toc-title="DataStorage">
+            <toc-element topic="DataStorage.md"/>
+            <toc-element topic="DataStore.md"/>
         </toc-element>
     </toc-element>
-    <toc-element toc-title="MotionProfiles">
-        <toc-element topic="SlewRateLimiter.md"/>
-        <toc-element topic="OnlyUpSlewRateLimiter.md"/>
-        <toc-element topic="TrapazoidalMotionProfile.md"/>
-        <toc-element topic="AccelerationMotionProfile.md"/>
-    </toc-element>
-    <toc-element toc-title="Heatseeker">
-        <toc-element toc-title="Simulator">
-            <toc-element topic="Setup-Instructions.md"/>
+    <toc-element toc-title="Test OpModes">
+        <toc-element toc-title="TeleOpRepeater">
+            <toc-element topic="Warnings-and-Specifications.md"/>
+            <toc-element topic="Setup.md"/>
+            <toc-element topic="OpModeTracker.md"/>
+            <toc-element topic="OpModeRepeater.md"/>
         </toc-element>
+        <toc-element toc-title="DriftDetector/Tuner">
+            <toc-element topic="DriftDetection.md"/>
+            <toc-element topic="DriftTuner.md"/>
+        </toc-element>
+        <toc-element topic="ServoTesterOpMode.md"/>
     </toc-element>
-    <toc-element toc-title="SensorArray">
-        <toc-element topic="sensor-array_how-to-use-it.md"/>
-    </toc-element>
-    <toc-element toc-title="Other Classes">
-        <toc-element topic="Tripwire.md"/>
-        <toc-element topic="other-classes_binaryarray.md"/>
-        <toc-element topic="alliance.md"/>
-        <toc-element topic="other-classes_analogencoder.md"/>
-        <toc-element topic="Timeout.md"/>
-        <toc-element topic="Avoidance.md"/>
-    </toc-element>
-    <toc-element topic="ServoTesterOpMode.md"/>
     <toc-element toc-title="Velocity Vision">
         <toc-element topic="vision-portal.md"/>
         <toc-element topic="black-and-white-dot-detection-bow.md"/>
         <toc-element topic="mean-of-area-detection-meo.md"/>
         <toc-element topic="sample-data-detector-sdd.md"/>
     </toc-element>
-    <toc-element toc-title="TeleOpRepeater">
-        <toc-element topic="Warnings-and-Specifications.md"/>
-        <toc-element topic="Setup.md"/>
-        <toc-element topic="OpModeTracker.md"/>
-        <toc-element topic="OpModeRepeater.md"/>
+    <toc-element toc-title="Other">
+        <toc-element topic="Avoidance.md"/>
+        <toc-element topic="Timeout.md"/>
+        <toc-element topic="other-classes_analogencoder.md"/>
+        <toc-element topic="alliance.md"/>
+        <toc-element topic="other-classes_binaryarray.md"/>
+        <toc-element topic="Tripwire.md"/>
+        <toc-element topic="Odometer.md"/>
+        <toc-element topic="Speedometer.md"/>
+        <toc-element topic="BeamBreak.md"/>
+    </toc-element>
+    <toc-element toc-title="Heatseeker">
+        <toc-element toc-title="Simulator">
+            <toc-element topic="Setup-Instructions.md"/>
+        </toc-element>
     </toc-element>
 </instance-profile>
