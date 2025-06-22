@@ -1,13 +1,11 @@
 // to test
-servotesterop
 1dfautolevel tuner
 command base
 
 //todo
-HeatSeeker
 PIDTuner
+HeatSeeker
 
 // to document
-1dfautolevel
 command base
 cachemanager

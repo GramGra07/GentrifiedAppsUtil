@@ -11,9 +11,6 @@ class ServoTesterOpMode @JvmOverloads constructor(
         0.0,
         90.0,
         180.0,
-        0.0,
-        -90.0,
-        -180.0
     )
 ) : LinearOpMode() {
 

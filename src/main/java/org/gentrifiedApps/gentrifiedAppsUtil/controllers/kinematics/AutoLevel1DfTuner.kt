@@ -52,7 +52,7 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
         require(usingPotent() and !usingEncoder() || !usingPotent() && usingEncoder()) {
             "You must provide either an encoder or a potentiometer name to use this tuner and not both."
         }
-        if (convertFactor == 1.0) {
+        if (convertFactor == 1.0 || convertFactor == 0.0) {
             state = States.NEEDS_CONVERT
         } else {
             state = States.CONVERTED
@@ -104,6 +104,8 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                     if (gamepad.buttonJustPressed(Button.B)) {
                         convertFactor = calculateConvert()
                     }
+                    telemetry.update()
+                    gamepad.sync()
                 }
 
                 States.CONVERTED -> {
@@ -114,6 +116,8 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                     if (gamepad.buttonJustPressed(Button.X)) {
                         state.setup(usingPotent(), usingEncoder())
                     }
+                    telemetry.update()
+                    gamepad.sync()
                 }
 
                 States.USING_ENCODER,
@@ -134,6 +138,8 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                         Scribe.instance.setSet("1DfTuner").logData("Offset Initial: $offset")
                         state = States.SLOPE_TUNING
                     }
+                    telemetry.update()
+                    gamepad.sync()
                 }
 
                 States.SLOPE_TUNING -> {
@@ -155,10 +161,10 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                         telemetry.addData("Final Offset", offset)
                         Scribe.instance.setSet("1DfTuner").logData("Final Slope: $servoSlope")
                     }
+                    telemetry.update()
+                    gamepad.sync()
                 }
             }
-            gamepad.sync()
-            telemetry.update()
         }
     }
 

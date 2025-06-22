@@ -1,8 +1,11 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad
 
 import com.qualcomm.robotcore.hardware.Gamepad
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 
 class GamepadPlus(private val gamepad: Gamepad) {
+    private var hasSynced = false
+
     companion object {
         @JvmStatic
         fun newInstance(gamepad: Gamepad): GamepadPlus {
@@ -34,6 +37,7 @@ class GamepadPlus(private val gamepad: Gamepad) {
 
     fun sync() {
         updateButtonStates()
+        hasSynced = true
     }
 
     private fun readButtonState(button: Button): Boolean {
@@ -58,18 +62,22 @@ class GamepadPlus(private val gamepad: Gamepad) {
     }
 
     fun buttonJustPressed(button: Button): Boolean {
+        checkHasSynced()
         return previousState[button] != true && (currentState[button] == true)
     }
 
     fun buttonJustReleased(button: Button): Boolean {
+        checkHasSynced()
         return (previousState[button] == true) && currentState[button] != true
     }
 
     fun buttonPressed(button: Button): Boolean {
+        checkHasSynced()
         return currentState[button] == true
     }
 
     fun buttonReleased(button: Button): Boolean {
+        checkHasSynced()
         return currentState[button] != true
     }
 
@@ -92,5 +100,10 @@ class GamepadPlus(private val gamepad: Gamepad) {
 
     fun atRest(): Boolean {
         return gamepad.atRest()
+    }
+
+    private fun checkHasSynced() {
+        if (!hasSynced) Scribe.instance.setSet("GamepadPlus")
+            .logData("Gamepad not synced - did you forget to call sync()?")
     }
 }

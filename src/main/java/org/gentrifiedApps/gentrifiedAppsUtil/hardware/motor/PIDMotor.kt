@@ -107,7 +107,7 @@ class PIDMotor @JvmOverloads constructor(
     /**
      * Reverses the current direction of the motor through the currentReverseVal, just negates val
      */
-    fun currentReversed() {
+    fun currentReversed(): PIDMotor {
         if (currentReversed) {
             currentReversed = false
             currentReverseVal = 1
@@ -115,6 +115,7 @@ class PIDMotor @JvmOverloads constructor(
             currentReversed = true
             currentReverseVal = -1
         }
+        return this
     }
 
     /**
