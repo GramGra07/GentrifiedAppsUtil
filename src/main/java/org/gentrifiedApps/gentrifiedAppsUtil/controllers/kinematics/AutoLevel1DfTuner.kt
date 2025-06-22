@@ -6,6 +6,8 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.AnalogEncoder
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.equations.SlopeIntercept
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.kinematics.AutoLevel1DfTuner.States.USING_ENCODER
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.kinematics.AutoLevel1DfTuner.States.USING_POTENTIOMETER
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
@@ -24,15 +26,15 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
         USING_ENCODER,
         USING_POTENTIOMETER,
         SLOPE_TUNING;
+    }
 
-        fun setup(usingPotent: Boolean, usingEncoder: Boolean) {
-            if (usingPotent && !usingEncoder) {
-                this == USING_POTENTIOMETER
-            } else if (!usingPotent && usingEncoder) {
-                this == USING_ENCODER
-            } else {
-                throw IllegalArgumentException("You must provide either an encoder or a potentiometer name to use this tuner and not both.")
-            }
+    fun setup(usingPotent: Boolean, usingEncoder: Boolean) {
+        if (usingPotent && !usingEncoder) {
+            state == USING_POTENTIOMETER
+        } else if (!usingPotent && usingEncoder) {
+            state == USING_ENCODER
+        } else {
+            throw IllegalArgumentException("You must provide either an encoder or a potentiometer name to use this tuner and not both.")
         }
     }
 
@@ -56,7 +58,7 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
             state = States.NEEDS_CONVERT
         } else {
             state = States.CONVERTED
-            state.setup(usingPotent(), usingEncoder())
+            setup(usingPotent(), usingEncoder())
         }
     }
 
@@ -114,7 +116,7 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                     telemetry.addLine("Make sure this looks right, then move the lift to 45 degrees and press gamepad1.x (SQUARE) to finish the test.")
                     Scribe.instance.setSet("1DfTuner").logData("Conversion Factor $convertFactor")
                     if (gamepad.buttonJustPressed(Button.X)) {
-                        state.setup(usingPotent(), usingEncoder())
+                        setup(usingPotent(), usingEncoder())
                     }
                     telemetry.update()
                     gamepad.sync()
