@@ -66,6 +66,15 @@ class PIDMotor @JvmOverloads constructor(
         this.direction = direction
     }
 
+    fun setPIDF(pidfCoefficients: PIDFCoefficients) {
+        this.setPIDF(
+            pidfCoefficients.kP,
+            pidfCoefficients.kI,
+            pidfCoefficients.kD,
+            pidfCoefficients.kF
+        )
+    }
+
     /**
      * Sets the target position of the motor
      * @param target The target position

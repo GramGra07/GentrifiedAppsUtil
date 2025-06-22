@@ -17,7 +17,7 @@ The `SlowModeManager` class manages different slow modes based on a predefined m
 There are multiple ways to initialize a `SlowModeManager`:
 
 ```java
-SlowModeManager slowModeManager = new SlowModeManager(new HashMap<SlowModeDefaults, SlowModeMulti>() {{
+SlowModeManager slowModeManager = new SlowModeManager(new HashMap<Enum<?>, SlowModeMulti>() {{
     put(SlowModeDefaults.NORMAL, new SlowModeMulti(SlowMode.basic(), Button.A));
 }}, gamepadPlus);
 ```
@@ -86,7 +86,7 @@ SlowMode slowMode = new SlowMode(2); // Reduces speed by half
 This example demonstrates how to integrate `SlowModeManager` with a gamepad.
 
 ```java
-HashMap<SlowModeDefaults, SlowModeMulti> slowModeMap = new HashMap<>();
+HashMap<Enum<?>, SlowModeMulti> slowModeMap = new HashMap<>();
 slowModeMap.put(SlowModeDefaults.NORMAL, new SlowModeMulti(SlowMode.basic(), Button.A));
 GamepadPlus gamepadPlus = new GamepadPlus(gamepad1);
 SlowModeManager slowModeManager = new SlowModeManager(slowModeMap, gamepadPlus);

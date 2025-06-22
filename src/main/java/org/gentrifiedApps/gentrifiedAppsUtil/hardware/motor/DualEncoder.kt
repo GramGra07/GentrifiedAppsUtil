@@ -3,6 +3,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.HardwareMap
+import org.firstinspires.ftc.robotcore.external.Telemetry
 
 class DualEncoder {
     companion object {
@@ -62,5 +63,14 @@ class DualEncoder {
         } else {
             rightEncoder.currentPosition
         }
+    }
+
+    fun telemetry(telemetry: Telemetry) {
+        telemetry.addData("Left Encoder", leftEncoder.currentPosition)
+        telemetry.addData("Right Encoder", rightEncoder.currentPosition)
+    }
+
+    fun isAtTolerance(target: Double, tolerance: Double): Boolean {
+        return (target - tolerance < getMost()) && (getMost() < target + tolerance)
     }
 }
