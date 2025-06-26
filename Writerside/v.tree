@@ -21,12 +21,6 @@
             <toc-element topic="looptimecontroller_other-useful-functions.md"/>
             <toc-element topic="analyzer.md"/>
         </toc-element>
-        <toc-element toc-title="GamepadPlus">
-            <toc-element topic="gamepadplus_why-use-it.md"/>
-            <toc-element topic="gamepadplus_how-to-use-it.md"/>
-            <toc-element topic="gamepadplus_other-useful-functions.md"/>
-            <toc-element topic="Macros.md"/>
-        </toc-element>
         <toc-element topic="InitMovementController.md"/>
     </toc-element>
     <toc-element toc-title="Intermediate Topics">
@@ -124,6 +118,14 @@
     <toc-element toc-title="Heatseeker">
         <toc-element toc-title="Simulator">
             <toc-element topic="Setup-Instructions.md"/>
+        </toc-element>
+    </toc-element>
+    <toc-element toc-title="Archived">
+        <toc-element toc-title="GamepadPlus">
+            <toc-element topic="gamepadplus_why-use-it.md"/>
+            <toc-element topic="gamepadplus_how-to-use-it.md"/>
+            <toc-element topic="gamepadplus_other-useful-functions.md"/>
+            <toc-element topic="Macros.md"/>
         </toc-element>
     </toc-element>
 </instance-profile>

@@ -1,11 +1,8 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.controllers
 
 
-import com.qualcomm.robotcore.hardware.Gamepad
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
-import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
-import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
 
 enum class SlowModeDefaults {
     NORMAL
@@ -17,62 +14,8 @@ enum class SlowModeDefaults {
  * @param gamepad The gamepad used to control the robot.
  */
 class SlowModeManager(
-    internal val slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
-    private val gamepad: GamepadPlus
+    internal val slowModeDataList: SlowModeMulti
 ) {
-    companion object {
-        @JvmStatic
-        fun newInstance(
-            slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
-            gamepad: Gamepad
-        ): SlowModeManager {
-            return SlowModeManager(slowModeDataList, gamepad)
-        }
-    }
-
-    /**
-     * Constructor for SlowModeManager.
-     * @param slowModeDataList A map of slow mode data to their corresponding keys.
-     * @param gamepad The gamepad used to control the robot -> turns into a Gamepad +
-     */
-    constructor(
-        slowModeDataList: HashMap<Enum<*>, SlowModeMulti>,
-        gamepad: Gamepad
-    ) : this(slowModeDataList, GamepadPlus(gamepad))
-
-    /**
-     * Extremely basic slow mode manager
-     * @param gamepad Generic gamepad +
-     */
-    constructor(gamepad: GamepadPlus) : this(
-        hashMapOf(
-            SlowModeDefaults.NORMAL to SlowModeMulti(SlowMode.basic(), Button.A),
-        ) as HashMap<Enum<*>, SlowModeMulti>,  // Explicit cast
-        gamepad
-    )
-
-    /**
-     * Constructor using a list of pairs
-     * @param list A list of pairs of slow mode data and their corresponding keys.
-     * @param gamepad The gamepad used to control the robot.
-     * Doesn't work well/easily
-     */
-    constructor(list: List<Pair<Enum<*>, SlowModeMulti>>, gamepad: GamepadPlus) : this(
-        list.associate { it.first to it.second } as HashMap<Enum<*>, SlowModeMulti>,
-        gamepad
-    )
-
-    var currentlyActive: Enum<*>? = null
-
-    init {
-        require(slowModeDataList.isNotEmpty(), { "SlowModeDataList must be empty" })
-        require(slowModeDataList.size < 10, { "SlowModeDataList must be less than 10" })
-        if (slowModeDataList.size > 1) {
-            currentlyActive = null
-        } else if (slowModeDataList.size == 1) {
-            currentlyActive = slowModeDataList.keys.first()
-        }
-    }
 
     /**
      * Applies the slow mode to the given value.
@@ -80,9 +23,8 @@ class SlowModeManager(
      * @return The value after applying the slow mode.
      */
     fun apply(value: Double): Double {
-        update()
         var result = value
-        slowModeDataList[currentlyActive]?.let {
+        slowModeDataList.let {
             result = it.apply(result)
         }
         return result
@@ -94,9 +36,8 @@ class SlowModeManager(
      * @return The drive power coefficients after applying the slow mode.
      */
     fun apply(drivePowerCoefficients: DrivePowerCoefficients): DrivePowerCoefficients {
-        update()
         var result = drivePowerCoefficients
-        slowModeDataList[currentlyActive]?.let {
+        slowModeDataList.let {
             result = it.slowModeData.apply(result)
         }
         return result
@@ -105,18 +46,8 @@ class SlowModeManager(
     /**
      * Updates the slow mode manager.
      */
-    fun update() {
-        for (slowModeMulti in slowModeDataList) {
-            if (slowModeMulti.value.slowMode) {
-                if (slowModeMulti.value.changed()) {
-                    currentlyActive = slowModeMulti.key
-                }
-                if (currentlyActive != slowModeMulti.key) {
-                    slowModeMulti.value.deactivate()
-                }
-            }
-            slowModeMulti.value.update(gamepad)
-        }
+    fun update(onFunc: Boolean, offFunc: Boolean) {
+        slowModeDataList.update(onFunc, offFunc)
     }
 
     /**
@@ -124,9 +55,7 @@ class SlowModeManager(
      * @param telemetry The telemetry to report to.
      */
     fun telemetry(telemetry: Telemetry) {
-        currentlyActive?.let {
-            slowModeDataList[it]?.report(telemetry)
-        }
+        slowModeDataList.report(telemetry)
     }
 }
 
@@ -138,15 +67,7 @@ class SlowModeManager(
  */
 data class SlowModeMulti(
     val slowModeData: SlowMode,
-    internal val activeButton: Button,
-    internal val deactiveButton: Button
 ) {
-    constructor(slowModeData: SlowMode, activeButton: Button) : this(
-        slowModeData,
-        activeButton,
-        activeButton
-    )
-
     var slowMode: Boolean = false
     var lastSlowMode: Boolean = false
     fun deactivate() {
@@ -173,17 +94,13 @@ data class SlowModeMulti(
     private var lastUpdateTime: Long = 0
     private val debounceTime: Long = 200 // 200 milliseconds
 
-    /**
-     * Updates the slow mode.
-     * @param gamepad The gamepad used to control the robot.
-     */
-    fun update(gamepad: GamepadPlus) {
+    fun update(onFunc: Boolean, offFunc: Boolean) {
         val currentTime = System.currentTimeMillis()
         if (currentTime - lastUpdateTime > debounceTime) {
-            if (gamepad.buttonJustPressed(activeButton) && !slowMode) {
+            if (onFunc && !slowMode) {
                 slowMode = true
                 lastUpdateTime = currentTime
-            } else if (gamepad.buttonJustPressed(deactiveButton) && slowMode) {
+            } else if (offFunc && slowMode) {
                 slowMode = false
                 lastUpdateTime = currentTime
             } else {
@@ -207,7 +124,7 @@ data class SlowModeMulti(
                  * Creates a basic slow mode multi with a slow mode factor of 2.0 and the active button as A.
                  */
         fun basic(): SlowModeMulti {
-            return SlowModeMulti(SlowMode.basic(), Button.A)
+            return SlowModeMulti(SlowMode.basic())
         }
     }
 }

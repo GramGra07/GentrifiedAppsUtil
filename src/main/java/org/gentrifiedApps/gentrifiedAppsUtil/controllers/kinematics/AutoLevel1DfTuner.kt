@@ -6,8 +6,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.analogEncoder.AnalogEncoder
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.equations.SlopeIntercept
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
-import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.Button
-import org.gentrifiedApps.gentrifiedAppsUtil.hardware.gamepad.GamepadPlus
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.servo.ServoPlus
 
@@ -87,7 +85,7 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
             return convertFactor
         }
 
-        val gamepad = GamepadPlus(gamepad1)
+        val gamepad = gamepad1
         waitForStart()
         var half = Point(0.0, 0.0)
         var servoPose = 0
@@ -97,15 +95,14 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                 States.NEEDS_CONVERT -> {
                     telemetry.addLine("State: NEEDS_CONVERT")
                     telemetry.addLine("If using a potentiometer, press gamepad1.a (CROSS) to get the initial position.")
-                    if (gamepad.buttonJustPressed(Button.A) && usingPotent()) {
+                    if (gamepad.aWasPressed() && usingPotent()) {
                         startPotent = getInputValue()
                     }
                     telemetry.addLine("If all done, move the lift to 90 degrees and press gamepad1.b (CIRCLE) to calculate the conversion factor.")
-                    if (gamepad.buttonJustPressed(Button.B)) {
+                    if (gamepad.bWasPressed()) {
                         convertFactor = calculateConvert()
                     }
                     telemetry.update()
-                    gamepad.sync()
                 }
 
                 States.CONVERTED -> {
@@ -114,19 +111,19 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                     telemetry.addLine("Make sure this looks right, then move the lift to 45 degrees and press gamepad1.x (SQUARE) to finish the test.")
                     Scribe.instance.setSet("AutoLevelTuner")
                         .logDataOnce("Conversion Factor $convertFactor")
-                    if (gamepad.buttonJustPressed(Button.X)) {
+                    if (gamepad.xWasPressed()) {
                         setup(usingPotent(), usingEncoder())
                     }
                     telemetry.update()
-                    gamepad.sync()
                 }
 
                 States.USING_ENCODER,
                 States.USING_POTENTIOMETER -> {
                     telemetry.addLine("Now press gamepad1.up or down to move the servo and tune the offset.")
-                    if (gamepad.buttonPressed(Button.DPAD_UP)) {
+                    if (gamepad.dpad_up) {
+
                         servoPose++
-                    } else if (gamepad.buttonPressed(Button.DPAD_DOWN)) {
+                    } else if (gamepad.dpad_down) {
                         servoPose--
                     }
                     telemetry.addData("Servo Position", output.position)
@@ -137,13 +134,12 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                     )
                     offset = output.position * 90 - (90 - getInputValue() * convertFactor)
                     telemetry.addLine("Press gamepad1.b (CIRCLE) to start the slope tuning process.")
-                    if (gamepad.buttonJustPressed(Button.B)) {
+                    if (gamepad.bWasPressed()) {
                         half = Point(45.0, output.position - offset)
                         Scribe.instance.setSet("AutoLevelTuner").logData("Offset Initial: $offset")
                         state = States.SLOPE_TUNING
                     }
                     telemetry.update()
-                    gamepad.sync()
                 }
 
                 States.SLOPE_TUNING -> {
@@ -151,22 +147,21 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
                         SlopeIntercept.fromPoints(half.x, half.y, 0, output.position * 90 - offset)
                     telemetry.addLine("Put the lift at 0 degrees")
                     telemetry.addLine("Press gamepad1.left or right to adjust the servo.")
-                    if (gamepad.buttonPressed(Button.DPAD_LEFT)) {
+                    if (gamepad.dpad_left) {
                         servoPose -= 1
-                    } else if (gamepad.buttonPressed(Button.DPAD_RIGHT)) {
+                    } else if (gamepad.dpad_right) {
                         servoPose += 1
                     }
                     output.position = servoPose.toDouble()
                     telemetry.addData("Slope", servoSlope)
                     telemetry.addLine("Press gamepad1.b (CIRCLE) to finish tuning.")
-                    if (gamepad.buttonJustPressed(Button.B)) {
+                    if (gamepad.bWasPressed()) {
                         telemetry.addLine("Slope Tuning Finished")
                         telemetry.addData("Final Slope", servoSlope)
                         telemetry.addData("Final Offset", offset)
                         Scribe.instance.setSet("AutoLevelTuner").logData("Final Slope: $servoSlope")
                     }
                     telemetry.update()
-                    gamepad.sync()
                 }
             }
         }
