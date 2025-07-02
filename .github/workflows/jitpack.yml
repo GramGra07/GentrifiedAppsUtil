@@ -31,7 +31,7 @@ jobs:
         echo "Triggering JitPack build for $REPO"
         curl -s "https://jitpack.io/com/github/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ steps.get_version.outputs.version }}/build.log" > /dev/null
 
-    - name: Wait for JitPack Build to Complete
+        - name: Wait for JitPack Build to Complete
       id: wait_build
       run: |
         VERSION=${{ steps.get_version.outputs.version }}
@@ -45,8 +45,16 @@ jobs:
 
         for i in $(seq 1 $MAX_RETRIES); do
           RESPONSE=$(curl -s "$STATUS_URL")
-          STATUS=$(echo "$RESPONSE" | jq -r '.status')
 
+          # Ensure response is JSON
+          if ! echo "$RESPONSE" | jq . >/dev/null 2>&1; then
+            echo "Invalid JSON or no build yet. Response:"
+            echo "$RESPONSE"
+            sleep $DELAY
+            continue
+          fi
+
+          STATUS=$(echo "$RESPONSE" | jq -r '.status')
           echo "Attempt $i: status=$STATUS"
 
           if [[ "$STATUS" == "ok" || "$STATUS" == "error" ]]; then
