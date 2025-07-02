@@ -2,7 +2,7 @@ name: Check Latest JitPack Build
 
 on:
   push:
-  workflow_dispatch:  # Trigger manually, or change to `schedule` to run regularly
+  workflow_dispatch:  # Trigger manually
 
 jobs:
   check-jitpack-build:
@@ -13,7 +13,7 @@ jobs:
       id: get_version
       run: |
         echo "Trying to get latest tag..."
-        TAG=$(git ls-remote --tags https://github.com/${{ github.repository }} | cut -d/ -f3 | sort -V | tail -n1)
+        TAG=$(git ls-remote --tags https://github.com/${{ github.repository }} | cut -d/ -f3 | grep -v '\^{}' | sort -V | tail -n1)
         
         if [ -z "$TAG" ]; then
           echo "No tags found, using latest commit"
@@ -27,13 +27,12 @@ jobs:
 
     - name: Trigger JitPack Build
       run: |
-        REPO="com.github.${{ github.repository_owner }}:${{ github.event.repository.name }}:${{ steps.get_version.outputs.version }}"
-        echo "Triggering JitPack build for $REPO"
+        echo "Triggering JitPack build..."
         curl -s "https://jitpack.io/com/github/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ steps.get_version.outputs.version }}/build.log" > /dev/null
 
     - name: Wait for JitPack Build to Complete
-      run: |
       id: wait_build
+      run: |
         VERSION=${{ steps.get_version.outputs.version }}
         REPO_PATH="com.github.${{ github.repository_owner }}:${{ github.event.repository.name }}:$VERSION"
         STATUS_URL="https://jitpack.io/api/builds/$REPO_PATH"
@@ -46,7 +45,7 @@ jobs:
         for i in $(seq 1 $MAX_RETRIES); do
           RESPONSE=$(curl -s "$STATUS_URL")
 
-          # Ensure response is JSON
+          # Validate JSON response
           if ! echo "$RESPONSE" | jq . >/dev/null 2>&1; then
             echo "Invalid JSON or no build yet. Response:"
             echo "$RESPONSE"
