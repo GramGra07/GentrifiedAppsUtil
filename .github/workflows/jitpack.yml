@@ -35,7 +35,7 @@ jobs:
       run: |
         VERSION=${{ steps.get_version.outputs.version }}
         REPO_PATH="com.github.${{ github.repository_owner }}:${{ github.event.repository.name }}:$VERSION"
-        STATUS_URL="https://jitpack.io/api/builds/$REPO_PATH"
+        STATUS_URL="https://jitpack.io/api/builds/com.github.GramGra07/GentrifiedAppsUtil/$VERSION"
 
         MAX_RETRIES=10
         DELAY=30
