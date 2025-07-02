@@ -34,8 +34,10 @@ jobs:
       id: wait_build
       run: |
         VERSION=${{ steps.get_version.outputs.version }}
+        OWNER = "${{ github.repository_owner}}
+        NAME = "${{ github.event.repository.name}}
         REPO_PATH="com.github.${{ github.repository_owner }}:${{ github.event.repository.name }}:$VERSION"
-        STATUS_URL="https://jitpack.io/api/builds/com.github.GramGra07/GentrifiedAppsUtil/$VERSION"
+        STATUS_URL="https://jitpack.io/api/builds/com.github.$OWNER/$NAME/$VERSION"
 
         MAX_RETRIES=10
         DELAY=30
