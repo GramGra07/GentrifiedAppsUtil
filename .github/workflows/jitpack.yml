@@ -31,9 +31,9 @@ jobs:
         echo "Triggering JitPack build for $REPO"
         curl -s "https://jitpack.io/com/github/${{ github.repository_owner }}/${{ github.event.repository.name }}/${{ steps.get_version.outputs.version }}/build.log" > /dev/null
 
-        - name: Wait for JitPack Build to Complete
-      id: wait_build
+    - name: Wait for JitPack Build to Complete
       run: |
+      id: wait_build
         VERSION=${{ steps.get_version.outputs.version }}
         REPO_PATH="com.github.${{ github.repository_owner }}:${{ github.event.repository.name }}:$VERSION"
         STATUS_URL="https://jitpack.io/api/builds/$REPO_PATH"
