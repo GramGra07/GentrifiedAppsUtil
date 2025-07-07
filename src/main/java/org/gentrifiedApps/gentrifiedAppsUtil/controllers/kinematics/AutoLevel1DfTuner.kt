@@ -44,7 +44,6 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
     }
 
     init {
-        Scribe.instance.startLogger(this)
         require(usingPotent() || usingEncoder()) {
             "You must provide either an encoder or a potentiometer name to use this tuner and not both."
         }
@@ -59,6 +58,7 @@ class AutoLevel1DfTuner @JvmOverloads constructor(
     }
 
     override fun runOpMode() {
+        Scribe.instance.startLogger(this)
         var startPotent = 0.0
         val output = ServoPlus(hardwareMap, outputServoName)
         val input = if (usingEncoder()) {
