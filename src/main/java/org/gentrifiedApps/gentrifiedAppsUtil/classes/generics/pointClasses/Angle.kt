@@ -75,4 +75,8 @@ data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.DEGREES) {
             return Angle(radians, AngleUnit.RADIANS)
         }
     }
+
+    operator fun minus(other: Angle): Angle {
+        return ofRadians(this.toRadians() - other.toRadians())
+    }
 }

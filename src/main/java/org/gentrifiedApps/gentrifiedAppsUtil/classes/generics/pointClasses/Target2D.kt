@@ -55,4 +55,8 @@ data class Target2D(val x: Double, val y: Double, val angle: Angle) {
             return blank()
         }
     }
+
+    operator fun minus(other: Target2D): Target2D {
+        return Target2D(x - other.x, y - other.y, angle - other.angle)
+    }
 }

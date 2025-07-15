@@ -8,9 +8,11 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
 import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.MovementData
 import kotlin.math.abs
 
@@ -51,15 +53,15 @@ class Driver @JvmOverloads constructor(
         brDirection
     )
 
-//    internal var localizer: Localizer? = null
-//        set(value) {
-//            field = value
-//            if (value != null) {
-//                value.initLocalizer()
-//                drawer.drawLocalization(value.getPose())
-//                telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, value.getPose())
-//            }
-//        }
+    internal var localizer: Localizer? = null
+        set(value) {
+            field = value
+            if (value != null) {
+                value.initLocalizer()
+                drawer.drawLocalization(value.getPose())
+                telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, value.getPose())
+            }
+        }
 
     internal fun getPositions(): DriveVelocities {
         return DriveVelocities(
@@ -123,30 +125,34 @@ class Driver @JvmOverloads constructor(
         bl.direction = blDirection
         br.direction = brDirection
 
-//        if (localizer != null) {
-//            localizer!!.initLocalizer()
-//            drawer.drawLocalization(localizer!!.getPose())
-//            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
-//        }
+        if (localizer != null) {
+            localizer!!.initLocalizer()
+            drawer.drawLocalization(localizer!!.getPose())
+            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
+        }
     }
 
     internal fun update() {
         updatePoseEstimate()
-//        if (localizer != null) {
-//            drawer.drawLocalization(localizer!!.getPose())
-//            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
-//        }
+        if (localizer != null) {
+            drawer.drawLocalization(localizer!!.getPose())
+            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
+        }
     }
 
     internal fun updateNoTelemetry() {
         updatePoseEstimate()
-//        if (localizer != null) {
-//            drawer.drawLocalization(localizer!!.getPose())
-//        }
+        if (localizer != null) {
+            drawer.drawLocalization(localizer!!.getPose())
+        }
     }
 
     internal fun updatePoseEstimate() {
-//        localizer?.update()
+        localizer?.update()
+    }
+
+    fun getCurrentPose(): Target2D {
+        return localizer!!.getPose()
     }
 
     fun findWheelVectors(data: MovementData): DrivePowerCoefficients {

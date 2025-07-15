@@ -4,10 +4,6 @@ package org.gentrifiedApps.gentrifiedAppsUtil.controllers
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 
-enum class SlowModeDefaults {
-    NORMAL
-}
-
 /**
  * A class to manage slow modes for a robot.
  * @param slowModeDataList A map of slow mode data to their corresponding keys.

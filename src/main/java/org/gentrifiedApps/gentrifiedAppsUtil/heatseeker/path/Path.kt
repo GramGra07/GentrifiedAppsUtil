@@ -25,7 +25,7 @@ data class Path(val type: PathType, val target: Target2D, val velocity: Double) 
     )
 
     fun waypoint(): Waypoint {
-        return Waypoint(target.x, target.y, target.angle, velocity)
+        return Waypoint(target.x, target.y, target.angle)
     }
 
     fun x(): Double {
@@ -39,4 +39,8 @@ data class Path(val type: PathType, val target: Target2D, val velocity: Double) 
     fun h(): Double {
         return target.h()
     }
+}
+
+fun List<Path>.notFinished(currentIndex: Int): Boolean {
+    return currentIndex < this.size
 }

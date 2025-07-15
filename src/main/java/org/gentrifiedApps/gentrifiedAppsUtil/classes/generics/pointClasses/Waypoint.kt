@@ -1,17 +1,9 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses
 
-data class Waypoint(val target2D: Target2D, val velocity: Double) {
-    constructor(x: Double, y: Double, h: Double, velocity: Double) : this(
-        Target2D(
-            x,
-            y,
-            Angle(h, AngleUnit.DEGREES)
-        ), velocity
-    )
-
-    constructor(x: Double, y: Double, h: Angle, velocity: Double) : this(
-        Target2D(x, y, h),
-        velocity
+data class Waypoint @JvmOverloads constructor(val target2D: Target2D, val velocity: Double = 1.0) {
+    @JvmOverloads
+    constructor(x: Double, y: Double, angle: Angle, velocity: Double = 1.0) : this(
+        Target2D(x, y, angle), velocity
     )
 
     init {

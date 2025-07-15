@@ -1,7 +1,20 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.motion.controllers
 
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pid.PIDCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pid.PIDFCoefficients
 import kotlin.math.abs
+
+class PIDController(kP: Double, kI: Double, kD: Double) : PIDFController(kP, kI, kD, 0.0) {
+    constructor(pidCoefficients: PIDCoefficients) : this(
+        pidCoefficients.kP,
+        pidCoefficients.kI,
+        pidCoefficients.kD
+    )
+
+    fun setPID(kP: Double, kI: Double, kD: Double) {
+        setPIDF(kP, kI, kD, 0.0)
+    }
+}
 
 open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF: Double) {
     private var setPoint: Double = 0.0
@@ -86,7 +99,7 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         return calculate(pv)
     }
 
-    fun calculate(pv: Double): Double {
+    private fun calculate(pv: Double): Double {
         prevErrorVal = errorValP
 
         val currentTimeStamp = System.nanoTime() / 1E9

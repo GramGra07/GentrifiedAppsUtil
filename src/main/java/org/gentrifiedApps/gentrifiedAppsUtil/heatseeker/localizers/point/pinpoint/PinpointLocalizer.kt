@@ -1,5 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.pinpoint
 
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
@@ -9,10 +10,9 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.PointLocalizer
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.pinpoint.GoBildaPinpointDriver.GoBildaOdometryPods
 
 data class GoBildaPinpointParams(
-    val offset: Point, val encoderResolution: GoBildaOdometryPods,
+    val offset: Point, val encoderResolution: GoBildaPinpointDriver.GoBildaOdometryPods,
     val e1Direction: GoBildaPinpointDriver.EncoderDirection,
     val e2Direction: GoBildaPinpointDriver.EncoderDirection
 ) {
@@ -20,7 +20,7 @@ data class GoBildaPinpointParams(
         pinpoint.initialize()
         pinpoint.recalibrateIMU()
         pinpoint.resetPosAndIMU()
-        pinpoint.setOffsets(offset.x, offset.y)
+        pinpoint.setOffsets(offset.x, offset.y, DistanceUnit.INCH)
         pinpoint.setEncoderResolution(encoderResolution)
         pinpoint.setEncoderDirections(e1Direction, e2Direction)
     }
