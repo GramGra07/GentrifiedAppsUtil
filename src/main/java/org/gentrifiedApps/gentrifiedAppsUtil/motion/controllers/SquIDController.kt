@@ -13,7 +13,11 @@ class SquIDController(var p: Double, var d: Double) {
     constructor(p: Double) : this(p, 0.0)
 
     fun calculate(setpoint: Double, current: Double): Double {
-        return (sqrt(abs((setpoint - current) * p)) * sign(setpoint - current))
-//        +(d * setpoint - current)
+        val error: Double = setpoint - current
+        return signSqrt(error) * p
+    }
+
+    fun signSqrt(va: Double): Double {
+        return (sign(va) * sqrt(abs(va)))
     }
 }
