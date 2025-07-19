@@ -34,7 +34,7 @@ class DriftTunerOpMode @JvmOverloads constructor(
                 driver.setWheelPower(DrivePowerCoefficients(1.0))
             }
             driver.setWheelPower(DrivePowerCoefficients(0.0))
-            val velocitiesP = driver.getPositions().asPercent()
+            val velocitiesP = driver.getAbsPositions().asPercent()
             val driftV = velocitiesP.applyDriftNormalizer(threshold)
             if (driftV.all0()) {
                 Scribe.instance.setSet("Drift Tuner").logDebug("No drift detected")

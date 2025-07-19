@@ -45,7 +45,7 @@ class DriveSpeedometer(val driver: Driver, val encoderSpecs: EncoderSpecs) :
         telemetry.addLine("Speed ${round(speed, 2)} m/s ")
     }
 
-    var lastPoses = driver.getPositions()
+    var lastPoses = driver.getAbsPositions()
     private fun ticksToInches(ticks: Int): Double {
         return ticks.toDouble() / encoderSpecs.ticksPerInch
     }
@@ -55,10 +55,10 @@ class DriveSpeedometer(val driver: Driver, val encoderSpecs: EncoderSpecs) :
      */
     override fun update() {
         speed = ((ticksToInches(
-            (lastPoses.abs() - driver.getPositions().abs()).average().toInt()
+            (lastPoses.abs() - driver.getAbsPositions().abs()).average().toInt()
         ) * 0.0254) / (elapsedTime.seconds() - lastTime)).absoluteValue
         lastTime = elapsedTime.seconds()
-        lastPoses = driver.getPositions()
+        lastPoses = driver.getAbsPositions()
     }
 }
 

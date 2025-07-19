@@ -57,7 +57,7 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
     override val odometerFileManager: OdometerFileManager = OdometerFileManager()
     override var ODO: Double = odometerFileManager.readOdometryData()
     override var encoderSpecs: EncoderSpecs? = odometerFileManager.readConfigData()
-    var lastPoses = driver.getPositions()
+    var lastPoses = driver.getAbsPositions()
 
     /**
      * Resets the odometer to 0.
@@ -71,7 +71,7 @@ class DriveOdometer(val driver: Driver) : Odometer(driver.opMode) {
      * Updates the odometer with the current position of the driver.
      */
     override fun update() {
-        val poses = driver.getPositions()
+        val poses = driver.getAbsPositions()
         ODO += (poses.abs() - lastPoses.abs()).abs().average().absoluteValue
         lastPoses = poses
     }

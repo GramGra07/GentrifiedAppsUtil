@@ -14,7 +14,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
 import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.MovementData
-import kotlin.math.abs
 
 
 enum class DRIVETYPE {
@@ -63,12 +62,16 @@ class Driver @JvmOverloads constructor(
             }
         }
 
-    internal fun getPositions(): DriveVelocities {
+    internal fun getAbsPositions(): DriveVelocities {
+        return getPositions().abs()
+    }
+
+    fun getPositions(): DriveVelocities {
         return DriveVelocities(
-            abs(fl.currentPosition),
-            abs(fr.currentPosition),
-            abs(bl.currentPosition),
-            abs(br.currentPosition)
+            fl.currentPosition,
+            fr.currentPosition,
+            bl.currentPosition,
+            br.currentPosition
         )
     }
 
