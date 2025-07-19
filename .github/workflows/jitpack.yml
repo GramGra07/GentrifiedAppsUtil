@@ -1,7 +1,6 @@
 name: Check Latest JitPack Build
 
 on:
-  push:
   workflow_dispatch:  # Trigger manually
 
 jobs:
