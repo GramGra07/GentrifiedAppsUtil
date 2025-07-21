@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.moa
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import androidx.core.graphics.createBitmap
 import org.firstinspires.ftc.robotcore.external.function.Consumer
 import org.firstinspires.ftc.robotcore.external.function.Continuation
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource
@@ -29,7 +30,7 @@ class MeanColorOfAreaDetector(
             this(CSpace.RGB, builder, builder2, assumption)
 
 
-    private val lastFrame = AtomicReference(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565))
+    private val lastFrame = AtomicReference(createBitmap(1, 1, Bitmap.Config.RGB_565))
     private var colorSpaceMat = Mat()
     private var submatOne = Mat()
     private var submatTwo = Mat()

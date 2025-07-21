@@ -2,6 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import androidx.core.graphics.createBitmap
 import org.firstinspires.ftc.robotcore.external.function.Consumer
 import org.firstinspires.ftc.robotcore.external.function.Continuation
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource
@@ -25,7 +26,7 @@ class BlackAndWhiteDotDetector(
     constructor(dotColor: DotColor) : this(dotColor, DotDetectionBuilder())
     constructor(builder: DotDetectionBuilder) : this(DotColor.WHITE, builder)
 
-    private val lastFrame = AtomicReference(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565))
+    private val lastFrame = AtomicReference(createBitmap(1, 1, Bitmap.Config.RGB_565))
     private var submat = Mat()
     private var dotColor: DotColor
     private var builder: DotDetectionBuilder
@@ -44,7 +45,7 @@ class BlackAndWhiteDotDetector(
     }
 
     override fun init(width: Int, height: Int, calibration: CameraCalibration) {
-        lastFrame.set(Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565))
+        lastFrame.set(createBitmap(width, height, Bitmap.Config.RGB_565))
     }
 
     override fun processFrame(frame: Mat, captureTimeNanos: Long): Any {

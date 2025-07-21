@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.velocityVision
+package test.kotlin.classes
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.Alliance
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.bow.BlackAndWhiteDotDetector
@@ -10,7 +10,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.moa.MeanCo
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.ReturnType
 import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.sample.SampleDataDetector
 import org.junit.Test
-import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.opencv.core.Rect
 import org.opencv.core.Scalar
 
@@ -39,16 +39,20 @@ class VelocityVisionBuilderTest {
 
     @Test
     fun testMOA() {
-        assertDoesNotThrow {
-            MeanColorOfAreaDetector(
-                DetectionBuilder(
-                    Rect(50, 50, 100, 75), "testd1", Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0)
-                ),
-                DetectionBuilder(
-                    Rect(50, 50, 100, 75), "testd2", Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0)
-                ),
-                AssumedBuilder { println("Assumed") }
-            )
-        }
+        MeanColorOfAreaDetector(
+            DetectionBuilder(
+                Rect(50, 50, 100, 75),
+                "testd1",
+                Scalar(0.0, 0.0, 0.0),
+                Scalar(0.0, 0.0, 0.0)
+            ),
+            DetectionBuilder(
+                Rect(50, 50, 100, 75),
+                "testd2",
+                Scalar(0.0, 0.0, 0.0),
+                Scalar(0.0, 0.0, 0.0)
+            ),
+            AssumedBuilder { println("Assumed") }
+        )
     }
 }

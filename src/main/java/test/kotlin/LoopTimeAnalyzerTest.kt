@@ -1,11 +1,11 @@
 package test.kotlin
 
-import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.LoopTimeAnalyzer
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
+import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.LoopTimeAnalyzer
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.analyzer.TestableFunctions
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Test
+import org.testng.Assert.assertEquals
+import org.testng.Assert.assertTrue
 
 
 class LoopTimeAnalyzerTest {
@@ -15,7 +15,8 @@ class LoopTimeAnalyzerTest {
     val testableFunction = TestableFunctions("TestFunction", function)
     private var loopTimeAnalyzer: LoopTimeAnalyzer =
         LoopTimeAnalyzer(
-            null,10.0, initLoop, listOf(testableFunction))
+            null, 10.0, initLoop, listOf(testableFunction)
+        )
 
 
     @Test
@@ -33,7 +34,7 @@ class LoopTimeAnalyzerTest {
     fun initShouldCallInitLoop2() {
         // Arrange
         var bool = false
-        val loopAnalyzer = LoopTimeAnalyzer(null,10.0, { bool = true }, emptyList())
+        val loopAnalyzer = LoopTimeAnalyzer(null, 10.0, { bool = true }, emptyList())
 
         // Act
         loopAnalyzer.init()
@@ -46,7 +47,12 @@ class LoopTimeAnalyzerTest {
     fun testEachShouldUpdate() {
         // Arrange
         var bool = false
-        val loopAnalyzer = LoopTimeAnalyzer(null,10.0, Runnable {}, listOf(TestableFunctions("TestFunction", Runnable { bool = true })))
+        val loopAnalyzer = LoopTimeAnalyzer(
+            null,
+            10.0,
+            Runnable {},
+            listOf(TestableFunctions("TestFunction", Runnable { bool = true }))
+        )
         val loopTimeController = LoopTimeController()
         loopAnalyzer.loopTimeController = loopTimeController
 
@@ -63,7 +69,7 @@ class LoopTimeAnalyzerTest {
         var bool1 = false
         val testableFunction1 = TestableFunctions("Function1", { bool1 = true })
         var bool2 = false
-        val testableFunction2 = TestableFunctions("Function2", {bool2 = true})
+        val testableFunction2 = TestableFunctions("Function2", { bool2 = true })
 
         val loopAnalyzer = LoopTimeAnalyzer(
             null,
@@ -158,7 +164,8 @@ class LoopTimeAnalyzerTest {
         var wasInitCalled = false
         val initLoop = Runnable { wasInitCalled = true }
         val loopAnalyzer = LoopTimeAnalyzer(
-            null,10.0, initLoop, emptyList())
+            null, 10.0, initLoop, emptyList()
+        )
 
         loopAnalyzer.init()
 

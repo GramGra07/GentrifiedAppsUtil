@@ -89,13 +89,13 @@ dependencies {
     implementation libs.vision
 
     implementation libs.core.ktx
-    implementation libs.junit.v412
-    implementation libs.junit.jupiter
-    implementation libs.testng
+    compileOnly libs.junit.v412
+    compileOnly libs.junit.jupiter
+    compileOnly libs.testng
 
     implementation libs.listenablefuture
-    testImplementation libs.kotlin.test
-    testImplementation libs.kotlinx.coroutines.test
+    compileOnly libs.kotlin.test
+    compileOnly libs.kotlinx.coroutines.test
 }
 
 afterEvaluate {
