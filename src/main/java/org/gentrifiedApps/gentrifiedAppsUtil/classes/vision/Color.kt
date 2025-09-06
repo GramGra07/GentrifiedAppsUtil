@@ -4,6 +4,11 @@ import org.firstinspires.ftc.vision.opencv.ColorSpace
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.BinaryArray
 import org.opencv.core.Scalar
 
+enum class DecodeColor {
+    PURPLE,
+    GREEN
+}
+
 enum class Color {
     RED, BLUE, YELLOW, NONE;
 
