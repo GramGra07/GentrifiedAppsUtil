@@ -1,56 +1,48 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.decode
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode.blackboard
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.vision.DecodeColor
 
-data class ColorPattern(var index0: Int, var index1: Int, var index2: Int) {
-    constructor(list: List<Int>) : this(list[0], list[1], list[2])
-    constructor() : this(0, 0, 0)
-    constructor(a: DecodeColor, b: DecodeColor, c: DecodeColor) : this(
-        when (a) {
-            DecodeColor.PURPLE -> 0
-            DecodeColor.GREEN -> 1
-        },
-        when (b) {
-            DecodeColor.PURPLE -> 0
-            DecodeColor.GREEN -> 1
-        },
-        when (c) {
-            DecodeColor.PURPLE -> 0
-            DecodeColor.GREEN -> 1
-        }
-    )
+enum class PatternType() {
+    PPG, PGP, GPP, NONE;
 
-    constructor(aTag: Int) : this(
-        //TODO: make sure this is right
-        //TODO add error checking and test cases
-    )
+    fun store() {
+        blackboard.put("Motif", this)
+    }
 
-    fun asList(): List<Int> {
-        return listOf(index0, index1, index2)
+    fun getFromMemory(): PatternType {
+        return blackboard.get("Motif") as PatternType? ?: NONE
     }
 
     override fun toString(): String {
-        return "ColorPattern(index0=$index0, index1=$index1, index2=$index2)"
+        return this.name
     }
 
-    fun toStringColors(): String {
-        return "ColorPattern(first=${toColor(index0)}, middle=${toColor(index1)}, last=${
-            toColor(
-                index2
-            )
-        })"
+    fun middle(): DecodeColor {
+        return when (this) {
+            PPG -> DecodeColor.PURPLE
+            PGP -> DecodeColor.GREEN
+            GPP -> DecodeColor.PURPLE
+            NONE -> DecodeColor.PURPLE // Default case, should not happen
+        }
     }
 
-    fun middle(): Int {
-        return index1
+    fun first(): DecodeColor {
+        return when (this) {
+            PPG -> DecodeColor.PURPLE
+            PGP -> DecodeColor.PURPLE
+            GPP -> DecodeColor.GREEN
+            NONE -> DecodeColor.PURPLE // Default case, should not happen
+        }
     }
 
-    fun first(): Int {
-        return index0
-    }
-
-    fun last(): Int {
-        return index2
+    fun last(): DecodeColor {
+        return when (this) {
+            PPG -> DecodeColor.GREEN
+            PGP -> DecodeColor.PURPLE
+            GPP -> DecodeColor.PURPLE
+            NONE -> DecodeColor.PURPLE // Default case, should not happen
+        }
     }
 
     fun toColor(index: Int): DecodeColor {
@@ -60,4 +52,6 @@ data class ColorPattern(var index0: Int, var index1: Int, var index2: Int) {
             else -> DecodeColor.PURPLE // Default case, should not happen
         }
     }
+
+
 }

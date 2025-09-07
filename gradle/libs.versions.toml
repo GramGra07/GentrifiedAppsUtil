@@ -15,7 +15,7 @@ listenablefuture = "9999.0-empty-to-avoid-conflict-with-guava"
 jetbrainsKotlinJvm = "1.9.0"
 coreKtxVersion = "1.13.1"
 junitJupiter = "5.8.1"
-robotcore = "10.3.0"
+robotcore = "11.0.0"
 testng = "6.9.6"
 
 [libraries]

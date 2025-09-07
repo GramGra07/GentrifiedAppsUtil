@@ -11,4 +11,10 @@ data class DirectionalVector(val magnitude: Double, val direction: Angle) {
     fun yComponent(): Double {
         return magnitude * sin(direction.toRadians())
     }
+
+    companion object {
+        fun zeros(): DirectionalVector {
+            return DirectionalVector(0.0, Angle(0.0))
+        }
+    }
 }
