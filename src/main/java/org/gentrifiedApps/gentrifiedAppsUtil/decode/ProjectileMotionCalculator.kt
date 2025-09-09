@@ -14,7 +14,7 @@ class ProjectileMotionCalculator(
     var initialVelocity: Double?,
     var range: Double?
 ) {
-    val targetHeight = 5
+    val targetHeight = 38.0  // inches
     val g = 9.81
     private val dy: Double get() = targetHeight - launchHeight
 

@@ -89,13 +89,15 @@ dependencies {
     implementation libs.vision
 
     implementation libs.core.ktx
-    compileOnly libs.junit.v412
-    compileOnly libs.junit.jupiter
-    compileOnly libs.testng
 
     implementation libs.listenablefuture
-    compileOnly libs.kotlin.test
-    compileOnly libs.kotlinx.coroutines.test
+    // JUnit 5 API at compile time
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.2"
+    // Engine at runtime (use testImplementation if testRuntimeOnly is not recognized)
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.10.2"
+
+    // Kotlin test bindings for JUnit 5 (optional, if you use kotlin.test)
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:1.9.25"
 }
 
 afterEvaluate {

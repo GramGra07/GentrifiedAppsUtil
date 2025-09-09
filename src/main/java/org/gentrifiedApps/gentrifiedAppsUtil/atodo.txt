@@ -1,3 +1,5 @@
 //todo
 command base
 HeatSeeker
+
+fix vv tests and sequential run tests and sm test cases

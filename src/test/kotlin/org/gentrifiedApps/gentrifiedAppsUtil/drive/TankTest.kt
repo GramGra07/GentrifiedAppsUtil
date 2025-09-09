@@ -1,0 +1,43 @@
+package org.gentrifiedApps.gentrifiedAppsUtil.drive
+
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class TankTest {
+    @Test
+    fun testDriveTank_Forward() {
+        val drivePowerCoefficients = TankDriver.driveTank(1.0, 1.0)
+        assertEquals(DrivePowerCoefficients(1.0, 1.0, 1.0, 1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveTank_Backward() {
+        val drivePowerCoefficients = TankDriver.driveTank(-1.0, -1.0)
+        assertEquals(DrivePowerCoefficients(-1.0, -1.0, -1.0, -1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveTank_TurnLeft() {
+        val drivePowerCoefficients = TankDriver.driveTank(-1.0, 1.0)
+        assertEquals(DrivePowerCoefficients(-1.0, 1.0, -1.0, 1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveTank_TurnRight() {
+        val drivePowerCoefficients = TankDriver.driveTank(1.0, -1.0)
+        assertEquals(DrivePowerCoefficients(1.0, -1.0, 1.0, -1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveTankRobotCentric_Forward() {
+        val drivePowerCoefficients = TankDriver.driveTankRobotCentric(1.0, 0.0)
+        assertEquals(DrivePowerCoefficients(1.0, 1.0, 1.0, 1.0), drivePowerCoefficients)
+    }
+
+    @Test
+    fun testDriveTankRobotCentric_Rotate() {
+        val drivePowerCoefficients = TankDriver.driveTankRobotCentric(0.0, 1.0)
+        assertEquals(DrivePowerCoefficients(-1.0, 1.0, -1.0, 1.0), drivePowerCoefficients)
+    }
+}
