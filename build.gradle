@@ -90,7 +90,7 @@ dependencies {
 
     implementation libs.core.ktx
 
-    implementation libs.listenablefuture
+//    implementation libs.listenablefuture
     // JUnit 5 API at compile time
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.2"
     // Engine at runtime (use testImplementation if testRuntimeOnly is not recognized)
