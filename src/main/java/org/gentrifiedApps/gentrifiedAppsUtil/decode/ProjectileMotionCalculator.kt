@@ -8,34 +8,33 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.math.tan
 
-class ProjectileMotionCalculator(
-    var launchHeight: Double,
-    var launchAngle: Angle?,
-    var initialVelocity: Double?,
-    var range: Double?
-) {
+class ProjectileMotionCalculator() {
     val targetHeight = 38.0  // inches
     val g = 9.81
-    private val dy: Double get() = targetHeight - launchHeight
+    private var dy: Double = targetHeight
 
-    fun calculateTimeOfFlight(): Double {
-        val v0 = requireNotNull(initialVelocity)
-        val theta = requireNotNull(launchAngle).toRadians()
+    fun calculateTimeOfFlight(
+        initialVelocity: Double,
+        launchAngle: Angle,
+        launchHeight: Double
+    ): Double {
+        val v0 = initialVelocity
+        val theta = launchAngle.toRadians()
         val vy0 = v0 * sin(theta)
-        val disc = vy0 * vy0 - 2.0 * g * dy
+        val disc = vy0 * vy0 - 2.0 * g * (dy - launchHeight)
         require(disc >= 0.0) { "Target height not reachable for given v0 and angle." }
         // Use the '+' root for the landing time
         return (vy0 + sqrt(disc)) / g
     }
 
-    fun calculateRange(): Double {
-        val v0 = requireNotNull(initialVelocity)
-        val theta = requireNotNull(launchAngle).toRadians()
-        return v0 * cos(theta) * calculateTimeOfFlight()
+    fun calculateRange(initialVelocity: Double, launchAngle: Angle, launchHeight: Double): Double {
+        val v0 = (initialVelocity)
+        val theta = (launchAngle).toRadians()
+        return v0 * cos(theta) * calculateTimeOfFlight(initialVelocity, launchAngle, launchHeight)
     }
 
     // Returns the two valid angles (low, high) if both exist; one if grazing; throws if impossible.
-    fun calculateRequiredLaunchAngles(): List<Angle> {
+    fun calculateRequiredLaunchAngles(initialVelocity: Double, range: Double): List<Angle> {
         val v0 = requireNotNull(initialVelocity)
         val R = requireNotNull(range)
         require(R > 0) { "Range must be positive." }
@@ -56,7 +55,7 @@ class ProjectileMotionCalculator(
         return if (root == 0.0) listOf(low) else listOf(low, high)
     }
 
-    fun calculateRequiredInitialVelocity(): Double {
+    fun calculateRequiredInitialVelocity(launchAngle: Angle, range: Double): Double {
         val R = requireNotNull(range)
         val theta = requireNotNull(launchAngle).toRadians()
         require(R > 0) { "Range must be positive." }
@@ -70,12 +69,17 @@ class ProjectileMotionCalculator(
         return sqrt((g * R * R) / denom)
     }
 
-    fun willLand(): Boolean {
+    fun willLand(
+        initialVelocity: Double,
+        launchAngle: Angle,
+        launchHeight: Double,
+        range: Double
+    ): Boolean {
         // detects if given all parameters, the projectile will land at the target height and range
         val v0 = requireNotNull(initialVelocity)
         val theta = requireNotNull(launchAngle).toRadians()
         val R = requireNotNull(range)
-        val time = calculateTimeOfFlight()
+        val time = calculateTimeOfFlight(initialVelocity, launchAngle, launchHeight)
         val xAtTime = v0 * cos(theta) * time
         val yAtTime = launchHeight + v0 * sin(theta) * time - 0.5 * g * time.pow(2)
         val epsilon = 0.01

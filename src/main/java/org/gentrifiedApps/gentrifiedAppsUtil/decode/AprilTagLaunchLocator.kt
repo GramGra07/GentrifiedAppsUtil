@@ -12,7 +12,7 @@ data class AprilTagPhysicsData(
 
 class AprilTagLaunchLocator(var aprilTag: AprilTagProcessor, val height: Double) {
     val tagsOfInterest = listOf<Int>(20, 24)
-    val projectileMotionCalculator = ProjectileMotionCalculator(height, null, null, null)
+    val projectileMotionCalculator = ProjectileMotionCalculator()
     var aprilTagPhysicsData = AprilTagPhysicsData(0.0, 0.0, 0.0)
 
     fun detect(): AprilTagPhysicsData? {
@@ -42,22 +42,26 @@ class AprilTagLaunchLocator(var aprilTag: AprilTagProcessor, val height: Double)
     }
 
     fun getWillHitTarget(initialVelocity: Double, launchAngle: Angle): Boolean {
-        projectileMotionCalculator.initialVelocity = initialVelocity
-        projectileMotionCalculator.range = aprilTagPhysicsData.range
-        projectileMotionCalculator.launchAngle = launchAngle
-        return projectileMotionCalculator.willLand()
+        return projectileMotionCalculator.willLand(
+            initialVelocity,
+            launchAngle,
+            height,
+            aprilTagPhysicsData.range
+        )
     }
 
     fun getRequiredLaunchAngles(initialVelocity: Double): List<Angle> {
-        projectileMotionCalculator.initialVelocity = initialVelocity
-        projectileMotionCalculator.range = aprilTagPhysicsData.range
-        return projectileMotionCalculator.calculateRequiredLaunchAngles()
+        return projectileMotionCalculator.calculateRequiredLaunchAngles(
+            initialVelocity,
+            aprilTagPhysicsData.range
+        )
     }
 
     fun getRequiredInitialVelocity(launchAngle: Angle): Double {
-        projectileMotionCalculator.launchAngle = launchAngle
-        projectileMotionCalculator.range = aprilTagPhysicsData.range
-        return projectileMotionCalculator.calculateRequiredInitialVelocity()
+        return projectileMotionCalculator.calculateRequiredInitialVelocity(
+            launchAngle,
+            aprilTagPhysicsData.range
+        )
     }
 
 
