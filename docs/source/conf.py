@@ -31,5 +31,7 @@ source_suffix = {
 html_theme = "furo"
 
 html_static_path = ['_static']  # keep if not present
+html_extra_path = ['summary.html']
+
 pygments_style = "friendly"
 pygments_dark_style = "native"
