@@ -84,10 +84,10 @@ public class ConfigMaker {
         return this;
     }
 
-    public ConfigMaker addModule(ModuleType type, String name) {
+    public ConfigMaker addModule(ModuleType type, String name, int port) {
 
         if (type == ModuleType.EXPANSION_HUB && !added) {
-            EHub = String.format("      <LynxModule name=\"%s\" port=\"1\">\n", name);
+            EHub = String.format("      <LynxModule name=\"%s\" port=\"%s\">\n", name, port);
             added = true;
         }
         return this;
