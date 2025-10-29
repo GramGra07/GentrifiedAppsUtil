@@ -9,7 +9,7 @@ Basically, the config creator allows you to make your config in your code, then 
 
 **The preferred method is to use the Config Creator website.**
 
-Use this site to generate your config: [Config Creator](https://gramgra07.github.io/ConfigurationCreator/)
+Use this site to generate your config: [Config Creator](https://gramgra07.github.io/gg-web/content/ftcUtils/config_creator/index.html)
 
 Then download it and put it in your teamcode folder in your project.
 
