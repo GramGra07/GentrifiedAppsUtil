@@ -1,6 +1,7 @@
 # Setup
 
 The generic setup for this is incredibly easy, just create the `OpModeRepeaterRegistrar` class and copy in this code. 
+
 Then, rename your drive motors in the `Driver` constructor to match your robot.
 Then, change the `name` variable to the name of your recording if you want to.
 

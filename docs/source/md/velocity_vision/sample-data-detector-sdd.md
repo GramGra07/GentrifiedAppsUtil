@@ -26,12 +26,12 @@ import android.util.Size;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.gentrifiedApps.velocityvision.pipelines.sample.ReturnType;
+import org.gentrifiedApps.velocityVision.pipelines.sample.ReturnType;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.gentrifiedApps.velocityvision.enums.Alliance;
-import org.gentrifiedApps.velocityvision.pipelines.sample.CameraLock;
-import org.gentrifiedApps.velocityvision.pipelines.sample.SampleDataDetector;
+import org.gentrifiedApps.classes.generics.Alliance;
+import org.gentrifiedApps.velocityVision.pipelines.sample.CameraLock;
+import org.gentrifiedApps.velocityVision.pipelines.sample.SampleDataDetector;
 @Autonomous
 public class testAuto extends LinearOpMode {
     private SampleDataDetector processor;
