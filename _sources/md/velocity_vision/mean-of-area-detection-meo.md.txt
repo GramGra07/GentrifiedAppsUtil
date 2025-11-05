@@ -38,10 +38,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.gentrifiedApps.velocityvision.pipelines.moa.AssumedBuilder;
-import org.gentrifiedApps.velocityvision.pipelines.moa.DetectionBuilder;
-import org.gentrifiedApps.velocityvision.pipelines.moa.MeanColorOfAreaDetector;
-import org.gentrifiedApps.velocityvision.enums.CSpace;
+import org.gentrifiedApps.velocityVision.pipelines.moa.AssumedBuilder;
+import org.gentrifiedApps.velocityVision.pipelines.moa.DetectionBuilder;
+import org.gentrifiedApps.velocityVision.pipelines.moa.MeanColorOfAreaDetector;
+import org.gentrifiedApps.classes.vision.CSpace;
 import org.opencv.core.Rect;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;

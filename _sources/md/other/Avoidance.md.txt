@@ -61,8 +61,8 @@ boolean isInField = avoidanceController.inField(robotPosition) != null;
 ## Example: Minimal OpMode
 
 ```java
-import org.firstinspires.ftc.teamcode.ggutil.AvoidanceController;
-import org.firstinspires.ftc.teamcode.ggutil.VectorField;
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance.VectorField;
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance.AvoidanceController;
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients;
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point;
 
