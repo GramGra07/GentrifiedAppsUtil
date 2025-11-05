@@ -28,4 +28,3 @@ packagingOptions {
     exclude 'META-INF/LICENSE.md'
 }
 ```
-
