@@ -14,8 +14,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver;
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.teleopTracker.TeleOpCopyRunner;
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.teleopTracker.TeleOpTrackerOpMode;
+import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.TeleOpCopyRunner;
+import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.TeleOpTrackerOpMode;
 
 public final class OpModeRepeaterRegistrar {
 
