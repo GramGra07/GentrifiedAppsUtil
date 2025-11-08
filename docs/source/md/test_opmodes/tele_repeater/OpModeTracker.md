@@ -1,4 +1,4 @@
-# OpModeTracker 
+# OpModeTracker  
 
 The OpModeTracker will run for a total of 30 seconds but any stops before that time will be recorded correctly.
 
