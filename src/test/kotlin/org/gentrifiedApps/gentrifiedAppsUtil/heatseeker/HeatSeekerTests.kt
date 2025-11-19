@@ -9,9 +9,11 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generators.EncoderSpecsB
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.Path
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.PathType
 import org.junit.jupiter.api.Assertions.assertEquals
+import kotlin.math.sqrt
 import kotlin.test.Test
 
 class HeatSeekerTests {
@@ -170,6 +172,42 @@ class DriverTests {
         assert(vectors2.backLeft == -1.0)
         assert(vectors2.backRight == 1.0)
         val vectors3 = Driver.findWheelVectors(0.0, 0.0, 1.0)
+    }
+}
+
+class VectorTests {
+    @Test
+    fun testVectorCreation() {
+        val v1 = Vector(1.0, 2.0, 0.0)
+        val v2 = Vector(1.9, 2.0, 10.0)
+        assert(v1.a != v2.a)
+        assert(v1.b == v2.b)
+        assert(v1.c != v2.c)
+    }
+
+    @Test
+    fun testVectorMath() {
+        val v1 = Vector(1.0, 1.0, 1.0)
+        val v2 = Vector(2.0, 2.0, 1.0)
+        val expectedAdd = Vector(3.0, 3.0, 2.0)
+        assert(expectedAdd == v1 + v2)
+        val expectedSub = Vector(-1.0, -1.0, 0.0)
+        assert(expectedSub == v1 - v2)
+        val expectedMultScale = Vector(2.0, 2.0, 2.0)
+        assert(expectedMultScale == v1 * 2.0)
+        val expectedCross = Vector(-1.0, 1.0, 0.0)
+        assert(expectedCross == v1.crossProduct(v2))
+        val expectedDot = 2 + 2 + 1.0
+        assert(expectedDot == v1 * v2)
+        val expectedDerivation = Vector(3.0, 4.0, 0.0)
+        assert(
+            expectedDerivation == Vector.of(
+                Target2D(1.0, 2.0, Angle(90.0)),
+                Target2D(4.0, 6.0, Angle(90.0))
+            )
+        )
+        val expectedMagnitude = sqrt(1.0 + 1.0 + 1.0)
+        assert(expectedMagnitude == v1.magnitude())
     }
 }
 
