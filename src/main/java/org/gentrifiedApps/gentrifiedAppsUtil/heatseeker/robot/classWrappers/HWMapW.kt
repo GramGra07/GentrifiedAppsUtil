@@ -1,7 +1,6 @@
-// Kotlin
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers
 
-class HWMapW {
+internal class HWMapW {
 
     @JvmOverloads
     @Suppress("UNCHECKED_CAST")
@@ -34,7 +33,7 @@ class HWMapW {
         }
 
         throw IllegalArgumentException(
-            "No suitable constructor found for ${cls.simpleName}. Expected one of: (String, Int), (String), or ()."
+            "No suitable constructor found for ${cls.simpleName}. Expected one of: (String, Int), (String), or ()"
         )
     }
 

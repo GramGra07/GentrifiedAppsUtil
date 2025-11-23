@@ -1,19 +1,20 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers
 
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.OutputFormatter
+
 class TelemetryW {
     constructor() {
-        println("TelemetryW booted")
     }
 
     private var toLog: ArrayList<String> = arrayListOf()
     fun addData(caption: String, value: Object) {
 
-        toLog.plus("$caption: $value")
+        toLog.add("$caption: $value")
     }
 
     fun update() {
-        for (log in toLog) {
-            println(log)
+        for (i in toLog.indices) {
+            OutputFormatter.instance.sendData("TelemetryW", toLog[i])
         }
         toLog.clear()
     }

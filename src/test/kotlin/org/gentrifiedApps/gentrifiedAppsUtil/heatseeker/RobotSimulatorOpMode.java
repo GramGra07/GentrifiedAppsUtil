@@ -1,9 +1,9 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot;
+package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker;
 
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.LinearOpModeW;
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.DcMotorW;
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.LinearOpModeW;
 
-public class RobotSimulatorOpMode extends LinearOpModeW {
+class RobotSimulatorOpMode extends LinearOpModeW {
     public DcMotorW leftDrive = null;
     public DcMotorW rightDrive = null;
 
@@ -16,8 +16,8 @@ public class RobotSimulatorOpMode extends LinearOpModeW {
         telemetry.update();
         waitForStart();
 
-        while (opModeIsActive()) {
-
+        while (opModeIsActive(5.0)) {
+            leftDrive.setPower(1);
         }
 
     }
