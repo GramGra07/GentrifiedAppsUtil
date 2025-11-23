@@ -26,6 +26,10 @@ data class DrivePowerCoefficients(
         fun zeros(): DrivePowerCoefficients {
             return DrivePowerCoefficients(0.0, 0.0, 0.0, 0.0)
         }
+
+        fun of(one: Double): DrivePowerCoefficients {
+            return DrivePowerCoefficients(one, one, one, one)
+        }
     }
 
     /**

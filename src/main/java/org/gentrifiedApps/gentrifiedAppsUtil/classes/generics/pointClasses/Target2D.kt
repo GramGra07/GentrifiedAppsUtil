@@ -59,4 +59,12 @@ data class Target2D(val x: Double, val y: Double, val angle: Angle) {
     operator fun minus(other: Target2D): Target2D {
         return Target2D(x - other.x, y - other.y, angle - other.angle)
     }
+
+    operator fun times(other: Double): Target2D {
+        return Target2D(x * other, y * other, angle)
+    }
+
+    operator fun div(other: Double): Target2D {
+        return Target2D(x / other, y / other, angle)
+    }
 }

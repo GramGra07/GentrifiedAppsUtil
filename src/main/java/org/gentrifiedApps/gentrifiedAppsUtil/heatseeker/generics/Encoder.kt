@@ -9,7 +9,7 @@ class Encoder(
     private val encoderSpecs: EncoderSpecs,
     name: String,
     direction: DcMotorSimple.Direction,
-    private val hardReverse: Boolean,
+    private var hardReverse: Boolean,
     val offset: Double,
     hwMap: HardwareMap?
 ) {
@@ -30,15 +30,21 @@ class Encoder(
     ) :
             this(encoderSpecs, name, direction, false, 0.0, hwMap)
 
-    private var encoder: DcMotor?
+    public var encoder: DcMotor?
     private var lastPosition = 0
 
     init {
         require(name.isNotBlank()) { "name must not be blank" }
         encoder = hwMap?.get(DcMotor::class.java, name)
         encoder?.direction = direction
+        setLastPosition()
         reset()
     }
+
+    internal fun setHardReverse(hardReverse: Boolean) {
+        this.hardReverse = hardReverse
+    }
+
 
     fun getTicks(): Int {
         if (hardReverse) {

@@ -76,4 +76,14 @@ data class DriveVelocities(
         }
         return Quadruple(0.0)
     }
+
+    companion object {
+        fun zeros(): DriveVelocities {
+            return DriveVelocities(0.0, 0.0, 0.0, 0.0)
+        }
+
+        fun of(vel: Double): DriveVelocities {
+            return DriveVelocities(vel, vel, vel, vel)
+        }
+    }
 }
