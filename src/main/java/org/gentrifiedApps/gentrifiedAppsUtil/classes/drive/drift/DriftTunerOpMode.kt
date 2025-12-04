@@ -37,7 +37,8 @@ class DriftTunerOpMode @JvmOverloads constructor(
             val velocitiesP = driver.getAbsPositions().asPercent()
             val driftV = velocitiesP.applyDriftNormalizer(threshold)
             if (driftV.all0()) {
-                Scribe.instance.setSet("Drift Tuner").logDebug("No drift detected")
+                Scribe.instance.setSet("Drift Tuner")
+                    .logDebug("No drift detected ${velocitiesP.frontLeft}, ${velocitiesP.frontRight}, ${velocitiesP.backLeft}, ${velocitiesP.backRight}")
             } else {
                 Scribe.instance.setSet("Drift Tuner").logDebug(
                     "Drift detected: ${velocitiesP.frontLeft}, ${velocitiesP.frontRight}, ${velocitiesP.backLeft}, ${velocitiesP.backRight}"
@@ -48,7 +49,10 @@ class DriftTunerOpMode @JvmOverloads constructor(
             }
             while (opModeIsActive() && !isStopRequested) {
                 if (driftV.all0()) {
-                    telemetry.addData("Drift Tuner", "No drift detected")
+                    telemetry.addData(
+                        "Drift Tuner",
+                        "No drift detected ${velocitiesP.frontLeft}, ${velocitiesP.frontRight}, ${velocitiesP.backLeft}, ${velocitiesP.backRight}"
+                    )
                 } else {
                     telemetry.addData("Drift Tuner", "Drift detected")
                     telemetry.addData("Front Left", velocitiesP.frontLeft)
