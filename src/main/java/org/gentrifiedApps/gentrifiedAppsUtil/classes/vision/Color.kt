@@ -10,7 +10,7 @@ enum class DecodeColor {
 }
 
 enum class Color {
-    RED, BLUE, YELLOW, NONE;
+    RED, BLUE, YELLOW, NONE, GREEN, ORANGE, WHITE, PURPLE, BLACK;
 
     fun cSpace(colorSpace: ColorSpace): DualScalarPair {
         return when (colorSpace) {
