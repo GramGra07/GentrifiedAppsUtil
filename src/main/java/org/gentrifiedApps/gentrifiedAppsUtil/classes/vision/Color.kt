@@ -19,6 +19,7 @@ enum class Color {
                 BLUE -> ScalarPair(Scalar(0.0, 100.0, 140.0), Scalar(255.0, 130.0, 180.0))
                 YELLOW -> ScalarPair(Scalar(0.0, 140.0, 100.0), Scalar(255.0, 170.0, 130.0))
                 NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
+                else -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
             }
 
             ColorSpace.HSV -> when (this) {
@@ -30,6 +31,7 @@ enum class Color {
                 BLUE -> ScalarPair(Scalar(100.0, 150.0, 0.0), Scalar(130.0, 255.0, 255.0))
                 YELLOW -> ScalarPair(Scalar(20.0, 100.0, 100.0), Scalar(30.0, 255.0, 255.0))
                 NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
+                else -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
             }
 
             ColorSpace.RGB -> when (this) {
@@ -37,6 +39,7 @@ enum class Color {
                 BLUE -> ScalarPair(Scalar(0.0, 0.0, 150.0), Scalar(80.0, 80.0, 255.0))
                 YELLOW -> ScalarPair(Scalar(150.0, 150.0, 0.0), Scalar(255.0, 255.0, 100.0))
                 NONE -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
+                else -> ScalarPair(Scalar(0.0, 0.0, 0.0), Scalar(0.0, 0.0, 0.0))
             }
         }
     }
@@ -57,6 +60,7 @@ enum class Color {
                 BLUE -> "blue"
                 YELLOW -> "yellow"
                 NONE -> "none"
+                else -> "unknown"
             }
         }
 
@@ -75,6 +79,7 @@ enum class Color {
                 BLUE -> BinaryArray(2).apply { this[0] = 1.0; this[1] = 0.0 }
                 YELLOW -> BinaryArray(2).apply { this[0] = 1.0; this[1] = 1.0 }
                 NONE -> BinaryArray(2).apply { this[0] = 0.0; this[1] = 0.0 }
+                else -> BinaryArray(2).apply { this[0] = 0.0; this[1] = 0.0 }
             }
         }
 
