@@ -7,6 +7,10 @@ import kotlin.math.hypot
 
 class MathFunctions {
     companion object {
+        fun withinEpsilon(value: Double, value2: Double, epsilon: Double = 0.005): Boolean {
+            return (abs(value2 - value) < epsilon)
+        }
+
         /**
          * Returns the average of an array of values
          * @param values The values to get the average of

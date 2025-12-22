@@ -1,6 +1,9 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
@@ -9,9 +12,15 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generators.EncoderSpecsB
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking.MecanumLocalizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.Path
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.PathType
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.DcMotorW
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.HWMapW
 import org.junit.jupiter.api.Assertions.assertEquals
+import kotlin.math.abs
+import kotlin.math.sqrt
 import kotlin.test.Test
 
 class HeatSeekerTests {
@@ -173,6 +182,42 @@ class DriverTests {
     }
 }
 
+class VectorTests {
+    @Test
+    fun testVectorCreation() {
+        val v1 = Vector(1.0, 2.0, 0.0)
+        val v2 = Vector(1.9, 2.0, 10.0)
+        assert(v1.a != v2.a)
+        assert(v1.b == v2.b)
+        assert(v1.c != v2.c)
+    }
+
+    @Test
+    fun testVectorMath() {
+        val v1 = Vector(1.0, 1.0, 1.0)
+        val v2 = Vector(2.0, 2.0, 1.0)
+        val expectedAdd = Vector(3.0, 3.0, 2.0)
+        assert(expectedAdd == v1 + v2)
+        val expectedSub = Vector(-1.0, -1.0, 0.0)
+        assert(expectedSub == v1 - v2)
+        val expectedMultScale = Vector(2.0, 2.0, 2.0)
+        assert(expectedMultScale == v1 * 2.0)
+        val expectedCross = Vector(-1.0, 1.0, 0.0)
+        assert(expectedCross == v1.crossProduct(v2))
+        val expectedDot = 2 + 2 + 1.0
+        assert(expectedDot == v1 * v2)
+        val expectedDerivation = Vector(3.0, 4.0, 0.0)
+        assert(
+            expectedDerivation == Vector.of(
+                Target2D(1.0, 2.0, Angle(90.0)),
+                Target2D(4.0, 6.0, Angle(90.0))
+            )
+        )
+        val expectedMagnitude = sqrt(1.0 + 1.0 + 1.0)
+        assert(expectedMagnitude == v1.magnitude())
+    }
+}
+
 class WaypointTests {
     @Test
     fun testWaypointConstructor() {
@@ -304,5 +349,95 @@ class EncoderTests {
         val encoderSpecs = EncoderSpecsBuilder.goBildaSwingArm()
         println(encoderSpecs.ticksPerInch)
         assert(encoderSpecs.ticksPerInch == 2000 / (Math.PI * 1.88976))
+    }
+}
+
+class GenericTests {
+    @Test
+    fun testEncoder() {
+        val specs = EncoderSpecsBuilder.goBildaSwingArm()
+        val hw = HWMapW()
+        val e = Encoder(specs, "testMotor", DcMotorSimple.Direction.FORWARD, false, 0.0, null)
+        e.encoder = DcMotorW("testMotor", 1)
+        assert(e.getTicks() == 0)
+        assert(e.getDelta() == 0)
+        assert(e.getDeltaInches() == 0.0)
+        assert(e.ticksPerIn() == 2000.0 / (1.88976 * Math.PI))
+        e.encoder!!.power = 1.0
+        assert(e.getTicks() == 10)
+        assert(e.getInches() == 10 / specs.ticksPerInch)
+        assert(e.getDelta() == 10)
+        e.setLastPosition()
+        e.encoder!!.power = -1.0
+        assert(e.getTicks() == 0)
+        assert(e.getDelta() == -10)
+        assert(e.getDeltaInches() == -10.0 / specs.ticksPerInch)
+        assert(e.getInches() == 0.0)
+        e.reset()
+        assert(e.getTicks() == 0)
+        assert(e.getDelta() == 0)
+        e.setHardReverse(true)
+        e.encoder!!.power = 1.0
+        assert(e.getTicks() == -10)
+    }
+
+    @Test
+    fun testDriver() {
+        val fl = DcMotorW("fl", 2)
+        val fr = DcMotorW("fr", 2)
+        val br = DcMotorW("br", 2)
+        val bl = DcMotorW("bl", 2)
+
+        val d =
+            Driver().aconstructor(fl, fr, bl, br)
+        assert(d.hwMap == null)
+        assert(d.opMode == null)
+        assert(d.getPositions() == DriveVelocities.zeros())
+        assert(d.getAbsPositions() == DriveVelocities.zeros())
+        val straight = Driver.findWheelVectors(1.0, 0.0, 0.0)
+        d.setWheelPower(straight)
+        assert(d.getPositions() == DriveVelocities.of(10.0))
+        val back = Driver.findWheelVectors(-0.8, 0.0, 0.0)
+        d.setWheelPower(back)
+        assert(d.getPositions() == DriveVelocities.of(2.0))
+        d.resetDriveEncoders()
+        assert(d.getPositions() == DriveVelocities.zeros())
+        assert(
+            d.sendEncoders() == listOf(
+                Pair<DcMotor, String>(fl, ""),
+                Pair<DcMotor, String>(fr, ""),
+                Pair<DcMotor, String>(bl, ""),
+                Pair<DcMotor, String>(br, "")
+            )
+        )
+        assert(d.localizer == null)
+    }
+
+    @Test
+    fun testMecLocalizer() {
+
+        val fl = DcMotorW("fl", 2)
+        val fr = DcMotorW("fr", 2)
+        val br = DcMotorW("br", 2)
+        val bl = DcMotorW("bl", 2)
+
+        val d = Driver("fl", "fr", "bl", "br").aconstructor(fl, fr, bl, br)
+        val specs = EncoderSpecsBuilder.goBildaSwingArm()
+        val m = MecanumLocalizer(d, specs.ticksPerInch, 10.0, Target2D.blank())
+        assert(m.getPose() == Target2D.blank())
+        d.setWheelPower(DrivePowerCoefficients.of(1.0))
+        assert(m.getPose() == Target2D.blank())
+        m.update()
+        assert(m.getPose() != Target2D.blank())
+        assert(abs(m.getPose().x) < 0.005)
+        assert(m.getPose().y == 10.0 / specs.ticksPerInch)
+        assert(m.getPose().h() == Angle(90.0, AngleUnit.DEGREES).toRadians())
+        m.reset()
+        val tr = TestRunner()
+        tr.movements = listOf(DrivePowerCoefficients.of(1.0), DrivePowerCoefficients.of(-1.0))
+        tr.run(m.driver)
+        println(m.getPose())
+        println(tr.calculatePosition())
+        assert(tr.calculatePosition() / specs.ticksPerInch == m.getPose())
     }
 }

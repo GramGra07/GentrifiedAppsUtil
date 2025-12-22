@@ -31,6 +31,23 @@ class Driver @JvmOverloads constructor(
     private val blDirection: Direction = Direction.FORWARD,
     private val brDirection: Direction = Direction.FORWARD,
 ) {
+    constructor() : this(null, "", "", "", "")
+    constructor(
+        flName: String,
+        frName: String,
+        blName: String,
+        brName: String
+    ) : this(
+        flName,
+        frName,
+        blName,
+        brName,
+        Direction.FORWARD,
+        Direction.FORWARD,
+        Direction.FORWARD,
+        Direction.FORWARD
+    )
+
     constructor(
         flName: String,
         frName: String,
@@ -89,11 +106,11 @@ class Driver @JvmOverloads constructor(
         telemetry.addData("BR", br.currentPosition)
     }
 
-    lateinit var hwMap: HardwareMap
-    private lateinit var fl: DcMotor
-    private lateinit var fr: DcMotor
-    private lateinit var bl: DcMotor
-    private lateinit var br: DcMotor
+    public var hwMap: HardwareMap? = null
+    lateinit var fl: DcMotor
+    lateinit var fr: DcMotor
+    lateinit var bl: DcMotor
+    lateinit var br: DcMotor
 
     val drawer = Drawer()
     private val telemetry: TelemetryMaker = TelemetryMaker()
@@ -111,10 +128,10 @@ class Driver @JvmOverloads constructor(
 
     private fun initialize() {
         hwMap = opMode!!.hardwareMap
-        fl = hwMap.get(DcMotor::class.java, flName)
-        fr = hwMap.get(DcMotor::class.java, frName)
-        bl = hwMap.get(DcMotor::class.java, blName)
-        br = hwMap.get(DcMotor::class.java, brName)
+        fl = hwMap!!.get(DcMotor::class.java, flName)
+        fr = hwMap!!.get(DcMotor::class.java, frName)
+        bl = hwMap!!.get(DcMotor::class.java, blName)
+        br = hwMap!!.get(DcMotor::class.java, brName)
         fl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         fr.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         bl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
@@ -188,6 +205,14 @@ class Driver @JvmOverloads constructor(
 
     fun addDriftCorrection(constraint: DrivePowerConstraint): Driver {
         driftCoefficients = constraint
+        return this
+    }
+
+    fun aconstructor(flObj: DcMotor, frObj: DcMotor, blObj: DcMotor, brObj: DcMotor): Driver {
+        fl = flObj
+        fr = frObj
+        bl = blObj
+        br = brObj
         return this
     }
 

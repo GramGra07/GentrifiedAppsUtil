@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point.pinpoint
+package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver
 import com.qualcomm.robotcore.hardware.HardwareMap

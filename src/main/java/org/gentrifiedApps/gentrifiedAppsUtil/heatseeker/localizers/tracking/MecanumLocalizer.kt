@@ -1,20 +1,20 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking
 
+import com.qualcomm.robotcore.hardware.DcMotor
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.ComparablePair
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.TrackingLocalizer
 import kotlin.math.cos
 import kotlin.math.sin
 
 class MecanumLocalizer(
-    driver: Driver, private val ticksPerIn: Double, private val trackWidth: Double,
+    val driver: Driver, private val ticksPerIn: Double, private val trackWidth: Double,
     private val startPose: Target2D,
 ) : TrackingLocalizer() {
-    private var pose: Target2D = Target2D(0.0, 0.0, Angle.blank())
+    private var pose: Target2D = startPose
 
     constructor(driver: Driver, ticksPerIn: Double, trackWidth: Double) : this(
         driver,
@@ -23,47 +23,28 @@ class MecanumLocalizer(
         Target2D(0.0, 0.0, Angle.blank())
     )
 
-    private var fl: Encoder = Encoder(
-        EncoderSpecs.ticksPerIn(ticksPerIn),
-        driver.sendEncoders()[0].second,
-        driver.sendEncoders()[0].first.direction,
-        driver.hwMap
-    )
-    private var fr: Encoder = Encoder(
-        EncoderSpecs.ticksPerIn(ticksPerIn),
-        driver.sendEncoders()[1].second,
-        driver.sendEncoders()[1].first.direction,
-        true,
-        driver.hwMap
-    )
-    private var bl: Encoder = Encoder(
-        EncoderSpecs.ticksPerIn(ticksPerIn),
-        driver.sendEncoders()[2].second,
-        driver.sendEncoders()[2].first.direction,
-        true,
-        driver.hwMap
-    )
-    private var br: Encoder = Encoder(
-        EncoderSpecs.ticksPerIn(ticksPerIn),
-        driver.sendEncoders()[3].second,
-        driver.sendEncoders()[3].first.direction,
-        true,
-        driver.hwMap
-    )
+    var flComp = ComparablePair<Int>(0, 0)
+    var frComp = ComparablePair<Int>(0, 0)
+    var blComp = ComparablePair<Int>(0, 0)
+    var brComp = ComparablePair<Int>(0, 0)
 
     private fun setLast() {
-        fl.setLastPosition()
-        fr.setLastPosition()
-        bl.setLastPosition()
-        br.setLastPosition()
+        flComp.second = flComp.first
+        frComp.second = frComp.first
+        blComp.second = blComp.first
+        brComp.second = brComp.first
     }
 
+    fun reset() {
+        setPose(startPose)
+        driver.resetDriveEncoders()
+    }
 
     override fun initLocalizer() {
-        fl.reset()
-        fr.reset()
-        bl.reset()
-        br.reset()
+        driver.fl.reset()
+        driver.fr.reset()
+        driver.bl.reset()
+        driver.br.reset()
 
         setLast()
 
@@ -71,10 +52,16 @@ class MecanumLocalizer(
     }
 
     override fun update() {
-        val deltaFl = fl.getDeltaInches()
-        val deltaFr = fr.getDeltaInches()
-        val deltaBl = bl.getDeltaInches()
-        val deltaBr = br.getDeltaInches()
+        flComp.first = driver.fl.currentPosition
+        frComp.first = driver.fr.currentPosition
+        blComp.first = driver.bl.currentPosition
+        brComp.first = driver.br.currentPosition
+
+        val deltaFl = (flComp.first - flComp.second) / ticksPerIn
+        val deltaFr = (frComp.first - frComp.second) / ticksPerIn
+        val deltaBl = (blComp.first - blComp.second) / ticksPerIn
+        val deltaBr = (brComp.first - brComp.second) / ticksPerIn
+
 
         // calculate change in all positions
         val deltaFwd = ((deltaFl + deltaFr + deltaBl + deltaBr) / 4)
@@ -82,8 +69,8 @@ class MecanumLocalizer(
         val deltaTurn = (deltaFl - deltaFr + deltaBl - deltaBr) / (4 * trackWidth)
 
         // calculate new position
-        val deltaX = deltaRight * cos(pose.h()) - deltaFwd * sin(pose.h())
-        val deltaY = deltaRight * sin(pose.h()) + deltaFwd * cos(pose.h())
+        val deltaX = deltaRight * sin(pose.h()) - deltaFwd * cos(pose.h())
+        val deltaY = deltaRight * cos(pose.h()) + deltaFwd * sin(pose.h())
 
         val xNew = pose.x + deltaX
         val yNew = pose.y + deltaY
@@ -111,10 +98,25 @@ class MecanumLocalizer(
     }
 
     override fun testEncoderDirection(telemetry: Telemetry) {
-        telemetry.addData("FL Encoder", fl.getTicks())
-        telemetry.addData("FR Encoder", fr.getTicks())
-        telemetry.addData("BL Encoder", bl.getTicks())
-        telemetry.addData("BR Encoder", br.getTicks())
+        telemetry.addData(
+            "FL Encoder", flComp.first
+        )
+        telemetry.addData(
+            "FR Encoder", frComp.first
+        )
+        telemetry.addData(
+            "BL Encoder", blComp.first
+        )
+        telemetry.addData(
+            "BR Encoder", brComp.first
+        )
         telemetry.update()
     }
+}
+
+
+private fun DcMotor.reset() {
+    val prev = this.mode
+    this.mode = DcMotor.RunMode.STOP_AND_RESET_ENCODER
+    this.mode = prev
 }

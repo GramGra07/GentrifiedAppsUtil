@@ -2,8 +2,8 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses
 
 import kotlin.math.PI
 
-data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.DEGREES) {
-    constructor(angle: Double) : this(angle, AngleUnit.DEGREES)
+data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.RADIANS) {
+    constructor(angle: Double) : this(angle, AngleUnit.RADIANS)
 
     fun toRadians(): Double {
         return when (unit) {
@@ -62,7 +62,7 @@ data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.DEGREES) {
     companion object {
         @JvmStatic
         fun blank(): Angle {
-            return Angle(0.0)
+            return Angle(Math.PI / 2)
         }
 
         @JvmStatic

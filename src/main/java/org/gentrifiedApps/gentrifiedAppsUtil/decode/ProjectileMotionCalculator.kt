@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.decode
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
 import kotlin.math.atan
 import kotlin.math.cos
 import kotlin.math.pow
@@ -21,7 +22,7 @@ class ProjectileMotionCalculator() {
         val v0 = initialVelocity
         val theta = launchAngle.toRadians()
         val vy0 = v0 * sin(theta)
-        val disc = vy0 * vy0 - 2.0 * g * (dy - launchHeight)
+        val disc = vy0 * vy0 - (2.0 * g) * (dy - launchHeight)
         require(disc >= 0.0) { "Target height not reachable for given v0 and angle." }
         // Use the '+' root for the landing time
         return (vy0 + sqrt(disc)) / g
@@ -37,7 +38,6 @@ class ProjectileMotionCalculator() {
     fun calculateRequiredLaunchAngles(initialVelocity: Double, range: Double): List<Angle> {
         val v0 = requireNotNull(initialVelocity)
         val R = requireNotNull(range)
-        require(R > 0) { "Range must be positive." }
 
         val v0sq = v0 * v0
         val inner = v0sq * v0sq - g * (g * R * R + 2.0 * dy * v0sq)
@@ -46,7 +46,7 @@ class ProjectileMotionCalculator() {
         val root = sqrt(inner)
         val denom = g * R
 
-        fun ang(numer: Double) = Angle(Math.toDegrees(atan(numer / denom)))
+        fun ang(numer: Double) = Angle(Math.toDegrees(atan(numer / denom)), AngleUnit.DEGREES)
 
         // tanθ = (v0^2 ± sqrt(...)) / (gR)
         val low = ang(v0sq - root)  // lower angle solution

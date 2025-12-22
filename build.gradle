@@ -51,6 +51,13 @@ android {
     testOptions {
         unitTests.all {
             useJUnitPlatform()
+            testLogging {
+                events "PASSED", "FAILED", "SKIPPED", "STANDARD_OUT", "STANDARD_ERROR"
+                showExceptions true
+                showCauses true
+                showStackTraces true
+                exceptionFormat "full"
+            }
         }
     }
     packagingOptions {
@@ -61,7 +68,6 @@ android {
         jvmTarget = '11'
     }
 }
-
 
 allprojects {
     repositories {
