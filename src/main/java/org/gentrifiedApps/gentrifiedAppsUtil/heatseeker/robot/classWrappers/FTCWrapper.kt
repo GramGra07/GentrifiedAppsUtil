@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers
 
-internal abstract class FTCWrapper {
+abstract class FTCWrapper {
     constructor(
         name: String, port: Int
     ) {

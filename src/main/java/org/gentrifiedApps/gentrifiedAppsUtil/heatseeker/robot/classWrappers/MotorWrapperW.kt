@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType
 
 
-internal class DcMotorW(name: String, port: Int) : DcMotor, FTCWrapper(name, port) {
+class DcMotorW(name: String, port: Int) : DcMotor, FTCWrapper(name, port) {
     private var zpb: DcMotor.ZeroPowerBehavior? = null
     override fun getMotorType(): MotorConfigurationType? {
         TODO("Not yet implemented")
