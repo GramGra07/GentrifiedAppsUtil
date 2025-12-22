@@ -1,6 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.decode.ProjectileMotionCalculator
 import kotlin.math.abs
 import kotlin.math.cos
@@ -20,7 +21,7 @@ class ProjectileMotionCalculatorTest {
     @Test
     fun calculateTimeOfFlight_valid() {
         val launchHeight = 0.0
-        val angle = Angle(60.0)
+        val angle = Angle(60.0, AngleUnit.DEGREES)
         val v0 = 50.0
         val g = calc.g
         val dy = calc.targetHeight - launchHeight
@@ -34,7 +35,7 @@ class ProjectileMotionCalculatorTest {
     @Test
     fun calculateRange_valid() {
         val launchHeight = 0.0
-        val angle = Angle(60.0)
+        val angle = Angle(60.0, AngleUnit.DEGREES)
         val v0 = 50.0
         val t = calc.calculateTimeOfFlight(v0, angle, launchHeight)
         val expected = v0 * cos(angle.toRadians()) * t
@@ -45,15 +46,16 @@ class ProjectileMotionCalculatorTest {
     @Test
     fun calculateRequiredLaunchAngles_returnsOriginalAngle() {
         val launchHeight = 0.0
-        val originalAngle = Angle(50.0)
+        val originalAngle = Angle(50.0, AngleUnit.DEGREES)
         val v0 = 60.0
         // Produce a consistent range using the class itself
         val producedRange = calc.calculateRange(v0, originalAngle, launchHeight)
 
         val angles = calc.calculateRequiredLaunchAngles(v0, producedRange)
         assertTrue(angles.isNotEmpty())
+        println(angles)
         assertTrue(
-            angles.any { abs(it.toDegrees() - originalAngle.toDegrees()) < 1e-4 },
+            abs(angles[1].toDegrees() - originalAngle.toDegrees()) < 1e-4,
             "Expected one of returned angles to match original angle."
         )
     }
@@ -61,7 +63,7 @@ class ProjectileMotionCalculatorTest {
     @Test
     fun calculateRequiredInitialVelocity_invertsRangeComputation() {
         val launchHeight = 0.0
-        val angle = Angle(40.0)
+        val angle = Angle(40.0, AngleUnit.DEGREES)
         val v0 = 55.0
 
         val producedRange = calc.calculateRange(v0, angle, launchHeight)
