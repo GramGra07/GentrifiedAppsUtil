@@ -32,7 +32,7 @@ class Target2DTests {
         val target = Target2D.blank()
         assert(target.x == 0.0)
         assert(target.y == 0.0)
-        assert(target.angle.angle == 0.0)
+        assert(target.angle.toRadians() == Math.PI / 2)
         val target2 = Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES))
         assert(target2.x == 1.0)
         assert(target2.y == 2.0)
@@ -46,7 +46,7 @@ class Target2DTests {
         val target = Target2D.blank()
         assert(target.x == 0.0)
         assert(target.y == 0.0)
-        assert(target.angle.angle == 0.0)
+        assert(target.angle.angle == Math.PI / 2)
     }
 
     @Test
@@ -90,15 +90,24 @@ class AngleTests {
     @Test
     fun testAngle() {
         val angle = Angle.blank()
-        assert(angle.angle == 0.0)
-        assert(angle.unit == AngleUnit.DEGREES)
-        assert(angle.toRadians() == 0.0)
-        assert(angle.toDegrees() == 0.0)
-        assert(angle.toAngleUnit(AngleUnit.DEGREES).angle == 0.0)
-        assert(angle.toAngleUnit(AngleUnit.RADIANS).angle == 0.0)
-        assert(angle.angleWrap().angle == 0.0)
-        assert(angle.errorTo(Angle(1.0, AngleUnit.DEGREES)).angle == 1.0)
-        assert(angle.errorToD(Angle(1.0, AngleUnit.DEGREES)) == 1.0)
+        assert(angle.angle == Math.PI / 2)
+        assert(angle.unit == AngleUnit.RADIANS)
+        assert(angle.toRadians() == Math.PI / 2)
+        assert(angle.toDegrees() == 90.0)
+        assert(angle.toAngleUnit(AngleUnit.DEGREES).angle == 90.0)
+        assert(angle.toAngleUnit(AngleUnit.RADIANS).angle == Math.PI / 2)
+        assert(angle.angleWrap().angle == Math.PI / 2)
+        println(angle.errorToD(Angle(1.0, AngleUnit.DEGREES)))
+        assert(
+            angle.errorTo(
+                Angle(
+                    1.0,
+                    AngleUnit.DEGREES
+                )
+            ).angle == 1.0 - Math.PI / 2
+        )
+        assert(angle.errorToD(Angle(1.0, AngleUnit.DEGREES)) == 1 - Math.PI / 2)
+
     }
 
     @Test

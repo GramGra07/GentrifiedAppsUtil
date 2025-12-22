@@ -1,6 +1,6 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers
 
-internal class HWMapW {
+class HWMapW {
 
     @JvmOverloads
     @Suppress("UNCHECKED_CAST")

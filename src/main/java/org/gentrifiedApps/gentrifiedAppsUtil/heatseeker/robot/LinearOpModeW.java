@@ -11,8 +11,8 @@ public abstract class LinearOpModeW {
     long startTime = System.currentTimeMillis();
     State s = State.stopped;
 
-    protected final TelemetryW telemetry = new TelemetryW();
-    protected final HWMapW hwMap = new HWMapW();
+    public final TelemetryW telemetry = new TelemetryW();
+    public final HWMapW hwMap = new HWMapW();
 
     public abstract void runOpMode();
 

@@ -4,7 +4,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Targe
 import java.io.InvalidClassException
 import kotlin.math.sqrt
 
-data class Vector(val a: Double, val b: Double, val c: Double) {
+open class Vector(open val a: Double, open val b: Double, val c: Double) {
     operator fun plus(other: Vector) = Vector(a + other.a, b + other.b, c + other.c)
     operator fun minus(other: Vector) = Vector(a - other.a, b - other.b, c - other.c)
     operator fun times(other: Vector) = dotProduct(other)

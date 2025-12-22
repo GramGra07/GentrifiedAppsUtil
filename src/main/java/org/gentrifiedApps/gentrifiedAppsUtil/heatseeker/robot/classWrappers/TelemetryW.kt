@@ -7,7 +7,7 @@ class TelemetryW {
     }
 
     private var toLog: ArrayList<String> = arrayListOf()
-    fun addData(caption: String, value: Object) {
+    fun addData(caption: String, value: String) {
 
         toLog.add("$caption: $value")
     }
