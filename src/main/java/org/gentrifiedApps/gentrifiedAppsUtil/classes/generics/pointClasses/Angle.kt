@@ -5,6 +5,10 @@ import kotlin.math.PI
 data class Angle(val angle: Double, val unit: AngleUnit = AngleUnit.RADIANS) {
     constructor(angle: Double) : this(angle, AngleUnit.RADIANS)
 
+    fun angle(): Double {
+        return angle
+    }
+
     fun toRadians(): Double {
         return when (unit) {
             AngleUnit.DEGREES -> Math.toRadians(angle)

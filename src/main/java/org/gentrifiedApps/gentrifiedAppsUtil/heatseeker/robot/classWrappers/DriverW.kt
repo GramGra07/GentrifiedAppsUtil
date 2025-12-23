@@ -8,8 +8,10 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConst
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.LinearOpModeW
 import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.MovementData
@@ -21,7 +23,6 @@ enum class DRIVETYPE {
 
 class DriverW @JvmOverloads constructor(
     var opMode: LinearOpModeW?,
-
     val flName: String,
     val frName: String,
     val blName: String,
@@ -32,44 +33,8 @@ class DriverW @JvmOverloads constructor(
     private val brDirection: Direction = Direction.FORWARD,
 ) {
     constructor() : this(null, "", "", "", "")
-    constructor(
-        flName: String,
-        frName: String,
-        blName: String,
-        brName: String
-    ) : this(
-        flName,
-        frName,
-        blName,
-        brName,
-        Direction.FORWARD,
-        Direction.FORWARD,
-        Direction.FORWARD,
-        Direction.FORWARD
-    )
 
-    constructor(
-        flName: String,
-        frName: String,
-        blName: String,
-        brName: String,
-        flDirection: Direction,
-        frDirection: Direction,
-        blDirection: Direction,
-        brDirection: Direction
-    ) : this(
-        null,
-        flName,
-        frName,
-        blName,
-        brName,
-        flDirection,
-        frDirection,
-        blDirection,
-        brDirection
-    )
-
-    internal var localizer: Localizer? = null
+    var localizer: Localizer? = null
         set(value) {
             field = value
             if (value != null) {
@@ -129,10 +94,10 @@ class DriverW @JvmOverloads constructor(
 
     private fun initialize() {
         hwMap = opMode!!.hwMap
-        fl = hwMap!!.get(DcMotorW::class.java, flName, 1)
-        fr = hwMap!!.get(DcMotorW::class.java, frName, 2)
-        bl = hwMap!!.get(DcMotorW::class.java, blName, 3)
-        br = hwMap!!.get(DcMotorW::class.java, brName, 4)
+        fl = hwMap!!.get(DcMotorW::class.java, flName)
+        fr = hwMap!!.get(DcMotorW::class.java, frName)
+        bl = hwMap!!.get(DcMotorW::class.java, blName)
+        br = hwMap!!.get(DcMotorW::class.java, brName)
         fl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         fr.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
         bl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
@@ -220,6 +185,13 @@ class DriverW @JvmOverloads constructor(
     }
 
 
+    fun findWheelVecs(v: Vector): DrivePowerCoefficients {
+        val fwd = v.b
+        val strafe = v.a
+        val turn = v.c
+        return Driver.Companion.findWheelVectors(fwd, strafe, turn)
+    }
+
     companion object {
 
         var driftCoefficients: DrivePowerConstraint? = null
@@ -231,6 +203,13 @@ class DriverW @JvmOverloads constructor(
             } else {
                 coefficients
             }
+        }
+
+        fun findWheelVecs(v: Vector): DrivePowerCoefficients {
+            val fwd = v.b
+            val strafe = v.a
+            val turn = v.c
+            return Driver.Companion.findWheelVectors(fwd, strafe, turn)
         }
 
         fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {

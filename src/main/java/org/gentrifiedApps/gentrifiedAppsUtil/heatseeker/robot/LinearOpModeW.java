@@ -35,4 +35,8 @@ public abstract class LinearOpModeW {
         s = State.running;
         return true;
     }
+
+    public boolean isStopRequested() {
+        return s == State.stopped;
+    }
 }

@@ -5,6 +5,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
 import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
 import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -66,5 +67,9 @@ data class Target2D(val x: Double, val y: Double, val angle: Angle) {
 
     operator fun div(other: Double): Target2D {
         return Target2D(x / other, y / other, angle)
+    }
+
+    fun vectorTo(other: Target2D): Vector {
+        return Vector(other.x - x, other.y - y, other.angle.angle() - angle.angle())
     }
 }
