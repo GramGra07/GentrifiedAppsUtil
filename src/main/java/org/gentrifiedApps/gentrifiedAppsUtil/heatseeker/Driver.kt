@@ -12,6 +12,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Targe
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
 import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.MovementData
 
@@ -31,45 +32,10 @@ class Driver @JvmOverloads constructor(
     private val blDirection: Direction = Direction.FORWARD,
     private val brDirection: Direction = Direction.FORWARD,
 ) {
-    constructor() : this(null, "", "", "", "")
-    constructor(
-        flName: String,
-        frName: String,
-        blName: String,
-        brName: String
-    ) : this(
-        flName,
-        frName,
-        blName,
-        brName,
-        Direction.FORWARD,
-        Direction.FORWARD,
-        Direction.FORWARD,
-        Direction.FORWARD
-    )
+    internal constructor() : this(null, "", "", "", "")
 
-    constructor(
-        flName: String,
-        frName: String,
-        blName: String,
-        brName: String,
-        flDirection: Direction,
-        frDirection: Direction,
-        blDirection: Direction,
-        brDirection: Direction
-    ) : this(
-        null,
-        flName,
-        frName,
-        blName,
-        brName,
-        flDirection,
-        frDirection,
-        blDirection,
-        brDirection
-    )
 
-    internal var localizer: Localizer? = null
+    var localizer: Localizer? = null
         set(value) {
             field = value
             if (value != null) {
@@ -217,6 +183,13 @@ class Driver @JvmOverloads constructor(
     }
 
 
+    fun findWheelVecs(v: Vector): DrivePowerCoefficients {
+        val fwd = v.b
+        val strafe = v.a
+        val turn = v.c
+        return Companion.findWheelVectors(fwd, strafe, turn)
+    }
+
     companion object {
 
         var driftCoefficients: DrivePowerConstraint? = null
@@ -228,6 +201,13 @@ class Driver @JvmOverloads constructor(
             } else {
                 coefficients
             }
+        }
+
+        fun findWheelVecs(v: Vector): DrivePowerCoefficients {
+            val fwd = v.b
+            val strafe = v.a
+            val turn = v.c
+            return findWheelVectors(fwd, strafe, turn)
         }
 
         fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {

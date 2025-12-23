@@ -11,7 +11,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver;
 public final class OpModeRepeaterRegistrar {
 
     static String name = "Test2";
-    static Driver driver = new Driver("fl", "fr", "bl", "br", DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE);
+    static Driver driver = new Driver(null, "fl", "fr", "bl", "br", DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE);
 
     static boolean isEnabled = false;
 

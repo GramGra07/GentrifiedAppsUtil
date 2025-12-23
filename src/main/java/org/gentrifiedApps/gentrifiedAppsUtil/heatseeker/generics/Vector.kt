@@ -44,4 +44,9 @@ open class Vector(open val a: Double, open val b: Double, val c: Double) {
         result = 31 * result + c.hashCode()
         return result
     }
+
+    fun unitVec(): Vector {
+        val mag = magnitude()
+        return Vector(a / mag, b / mag, c / mag)
+    }
 }
