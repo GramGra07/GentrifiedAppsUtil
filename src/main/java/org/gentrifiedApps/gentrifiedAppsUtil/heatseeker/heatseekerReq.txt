@@ -1,0 +1,16 @@
+Easy to setup and use
+- use RR tuning and Pedro tuning with constraint generation
+Multitude of movement types
+- move to
+- local steps (back, forward, right)
+- LATER: splines
+Parametric and time based callbacks
+Coord system
+- (0,0) in middle with red side being +x
+Deceleration
+Path completion should be heading (rotational) or position (translational)
+Smooth path state system?
+"On the fly approach" should always reach the target position (+- tolerance) then "not busy", if off, should automatically correct, if shoved should correct (movement,rotation vector calculated every loop)
+Heading, translational pids
+Zero power movement on braking
+Builder interpolation for easy creation
