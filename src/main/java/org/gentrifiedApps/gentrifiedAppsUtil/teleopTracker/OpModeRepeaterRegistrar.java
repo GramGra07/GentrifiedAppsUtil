@@ -3,7 +3,6 @@ package org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver;
@@ -11,8 +10,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver;
 public final class OpModeRepeaterRegistrar {
 
     static String name = "Test2";
-    static Driver driver = new Driver(null, "fl", "fr", "bl", "br", DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE, DcMotorSimple.Direction.FORWARD, DcMotorSimple.Direction.REVERSE);
-
+    static Driver driver = new Driver().setFrontLeftName("fl").setFrontRightName("fr").setBackLeftName("bl").setBackRightName("br").reverseBackLeft().reverseBackRight();
     static boolean isEnabled = false;
 
     private OpModeRepeaterRegistrar() {

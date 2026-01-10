@@ -1,6 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robotSims
 
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.TestWrapperSuite
 import kotlin.test.Test
 
 class BasicRobotSimTest {

@@ -25,7 +25,7 @@ class TeleOpTrackerOpMode(val name: String, val driver: Driver) : LinearOpMode()
     val elapsedTime: ElapsedTime = ElapsedTime()
     val currentTime = ElapsedTime()
     override fun runOpMode() {
-        driver.setupOpMode(this)
+        driver.build(this)
         tracker.init()
         waitForStart()
         elapsedTime.reset()
