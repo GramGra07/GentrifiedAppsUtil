@@ -1,4 +1,6 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot
+package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robotSims
+
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.OutputFormatter
 
 internal class TestWrapperSuite {
     companion object {
@@ -7,7 +9,7 @@ internal class TestWrapperSuite {
             if (!condition) {
                 tag = "Assertion Failed"
             }
-            OutputFormatter.instance.sendData(tag, message)
+            OutputFormatter.Companion.instance.sendData(tag, message)
             assert(condition)
         }
     }

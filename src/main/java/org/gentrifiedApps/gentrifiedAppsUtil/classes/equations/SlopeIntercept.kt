@@ -35,5 +35,17 @@ data class SlopeIntercept(var m: Number, var b: Number) {
             val b = y.toDouble() - (slope.toDouble() * x.toDouble())
             return SlopeIntercept(slope, b)
         }
+
+        @JvmStatic
+        fun zeros(): SlopeIntercept {
+            return SlopeIntercept(0, 0)
+        }
+    }
+
+    override operator fun equals(other: Any?): Boolean {
+        if (other !is SlopeIntercept) {
+            return false
+        }
+        return m == other.m && b == other.b
     }
 }
