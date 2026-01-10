@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics
+package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import java.io.InvalidClassException

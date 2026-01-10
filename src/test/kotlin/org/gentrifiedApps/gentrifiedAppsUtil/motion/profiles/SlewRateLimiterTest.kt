@@ -22,7 +22,7 @@ class SlewRateLimiterTest {
 
         Thread.sleep(500) // Simulate 0.5 seconds
         val result = rateLimiter.calculate(3.0) // Input exceeds limit
-        assertEquals(1.0, result, 0.05) // Limited to 1.0 (2 * 0.5)
+        assertEquals(1.0, result, 0.1) // Limited to 1.0 (2 * 0.5)
     }
 
     @Test

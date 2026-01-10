@@ -14,7 +14,7 @@ class TrackWidthTuner(private val driver: Driver) : LinearOpMode() {
 
         waitForStart()
         while (opModeIsActive()) {
-            driver.updateNoTelemetry()
+            driver.update()
 
 //            val heading = driver.localizer!!.getPose().h()
 //            val correctedTrackWidth = (heading / (2 * Math.PI * turns))

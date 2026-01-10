@@ -1,7 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector2d
 import org.junit.jupiter.api.Test
 
 class VectorTest {

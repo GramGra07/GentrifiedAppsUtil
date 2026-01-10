@@ -4,8 +4,8 @@ import com.qualcomm.hardware.sparkfun.SparkFunOTOS
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.dataStorage.DataStorage
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
 import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
