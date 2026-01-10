@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation
 import org.firstinspires.ftc.robotcore.external.navigation.Quaternion
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles
 
-internal class IMUW : IMU {
+internal class IMUW(name: String) : IMU, FTCWrapper(name) {
 
     override fun getManufacturer(): HardwareDevice.Manufacturer? {
         TODO("Not yet implemented")
