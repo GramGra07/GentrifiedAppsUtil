@@ -12,7 +12,7 @@ public abstract class LinearOpModeW {
     State s = State.stopped;
 
     public final TelemetryW telemetry = new TelemetryW();
-    public final HWMapW hwMap = new HWMapW();
+    public final HWMapW hardwareMap = new HWMapW();
 
     public abstract void runOpMode();
 
