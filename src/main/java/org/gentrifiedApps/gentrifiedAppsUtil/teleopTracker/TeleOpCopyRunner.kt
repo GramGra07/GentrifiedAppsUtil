@@ -11,7 +11,7 @@ class TeleOpCopyRunner(val name: String, val driver: Driver) : LinearOpMode() {
     val trackedRunner = TrackedRunner(name)
     val ltc: LoopTimeController = LoopTimeController()
     override fun runOpMode() {
-        driver.setupOpMode(this)
+        driver.build(this)
         waitForStart()
         trackedRunner.init()
         ltc.reset()
