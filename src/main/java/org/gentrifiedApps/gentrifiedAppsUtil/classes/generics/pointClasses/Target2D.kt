@@ -12,6 +12,8 @@ import kotlin.math.sqrt
 
 data class Target2D(val x: Double, val y: Double, val angle: Angle) {
     constructor(x: Double, y: Double, angle: Double) : this(x, y, Angle(angle))
+    constructor(x: Double, y: Double) : this(x, y, Angle.blank())
+
 
     fun store() {
         DataStorage.setPose(this)

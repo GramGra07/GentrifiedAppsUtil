@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point
+package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.localizers.point
 
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS.Pose2D
@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.PointLocalizer
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.localizers.PointLocalizer
 
 data class SparkFunOTOSParams(
     val offset: Pose2D,

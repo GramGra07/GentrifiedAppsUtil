@@ -18,6 +18,5 @@ public class BasicRobotSimulatorOpMode extends LinearOpModeW {
         while (opModeIsActive(5.0) && !isStopRequested()) {
             leftDrive.setPower(1);
         }
-
     }
 }

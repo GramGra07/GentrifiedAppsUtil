@@ -2,7 +2,6 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers
 
 class HWMapW {
 
-    @JvmOverloads
     @Suppress("UNCHECKED_CAST")
     fun <T : FTCWrapper> get(cls: Class<T>, name: String): T {
         // Try (String, int)/(String, Integer)

@@ -1,6 +1,5 @@
 //todo
 command base
 HeatSeeker
-- finish imu encoder wrapper implements
 - rewrite for vectors
 - derivative prediction workflow

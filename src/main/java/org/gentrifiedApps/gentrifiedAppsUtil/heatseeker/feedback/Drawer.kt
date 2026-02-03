@@ -3,11 +3,11 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS.Pose2D
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Waypoint
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathComponent
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Drawer {
+open class Drawer {
     fun drawLocalization(target: Target2D) {
         val packet = TelemetryPacket()
         val fieldOverlay = packet.fieldOverlay()
@@ -27,13 +27,13 @@ class Drawer {
             .strokeLine(p1s2.x, p1s2.y, newS2.x, newS2.y)
     }
 
-    fun drawPath(path: List<Waypoint>) {
+    fun drawPath(pathComponent: List<PathComponent>) {
         val packet = TelemetryPacket()
         val fieldOverlay = packet.fieldOverlay()
         val color = "green"
-        for (i in 0 until path.size - 1) {
-            val p1 = path[i].target2D
-            val p2 = path[i + 1].target2D
+        for (i in 0 until pathComponent.size - 1) {
+            val p1 = pathComponent[i].target
+            val p2 = pathComponent[i + 1].target
             fieldOverlay.setStroke(color).strokeLine(p1.x, p1.y, p2.x, p2.y)
         }
     }

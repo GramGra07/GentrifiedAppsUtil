@@ -5,7 +5,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.looptime.LoopTimeController
 import kotlin.math.absoluteValue
 import kotlin.math.sqrt
