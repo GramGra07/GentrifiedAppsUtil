@@ -1,11 +1,11 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics
+package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 
 //perpOffsetY and parOffsetX
-class Encoder(
+public class Encoder(
     private val encoderSpecs: EncoderSpecs,
     name: String,
     direction: DcMotorSimple.Direction,

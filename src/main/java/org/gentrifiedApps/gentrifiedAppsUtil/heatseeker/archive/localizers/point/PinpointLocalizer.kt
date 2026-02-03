@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.point
+package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.localizers.point
 
 import com.qualcomm.hardware.gobilda.GoBildaPinpointDriver
 import com.qualcomm.robotcore.hardware.HardwareMap
@@ -9,7 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose2D
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.PointLocalizer
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.localizers.PointLocalizer
 
 data class GoBildaPinpointParams(
     val offset: Point, val encoderResolution: GoBildaPinpointDriver.GoBildaOdometryPods,

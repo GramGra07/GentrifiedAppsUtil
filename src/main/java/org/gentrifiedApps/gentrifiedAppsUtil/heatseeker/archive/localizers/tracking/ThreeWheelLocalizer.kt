@@ -1,11 +1,11 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking
+package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.localizers.tracking
 
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderStorage
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.TrackingLocalizer
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.Encoder
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.EncoderStorage
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.localizers.TrackingLocalizer
 import kotlin.math.cos
 import kotlin.math.sin
 

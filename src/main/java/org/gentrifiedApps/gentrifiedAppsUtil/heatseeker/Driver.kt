@@ -1,10 +1,10 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode
+import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.hardware.DcMotor
-import com.qualcomm.robotcore.hardware.DcMotorSimple.Direction
+import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
-import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
@@ -12,8 +12,9 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Targe
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathVector
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.Localizer
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.DcMotorW
 import org.gentrifiedApps.gentrifiedAppsUtil.teleopTracker.MovementData
 
 
@@ -22,30 +23,77 @@ enum class DRIVETYPE {
 }
 
 class Driver @JvmOverloads constructor(
-    var opMode: LinearOpMode?,
-    val flName: String,
-    val frName: String,
-    val blName: String,
-    val brName: String,
-    private val flDirection: Direction = Direction.FORWARD,
-    private val frDirection: Direction = Direction.FORWARD,
-    private val blDirection: Direction = Direction.FORWARD,
-    private val brDirection: Direction = Direction.FORWARD,
 ) {
-    internal constructor() : this(null, "", "", "", "")
+    private var flName: String? = null;
+    private var frName: String? = null;
+    private var blName: String? = null;
+    private var brName: String? = null;
+    private var blDirection: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD
+    private var frDirection: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD
+    private var flDirection: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD
+    private var brDirection: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD
+    private var zeroPowerBehavior: DcMotor.ZeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
 
 
-    var localizer: Localizer? = null
+    fun setFrontLeftName(name: String): Driver {
+        flName = name
+        return this
+    }
+
+    fun setFrontRightName(name: String): Driver {
+        frName = name
+        return this
+    }
+
+    fun setBackLeftName(name: String): Driver {
+        blName = name
+        return this
+    }
+
+    fun setBackRightName(name: String): Driver {
+        brName = name
+        return this
+    }
+
+    fun reverseBackLeft(): Driver {
+        blDirection = DcMotorSimple.Direction.REVERSE
+        return this
+    }
+
+    fun reverseBackRight(): Driver {
+        brDirection = DcMotorSimple.Direction.REVERSE
+        return this
+    }
+
+    fun reverseFrontLeft(): Driver {
+        flDirection = DcMotorSimple.Direction.REVERSE
+        return this
+    }
+
+    fun reverseFrontRight(): Driver {
+        frDirection = DcMotorSimple.Direction.REVERSE
+        return this
+    }
+
+    fun setZeroPowerBehavior(behavior: DcMotor.ZeroPowerBehavior): Driver {
+        zeroPowerBehavior = behavior
+        return this
+    }
+    /////// above require NO HW MAP
+
+
+    private var localizer: Localizer? = null
         set(value) {
             field = value
             if (value != null) {
                 value.initLocalizer()
                 drawer.drawLocalization(value.getPose())
-                telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, value.getPose())
+                opMode!!.telemetry.addData("pose", value.getPose().toString())
+//                telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, value.getPose())
             }
         }
 
-    internal fun getAbsPositions(): DriveVelocities {
+    fun getAbsPositions(): DriveVelocities {
         return getPositions().abs()
     }
 
@@ -65,47 +113,50 @@ class Driver @JvmOverloads constructor(
         resetMotor(br, DcMotor.RunMode.RUN_WITHOUT_ENCODER)
     }
 
-    fun showEncoderPositions(telemetry: Telemetry) {
-        telemetry.addData("FL", fl.currentPosition)
-        telemetry.addData("FR", fr.currentPosition)
-        telemetry.addData("BL", bl.currentPosition)
-        telemetry.addData("BR", br.currentPosition)
+    private var drawer = Drawer()
+    fun attachDrawer(drawer: Drawer): Driver {
+        this.drawer = drawer
+        return this
     }
 
-    public var hwMap: HardwareMap? = null
-    lateinit var fl: DcMotor
-    lateinit var fr: DcMotor
-    lateinit var bl: DcMotor
-    lateinit var br: DcMotor
+    var opMode: OpMode? = null
+    private var hwMap: HardwareMap? = null
 
-    val drawer = Drawer()
+    internal lateinit var fl: DcMotor
+    internal lateinit var fr: DcMotor
+    internal lateinit var bl: DcMotor
+    internal lateinit var br: DcMotor
+
     private val telemetry: TelemetryMaker = TelemetryMaker()
 
-    init {
-        if (opMode != null) {
-            initialize()
-        }
-    }
 
-    fun setupOpMode(opMode: LinearOpMode) {
+    fun build(opMode: OpMode) { // change to OpMode
         this.opMode = opMode
+        this.hwMap = opMode.hardwareMap
+//        telemetry.attach(opMode.telemetry)
+        verifyRequirements()
         initialize()
     }
 
+    private fun verifyRequirements() {
+        val check1 = flName != null && frName != null && blName != null && brName != null
+
+        val final = check1
+        if (!final) {
+            throw Exception("Requirements not met")
+        }
+    }
+
     private fun initialize() {
-        hwMap = opMode!!.hardwareMap
-        fl = hwMap!!.get(DcMotor::class.java, flName)
-        fr = hwMap!!.get(DcMotor::class.java, frName)
-        bl = hwMap!!.get(DcMotor::class.java, blName)
-        br = hwMap!!.get(DcMotor::class.java, brName)
-        fl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        fr.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        bl.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        br.mode = DcMotor.RunMode.RUN_WITHOUT_ENCODER
-        fl.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        fr.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        bl.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
-        br.zeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
+        fl = hwMap!!.get(DcMotorW::class.java, flName!!)
+        fr = hwMap!!.get(DcMotorW::class.java, frName!!)
+        bl = hwMap!!.get(DcMotorW::class.java, blName!!)
+        br = hwMap!!.get(DcMotorW::class.java, brName!!)
+        resetDriveEncoders()
+        fl.zeroPowerBehavior = zeroPowerBehavior
+        fr.zeroPowerBehavior = zeroPowerBehavior
+        bl.zeroPowerBehavior = zeroPowerBehavior
+        br.zeroPowerBehavior = zeroPowerBehavior
         fl.direction = flDirection
         fr.direction = frDirection
         bl.direction = blDirection
@@ -114,7 +165,8 @@ class Driver @JvmOverloads constructor(
         if (localizer != null) {
             localizer!!.initLocalizer()
             drawer.drawLocalization(localizer!!.getPose())
-            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
+            opMode!!.telemetry.addData("pose", localizer!!.getPose().toString())
+//            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
         }
     }
 
@@ -122,14 +174,8 @@ class Driver @JvmOverloads constructor(
         updatePoseEstimate()
         if (localizer != null) {
             drawer.drawLocalization(localizer!!.getPose())
-            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
-        }
-    }
-
-    internal fun updateNoTelemetry() {
-        updatePoseEstimate()
-        if (localizer != null) {
-            drawer.drawLocalization(localizer!!.getPose())
+            opMode!!.telemetry.addData("pose", localizer!!.getPose().toString())
+//            telemetry.sendTelemetryNoUpdate(opMode!!.telemetry, localizer!!.getPose())
         }
     }
 
@@ -141,12 +187,22 @@ class Driver @JvmOverloads constructor(
         return localizer!!.getPose()
     }
 
-    fun findWheelVectors(data: MovementData): DrivePowerCoefficients {
-        return findWheelVectorsXY(data.x, data.y, data.rotation)
+    fun setWheelPower(powerCoefficients: DrivePowerCoefficients) {
+        fl.power = powerCoefficients.frontLeft
+        fr.power = powerCoefficients.frontRight
+        bl.power = powerCoefficients.backLeft
+        br.power = powerCoefficients.backRight
     }
 
-    fun findWheelVectorsXY(x: Double, y: Double, rotation: Double): DrivePowerCoefficients {
-        return findWheelVectors(y, x, rotation)
+
+    fun sendEncoders(): List<Pair<DcMotor, String?>> {
+//        verifyRequirements()
+        return listOf(Pair(fl, flName), Pair(fr, frName), Pair(bl, blName), Pair(br, brName))
+    }
+
+
+    internal fun findWheelVectors(data: MovementData): DrivePowerCoefficients {
+        return findWheelVectors(data.y, data.x, data.rotation)
     }
 
     fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {
@@ -157,16 +213,11 @@ class Driver @JvmOverloads constructor(
         return DrivePowerCoefficients(frontLeft, frontRight, backLeft, backRight)
     }
 
-    fun setWheelPower(powerCoefficients: DrivePowerCoefficients) {
-        fl.power = powerCoefficients.frontLeft
-        fr.power = powerCoefficients.frontRight
-        bl.power = powerCoefficients.backLeft
-        br.power = powerCoefficients.backRight
-    }
-
-
-    fun sendEncoders(): List<Pair<DcMotor, String>> {
-        return listOf(Pair(fl, flName), Pair(fr, frName), Pair(bl, blName), Pair(br, brName))
+    fun findWheelVectors(v: PathVector): DrivePowerCoefficients { // wrong this is [0..1]
+        val fwd = v.translationalVector.a
+        val strafe = v.translationalVector.b
+        val turn = v.rotationalVector.angle
+        return findWheelVectors(fwd, strafe, turn)
     }
 
     fun addDriftCorrection(constraint: DrivePowerConstraint): Driver {
@@ -182,16 +233,7 @@ class Driver @JvmOverloads constructor(
         return this
     }
 
-
-    fun findWheelVecs(v: Vector): DrivePowerCoefficients {
-        val fwd = v.b
-        val strafe = v.a
-        val turn = v.c
-        return Companion.findWheelVectors(fwd, strafe, turn)
-    }
-
     companion object {
-
         var driftCoefficients: DrivePowerConstraint? = null
 
         @JvmStatic
@@ -207,7 +249,7 @@ class Driver @JvmOverloads constructor(
             val fwd = v.b
             val strafe = v.a
             val turn = v.c
-            return findWheelVectors(fwd, strafe, turn)
+            return Driver.Companion.findWheelVectors(fwd, strafe, turn)
         }
 
         fun findWheelVectors(fwd: Double, strafe: Double, turn: Double): DrivePowerCoefficients {

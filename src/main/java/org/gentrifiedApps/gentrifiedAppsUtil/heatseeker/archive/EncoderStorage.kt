@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics
+package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive
 
 data class EncoderStorage(
     val par1Encoder: Encoder,

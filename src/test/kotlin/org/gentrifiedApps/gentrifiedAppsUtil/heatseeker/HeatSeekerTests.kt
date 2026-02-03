@@ -2,23 +2,30 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Waypoint
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generators.EncoderSpecsBuilder
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Encoder
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.Encoder
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.EncoderSpecs
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.generators.EncoderSpecsBuilder
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.localizers.tracking.MecanumLocalizer
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Callback
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Path
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Vector
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.localizers.tracking.MecanumLocalizer
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.Path
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.path.PathType
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathCallback
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathComponent
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathType
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathVector
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.TranslationalVector
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.totalDistance
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.DcMotorW
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.HWMapW
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.assertThrows
 import kotlin.math.abs
 import kotlin.math.sqrt
 import kotlin.test.Test
@@ -249,111 +256,114 @@ class VectorTests {
     }
 }
 
-class WaypointTests {
+class CallbackTests {
     @Test
-    fun testWaypointConstructor() {
-        val waypoint = Waypoint(1.0, 2.0, Angle.ofRadians(3.0), 1.0)
-        assert(waypoint.x == 1.0)
-        assert(waypoint.y == 2.0)
-        assert(waypoint.h == 3.0)
-        assert(waypoint.velocity == 1.0)
+    fun testCallback() {
+        val callback = Callback(Runnable { println("Hello World") })
+        callback.run()
     }
 
-    @Test
-    fun testWaypointConstructor2() {
-        val waypoint = Waypoint(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES), 1.0)
-        assert(waypoint.x == 1.0)
-        assert(waypoint.y == 2.0)
-        assert(waypoint.h == Math.toRadians(3.0))
-        assert(waypoint.velocity == 1.0)
-    }
-
-    @Test
-    fun testWaypointConstructor3() {
-        val waypoint =
-            Waypoint(
-                Target2D(
-                    1.0,
-                    2.0,
-                    Angle(3.0, AngleUnit.DEGREES)
-                ), 1.0
-            )
-
-        assert(waypoint.x == 1.0)
-        assert(waypoint.y == 2.0)
-        assert(waypoint.h == Math.toRadians(3.0))
-        assert(waypoint.velocity == 1.0)
-    }
 }
 
 class PathBuilderTests {
     @Test
     fun testPathBuilderBasics() {
-        val path = PathBuilder()
-            .addWaypoint(Waypoint(1.0, 2.0, Angle.ofRadians(3.0), 1.0))
-            .addWaypoint(Waypoint(5.0, 6.0, Angle.ofRadians(7.0), 1.0))
+        val pathComponents = PathBuilder()
+            .addPath(PathComponent(Target2D(1.0, 2.0, Angle.ofRadians(3.0))))
+            .addPath(PathComponent(Target2D(5.0, 6.0, Angle.ofRadians(7.0))))
             .build()
-        assert(path.size == 2)
-        assert(path[0].x() == 1.0)
-        assert(path[0].y() == 2.0)
-        assert(path[0].h() == 3.0)
-        assert(path[0].velocity == 1.0)
-        assert(path[1].x() == 5.0)
-        assert(path[1].y() == 6.0)
-        assert(path[1].h() == 7.0)
-        assert(path[1].velocity == 1.0)
+        assert(pathComponents.waypoints.size == 2)
+        assert(pathComponents.waypoints[0].x() == 1.0)
+        assert(pathComponents.waypoints[0].y() == 2.0)
+        assert(pathComponents.waypoints[0].h() == 3.0)
+        assert(pathComponents.waypoints[0].velocity == 1.0)
+        assert(pathComponents.waypoints[1].x() == 5.0)
+        assert(pathComponents.waypoints[1].y() == 6.0)
+        assert(pathComponents.waypoints[1].h() == 7.0)
+        assert(pathComponents.waypoints[1].velocity == 1.0)
+    }
+
+    @Test
+    fun testConstructor() {
+        var b = false
+        val path: Path =
+            PathBuilder()
+                .addPath(PathComponent(Target2D(1.0, 2.0, Angle.ofRadians(3.0)), 0.2))
+                .insertCallback { b = true }
+                .percentCallback(0.5, Runnable { println("Hello World") })
+                .distanceCallback(1.0) { println("this is hello world 2") }
+                .build()
+        assert(path.waypoints[0].velocity == 0.2)
+        path.callbacks.forEach {
+            it.run()
+        }
+        path.waypoints.forEach {
+            if (it.type == PathType.CALLBACK) {
+                it as PathCallback
+                it.run()
+            }
+        }
+        assert(b)
+        println(path.callbacks[0].distance)
+        println(2.2360679775 / 2)
+        assert(MathFunctions.inTolerance(2.2360679775 / 2, path.callbacks[0].distance!!, 0.01))
+        assert(MathFunctions.inTolerance(2.2360679775, path.waypoints.totalDistance(), 0.01))
+    }
+
+    @Test
+    fun testCallbackBuilder() {
+        val path = PathBuilder().distanceCallback(1.0, Runnable { println("Hello World") })
+        assertThrows<Exception> { path.build() }
     }
 
     @Test
     fun testPathConstructorWithWaypoint() {
-        val waypoint = Waypoint(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES), 1.0)
-        val path = Path(waypoint)
-        assertEquals(PathType.MOVE_TO, path.type)
-        assertEquals(1.0, path.x())
-        assertEquals(2.0, path.y())
-        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), path.h())
-        assertEquals(1.0, path.velocity)
+        val pathComponent = PathComponent(Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES)))
+        assertEquals(PathType.MOVE_TO, pathComponent.type)
+        assertEquals(1.0, pathComponent.x())
+        assertEquals(2.0, pathComponent.y())
+        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), pathComponent.h())
+        assertEquals(1.0, pathComponent.velocity)
     }
 
     @Test
     fun testPathConstructorWithTargetAndVelocity() {
         val target = Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES))
-        val path = Path(target, 1.0)
-        assertEquals(PathType.MOVE_TO, path.type)
-        assertEquals(1.0, path.x())
-        assertEquals(2.0, path.y())
-        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), path.h())
-        assertEquals(1.0, path.velocity)
+        val pathComponent = PathComponent(target)
+        assertEquals(PathType.MOVE_TO, pathComponent.type)
+        assertEquals(1.0, pathComponent.x())
+        assertEquals(2.0, pathComponent.y())
+        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), pathComponent.h())
+        assertEquals(1.0, pathComponent.velocity)
     }
 
     @Test
     fun testPathConstructorWithHeadingVelocityAndCurrentTarget() {
         val currentTarget = Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES))
-        val path = Path(Angle(4.0, AngleUnit.DEGREES), 1.0, currentTarget)
-        assertEquals(PathType.TURN_TO, path.type)
-        assertEquals(1.0, path.x())
-        assertEquals(2.0, path.y())
-        assertEquals(Angle(4.0, AngleUnit.DEGREES).toRadians(), path.h())
-        assertEquals(1.0, path.velocity)
+        val pathComponent = PathComponent(Angle(4.0, AngleUnit.DEGREES), currentTarget)
+        assertEquals(PathType.TURN_TO, pathComponent.type)
+        assertEquals(1.0, pathComponent.x())
+        assertEquals(2.0, pathComponent.y())
+        assertEquals(Angle(4.0, AngleUnit.DEGREES).toRadians(), pathComponent.h())
+        assertEquals(1.0, pathComponent.velocity)
     }
 
     @Test
     fun testPathConstructorWithHeadingVelocityXAndY() {
-        val path = Path(Angle(4.0, AngleUnit.DEGREES), 1.0, 1.0, 2.0)
-        assertEquals(PathType.TURN_TO, path.type)
-        assertEquals(1.0, path.x())
-        assertEquals(2.0, path.y())
-        assertEquals(Angle(4.0, AngleUnit.DEGREES).toRadians(), path.h())
-        assertEquals(1.0, path.velocity)
+        val pathComponent = PathComponent(Angle(4.0, AngleUnit.DEGREES), Target2D(1.0, 2.0))
+        assertEquals(PathType.TURN_TO, pathComponent.type)
+        assertEquals(1.0, pathComponent.x())
+        assertEquals(2.0, pathComponent.y())
+        assertEquals(Angle(4.0, AngleUnit.DEGREES).toRadians(), pathComponent.h())
+        assertEquals(1.0, pathComponent.velocity)
     }
 
     @Test
     fun testWaypointFunction() {
-        val path = Path(Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES)), 1.0)
-        val waypoint = path.waypoint()
-        assertEquals(1.0, waypoint.x)
-        assertEquals(2.0, waypoint.y)
-        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), waypoint.h)
+        val waypoint = PathComponent(Target2D(1.0, 2.0, Angle(3.0, AngleUnit.DEGREES)))
+        assertEquals(1.0, waypoint.x())
+        assertEquals(2.0, waypoint.y())
+        assertEquals(Angle(3.0, AngleUnit.DEGREES).toRadians(), waypoint.h())
         assertEquals(1.0, waypoint.velocity)
     }
 }
@@ -389,7 +399,7 @@ class GenericTests {
         val specs = EncoderSpecsBuilder.goBildaSwingArm()
         val hw = HWMapW()
         val e = Encoder(specs, "testMotor", DcMotorSimple.Direction.FORWARD, false, 0.0, null)
-        e.encoder = DcMotorW("testMotor", 1)
+        e.encoder = DcMotorW("testMotor")
         assert(e.getTicks() == 0)
         assert(e.getDelta() == 0)
         assert(e.getDeltaInches() == 0.0)
@@ -414,14 +424,13 @@ class GenericTests {
 
     @Test
     fun testDriver() {
-        val fl = DcMotorW("fl", 2)
-        val fr = DcMotorW("fr", 2)
-        val br = DcMotorW("br", 2)
-        val bl = DcMotorW("bl", 2)
+        val fl = DcMotorW("fl")
+        val fr = DcMotorW("fr")
+        val br = DcMotorW("br")
+        val bl = DcMotorW("bl")
 
         val d =
             Driver().aconstructor(fl, fr, bl, br)
-        assert(d.hwMap == null)
         assert(d.getPositions() == DriveVelocities.zeros())
         assert(d.getAbsPositions() == DriveVelocities.zeros())
         val straight = Driver.findWheelVectors(1.0, 0.0, 0.0)
@@ -434,22 +443,26 @@ class GenericTests {
         assert(d.getPositions() == DriveVelocities.zeros())
         assert(
             d.sendEncoders() == listOf(
-                Pair<DcMotor, String>(fl, ""),
-                Pair<DcMotor, String>(fr, ""),
-                Pair<DcMotor, String>(bl, ""),
-                Pair<DcMotor, String>(br, "")
+                Pair<DcMotor, String?>(fl, null),
+                Pair<DcMotor, String?>(fr, null),
+                Pair<DcMotor, String?>(bl, null),
+                Pair<DcMotor, String?>(br, null)
             )
         )
-        assert(d.localizer == null)
+        //TODO refine these tests
+        val pathVector: PathVector = PathVector()
+        assert(d.findWheelVectors(pathVector) != DrivePowerCoefficients.of(0.0))
+        val pathVector2: PathVector = PathVector(TranslationalVector(0.0, 1.0), Angle.blank())
+        assert(d.findWheelVectors(pathVector2) != DrivePowerCoefficients.of(1.0))
     }
 
     @Test
     fun testMecLocalizer() {
 
-        val fl = DcMotorW("fl", 2)
-        val fr = DcMotorW("fr", 2)
-        val br = DcMotorW("br", 2)
-        val bl = DcMotorW("bl", 2)
+        val fl = DcMotorW("fl")
+        val fr = DcMotorW("fr")
+        val br = DcMotorW("br")
+        val bl = DcMotorW("bl")
 
         val d = Driver().aconstructor(fl, fr, bl, br)
         val specs = EncoderSpecsBuilder.goBildaSwingArm()

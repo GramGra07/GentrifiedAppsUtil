@@ -2,7 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.odometer
 
 import android.os.Environment
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.EncoderSpecs
+import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.EncoderSpecs
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException

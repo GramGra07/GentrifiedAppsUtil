@@ -1,7 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes
 
-import org.firstinspires.ftc.robotcore.internal.system.Assert.assertTrue
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.callbacks.Timeout
+import org.junit.jupiter.api.Assertions.assertTrue
 import kotlin.test.Test
 
 class TimeoutTest {
