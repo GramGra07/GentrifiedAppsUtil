@@ -15,6 +15,7 @@ Make a branch of your DECODE season, version it to use this Library using things
 Side project:
 - Advance config creator to automatically get IMU/CameraSerial num
   - Maybe read from a scan file?
+- Add test cases for the things I was too lazy to add test cases for
 
 Freshman Project:
 - CTM (make a project)
