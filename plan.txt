@@ -1,0 +1,8 @@
+Project Guidelines:
+Add things that will help you next season. The idea is to make you have some stake in it, so you use more
+Write one packager (includes multiple other classes in the library)
+- idea: package loop time manager and init movement controller
+Write multiple "useful" (math or facilitation) classes
+- idea: 
+Focus on usability
+Use Java OR Kotlin
