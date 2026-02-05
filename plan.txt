@@ -11,3 +11,13 @@ Write multiple "useful" (math or facilitation) classes
   - test cases
   - dox (written in md)
 Make a branch of your DECODE season, version it to use this Library using things in the dox as well as things hidden
+
+Side project:
+- Advance config creator to automatically get IMU/CameraSerial num
+  - Maybe read from a scan file?
+
+Freshman Project:
+- CTM (make a project)
+  - quiz?
+  - read lib
+  - branch and change to use lib (ambitious?)
