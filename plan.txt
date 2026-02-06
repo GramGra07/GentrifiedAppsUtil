@@ -10,6 +10,7 @@ Write multiple "useful" (math or facilitation) classes
 - required: 
   - test cases
   - dox (written in md)
+Optional - Generator for subsystem/etc
 Make a branch of your DECODE season, version it to use this Library using things in the dox as well as things hidden
 
 Side project:
