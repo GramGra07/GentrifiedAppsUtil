@@ -1,6 +1,7 @@
 Project Guidelines:
 Add things that will help you next season. The idea is to make you have some stake in it, so you use more
 Focus on usability
+ABSOLUTELY NO AI
 Use Java OR Kotlin
 Project files will be written in branches titled with your first name
 Write one packager (includes multiple other classes in the library)
