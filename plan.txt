@@ -6,7 +6,7 @@ Project files will be written in branches titled with your first name
 Write one packager (includes multiple other classes in the library)
 - idea: package loop time manager and init movement controller
 Write multiple "useful" (math or facilitation) classes
-- idea: ility
+- idea: 
 - required: 
   - test cases
   - dox (written in md)
