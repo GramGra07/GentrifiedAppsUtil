@@ -22,3 +22,5 @@ Freshman Project:
   - quiz?
   - read lib
   - branch and change to use lib (ambitious?)
+
+Group climbing/social?
