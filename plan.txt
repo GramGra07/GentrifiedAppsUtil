@@ -18,6 +18,7 @@ Make a branch of your DECODE season, version it to use this Library using things
 Side project:
 - Advance config creator to automatically get IMU/CameraSerial num
   - Maybe read from a scan file?
+https://beepbot99.github.io/FtcXmlConfigGenerator/
 
 Freshman Project:
 - CTM (make a project)
