@@ -339,18 +339,24 @@
         <article role="main">
           <section id="config-creator">
 <span id="id1"></span><h1>Config Creator<a class="headerlink" href="#config-creator" title="Permalink to this heading">#</a></h1>
-<p>Basically, the config creator allows you to make your config in your code, then build it from an opmode you can run. There are two ways you can do this, one is incredibly preferred over the other for simplicity.</p>
-<p><strong>You MUST run the configuration scan first to see what expansion hub and IMU you have, it will not work without this.</strong></p>
+<p>Basically, the config creator allows you to make your config in your code, then build it from an
+opmode you can run. There are two ways you can do this, one is incredibly preferred over the other
+for simplicity.</p>
+<p><strong>You MUST run the configuration scan first to see what expansion hub and IMU you have, it will not
+work without this.</strong></p>
 <section id="primary-method">
 <h2>Primary Method<a class="headerlink" href="#primary-method" title="Permalink to this heading">#</a></h2>
 <p><strong>The preferred method is to use the Config Creator website.</strong></p>
-<p>Use this site to generate your config: <a class="reference external" href="https://gramgra07.github.io/gg-web/content/ftcUtils/config_creator/index.html">Config Creator</a></p>
+<p>Use this site to generate your
+config: <a class="reference external" href="https://gramgra07.github.io/gg-web/content/ftcUtils/config_creator/index.html">Config Creator</a></p>
 <p>Then download it and put it in your teamcode folder in your project.</p>
-<p>Run the ConfigCreator and it will generate the config for you. Then simply activate that configuration and you are done!</p>
+<p>Run the ConfigCreator and it will generate the config for you. Then simply activate that
+configuration and you are done!</p>
 </section>
 <section id="secondary-method">
 <h2>Secondary Method<a class="headerlink" href="#secondary-method" title="Permalink to this heading">#</a></h2>
-<p>The other method is to create the config in your code, then run the opmode to generate the config. This is not recommended as it is much more difficult and time consuming.</p>
+<p>The other method is to create the config in your code, then run the opmode to generate the config.
+This is not recommended as it is much more difficult and time consuming.</p>
 <p>Here is an example of how to create a config in your code:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">ConfigMaker</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">(</span><span class="s">&quot;pinkbot&quot;</span><span class="p">)</span>
 <span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;f1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
@@ -359,7 +365,8 @@
 <span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;br&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Then, you can run the ConfigCreator opmode (below) to generate the config. This will create a config file in your teamcode folder.</p>
+<p>Then, you can run the ConfigCreator opmode (below) to generate the config. This will create a config
+file in your teamcode folder.</p>
 </section>
 <section id="list-of-types">
 <h2>List of Types<a class="headerlink" href="#list-of-types" title="Permalink to this heading">#</a></h2>
@@ -416,18 +423,10 @@ Motor</p>
 <span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="nf">ConfigRegistrar</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="p">}</span>
 
-<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">OpModeMeta</span><span class="w"> </span><span class="nf">metaForClass</span><span class="p">(</span><span class="n">Class</span><span class="o">&lt;?</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">OpMode</span><span class="o">&gt;</span><span class="w"> </span><span class="n">cls</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">OpModeMeta</span><span class="p">.</span><span class="na">Builder</span><span class="p">()</span>
-<span class="w">                </span><span class="p">.</span><span class="na">setName</span><span class="p">(</span><span class="n">cls</span><span class="p">.</span><span class="na">getSimpleName</span><span class="p">())</span>
-<span class="w">                </span><span class="p">.</span><span class="na">setGroup</span><span class="p">(</span><span class="s">&quot;Config&quot;</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">setFlavor</span><span class="p">(</span><span class="n">OpModeMeta</span><span class="p">.</span><span class="na">Flavor</span><span class="p">.</span><span class="na">TELEOP</span><span class="p">)</span>
-<span class="w">                </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-
 <span class="w">    </span><span class="nd">@OpModeRegistrar</span>
 <span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span><span class="n">OpModeManager</span><span class="w"> </span><span class="n">manager</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">isEnabled</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
-<span class="w">        </span><span class="n">manager</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="n">metaForClass</span><span class="p">(</span><span class="n">ConfigCreator</span><span class="p">.</span><span class="na">class</span><span class="p">),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConfigCreator</span><span class="p">(</span><span class="n">config</span><span class="p">));</span>
+<span class="w">        </span><span class="n">manager</span><span class="p">.</span><span class="na">register</span><span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="na">metaData</span><span class="p">(),</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConfigCreator</span><span class="p">(</span><span class="n">config</span><span class="p">));</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 <span class="w">    </span>
