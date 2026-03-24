@@ -3,10 +3,15 @@ package org.gentrifiedApps.gentrifiedAppsUtil.config;
 import android.os.Environment;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Scribe;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * This class is used to create a configuration file for the robot controller
@@ -112,6 +117,78 @@ public class ConfigMaker {
      */
     public ConfigMaker addCamera(String name, String serialNumber) {
         WC += String.format("<Webcam name=\"%s\" serialNumber=\"%s\" />\n", name, serialNumber);
+        return this;
+    }
+
+    public ConfigMaker addCamera_detectSN() {
+        String filePath = String.format("%s/FIRST/scan.xml", Environment.getExternalStorageDirectory().getAbsolutePath());
+        File file = new File(filePath);
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains("Webcam")) {
+                        Matcher matcher = Pattern.compile("serialNumber=\"([^\"]*)\"").matcher(line);
+                        Matcher matcher2 = Pattern.compile("Webcam name=\"([^\"]*)\"").matcher(line);
+                        if (matcher.find() && matcher2.find()) {
+                            return addCamera(matcher2.group(1), matcher.group(1));
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Scribe.getInstance().logError("No scan.xml found");
+        return this;
+    }
+
+    public ConfigMaker addModule_detect() {
+        String filePath = String.format("%s/FIRST/scan.xml", Environment.getExternalStorageDirectory().getAbsolutePath());
+        File file = new File(filePath);
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains("LynxModule") && line.contains("Expansion Hub")) {
+                        Matcher portMatcher = Pattern.compile("port=\"([^\"]*)\"").matcher(line);
+                        Matcher nameMatcher = Pattern.compile("LynxModule name=\"([^\"]*)\"").matcher(line);
+                        if (portMatcher.find() && nameMatcher.find()) {
+                            return addModule(ModuleType.EXPANSION_HUB, nameMatcher.group(1), Integer.parseInt(portMatcher.group(1)));
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Scribe.getInstance().logError("No scan.xml found");
+        }
+        return this;
+    }
+
+    public ConfigMaker addIMU_detect(ModuleType moduleType) {
+        String filePath = String.format("%s/FIRST/scan.xml", Environment.getExternalStorageDirectory().getAbsolutePath());
+        File file = new File(filePath);
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (line.contains("LynxEmbeddedIMU") || line.contains("ControlHubImuBHI260AP")) {
+                        DeviceType type = line.contains("LynxEmbeddedIMU") ? DeviceType.REV_INTERNAL_BNO055_IMU : DeviceType.REV_INTERNAL_BHI260_IMU;
+                        Matcher portMatcher = Pattern.compile("port=\"([^\"]*)\"").matcher(line);
+                        Matcher nameMatcher = Pattern.compile("name=\"([^\"]*)\"").matcher(line);
+                        if (portMatcher.find() && nameMatcher.find()) {
+                            return addDevice(nameMatcher.group(1), moduleType, type, Integer.parseInt(portMatcher.group(1)));
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Scribe.getInstance().logError("No scan.xml found");
+        }
         return this;
     }
 
