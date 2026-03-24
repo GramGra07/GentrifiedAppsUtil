@@ -340,29 +340,19 @@
           <section id="config-creator">
 <span id="id1"></span><h1>Config Creator<a class="headerlink" href="#config-creator" title="Permalink to this heading">#</a></h1>
 <p>Basically, the config creator allows you to make your config in your code, then build it from an
-opmode you can run. There are two ways you can do this, one is incredibly preferred over the other
-for simplicity.</p>
-<p><strong>You MUST run the configuration scan first to see what expansion hub and IMU you have, it will not
-work without this.</strong></p>
+opmode you can run.</p>
 <section id="primary-method">
 <h2>Primary Method<a class="headerlink" href="#primary-method" title="Permalink to this heading">#</a></h2>
-<p><strong>The preferred method is to use the Config Creator website.</strong></p>
-<p>Use this site to generate your
-config: <a class="reference external" href="https://gramgra07.github.io/gg-web/content/ftcUtils/config_creator/index.html">Config Creator</a></p>
-<p>Then download it and put it in your teamcode folder in your project.</p>
-<p>Run the ConfigCreator and it will generate the config for you. Then simply activate that
-configuration and you are done!</p>
-</section>
-<section id="secondary-method">
-<h2>Secondary Method<a class="headerlink" href="#secondary-method" title="Permalink to this heading">#</a></h2>
-<p>The other method is to create the config in your code, then run the opmode to generate the config.
-This is not recommended as it is much more difficult and time consuming.</p>
+<p>The primary method is to create the config in your code, then run the opmode to generate the config. There is the ability now to use the detection methods, which after creating a config file, will streamline the experience. The first step is to create a new configuration called “scan”, you will only hit the scan button and then save the configuration. Then follow the rest of this guide.</p>
 <p>Here is an example of how to create a config in your code:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">ConfigMaker</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">(</span><span class="s">&quot;pinkbot&quot;</span><span class="p">)</span>
 <span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;f1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
 <span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;bl&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
 <span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;br&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">);</span>
+<span class="c1">// use addModule_detect() to add an expansion hub easily</span>
+<span class="c1">// use addIMU_detect(MODULE TYPE) to add an IMU on the c-hub or e-hub</span>
+<span class="c1">// use addCamera_detectSN() to add a camera easily using the scan config</span>
 </pre></div>
 </div>
 <p>Then, you can run the ConfigCreator opmode (below) to generate the config. This will create a config
@@ -413,6 +403,8 @@ Motor</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="kd">class</span> <span class="nc">ConfigRegistrar</span><span class="w"> </span><span class="p">{</span>
 
 <span class="w">    </span><span class="kd">static</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">(</span><span class="s">&quot;pinkbot&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addModule_detect</span><span class="p">()</span><span class="w"> </span><span class="c1">// will automatically detect using the scan config</span>
+<span class="w">    </span><span class="p">.</span><span class="na">addIMU_detect</span><span class="p">(</span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">)</span><span class="c1">// ^ same</span>
 <span class="w">            </span><span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;f1&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
 <span class="w">            </span><span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;fr&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
 <span class="w">            </span><span class="p">.</span><span class="na">addMotor</span><span class="p">(</span><span class="s">&quot;bl&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">ModuleType</span><span class="p">.</span><span class="na">CONTROL_HUB</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigMaker</span><span class="p">.</span><span class="na">MotorType</span><span class="p">.</span><span class="na">RevRoboticsUltraplanetaryHDHexMotor</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
@@ -492,7 +484,6 @@ Motor</p>
             <ul>
 <li><a class="reference internal" href="#">Config Creator</a><ul>
 <li><a class="reference internal" href="#primary-method">Primary Method</a></li>
-<li><a class="reference internal" href="#secondary-method">Secondary Method</a></li>
 <li><a class="reference internal" href="#list-of-types">List of Types</a></li>
 <li><a class="reference internal" href="#lastly-you-can-also-just-download-or-create-this-file">Lastly, you can also just download or create this file</a></li>
 </ul>
