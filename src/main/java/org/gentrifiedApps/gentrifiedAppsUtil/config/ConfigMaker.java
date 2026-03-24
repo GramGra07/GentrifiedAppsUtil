@@ -2,6 +2,8 @@ package org.gentrifiedApps.gentrifiedAppsUtil.config;
 
 import android.os.Environment;
 
+import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,6 +12,15 @@ import java.io.IOException;
  * This class is used to create a configuration file for the robot controller
  */
 public class ConfigMaker {
+
+    public OpModeMeta metaData() {
+        return new OpModeMeta.Builder()
+                .setName("Config" + name)
+                .setGroup("config")
+                .setFlavor(OpModeMeta.Flavor.TELEOP)
+                .build();
+    }
+
     private static String name;
     /**
      * Adds a module to the configuration, **DO NOT add a Control Hub**
