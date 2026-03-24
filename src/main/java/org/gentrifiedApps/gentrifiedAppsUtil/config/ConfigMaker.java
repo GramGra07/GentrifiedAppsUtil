@@ -15,7 +15,7 @@ public class ConfigMaker {
 
     public OpModeMeta metaData() {
         return new OpModeMeta.Builder()
-                .setName("Config" + name)
+                .setName("Config_" + name)
                 .setGroup("config")
                 .setFlavor(OpModeMeta.Flavor.TELEOP)
                 .build();
