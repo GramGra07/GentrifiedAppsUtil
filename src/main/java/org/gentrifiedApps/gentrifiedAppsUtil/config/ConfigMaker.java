@@ -26,7 +26,7 @@ public class ConfigMaker {
                 .build();
     }
 
-    private static String name;
+    private final String name;
     /**
      * Adds a module to the configuration, **DO NOT add a Control Hub**
      *
