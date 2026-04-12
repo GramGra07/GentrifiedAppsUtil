@@ -4,9 +4,9 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
 
 open class Callback(
     open val callback: Runnable,
-    val distance: Double? = null,
-    val percent: Double? = null,
-    val time: Double? = null
+    internal val distance: Double? = null,
+    internal val percent: Double? = null,
+    internal val time: Double? = null
 ) {
     fun run() {
         callback.run()

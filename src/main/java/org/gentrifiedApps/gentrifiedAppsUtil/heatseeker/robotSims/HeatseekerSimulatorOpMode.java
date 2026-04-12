@@ -11,13 +11,11 @@ public class HeatseekerSimulatorOpMode extends LinearOpModeW {
     public DriverW driver = new DriverW();
     public Path p = new PathBuilder().forward(10).back(10).build();
 
-
     @Override
     public void runOpMode() {
         driver.setBackLeftName("bl").setBackRightName("br").setFrontLeftName("fl").setFrontRightName("fr")
                 .reverseBackLeft()
                 .setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE)
-                .setPathDeceleration(2, 1)
 
                 .build(this);
         telemetry.addData("Status", "Initialized");

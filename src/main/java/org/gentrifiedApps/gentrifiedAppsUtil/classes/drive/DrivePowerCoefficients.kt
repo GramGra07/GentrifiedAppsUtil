@@ -109,6 +109,15 @@ data class DrivePowerCoefficients(
         return this != zeros()
     }
 
+    fun max(): Double {
+        return maxOf(frontLeft, frontRight, backLeft, backRight)
+    }
+
+    fun normalizeTo1(): DrivePowerCoefficients {
+        val max = max()
+        return this / max
+    }
+
     /**
      * Applies a slew rate limiter to the coefficients.
      * @param rLimiter The slew rate limiter to apply.

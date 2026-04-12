@@ -32,6 +32,8 @@ class DriverW {
     private var brDirection: DcMotorSimple.Direction = DcMotorSimple.Direction.FORWARD
     private var zeroPowerBehavior: DcMotor.ZeroPowerBehavior = DcMotor.ZeroPowerBehavior.BRAKE
     private var pathDeceleration: SlopeIntercept = SlopeIntercept(0, 0)
+
+    //_______________________BUILDER INTERPOLATION________________
     fun setPathDeceleration(m: Double, b: Double): DriverW {
         pathDeceleration = SlopeIntercept(m, b)
         return this
@@ -108,10 +110,6 @@ class DriverW {
     }
 
     private var drawer = Drawer()
-    fun attachDrawer(drawer: Drawer): DriverW {
-        this.drawer = drawer
-        return this
-    }
 
     private var opMode: LinearOpModeW? = null
     private var hwMap: HWMapW? = null
@@ -121,12 +119,12 @@ class DriverW {
     internal lateinit var bl: DcMotorW
     internal lateinit var br: DcMotorW
 
-    private val telemetry: TelemetryMaker = TelemetryMaker()
+    private lateinit var telemetry: TelemetryMaker
 
     fun build(opMode: LinearOpModeW) { // change to OpMode
         this.opMode = opMode
         this.hwMap = opMode.hardwareMap
-        telemetry.attach(opMode.telemetry)
+//        telemetry = TelemetryMaker(opMode.telemetry)
         verifyRequirements()
         initialize()
     }
@@ -136,7 +134,7 @@ class DriverW {
         val check2 =
             pathDeceleration != SlopeIntercept.zeros() && zeroPowerBehavior == DcMotor.ZeroPowerBehavior.BRAKE
 
-        val final = check1 && check2
+        val final = check1
         if (!final) {
             throw Exception("Requirements not met")
         }
@@ -173,7 +171,7 @@ class DriverW {
     }
 
 
-    internal fun findWheelVectors(data: MovementData): DrivePowerCoefficients {
+    private fun findWheelVectors(data: MovementData): DrivePowerCoefficients {
         return findWheelVectors(data.y, data.x, data.rotation)
     }
 
