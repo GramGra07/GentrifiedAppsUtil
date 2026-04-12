@@ -2,6 +2,9 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.Encoder
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.EncoderSpecs
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.EncoderSpecsBuilder
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
@@ -9,10 +12,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.Encoder
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.EncoderSpecs
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.generators.EncoderSpecsBuilder
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.localizers.tracking.MecanumLocalizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Callback
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.Path
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
@@ -26,7 +25,6 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.DcMo
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.HWMapW
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
-import kotlin.math.abs
 import kotlin.math.sqrt
 import kotlin.test.Test
 
@@ -454,33 +452,5 @@ class GenericTests {
         assert(d.findWheelVectors(pathVector) != DrivePowerCoefficients.of(0.0))
         val pathVector2: PathVector = PathVector(TranslationalVector(0.0, 1.0), Angle.blank())
         assert(d.findWheelVectors(pathVector2) != DrivePowerCoefficients.of(1.0))
-    }
-
-    @Test
-    fun testMecLocalizer() {
-
-        val fl = DcMotorW("fl")
-        val fr = DcMotorW("fr")
-        val br = DcMotorW("br")
-        val bl = DcMotorW("bl")
-
-        val d = Driver().aconstructor(fl, fr, bl, br)
-        val specs = EncoderSpecsBuilder.goBildaSwingArm()
-        val m = MecanumLocalizer(d, specs.ticksPerInch, 10.0, Target2D.blank())
-        assert(m.getPose() == Target2D.blank())
-        d.setWheelPower(DrivePowerCoefficients.of(1.0))
-        assert(m.getPose() == Target2D.blank())
-        m.update()
-        assert(m.getPose() != Target2D.blank())
-        assert(abs(m.getPose().x) < 0.005)
-        assert(m.getPose().y == 10.0 / specs.ticksPerInch)
-        assert(m.getPose().h() == Angle(90.0, AngleUnit.DEGREES).toRadians())
-        m.reset()
-        val tr = TestRunner()
-        tr.movements = listOf(DrivePowerCoefficients.of(1.0), DrivePowerCoefficients.of(-1.0))
-        tr.run(m.driver)
-        println(m.getPose())
-        println(tr.calculatePosition())
-        assert(tr.calculatePosition() / specs.ticksPerInch == m.getPose())
     }
 }

@@ -3,10 +3,10 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.speedometer
 import com.qualcomm.robotcore.eventloop.opmode.OpMode
 import com.qualcomm.robotcore.util.ElapsedTime
 import org.firstinspires.ftc.robotcore.external.Telemetry
+import org.gentrifiedApps.gentrifiedAppsUtil.classes.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.round
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.Driver
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.archive.EncoderSpecs
 import kotlin.math.absoluteValue
 import kotlin.math.sqrt
 

@@ -82,6 +82,7 @@ repositories {
 
     maven { url = 'https://maven.brott.dev/' }
     maven { url = 'https://jitpack.io' }
+    maven { url = "https://mymaven.bylazar.com/releases" }
 }
 
 dependencies {
@@ -95,6 +96,9 @@ dependencies {
     implementation libs.vision
 
     implementation libs.core.ktx
+
+    compileOnly "com.acmerobotics.roadrunner:core:1.0.1"
+    compileOnly 'com.pedropathing:ftc:2.1.1'
 
 //    implementation libs.listenablefuture
     // JUnit 5 API at compile time

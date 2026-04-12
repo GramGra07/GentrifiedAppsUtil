@@ -99,7 +99,7 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         return calculate(pv)
     }
 
-    private fun calculate(pv: Double): Double {
+    fun calculate(pv: Double): Double {
         prevErrorVal = errorValP
 
         val currentTimeStamp = System.nanoTime() / 1E9

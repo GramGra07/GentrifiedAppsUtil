@@ -31,4 +31,8 @@ class TeleOpCopyRunner(val name: String, val driver: Driver) : LinearOpMode() {
             telemetry.update()
         }
     }
+
+    fun Driver.findWheelVectors(data: MovementData): DrivePowerCoefficients {
+        return findWheelVectors(data.y, data.x, data.rotation)
+    }
 }
