@@ -49,4 +49,8 @@ open class Vector(open val a: Double, open val b: Double, val c: Double) {
         val mag = magnitude()
         return Vector(a / mag, b / mag, c / mag)
     }
+
+    override fun toString(): String {
+        return "Vector3d($a, $b, $c)"
+    }
 }
