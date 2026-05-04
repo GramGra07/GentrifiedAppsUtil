@@ -1,10 +1,7 @@
-//package org.gentrifiedApps.gentrifiedAppsUtil.config;
+package org.gentrifiedApps.gentrifiedAppsUtil.config;
 //
-//import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 //import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 //import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
-//
-//import org.firstinspires.ftc.robotcore.internal.opmode.OpModeMeta;
 //
 //
 //public final class ConfigRegistrar {
@@ -20,18 +17,9 @@
 //    private ConfigRegistrar() {
 //    }
 //
-//    private static OpModeMeta metaForClass(Class<? extends OpMode> cls) {
-//        return new OpModeMeta.Builder()
-//                .setName(cls.getSimpleName())
-//                .setGroup("Config")
-//                .setFlavor(OpModeMeta.Flavor.TELEOP)
-//                .build();
-//    }
-//
 //    @OpModeRegistrar
 //    public static void register(OpModeManager manager) {
 //        if (!isEnabled) return;
-//        manager.register(metaForClass(ConfigCreator.class), new ConfigCreator(config));
+//        manager.register(config.metaData(), new ConfigCreator(config));
 //    }
 //}
-//

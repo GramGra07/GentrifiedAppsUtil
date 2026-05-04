@@ -1,23 +1,13 @@
 (config-creator)=
+
 # Config Creator
 
-Basically, the config creator allows you to make your config in your code, then build it from an opmode you can run. There are two ways you can do this, one is incredibly preferred over the other for simplicity.
-
-**You MUST run the configuration scan first to see what expansion hub and IMU you have, it will not work without this.**
+Basically, the config creator allows you to make your config in your code, then build it from an
+opmode you can run.
 
 ## Primary Method
 
-**The preferred method is to use the Config Creator website.**
-
-Use this site to generate your config: [Config Creator](https://gramgra07.github.io/gg-web/content/ftcUtils/config_creator/index.html)
-
-Then download it and put it in your teamcode folder in your project.
-
-Run the ConfigCreator and it will generate the config for you. Then simply activate that configuration and you are done!
-
-## Secondary Method
-
-The other method is to create the config in your code, then run the opmode to generate the config. This is not recommended as it is much more difficult and time consuming.
+The primary method is to create the config in your code, then run the opmode to generate the config. There is the ability now to use the detection methods, which after creating a config file, will streamline the experience. The first step is to create a new configuration called "scan", you will only hit the scan button and then save the configuration. Then follow the rest of this guide.
 
 Here is an example of how to create a config in your code:
 
@@ -27,9 +17,14 @@ ConfigMaker config = new ConfigMaker("pinkbot")
 .addMotor("fr", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 2)
 .addMotor("bl", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 1)
 .addMotor("br", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 3);
+// use addModule_detect() to add an expansion hub easily
+// use addIMU_detect(MODULE TYPE) to add an IMU on the c-hub or e-hub
+// use addCamera_detectSN() to add a camera easily using the scan config
+
 ```
 
-Then, you can run the ConfigCreator opmode (below) to generate the config. This will create a config file in your teamcode folder.
+Then, you can run the ConfigCreator opmode (below) to generate the config. This will create a config
+file in your teamcode folder.
 
 ## List of Types
 
@@ -59,7 +54,6 @@ DigitalDevice,
 OpticalDistanceSensor,
 ModernRoboticsAnalogTouchSensor,
 
-
 **Motors:**
 
 goBILDA5201SeriesMotor,
@@ -76,7 +70,6 @@ RevRoboticsUltraplanetaryHDHexMotor,
 TetrixMotor,
 Motor
 
-
 ## Lastly, you can also just download or create this file
 
 You will need to import things.
@@ -85,6 +78,8 @@ You will need to import things.
 public final class ConfigRegistrar {
 
     static ConfigMaker config = new ConfigMaker("pinkbot")
+    .addModule_detect() // will automatically detect using the scan config
+    .addIMU_detect(ConfigMaker.ModuleType.CONTROL_HUB)// ^ same
             .addMotor("f1", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 0)
             .addMotor("fr", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 2)
             .addMotor("bl", ConfigMaker.ModuleType.CONTROL_HUB, ConfigMaker.MotorType.RevRoboticsUltraplanetaryHDHexMotor, 1)
@@ -95,18 +90,10 @@ public final class ConfigRegistrar {
     private ConfigRegistrar() {
     }
 
-    private static OpModeMeta metaForClass(Class<? extends OpMode> cls) {
-        return new OpModeMeta.Builder()
-                .setName(cls.getSimpleName())
-                .setGroup("Config")
-                .setFlavor(OpModeMeta.Flavor.TELEOP)
-                .build();
-    }
-
     @OpModeRegistrar
     public static void register(OpModeManager manager) {
         if (!isEnabled) return;
-        manager.register(metaForClass(ConfigCreator.class), new ConfigCreator(config));
+        manager.register(config.metaData(), new ConfigCreator(config));
     }
 }
     
