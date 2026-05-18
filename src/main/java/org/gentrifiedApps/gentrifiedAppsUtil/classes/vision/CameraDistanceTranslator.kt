@@ -1,9 +1,9 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.vision
 
-import org.gentrifiedApps.gentrifiedAppsUtil.biobuzz.Pollen
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Vector2d
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Distance
+import org.gentrifiedApps.gentrifiedAppsUtil.velocityVision.pipelines.pd.Pollen
 
 class CameraDistanceTranslator(val cameraLensIntrinsics: LensIntrinsics) {
     public fun estimateRelativePosition(
