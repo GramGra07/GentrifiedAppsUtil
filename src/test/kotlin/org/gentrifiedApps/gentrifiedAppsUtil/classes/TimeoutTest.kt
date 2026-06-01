@@ -9,7 +9,7 @@ class TimeoutTest {
     fun testTimeout() {
         val timeout = Timeout(1.0, { false })
         timeout.start()
-        Thread.sleep(1000)
+        Thread.sleep(1001)
         assertTrue(timeout.update())
         assertTrue(timeout.isTimedOut())
     }

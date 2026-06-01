@@ -34,5 +34,19 @@ class MecanumDriver {
                 backRightPower
             )
         }
+
+        /**
+         * Drive mecanum.
+         * @param x_ The x value of the controller. ex leftStickX
+         * @param y_ The y value of the controller. ex leftStickY
+         * @param rotation_ The rotation value of the controller. ex rightStickX
+         * @return The coefficients to drive the robot.
+         * @see DrivePowerCoefficients
+         */
+        @Suppress("LocalVariableName")
+        @JvmStatic
+        fun driveMecanum(x_: Double, y_: Double, rotation_: Double): DrivePowerCoefficients {
+            return driveMecanum(x_.toFloat(), y_.toFloat(), rotation_.toFloat())
+        }
     }
 }
