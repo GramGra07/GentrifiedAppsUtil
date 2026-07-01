@@ -1,4 +1,4 @@
-package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robotSims
+package org.gentrifiedApps.gentrifiedAppsUtil
 
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.OutputFormatter
 

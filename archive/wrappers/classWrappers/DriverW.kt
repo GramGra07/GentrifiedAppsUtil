@@ -3,7 +3,6 @@ package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers
 import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.equations.SlopeIntercept
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor

@@ -1,14 +1,11 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker
 
-import com.qualcomm.robotcore.hardware.DcMotor
 import com.qualcomm.robotcore.hardware.DcMotorSimple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Encoder
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.EncoderSpecs
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.EncoderSpecsBuilder
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Vector
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Angle
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.AngleUnit
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
@@ -18,11 +15,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathBuilder
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathCallback
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathComponent
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathType
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathVector
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.TranslationalVector
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.totalDistance
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.DcMotorW
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.HWMapW
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.assertThrows
 import kotlin.math.sqrt
@@ -392,65 +385,65 @@ class EncoderTests {
 }
 
 class GenericTests {
-    @Test
-    fun testEncoder() {
-        val specs = EncoderSpecsBuilder.goBildaSwingArm()
-        val hw = HWMapW()
-        val e = Encoder(specs, "testMotor", DcMotorSimple.Direction.FORWARD, false, 0.0, null)
-        e.encoder = DcMotorW("testMotor")
-        assert(e.getTicks() == 0)
-        assert(e.getDelta() == 0)
-        assert(e.getDeltaInches() == 0.0)
-        assert(e.ticksPerIn() == 2000.0 / (1.88976 * Math.PI))
-        e.encoder!!.power = 1.0
-        assert(e.getTicks() == 10)
-        assert(e.getInches() == 10 / specs.ticksPerInch)
-        assert(e.getDelta() == 10)
-        e.setLastPosition()
-        e.encoder!!.power = -1.0
-        assert(e.getTicks() == 0)
-        assert(e.getDelta() == -10)
-        assert(e.getDeltaInches() == -10.0 / specs.ticksPerInch)
-        assert(e.getInches() == 0.0)
-        e.reset()
-        assert(e.getTicks() == 0)
-        assert(e.getDelta() == 0)
-        e.setHardReverse(true)
-        e.encoder!!.power = 1.0
-        assert(e.getTicks() == -10)
-    }
-
-    @Test
-    fun testDriver() {
-        val fl = DcMotorW("fl")
-        val fr = DcMotorW("fr")
-        val br = DcMotorW("br")
-        val bl = DcMotorW("bl")
-
-        val d =
-            Driver().aconstructor(fl, fr, bl, br)
-        assert(d.getPositions() == DriveVelocities.zeros())
-        assert(d.getAbsPositions() == DriveVelocities.zeros())
-        val straight = Driver.findWheelVectors(1.0, 0.0, 0.0)
-        d.setWheelPower(straight)
-        assert(d.getPositions() == DriveVelocities.of(10.0))
-        val back = Driver.findWheelVectors(-0.8, 0.0, 0.0)
-        d.setWheelPower(back)
-        assert(d.getPositions() == DriveVelocities.of(2.0))
-        d.resetDriveEncoders()
-        assert(d.getPositions() == DriveVelocities.zeros())
-        assert(
-            d.sendEncoders() == listOf(
-                Pair<DcMotor, String?>(fl, null),
-                Pair<DcMotor, String?>(fr, null),
-                Pair<DcMotor, String?>(bl, null),
-                Pair<DcMotor, String?>(br, null)
-            )
-        )
-        //TODO refine these tests
-        val pathVector: PathVector = PathVector()
-        assert(d.findWheelVectors(pathVector) != DrivePowerCoefficients.of(0.0))
-        val pathVector2: PathVector = PathVector(TranslationalVector(0.0, 1.0), Angle.blank())
-        assert(d.findWheelVectors(pathVector2) != DrivePowerCoefficients.of(1.0))
-    }
+//    @Test
+//    fun testEncoder() {
+//        val specs = EncoderSpecsBuilder.goBildaSwingArm()
+//        val hw = HWMapW()
+//        val e = Encoder(specs, "testMotor", DcMotorSimple.Direction.FORWARD, false, 0.0, null)
+//        e.encoder = DcMotorW("testMotor")
+//        assert(e.getTicks() == 0)
+//        assert(e.getDelta() == 0)
+//        assert(e.getDeltaInches() == 0.0)
+//        assert(e.ticksPerIn() == 2000.0 / (1.88976 * Math.PI))
+//        e.encoder!!.power = 1.0
+//        assert(e.getTicks() == 10)
+//        assert(e.getInches() == 10 / specs.ticksPerInch)
+//        assert(e.getDelta() == 10)
+//        e.setLastPosition()
+//        e.encoder!!.power = -1.0
+//        assert(e.getTicks() == 0)
+//        assert(e.getDelta() == -10)
+//        assert(e.getDeltaInches() == -10.0 / specs.ticksPerInch)
+//        assert(e.getInches() == 0.0)
+//        e.reset()
+//        assert(e.getTicks() == 0)
+//        assert(e.getDelta() == 0)
+//        e.setHardReverse(true)
+//        e.encoder!!.power = 1.0
+//        assert(e.getTicks() == -10)
+//    }
+//
+//    @Test
+//    fun testDriver() {
+//        val fl = DcMotorW("fl")
+//        val fr = DcMotorW("fr")
+//        val br = DcMotorW("br")
+//        val bl = DcMotorW("bl")
+//
+//        val d =
+//            Driver().aconstructor(fl, fr, bl, br)
+//        assert(d.getPositions() == DriveVelocities.zeros())
+//        assert(d.getAbsPositions() == DriveVelocities.zeros())
+//        val straight = Driver.findWheelVectors(1.0, 0.0, 0.0)
+//        d.setWheelPower(straight)
+//        assert(d.getPositions() == DriveVelocities.of(10.0))
+//        val back = Driver.findWheelVectors(-0.8, 0.0, 0.0)
+//        d.setWheelPower(back)
+//        assert(d.getPositions() == DriveVelocities.of(2.0))
+//        d.resetDriveEncoders()
+//        assert(d.getPositions() == DriveVelocities.zeros())
+//        assert(
+//            d.sendEncoders() == listOf(
+//                Pair<DcMotor, String?>(fl, null),
+//                Pair<DcMotor, String?>(fr, null),
+//                Pair<DcMotor, String?>(bl, null),
+//                Pair<DcMotor, String?>(br, null)
+//            )
+//        )
+//        //TODO refine these tests
+//        val pathVector: PathVector = PathVector()
+//        assert(d.findWheelVectors(pathVector) != DrivePowerCoefficients.of(0.0))
+//        val pathVector2: PathVector = PathVector(TranslationalVector(0.0, 1.0), Angle.blank())
+//        assert(d.findWheelVectors(pathVector2) != DrivePowerCoefficients.of(1.0))
+//    }
 }

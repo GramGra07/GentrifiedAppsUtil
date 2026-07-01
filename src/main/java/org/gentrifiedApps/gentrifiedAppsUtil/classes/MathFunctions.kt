@@ -4,6 +4,7 @@ import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Point
 import kotlin.math.abs
 import kotlin.math.atan2
 import kotlin.math.hypot
+import kotlin.math.sqrt
 
 class MathFunctions {
     companion object {
@@ -140,6 +141,13 @@ class MathFunctions {
 
         fun ticksToInches(ticks: Int, ticksPerIn: Double): Double {
             return ticks.toDouble() / ticksPerIn
+        }
+
+
+        fun lpnorm(input: DoubleArray): Double {
+            var sum = 0.0
+            input.forEach { it -> sum += (it * it) }
+            return sqrt(sum)
         }
     }
 }

@@ -1,7 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance
 
-import com.acmerobotics.dashboard.canvas.Canvas
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.distanceTo
@@ -65,12 +63,6 @@ data class VectorField @JvmOverloads constructor(
 
             AvoidanceVectorType.OFF -> DrivePowerCoefficients.zeros()
         }
-    }
-
-    internal fun draw(packet: TelemetryPacket, canvas: Canvas): TelemetryPacket {
-        canvas.setFill("red").setAlpha(.6).setStroke("red")
-            .fillCircle(this.point.x, this.point.y, radius)
-        return packet
     }
 }
 

@@ -30,7 +30,7 @@ class Heatseeker(
     fun setHSPath(path: Path) {
         log("New path set")
         this.path = path
-        driver.drawer.drawPath(path.waypoints)
+//        driver.drawer.drawPath(path.waypoints)
     }
 
     private fun components(): MutableList<PathComponent> {

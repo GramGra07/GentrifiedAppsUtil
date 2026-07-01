@@ -87,27 +87,16 @@ repositories {
 
 dependencies {
     implementation libs.hardware
-
-    compileOnly libs.dashboard
-
-
     implementation libs.robotcore
     implementation libs.easyopencv
     implementation libs.vision
-
+    implementation 'org.firstinspires.ftc:FtcCommon:11.1.0'
     implementation libs.core.ktx
+
+    testImplementation libs.kotlin.test.junit5
 
     compileOnly "com.acmerobotics.roadrunner:core:1.0.1"
     compileOnly 'com.pedropathing:ftc:2.1.1'
-
-//    implementation libs.listenablefuture
-    // JUnit 5 API at compile time
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.10.2"
-    // Engine at runtime (use testImplementation if testRuntimeOnly is not recognized)
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.10.2"
-
-    // Kotlin test bindings for JUnit 5 (optional, if you use kotlin.test)
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit5:1.9.25"
 }
 
 afterEvaluate {

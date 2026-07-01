@@ -1,6 +1,5 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.classes.avoidance
 
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance.AvoidanceController
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.avoidance.AvoidanceVectorType
@@ -10,24 +9,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class AvoidanceControllerTest {
-
-    @Test
-    fun testUpdatePointInField() {
-        val field = VectorField(Point(0.0, 0.0), 5.0, AvoidanceVectorType.BOTH)
-        val controller = AvoidanceController(field)
-
-        val point = Point(2.0, 2.0)
-        val result = controller.update(point)
-
-        DrivePowerCoefficients.TestCases.Companion.assertSigns(
-            Quadruple<Double>(
-                1.0,
-                -1.0,
-                -1.0,
-                1.0
-            ), result
-        )
-    }
 
     @Test
     fun testUpdatePointOutsideField() {

@@ -2,10 +2,9 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
 import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.MultiSlewLimiter
-import kotlin.math.sign
+import kotlin.math.abs
 
 /**
  * A class to hold the coefficients for field centric driving.
@@ -39,7 +38,7 @@ data class DrivePowerCoefficients(
      * @see DrivePowerConstraint
      * @see DrivePowerCoefficients
      */
-    fun applyConstraint(constraint: DrivePowerConstraint): DrivePowerCoefficients {
+    fun applyConstraint(constraint: DrivePowerCoefficients): DrivePowerCoefficients {
         return DrivePowerCoefficients(
             clip(frontLeft, -constraint.frontLeft, constraint.frontLeft),
             clip(frontRight, -constraint.frontRight, constraint.frontRight),
@@ -113,6 +112,10 @@ data class DrivePowerCoefficients(
         return maxOf(frontLeft, frontRight, backLeft, backRight)
     }
 
+    fun min(): Double {
+        return minOf(frontLeft, frontRight, backLeft, backRight)
+    }
+
     fun normalizeTo1(): DrivePowerCoefficients {
         val max = max()
         return this / max
@@ -139,27 +142,17 @@ data class DrivePowerCoefficients(
         return (this + drivePowerCoefficients).clip(0.0, 1.0)
     }
 
-    class TestCases() {
-        // all same
-        companion object {
-            fun assertAllEqual(a: Double, result: DrivePowerCoefficients) {
-                val drivePowerCoefficients = result
-                assert(drivePowerCoefficients.frontLeft == a)
-                assert(drivePowerCoefficients.frontRight == a)
-                assert(drivePowerCoefficients.backLeft == a)
-                assert(drivePowerCoefficients.backRight == a)
-            }
-
-            fun assertSigns(signs: Quadruple<Double>, result: DrivePowerCoefficients) {
-                val drivePowerCoefficients = result
-                // and PRINT
-                println("DrivePowerCoefficients: $drivePowerCoefficients")
-                println("Signs: $signs")
-                assert(drivePowerCoefficients.frontLeft.sign == signs.first)
-                assert(drivePowerCoefficients.frontRight.sign == signs.second)
-                assert(drivePowerCoefficients.backLeft.sign == signs.third)
-                assert(drivePowerCoefficients.backRight.sign == signs.fourth)
-            }
+    internal fun applyDriftNormalizer(tolerance: Double): Quadruple<Double> {
+        val min = min()
+        val max = max()
+        val dif = abs(max - min)
+        if (dif >= tolerance) {
+            val frontLeft = 1 + ((dif * (((1 - frontLeft) / dif) - 1)))
+            val frontRight = 1 + ((dif * (((1 - frontRight) / dif) - 1)))
+            val backLeft = 1 + ((dif * (((1 - backLeft) / dif) - 1)))
+            val backRight = 1 + ((dif * (((1 - backRight) / dif) - 1)))
+            return Quadruple(frontLeft, frontRight, backLeft, backRight)
         }
+        return Quadruple(0.0)
     }
 }

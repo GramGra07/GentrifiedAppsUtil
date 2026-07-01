@@ -1,5 +1,7 @@
 package org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer
 
+import com.acmerobotics.roadrunner.Pose2d
+import com.pedropathing.geometry.Pose
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.others.PPLocalizer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.others.RRLocalizer
@@ -47,17 +49,23 @@ class DualLocalizer(private var localizer: Any, val startPose: Target2D) {
     }
 
     fun getPose(): Target2D {
-        return if (isPPLocalizer()) Target2D.fromPose(asPPLocalizer()!!.pose)
-        else if (isRRLocalizer()) Target2D.fromPose2d(asRRLocalizer()!!.pose)
-        else Target2D.blank()
+        return if (isPPLocalizer()) {
+            val pose = asPPLocalizer()!!.pose
+            Target2D(pose.x, pose.y, pose.heading)
+        } else if (isRRLocalizer()) {
+            val pose = asRRLocalizer()!!.pose
+            Target2D(pose.position.x, pose.position.y, pose.heading.toDouble())
+        } else Target2D.blank()
     }
 
     fun setPose(pose: Target2D) {
 
         if (isPPLocalizer()) {
-            asPPLocalizer()?.setStartPose(pose.toPose())
+            val posePP = Pose(pose.x, pose.y, pose.h())
+            asPPLocalizer()?.setStartPose(posePP)
         } else if (isRRLocalizer()) {
-            asRRLocalizer()?.pose = pose.toPose2d()
+            val poseRR = Pose2d(pose.x, pose.y, pose.h())
+            asRRLocalizer()?.pose = poseRR
         }
     }
 

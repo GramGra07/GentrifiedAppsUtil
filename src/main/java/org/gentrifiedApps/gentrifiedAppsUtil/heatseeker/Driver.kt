@@ -6,15 +6,12 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Vector
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.DrivePowerCoefficients
-import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DrivePowerConstraint
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.drive.drift.DriveVelocities
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.generics.pointClasses.Target2D
 import org.gentrifiedApps.gentrifiedAppsUtil.hardware.motor.MotorExtensions.Companion.resetMotor
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.Drawer
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.feedback.TelemetryMaker
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.PathVector
 import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.generics.localizer.DualLocalizer
-import org.gentrifiedApps.gentrifiedAppsUtil.heatseeker.robot.classWrappers.DcMotorW
 
 
 //    val loc = DualLocalizer(TwoDeadWheelLocalizer(hwMap, imu, 29, Pose2d.blank()), Target2D.blank())
@@ -123,7 +120,6 @@ class Driver {
         resetMotor(br, DcMotor.RunMode.RUN_WITHOUT_ENCODER)
     }
 
-    var drawer = Drawer()
 
     var opMode: LinearOpMode? = null
     private var hwMap: HardwareMap? = null
@@ -154,10 +150,10 @@ class Driver {
     }
 
     private fun initialize() {
-        fl = hwMap!!.get(DcMotorW::class.java, flName!!)
-        fr = hwMap!!.get(DcMotorW::class.java, frName!!)
-        bl = hwMap!!.get(DcMotorW::class.java, blName!!)
-        br = hwMap!!.get(DcMotorW::class.java, brName!!)
+        fl = hwMap!!.get(DcMotor::class.java, flName!!)
+        fr = hwMap!!.get(DcMotor::class.java, frName!!)
+        bl = hwMap!!.get(DcMotor::class.java, blName!!)
+        br = hwMap!!.get(DcMotor::class.java, brName!!)
         resetDriveEncoders()
         fl.zeroPowerBehavior = zeroPowerBehavior
         fr.zeroPowerBehavior = zeroPowerBehavior
@@ -176,7 +172,7 @@ class Driver {
 
     fun localizerTelemetry() {
         if (localizer != null) {
-            drawer.drawLocalization(localizer!!.getPose())
+//            drawer.drawLocalization(localizer!!.getPose())
             telemetry.showPose(localizer!!.getPose())
         }
     }
@@ -250,8 +246,8 @@ class Driver {
         return this
     }
 
-    var driftCoefficients: DrivePowerConstraint? = null
-    fun setDriftCoefficients(coefficients: DrivePowerConstraint): Driver {
+    var driftCoefficients: DrivePowerCoefficients? = null
+    fun setDriftCoefficients(coefficients: DrivePowerCoefficients): Driver {
         driftCoefficients = coefficients
         return this
     }

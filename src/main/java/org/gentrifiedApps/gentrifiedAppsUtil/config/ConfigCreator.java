@@ -21,9 +21,9 @@ public class ConfigCreator extends LinearOpMode {
         Scribe.getInstance().logDebug("Config Maker run");
         Scribe.getInstance().logDebug("XML: " + configMaker.getXML());
         waitForStart();
-        stop();
         RobotConfigFileManager manager = new RobotConfigFileManager();
         manager.setActiveConfig(new RobotConfigFile(manager, configMaker.metaData().name));
+        stop();
     }
 }
 
