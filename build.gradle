@@ -86,17 +86,17 @@ repositories {
 }
 
 dependencies {
-    implementation libs.hardware
-    implementation libs.robotcore
+//    implementation libs.hardware
+//    implementation libs.robotcore
     implementation libs.easyopencv
-    implementation libs.vision
-    implementation 'org.firstinspires.ftc:FtcCommon:11.1.0'
+//    implementation libs.vision
+//    implementation 'org.firstinspires.ftc:FtcCommon:11.1.0'
     implementation libs.core.ktx
 
     testImplementation libs.kotlin.test.junit5
 
-    compileOnly "com.acmerobotics.roadrunner:core:1.0.1"
-    compileOnly 'com.pedropathing:ftc:2.1.1'
+//    compileOnly "com.acmerobotics.roadrunner:core:1.0.1"
+//    compileOnly 'com.pedropathing:ftc:2.1.1'
 }
 
 afterEvaluate {

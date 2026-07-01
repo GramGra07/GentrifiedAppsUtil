@@ -3,15 +3,15 @@ easyopencv = "1.7.3"
 kotlin = "1.9.0"
 kotlinTestJunit5 = "1.9.25"
 coreKtxVersion = "1.13.1"
-robotcore = "11.0.1"
+#robotcore = "11.0.1"
 
 [libraries]
 easyopencv = { module = "org.openftc:easyopencv", version.ref = "easyopencv" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlinTestJunit5" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtxVersion" }
-robotcore = { module = "org.firstinspires.ftc:RobotCore", version.ref = "robotcore" }
-vision = { module = "org.firstinspires.ftc:Vision", version.ref = "robotcore" }
-hardware = { module = "org.firstinspires.ftc:Hardware", version.ref = "robotcore" }
+#robotcore = { module = "org.firstinspires.ftc:RobotCore", version.ref = "robotcore" }
+#vision = { module = "org.firstinspires.ftc:Vision", version.ref = "robotcore" }
+#hardware = { module = "org.firstinspires.ftc:Hardware", version.ref = "robotcore" }
 
 
 [plugins]
