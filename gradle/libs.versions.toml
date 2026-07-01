@@ -3,7 +3,7 @@ easyopencv = "1.7.3"
 kotlin = "1.9.0"
 kotlinTestJunit5 = "1.9.25"
 coreKtxVersion = "1.13.1"
-robotcore = "11.0.1"
+robotcore = "11.1.0"
 
 [libraries]
 easyopencv = { module = "org.openftc:easyopencv", version.ref = "easyopencv" }
