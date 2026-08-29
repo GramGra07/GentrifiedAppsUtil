@@ -1,5 +1,0 @@
-//todo
-command base
-HeatSeeker
-- rewrite for vectors
-- derivative prediction workflow

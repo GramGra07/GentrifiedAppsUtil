@@ -19,19 +19,20 @@ class PIDController(kP: Double, kI: Double, kD: Double) : PIDFController(kP, kI,
 open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF: Double) {
     private var setPoint: Double = 0.0
     private var measuredValue: Double = 0.0
-    private var minIntegral: Double = -1.0
-    private var maxIntegral: Double = 1.0
+
+    private var minIntegral: Double = Double.NEGATIVE_INFINITY
+    private var maxIntegral: Double = Double.POSITIVE_INFINITY
 
     private var errorValP: Double = 0.0
     private var errorValV: Double = 0.0
     private var totalError: Double = 0.0
-    private var prevErrorVal: Double = 0.0
+    private var prevMeasuredValue: Double = 0.0
 
     private var errorToleranceP: Double = 0.05
     private var errorToleranceV: Double = Double.POSITIVE_INFINITY
 
     private var lastTimeStamp: Double = 0.0
-    private var period: Double = 0.0
+    private var period: Double = 0.02
 
     constructor(kP: Double, kI: Double, kD: Double, kF: Double, sp: Double, pv: Double) : this(
         kP,
@@ -45,6 +46,7 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
         reset()
     }
 
+    // Assuming PIDFCoefficients is a data class defined elsewhere
     constructor(pidfCoefficients: PIDFCoefficients) : this(
         pidfCoefficients.kP,
         pidfCoefficients.kI,
@@ -60,7 +62,6 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
 
     fun reset() {
         totalError = 0.0
-        prevErrorVal = 0.0
         lastTimeStamp = 0.0
     }
 
@@ -76,8 +77,6 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
 
     fun setSetPoint(sp: Double) {
         setPoint = sp
-        errorValP = setPoint - measuredValue
-        errorValV = (errorValP - prevErrorVal) / period
     }
 
     fun atSetPoint(): Boolean {
@@ -85,11 +84,8 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
     }
 
     fun getCoefficients(): DoubleArray = doubleArrayOf(kP, kI, kD, kF)
-
     fun getPositionError(): Double = errorValP
-
     fun getTolerance(): DoubleArray = doubleArrayOf(errorToleranceP, errorToleranceV)
-
     fun getVelocityError(): Double = errorValV
 
     fun calculate(): Double = calculate(measuredValue)
@@ -100,26 +96,30 @@ open class PIDFController(var kP: Double, var kI: Double, var kD: Double, var kF
     }
 
     fun calculate(pv: Double): Double {
-        prevErrorVal = errorValP
+        val currentTimeStamp = System.nanoTime().toDouble() / 1e9
 
-        val currentTimeStamp = System.nanoTime() / 1E9
-        if (lastTimeStamp == 0.0) lastTimeStamp = currentTimeStamp
+        if (lastTimeStamp == 0.0) {
+            lastTimeStamp = currentTimeStamp
+            prevMeasuredValue = pv
+        }
+
         period = currentTimeStamp - lastTimeStamp
         lastTimeStamp = currentTimeStamp
+
+        if (period <= 1e-6) {
+            period = 1e-6
+        }
 
         errorValP = setPoint - pv
         measuredValue = pv
 
-        errorValV = if (abs(period) > 1E-6) {
-            (errorValP - prevErrorVal) / period
-        } else {
-            0.0
-        }
+        errorValV = -(measuredValue - prevMeasuredValue) / period
+        prevMeasuredValue = measuredValue
 
-        totalError += period * (setPoint - measuredValue)
+        totalError += period * errorValP
         totalError = totalError.coerceIn(minIntegral, maxIntegral)
 
-        return kP * errorValP + kI * totalError + kD * errorValV + kF * setPoint
+        return (kP * errorValP) + (kI * totalError) + (kD * errorValV) + (kF * setPoint)
     }
 
     fun setPIDF(kP: Double, kI: Double, kD: Double, kF: Double) {
