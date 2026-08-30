@@ -2,7 +2,7 @@ package org.gentrifiedApps.gentrifiedAppsUtil.classes.drive
 
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.MathFunctions.Companion.clip
 import org.gentrifiedApps.gentrifiedAppsUtil.classes.Quadruple
-import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowModeManager
+import org.gentrifiedApps.gentrifiedAppsUtil.controllers.SlowMode
 import org.gentrifiedApps.gentrifiedAppsUtil.motion.profiles.MultiSlewLimiter
 import kotlin.math.abs
 
@@ -54,7 +54,7 @@ data class DrivePowerCoefficients(
      * @see DrivePowerConstraint
      * @see DrivePowerCoefficients
      */
-    fun applySlowMode(slowModeManager: SlowModeManager): DrivePowerCoefficients {
+    fun applySlowMode(slowModeManager: SlowMode): DrivePowerCoefficients {
         return slowModeManager.apply(this)
     }
 
